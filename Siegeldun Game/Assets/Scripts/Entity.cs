@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Entity Parent Class
-public class Entity
-{
+public class Entity : MonoBehaviour
+{      
     public string name;
     public int hp;
     public int damage;
     public float attackSpeed;
     public string[] statusEffect;
 
-    public static int entityCount;
-    public static int difficulty; // 1 = Normal, 2 = Hard, 3 = Insane
+    public int difficulty = 1;
 
-
-    public Entity(int diff = 1)
+    public void movement()
     {
-        difficulty = diff;
+
     }
 }
