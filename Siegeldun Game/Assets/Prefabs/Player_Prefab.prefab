@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 82316760946928152}
   - component: {fileID: 82316760946928228}
   - component: {fileID: 82316760946928231}
+  - component: {fileID: 1152592529691976740}
   m_Layer: 0
   m_Name: Player_Prefab
   m_TagString: Untagged
@@ -209,7 +210,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 991996671
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: -7336370125145216465, guid: 58868811b9b8d3b4b8d664a276fbc060, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -302,12 +303,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6.4
   jumpForce: 15.4
-  groundLayer:
+  groundLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 0
   attackRange: 0.3
   attackPoint: {fileID: 82316760197575889}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 128
   attackDamage: 10
+--- !u!70 &1152592529691976740
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82316760946928153}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0019540787, y: -0.3109874}
+  m_Size: {x: 0.5699148, y: 1.3216971}
+  m_Direction: 0
