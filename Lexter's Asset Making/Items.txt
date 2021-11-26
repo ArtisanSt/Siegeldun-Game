@@ -1,0 +1,13 @@
+Items:
+
+Currency: Crin
+
+Sharp Tooth and Claws:
+Cost (Sell): 1 Crin
+Cost (Buy): 2 Crins
+Purpose: None
+
+
+
+
+
