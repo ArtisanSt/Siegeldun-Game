@@ -1,0 +1,36 @@
+Consumables:
+
+Currency: Crin
+
+Water:
+Buffs: +2 HP, Cures Burn
+Debuffs: None
+Cost (Sell): 1 Crin
+Cost (Buy): 2 Crins
+
+Portious (Madeup Tuber Fruit)
+Buffs: +10 HP
+Debuffs: None
+Cost (Sell): 3 Crins
+Cost (Buy): 6 Crins
+
+Worms:
+Buffs: +4 HP
+Debuffs: None
+Cost (Sell): 2 Crins
+Cost (Buy): 3 Crins
+
+Enraged Blood:
+Buffs: +40% Damage for 3 seconds
+Debuffs: -20% Attack Speed
+Cost (Sell): 6 Crins
+Cost (Buy): 12 Crins
+
+Raw Meat:
+Buffs: +15 HP
+Debuffs: Can only eat twice per 1 minute
+Cost (Sell): 2 Crins
+Cost (Buy): 3 Crins
+
+
+
