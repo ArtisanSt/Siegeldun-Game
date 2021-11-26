@@ -5,27 +5,29 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D body;
-    private BoxCollider2D collider;
+    private CapsuleCollider2D collider;
     private Animator animator;
     private SpriteRenderer sprite;
     private float dirX;
     
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask groundLayers;
 
     // Attack Parameters
+    private bool attacking = false;
     public float attackRange = 0.3f;
-    [SerializeField] Transform attackPoint;
+    [SerializeField] Transform attackPoint; 
     [SerializeField] LayerMask enemyLayers;
     [SerializeField] int attackDamage = 10;
 
     private enum MovementAnim { idle, run, jump, fall };
+    private MovementAnim state;
 
     private void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        collider = GetComponent<BoxCollider2D>();
+        collider = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
     }
@@ -35,15 +37,17 @@ public class Player : MonoBehaviour
         dirX = Input.GetAxisRaw("Horizontal");
         body.velocity = new Vector2(dirX * speed, body.velocity.y);
 
-        if(Input.GetButtonDown("Jump") && IsGrounded())
+        if (Input.GetButtonDown("Jump") && collider.IsTouchingLayers(groundLayers))
         {
             body.velocity = new Vector2(body.velocity.x, jumpForce);
         }
-        
+
         AnimationState();
 
+
         // Attack Code
-        if(Input.GetKeyDown(KeyCode.Mouse0))
+        attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 11) == "Noob_Attack"; // Anti-spamming code
+        if (Input.GetKeyDown(KeyCode.Mouse0) && attacking == false)
         {
             Attack();
         }
@@ -51,21 +55,17 @@ public class Player : MonoBehaviour
 
     private void AnimationState()
     {
-        MovementAnim state;
-
-        if (dirX > 0f) 
+        if (dirX == 0)
         {
-            state = MovementAnim.run;
-            sprite.flipX = false;
-        }
-        else if (dirX < 0f)
-        {
-            state = MovementAnim.run;
-            sprite.flipX = true;
+            state = MovementAnim.idle;
         }
         else
         {
-            state = MovementAnim.idle;
+            state = MovementAnim.run;
+            if (dirX > 0f)
+                sprite.flipX = false;
+            else
+                sprite.flipX = true;
         }
 
         if (body.velocity.y > .99f)
@@ -80,17 +80,14 @@ public class Player : MonoBehaviour
         animator.SetInteger("state", (int)state);
     }
 
-    private bool IsGrounded()
-    {
-        return Physics2D.BoxCast(collider.bounds.center, collider.bounds.size, 0f, Vector2.down, .1f, groundLayer);
-    }
-
     private void Attack()
     {
+        attacking = true;
         // Play Attack anim
         animator.SetTrigger("attack");
         // Detect enemy in range
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        attacking = false;
 
         // Damage
         foreach(Collider2D enemy in hitEnemies)
