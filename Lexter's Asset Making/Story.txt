@@ -1,0 +1,465 @@
+STORY PROJECT S:
+
+Theme: Darkness and Post-apocalyptic
+Enemies: Demons and Monsters
+Tone: Tense
+Goals: Find someone, Discover something and kill someone
+
+Player:
+HP = 100
+Base Damage = 5 HP
+
+Essence Tower is a savepoint in the start of every level with only 3 revival chances while the Essence Shrine is a savepoint in the start of an Act with infinite revival chances.
+When the player used all of the 3 revival chances of the Essence Tower, he will then revive in the last Essence Shrine and forced to start the Act again.
+
+
+List of Enemy Weaknesses:
+Backstab (An attack while the enemy is not looking)
+Sharp melee weapons (Soft Skins Creatures can be critically striked)
+
+List of Enemy Strengths:
+Callouts (Call allied backups)
+
+
+Plot:
+Force the player to take bleeding item and crying items in him.
+Bleeding and Crying Items have large critical strike, critical chance, or damage.
+It also has weird buffs and debuffs to the player.
+Everytime the player touch a bleeding or a crying item, the more serious the end will be.
+The plan is to have 4 different outcomes based on the bleeding and crying level the player gets.
+
+Average Bleeding and Crying Level: 0-50%
+First ending: The player was able to save his companion after defeating the Crimson Corruptor.
+Second ending: The player wasn't able to save his companion because the Crimson Corruptor has taken over the body of his friend.
+Epilogue: The player will still travel to find the cure for those who were life sucked by the Crimson Corruptor.
+ 
+Average Bleeding and Crying Level: 51-100%
+Force Death: Everytime the Crimson Corruptor dies, half of the current HP of the player will be absorbed by the Crimson Corruptor thus reviving him.
+Third ending: The player was taken by the Crimson Corruptor. They didn't kill him but crowned and revealed that it was his actions that killed everyone and captured those people.
+Fourth ending: The body of the player will be corrupted and he will turn into a Crimson Corruptor.
+Epilogue: He will meet the God that the Crimson praises or the mastermind of all. It was the Santelmo he met at the start.
+He then revealed that every explorer that goes to that island is an intruder. Every intruder should die because it takes the life essence of every living thing in the island.
+He said that the reason why he told him not to take the Bleeding and Crying Items is that because he knows that they will just take it out of their curiousity.
+
+Bleeding and Crying Level Debuffs:
+0-25%: Nothing
+26-50%: The screen of the player will have an attraction effect for 2 seconds as if the player has low HP when a bleeding or crying item is in the players vicinity.
+51-99%: When the player collides with a bleeding or crying item, there are chances that the hand will take the item anyway even though the player doesn't want it.
+100%: The player can only swap a bleeding or crying item with the same type.
+
+Bleeding and Crying Level Buffs:
+0-25%: Nothing
+26-50%: Has a chance to reflect 25% of the damage taken.
+51-99%: Instant kill with a backstab but adds 1% bleeding and crying level.
+100%: Lifesteal
+
+
+
+=============================================================================================================================================================================================================================================
+Act 0 (Introduction):
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+In the heart of a world full of mysteries, Two explorers ventured a vast undiscovered island.
+Explorer names = (ask the user for names)
+
+Every explorer who dared to explorer the island never came back.
+One night, after settling up a camp near the shore, one of the explorers (companion) has gone missing.
+
+The other explorer (player) packed up to find his companion.
+He knows that his companion didn't disappear for nothing.
+It was either because he saw something, or something saw him.
+
+A moment later, a loud scream for help was heard in the dark forests.
+The explorer picked up his knife and rushed through the forest.
+
+He followed the footsteps and trails resembling someone being pulled until it disappeared.
+One moment later, Santelmo (Fire Ball Creature) appeared and talked to him.
+
+At first he was afraid and readied his knife to defend himself.
+But Santelmo told him to not worry because he will help him find his friend.
+He is the guardian of that forest and he swore an oath to protect every mankind that goes into that forest.
+
+Santelmo told the explorer that in order to find his friend, he has to get his smell away from the tracks.
+He should not leave any trail nor presence of himself in an area.
+To achieve this, he has to change his clothes and leave his bag behind.
+	
+Santelmo then revolved around him and his clothes magically changed.
+He was confused and asked where was his items.
+Santelmo answered that it was in a safe place that no one will find.
+He thought that he could keep his knife but it was also taken.
+
+Santelmo told him that it also has his presence so he took it too.
+But don't worry because he will have weapons along the way by the guide of Santelmo.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Scene 0 (Tutorial):
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Setting: Dark forest
+Time: Night
+
+The player will be guided by Santelmo.
+Santelmo is the AI that will show tutorials and tell the user how to control and do things.
+
+In the end, the Santelmo said that he can't pass through the Holy River because it is the boundary of the forest that he is guarding.
+The Santelmo gave him part of his essence so that if he has questions, his essence will answer everything. (Help buttons and other help shit)
+His essence will also keep him alive. Everytime he will see an Essence Shrine, his essence will bind into it to bring him to the nearest shrine when fainted. (Resurrection Shrine)
+
+He has to pass the Holy River first and the his essence will take him to his friend.
+Follow the direction of the wind and it will give him the power to kill them clean.
+The only warning he gave is that do not take any Bleeding Item nor Crying Item he sees.
+
+
+
+=============================================================================================================================================================================================================================================
+Act 1: 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+After crossing over the Holy River, a tall rock is seen in a distance that has symbols written around it.
+The rock looks like that it was there for a long period of time because it is covered in moss.
+The rock seems like it is talking to him because he can hear whispering voices telling him to touch the rock.
+
+The moment he touched it, the rock began to have life and it lit starting from where he touched it.
+Santelmo really gave him his essence. He found an Essence Shrine.
+Beside the shrine is a rare dagger. (50% durability and it has less damage debuff since this is for early game)
+
+The moment he touched the sword, its name spoke to him.
+It was called, "The Ruined Dagger of the Shrine".
+He felt the power hiding in the dagger for a very long time.
+
+At that time, he felt he was ready for everything that he will face.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Scene 1: (Levels 1-5)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Setting: Forest of the Aereans
+Time: Night
+
+New Enemy: Aereans
+Details:
+Dwarf monstrouos creatures that hides in a forest with tall bushes.
+They don't always stay as a group if they are in their home vecinity to maximize the movements they can do.
+They hide in bushes and ambush those go near them.
+They often use dagger, blowgun, a sling, or just stones to kill their prey.
+They build their houses underground because they can be easily killed during their vulnerable hours when they stay in a houses overground or in top of trees.
+
+Doesn't have a definite leader.
+
+Vulnerable Hours:
+Sleeping, Eating, Mating
+
+Stats:
+HP: 10 - 20 (Melee Aereans has higher HP than ranged Aereans)
+Base Damage: 2 HP
+Dagger Damage: 4 HP
+Blowgun Damage: 4 HP
+Sling Damage: 3 HP
+Stone Damage: 3 HP
+Attack Speed: 500/1000 ms
+
+Weakness:
+Sharp melee weapons (Soft-skinned Creatures can be critically striked)
+Backstab (An attack while the enemy is not looking)
+
+Strength:
+Callouts (Call allied backups) [Once an Aerean detected an enemy, it will call the attention of other nearest Aereans]
+
+Loots:
+Weapons: Dagger, Blowgun, Sling, Stone
+Items: 0-1 Crin
+Consumables: Water, Portious (Made up of Tuber Fruit), Worms
+
+
+First Destination: Forest of the Aereans (Levels 1-5)
+Time: Night
+Puzzle Application: -------------
+Enemies: Aereans
+Loots: Barrels, Bushes, 
+
+=============================================================================================================================================================================================================================================
+Act 2:
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+After the encounter with Aereans, he found a cave and decided to rest inside.
+Hidden in the darkness are eyes that observe every move the explorer make.
+Waiting for him to run
+
+Little did he know that the cave is a den of Nightcrawlers.
+These nocturnal creatures are deadly due to their sharp large claws that can penetrate through rocks.
+
+A wrong move can kill a normal person in a second with a fast heavy leap from these creatures hidden in the darkness.
+Followed with a slash of their sharp claws and bite in the neck with their shark teeth.
+Santelmo's essence tells him not to move and be alert of what's coming.
+
+After a while of waiting, the creatures got bored and started to make their move.
+They made consecutive howling sounds to scare their prey and force it to panic.
+But the essence and courage of the explorer made him more alert to counter any attacks that will be coming from the creatures.
+
+A moment later, a creature that looks like a panther with eight eyes around it leap over the explorer.
+With "The Ruined Dagger of the Shrine" he was holding, he countered the leap attack of one of the creatures.
+
+The other creatures then leap after their alpha but with the fast evasion and strong counter of the explorer, killed the creatures one by one.
+After the bloodbath that killed a pack of Nightcrawlers, the explorer rested for a little bit and then continued his quest to save his friend.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Scene 2: (Level 6-15)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Setting: Mid-forest Cave
+Time: Midnight/Morning
+
+New Enemies: Nightcrawlers, Queencrawler (Boss)
+
+New Enemy: Nightcrawlers
+These nocturnal creatures have sharp claws that can penetrate through rocks.
+When they spot a prey, they stay stealthy for a while until the prey moves.
+They leap on their target and pin down its boday so it doesn't move.
+Then they bite it on the neck to finish it.
+
+Others have tried to use stealth against them but failed.
+Due to their eight eyes located around their heads, they see every angle an enemy can come from.
+They only use half of their eyes when they sleep to stay alert of from their predators.
+
+Their only disadvantage is when they get tired.
+Due to their weight and heavy sharp claws, they use too much energy.
+So in order to efficiently use their energy, they have low attack speed to regain some of their energy used.
+
+When they ran out of energy, they stay idle for a while to re-energize themselves that makes them vulnerable from everything.
+
+Exiled Nightcrawler often create their own packs to avoid being a prey from the others.
+
+Stats:
+HP: 30
+Claw Damage: 7 HP
+Bite Damage: 5 HP
+Attack Speed: 4000 ms
+
+Weakness:
+Low Attack Speed [To efficiently use their energy, they attack after a while]
+Idling (A unit does not react to anything) [While re-energizing, they stay idle that makes them vulnerable]
+
+Strength:
+Confidence (Gives the entity additional stats: +1 HP damage) [Nightcrawlers like to hunt in pack, they will gain confidence when 3 or more nightcrawlers are enraged]
+Bleed (Sharp weapons can make the enemy constantly lose HP: -1 HP per second) [Their sharp claws has a chance to make the player bleed: 25%]
+Senses (Feel the enemies even in behind) [Their eyes see every angle an enemy will come from]
+
+Loots:
+Weapons: None
+Items: Sharp tooth and claws, 0-4 Crins
+Consumables: Enraged Blood, Raw Meat
+
+
+New Enemy: Queencrawler
+Every pack of nightcrawler has a Queencrawler that they serve.
+When they hunt, they give half of their hunt to their Queen.
+When a subpack failed their hunt when deployed, the Queen immediately kick them off the pack making them exiles.
+
+Stats:
+HP: 50
+Claw Damage: 10 HP
+Bite Damage: 8 HP
+Attack Speed: 3000 ms
+
+Weakness:
+Low Attack Speed [To efficiently use their energy, they attack after a while]
+Idling (A unit does not react to anything) [While re-energizing, they stay idle that makes them vulnerable]
+
+Strength:
+Pack (Summon minions) [Queencrawler can call the help of other nightcrawlers even the exiles]
+Bleed (Sharp weapons can make the enemy constantly lose HP: -1 HP per second) [Their sharp claws have a chance to make the player bleed: 25%]
+Senses (Feel the enemies even in behind) [Their eyes see every angle an enemy will come from]
+
+Loots:
+Weapons: Penetrating Claws
+Items: Sharp tooth and claws, 10 Crins
+Consumables: Enraged Blood, Raw Meat
+
+
+First Destination: Cave (Levels 6-10)
+Time: Midnight
+Puzzle Application:
+	Falling Stalactites that have damage of 3 HP
+	Pushing large boulders to clear paths
+Enemies: Exiled Nightcrawlers
+Loots: Burrows, Chests
+
+Second Destination: Midforest (Levels 11-15)
+Time: Morning
+Puzzle Application: Unlock chests with specific number of Sharp tooth and claws
+Enemies: Nightcrawlers, Queencrawler (Boss)
+Loots: Burrows, Chests
+
+=============================================================================================================================================================================================================================================
+Act 3:
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Last moments before the Queencrawler got its last breath, it made a sound that was so loud, even from miles afar would be heard.
+So in this way, a justice from killing the Queen could be served.
+Its warcry angered every nightcrawler that heard it.
+
+The explorer rushed away from the battlefield, not looking back to check if there's something following him.
+When he felt tired and safe, he stopped.
+Walked queitly as if he knows someone might be lurking in the forest.
+
+In the heart of the forest lies a temple.
+A temple with a dragon carved in its roof.
+Positioned as if it wants to fly into the heavens but its head is gone.
+
+In the walls of the temple, dragons are engraved.
+In its collumns, dragons are painted.
+As if the owner is obsessed with dragons.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Scene 3: (Level 16-40)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Setting: Dragonslayer Temple
+Time: Day/Afternoon
+
+A note is written in the gate to warn every explorer that,
+"Anyone dared to enter, should find the owner,
+but always remember, death is in the corner."
+
+To open the gates of the temple, the player should solve a puzzle first.
+
+Note: Every failed attempt on answering a puzzle, the player dies and ressurects to the nearest Essence Tower.
+
+
+New Enemies: Phoenix, Serpent, Bandits, Twisted Wyrm (Mini-boss), Dragonslayer (Boss)
+
+New Enemy: Phoenix
+
+Stats:
+HP: 15
+Fire Ball Damage: 5 HP, 1 HP per 500 ms (stackable up to 3 HP per 500 ms) for 3 seconds
+Burn Chance: 25%
+Attack Speed: 1000 ms
+
+Weakness:
+Water (Counter element)
+
+Strength:
+Burn (Slowly damages the enemy) [Every attack of the Phoenix significantly stacks its burn damage up to 3 times its base damage]
+
+Loots:
+Weapons: None
+Items: Phoenix Egg
+Consumables: None
+
+
+New Enemy: Serpent
+
+Stats:
+HP: 30
+Venom Spit Damage: 7 HP, slow effect, 1 HP per 500 ms for 4 seconds
+Slow Chance: 15%
+Attack Speed: 1500 ms
+
+Weakness:
+None
+
+Strength:
+Venom (Slowly damages and slows the movement of the enemy) [Every attack of the Serpent can slow their enemies]
+
+Loots:
+Weapons: None
+Items: Sharp Tooth
+Consumables: None
+
+
+New Enemy: Bandits
+
+Stats:
+HP: 25-40 (Melee Bandits has higher HP than ranged Aereans)
+Sword Damage: 4 HP
+Crossbow Damage: 7 HP
+Attack Speed: 500/750 ms
+
+Weakness:
+Sharp melee weapons (Soft-skinned Creatures can be critically striked)
+Backstab (An attack while the enemy is not looking)
+
+Strength:
+Callouts (Call allied backups) [Once a Bandit detected an enemy, it will call the attention of other nearest Bandits and boosts their attack speed for 2 seconds]
+
+Loots:
+Weapons: Sword, Crossbow
+Items: None
+Consumables: Water, Meat
+
+
+New Enemy: Twisted Wyrm (Mini-boss)
+
+Stats:
+HP: 70
+Fire Damage: 20 HP, 1 HP per 500 ms (stackable up to 3 HP per 500 ms) for 3 seconds
+Ice Damage: 15 HP, stuns the player for 1 second
+Attack Speed: 1500 ms
+
+Weakness:
+None
+
+Strength:
+Burn (Slowly damages the enemy) [Every attack of the Phoenix significantly stacks its burn damage up to 3 times its base damage]
+Freeze (Stuns the enemy, cancelling all the Buffs)
+
+Loots:
+Weapons: Halberd of Twisted Wyrm
+Items: None
+Consumables: None
+
+
+New Enemy: Dragonslayer (Boss)
+
+Stats:
+HP: 80
+Sword Damage: 20 HP
+Crossbow Damage: 25 HP
+Attack Speed: 250/750 ms
+
+Weakness:
+None
+
+Strength:
+Tough Skin (The damage dealt by the enemy is decreased) [Due to the tough skin of the Dragonslayer, the damage it will receive is decreased by 5%]
+
+Loots:
+Weapons: Pride of the Dragonslayer
+Items: None
+Consumables: Tough Skin Potion
+
+
+First Destination: Ground Floor - Fifth Floor (Levels 16-25)
+Time: Day
+Puzzle Application:
+	Puzzle 1 to open the gate
+Enemies: Phoenix, Bandits, Twisted Wyrm (Mini-boss)
+Loots: Chests
+
+Second Destination: Sixth Floor - Rooftop (Levels 16-25)
+Time: Afternoon
+Puzzle Application:
+	Puzzle 2
+Enemies: Serpent, Bandits, Dragonslayer (Boss)
+Loots: Chests
+
+=============================================================================================================================================================================================================================================
+Last Act: Life Essence
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+In the end, the explorer will find his companion, along withother people who have gone missing.
+Enclosed with blobby flesh that sucks every single blood in their body.
+The "Corrupted" has been feeding off from these unconscious lifeless creatures.
+
+When he approached his lifeless companion, it tried to reached him but he knew that
+it is dangerous if it touches him while it is connected with the "Corrupted".
+He cut every, "Corrupted" vessels that feeds off his friend.
+But for every cut he does, his friend reacts to it.
+Seems like his friend feels the pain too.
+
+After he cut the last vessel, his friend just fell to the ground like a dead person.
+No movement, no breathe, just a body without soul.
+
+He knew that his job isn't done yet, so after he put his lifeless friend in a safe spot,
+he released all of the people trapped as the life source of the "Corrupted".
+Every single person he release, the "Corrupted" screams as if it knows that its life support has been cut.
+
+A creature from a distance was heard marching towards the Crimson cave.
+He knows that he will be outnumbered if he stayed.
+Even though he wants to help all the people there, he has no time to take them to a safe spot.
+Anyways, they were already dead when he released them.
+
+He then fled with pulling his dead friend by him.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

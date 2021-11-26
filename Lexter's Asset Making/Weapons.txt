@@ -1,0 +1,33 @@
+Weapons
+
+Currency: Crin
+
+Stick:
+Damage: 1 HP
+Attack Cooldown: 250 ms
+Critical Hit: None
+Critical Chance: None
+Backstab: 2 HP
+Buffs: None
+Debuffs: None
+Cost (Sell): 0 Crins
+Cost (Buy): None
+
+Daggers:
+Names:
+	Common - Dagger
+	Rare - The Ruined Dagger of the Shrine
+	Epic - 
+	Legendary -
+	Special - Crying Dagger
+Damage: 3/6/12/24/48 HP
+Attack Cooldown: 250 ms
+Critical Hit: Damage * 2/3 HP
+Critical Chance: 5%
+Backstab: (Damage * 1/3) HP
+Durability: 20/25/30/35/40 hits
+Buffs: None/None/None/None/Lifesteal
+Debuffs: None/None/None/None/+5% Bleeding and Crying Level
+Cost (Sell): 2/5/9/14/20
+Cost (Buy): 5/9/14/None/None
+
