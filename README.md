@@ -1,4 +1,4 @@
-**Siegeldun-Game**
+# **Siegeldun-Game**
 Project Siegeldun
 
 
@@ -7,19 +7,19 @@ Project Siegeldun
 
 
 **Storyline:**
-# Prologue: 	
+Prologue: 	
 		Two explorers stumble upon an undiscovered archipelago inhabited by vicious creatures. 	As the two venture the newly discovered island, his companion, was abducted by the island’s 	inhabitants. As his companion, he went on to venture and discover the mysteries of the 	place to 	solve and find his friend. 
 
-# Act I: 
+Act I: 
 		As the story progresses, he discovers the secrets of the world. Obtaining inhuman powers 	helping him fight vicious creatures through fierce battles and solve the puzzles that come upon him. 
     
-# Act II: 
+Act II: 
 	While the protagonist, solve the mysteries of the island, he discovers the settlement where the creatures of the island live. Desperate to finally save his companion, he braves through battles and labyrinths to unravel its mysteries.
 
-# Act III:
+Act III:
 		At its heart, the protagonist finds an old temple. Wherein, he has no choice but to set 	foot into; to find his companion. Little does he know; this is where his true plight will start. 
 
-# Epilogue: 
+Epilogue: 
 		As the player nears completion, the ending is dependent on which decision he has 	made throughout the story. Poor decisions lead to a tragic ending, while good decisions lead to 	a good ending.
 
 
