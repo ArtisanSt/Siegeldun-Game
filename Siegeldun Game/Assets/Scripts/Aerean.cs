@@ -5,9 +5,10 @@ using UnityEngine;
 public class Aerean : Entity
 {
     public string type;
-
+        
     public static int aereanCount;
 
+    // Aerean Constructor for each instance created
     public Aerean(int aereanType = -1)
     {
         int[] types = new int[2] { 0, 1 };
@@ -28,10 +29,19 @@ public class Aerean : Entity
             rangeType();
         }
 
-        name = System.String.Format("Aerean{0}{1}_{2}", type, entityCount, aereanCount);
-        entityCount += 1;
+        name = System.String.Format("Aerean{0}{1}", type, aereanCount);
         aereanCount += 1;
         Debug.Log(type);
+    }
+
+    private void Start()
+    {
+        
+    }
+
+    private void Update()
+    {
+        
     }
 
     private void meleeType()
@@ -53,8 +63,8 @@ public class Aerean : Entity
 
     public void aereanDeath()
     {
-        entityCount -= 1;
         aereanCount -= 1;
     }
+
 
 }
