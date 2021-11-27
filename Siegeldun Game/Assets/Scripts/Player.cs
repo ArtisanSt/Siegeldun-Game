@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D body;
-    private CapsuleCollider2D collider;
+    private CapsuleCollider2D coll;
     private Animator animator;
     private SpriteRenderer sprite;
     private float dirX;
@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        collider = GetComponent<CapsuleCollider2D>();
+        coll = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
     }
@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
         dirX = Input.GetAxisRaw("Horizontal");
         body.velocity = new Vector2(dirX * speed, body.velocity.y);
 
-        if (Input.GetButtonDown("Jump") && collider.IsTouchingLayers(groundLayers))
+        if (Input.GetButtonDown("Jump") && GetComponent<Collider2D>().IsTouchingLayers(groundLayers))
         {
             body.velocity = new Vector2(body.velocity.x, jumpForce);
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 // Entity Parent Class
 public class Entity : MonoBehaviour
 {      
-    public string name;
+    public string entityName;
     public int hp;
     public int damage;
     public float attackSpeed;
