@@ -14,7 +14,7 @@ TagManager:
   - UI
   - Ground
   - Enemy
-  - 
+  - Player
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 2454533199
+    locked: 0
+  - name: AddOns
+    uniqueID: 3575831505
     locked: 0
   - name: Default
     uniqueID: 0

@@ -9,17 +9,21 @@ public class Player : MonoBehaviour
     private Animator animator;
     private SpriteRenderer sprite;
     private float dirX;
+    private bool facingRight = true;
     
+    [Header("Movement Parameters")]
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
     [SerializeField] private LayerMask groundLayers;
 
-    // Attack Parameters
-    private bool attacking = false;
-    public float attackRange = 0.3f;
+    [Header("Battle Parameters")]
     [SerializeField] Transform attackPoint; 
     [SerializeField] LayerMask enemyLayers;
+    [SerializeField] float attackRange = 0.3f;
     [SerializeField] int attackDamage = 10;
+    [SerializeField] int maxHealth = 100;
+    public int currentHealth;
+    private bool attacking = false;
 
     private enum MovementAnim { idle, run, jump, fall };
     private MovementAnim state;
@@ -30,6 +34,8 @@ public class Player : MonoBehaviour
         coll = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+
+        currentHealth = maxHealth;
     }
 
     private void Update()
@@ -46,7 +52,7 @@ public class Player : MonoBehaviour
 
 
         // Attack Code
-        attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 11) == "Noob_Attack"; // Anti-spamming code
+        attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 7) == "Noob_Attack"; // Anti-spamming code
         if (Input.GetKeyDown(KeyCode.Mouse0) && attacking == false)
         {
             Attack();
@@ -62,10 +68,10 @@ public class Player : MonoBehaviour
         else
         {
             state = MovementAnim.run;
-            if (dirX > 0f)
-                sprite.flipX = false;
-            else
-                sprite.flipX = true;
+            if (dirX > 0f && !facingRight)
+                Flip();
+            else if (dirX < 0 && facingRight)
+                Flip();
         }
 
         if (body.velocity.y > .99f)
@@ -94,6 +100,15 @@ public class Player : MonoBehaviour
         {
             enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
         }
+    }
+
+    private void Flip()
+    {
+		facingRight = !facingRight;
+
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
     }
 
     void OnDrawGizmosSelected()
