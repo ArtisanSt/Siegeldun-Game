@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Aerean : Entity
+public class Aerean : MonoBehaviour
 {
     public string type;
-        
-    public static int aereanCount;
 
     // Aerean Constructor for each instance created
     public Aerean(int aereanType = -1)
@@ -28,10 +26,6 @@ public class Aerean : Entity
             type = "range";
             rangeType();
         }
-
-        name = System.String.Format("Aerean{0}{1}", type, aereanCount);
-        aereanCount += 1;
-        Debug.Log(type);
     }
 
     private void Start()
@@ -46,9 +40,10 @@ public class Aerean : Entity
 
     private void meleeType()
     {
+        /*
         hp = 10 * difficulty;
         damage = 4 * difficulty;
-        attackSpeed = System.Convert.ToSingle((500 / 1000) * difficulty);
+        attackSpeed = System.Convert.ToSingle((500 / 1000) * difficulty);*/
     }
 
     private void rangeType()
@@ -63,7 +58,6 @@ public class Aerean : Entity
 
     public void aereanDeath()
     {
-        aereanCount -= 1;
     }
 
 
