@@ -27,17 +27,26 @@ public class EnemyAIv2 : MonoBehaviour
 
     [Header("Custom Behavior")]
     [SerializeField] bool jumpEnabled = true;
+
+    [Header("Battle Parameters")]
+    [SerializeField] float maxHealth = 100;
+    [SerializeField] float currentHealth;
+    [SerializeField] Transform attackPoint;
+    [SerializeField] LayerMask enemyLayers;
+    [SerializeField] public float cooldownTime = 2;
+    [SerializeField] float attackDamage;
+    [SerializeField] float attackRange = 3f;
+    private float nextAttack = 0;
     
-    private float pathUpdateSec = 0.5f;
-    public bool isGrounded = false;
-
-
-
     private Path path;
+    private float pathUpdateSec = 0.5f;
     private int currentWaypoint = 0;
+    public bool isGrounded = false;
 
     public void Start()
     {
+        currentHealth = maxHealth;
+
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -93,6 +102,12 @@ public class EnemyAIv2 : MonoBehaviour
                 Flip();
         }
 
+        // Attack if in proximity
+        if(distEntity <= proximity)
+        {
+            Attack();
+        }
+
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
         if (distance < proximity)
             currentWaypoint++;
@@ -141,6 +156,33 @@ public class EnemyAIv2 : MonoBehaviour
 
     private void Attack()
     {
+        if(Time.time - nextAttack < cooldownTime)
+        {
+            return;
+        }
+        nextAttack = Time.time;
+
         anim.SetTrigger("attack");
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            enemy.GetComponent<Player>().TakeDamage(attackDamage);
+        }
+        
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("Enemy dead");
     }
 }

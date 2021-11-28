@@ -20,9 +20,9 @@ public class Player : MonoBehaviour
     [SerializeField] Transform attackPoint; 
     [SerializeField] LayerMask enemyLayers;
     [SerializeField] float attackRange = 0.3f;
-    [SerializeField] int attackDamage = 10;
-    [SerializeField] int maxHealth = 100;
-    public int currentHealth;
+    [SerializeField] float attackDamage = 10;
+    [SerializeField] float maxHealth = 100;
+    public float currentHealth;
     private bool attacking = false;
 
     private enum MovementAnim { idle, run, jump, fall };
@@ -43,13 +43,13 @@ public class Player : MonoBehaviour
         dirX = Input.GetAxisRaw("Horizontal");
         body.velocity = new Vector2(dirX * speed, body.velocity.y);
 
-        if (Input.GetButtonDown("Jump") && GetComponent<Collider2D>().IsTouchingLayers(groundLayers))
+        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(groundLayers))
         {
+            
             body.velocity = new Vector2(body.velocity.x, jumpForce);
         }
 
         AnimationState();
-
 
         // Attack Code
         attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 7) == "Noob_Attack"; // Anti-spamming code
@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
         // Damage
         foreach(Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+            enemy.GetComponent<EnemyAIv2>().TakeDamage(attackDamage);
         }
     }
 
@@ -116,6 +116,21 @@ public class Player : MonoBehaviour
         if(attackPoint == null)
             return;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("Enemy dead");
     }
 }
 
