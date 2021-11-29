@@ -333,10 +333,10 @@ public class Player : MonoBehaviour
         attacking = false;
 
         // Damage
-        foreach (Collider2D enemy in hitEnemies)
+       /* foreach (Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
-        }
+        }*/
     }
 
     private void Consume()
