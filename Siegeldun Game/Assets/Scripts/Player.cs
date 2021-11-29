@@ -5,44 +5,6 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    // ========================================= Game Properties =========================================
-    public static int difficulty = 1; // Pseudo Difficulty
-    private int idxDiff = difficulty - 1;
-    private float animationSpeed = 1f;
-
-
-    // ========================================= Entity Properties =========================================
-    private string entityName = "player";
-
-    // Property Scaling
-    private float[] maxHpScaling = new float[] { 100f, 200f, 400f };
-    private float[] healthRegenScaling = new float[] { .01f, .005f, .001f };
-    private float[] weaponStaminaCost = new float[] { 2f, 5f, 10f }; // Pseudo Stamina cost
-    private float[] weaponAttackSpeed = new float[] { 1f, 2f, 5f }; // Pseudo Attack Speed
-
-    // Battle Mechanics
-    public int entityWeapon = 0; // Pseudoweapon
-    public float entityDamage;
-    public float attackSpeed;
-    public float attackRange = 0.3f;
-    [SerializeField] Transform attackPoint;
-    [SerializeField] LayerMask enemyLayers;
-    [SerializeField] int attackDamage = 10;
-
-    // HP Mechanics
-    private float entityHp;
-    private float healthRegen;
-    private float regenDelay = 3f;
-    private float maxHealth;
-
-    // Stamina Mechanics
-    private float entityStam;
-    private float stamRegen;
-    private float maxStam;
-    private bool attacking;
-    private float EqWeaponStamCost;
-
-
     // ========================================= Status Bar Properties =========================================
     // HP Component Declaration
     [SerializeField] Image HealthbarF;
@@ -82,99 +44,10 @@ public class Player : MonoBehaviour
     }
 
 
-    // ========================================= Unity Properties =========================================
-    // Component Declaration
-    private Rigidbody2D body;
-    private CapsuleCollider2D capColl;
-    private Animator animator;
-    private SpriteRenderer sprite;
-
-    // Movement Parameters
-    [SerializeField] float speed;
-    [SerializeField] float jumpForce;
-    [SerializeField] private LayerMask groundLayers;
-    private float dirX;
-    private enum MovementAnim { idle, run, jump, fall };
-    private MovementAnim state;
-
-
-    // ========================================= UNITY MAIN METHODS =========================================
-    // Initializes when the Player Script is called
-    void Start()
-    {
-        // Component Variable Definition
-        body = GetComponent<Rigidbody2D>();
-        capColl = GetComponent<CapsuleCollider2D>();
-        animator = GetComponent<Animator>();
-        sprite = GetComponent<SpriteRenderer>();
-
-        StatusInitialization();
-    }
-
-    // Updates Every Frame
-    void Update()
-    {
-        // Movement Animation
-        dirX = Input.GetAxisRaw("Horizontal");
-        body.velocity = new Vector2(dirX * speed, body.velocity.y);
-
-        if (Input.GetButtonDown("Jump") && capColl.IsTouchingLayers(groundLayers))
-        {
-            body.velocity = new Vector2(body.velocity.x, jumpForce);
-        }
-
-        // Attack Code
-        attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 11) == "Noob_Attack"; // Anti-spamming code
-        if (Input.GetKeyDown(KeyCode.Mouse0) && attacking == false && EqWeaponStamCost <= entityStam)
-        {
-            Attack();
-        }
-
-        // Pseudo Attack Speed Changer
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            attackSpeed += 0.1f;
-        }
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            attackSpeed -= 0.1f;
-        }
-
-        // Pseudo Damage Taken 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            TakeDamage(Random.Range(5, 10));
-        }
-
-        // Pseudo Heal
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            HpRegen(20f, "instant");
-        }
-
-
-        AnimationState();
-        PlayerHealthBarUpdate();
-        PlayerStaminaBarUpdate();
-    }
-
-
     // ========================================= STATUS BAR METHODS =========================================
     // Health Bar UI Update
-    private void PlayerHealthBarUpdate()
+    private void HealthBarUpdate()
     {
-        // Natural HP Heal starter
-        if (entityHp < maxHealth)
-        {
-            hpRegenTimer += Time.deltaTime;
-
-            if (hpRegenTimer >= regenDelay)
-            {
-                HpRegen(healthRegen);
-            }
-        }
-
         // HP UI Parameters
         float fillF = HealthbarF.fillAmount;
         float fillB = HealthbarB.fillAmount;
@@ -224,25 +97,9 @@ public class Player : MonoBehaviour
         statHpText.text = statHp.ToString() + " / " + maxHealth.ToString();
     }
 
-    public void HpRegen(float healAmount, string HealSpeed = "overtime")
-    {
-        entityHp += healAmount;
-        if (HealSpeed == "instant")
-        {
-            HealthbarF.fillAmount = entityHp / maxHealth;
-        }
-        entityHp = Mathf.Clamp(entityHp, 0, maxHealth);
-    }
-
     // Status Bar UI Update
-    private void PlayerStaminaBarUpdate()
+    private void StaminaBarUpdate()
     {
-        // Natural Stamina Heal starter
-        if (entityStam < maxStam)
-        {
-            StamRegen(stamRegen);
-        }
-
         // Stamina UI Parameters
         float fillS = StamBar.fillAmount;
         float stamFraction = entityStam / maxStam;
@@ -267,9 +124,134 @@ public class Player : MonoBehaviour
         statStamText.text = statStam.ToString() + " / " + maxStam.ToString();
     }
 
+
+    // ========================================= Unity Properties =========================================
+    // Component Declaration
+    private Rigidbody2D body;
+    private CapsuleCollider2D capColl;
+    private Animator animator;
+    private SpriteRenderer sprite;
+
+    // Movement Parameters
+    [SerializeField] float speed;
+    [SerializeField] float jumpForce;
+    [SerializeField] private LayerMask groundLayers;
+    private float dirX;
+    private enum MovementAnim { idle, run, jump, fall };
+    private MovementAnim state;
+
+
+    // ========================================= UNITY MAIN METHODS =========================================
+    // Initializes when the Player Script is called
+    void Start()
+    {
+        // Component Variable Definition
+        body = GetComponent<Rigidbody2D>();
+        capColl = GetComponent<CapsuleCollider2D>();
+        animator = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
+
+        StatusInitialization();
+    }
+
+    // Updates Every Frame
+    void Update()
+    {
+        if(isAlive)
+        {
+            PassiveSkills();
+
+            Controller();
+        }
+
+        // Pseudo Revive
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                HpRegen(maxHealth, "instant");
+                isAlive = true;
+            }
+        }
+
+        AnimationState();
+        HealthBarUpdate();
+        StaminaBarUpdate();
+    }
+
+
+    // ========================================= Game Properties =========================================
+    public static int difficulty = 1; // Pseudo Difficulty
+    private int idxDiff = difficulty - 1;
+    private float animationSpeed = 1f;
+
+
+    // ========================================= Entity Properties =========================================
+    private string entityName = "player";
+    private bool isAlive = true;
+
+    // Property Scaling
+    private float[] maxHpScaling = new float[] { 100f, 200f, 400f };
+    private float[] healthRegenScaling = new float[] { .01f, .005f, .001f };
+    private float[] weaponStaminaCost = new float[] { 2f, 5f, 10f }; // Pseudo Stamina cost
+    private float[] weaponAttackSpeed = new float[] { 1f, 2f, 5f }; // Pseudo Attack Speed
+
+    // Battle Mechanics
+    public int entityWeapon = 0; // Pseudoweapon
+    public float entityDamage;
+    public float attackSpeed;
+    public float attackRange = 0.3f;
+    private const float slideDivisor = 0.96f;
+    [SerializeField] Transform attackPoint;
+    [SerializeField] LayerMask enemyLayers;
+    [SerializeField] int attackDamage = 10;
+
+    // HP Mechanics
+    private float entityHp;
+    private float healthRegen;
+    private float regenDelay = 3f;
+    private float maxHealth;
+
+    // Stamina Mechanics
+    private float entityStam;
+    private float stamRegen;
+    private float maxStam;
+    private bool attacking;
+    private float EqWeaponStamCost;
+
+    // ========================================= ENTITY METHODS =========================================
+    private void PassiveSkills()
+    {
+        // HP Natural Healing
+        if (entityHp < maxHealth)
+        {
+            hpRegenTimer += Time.deltaTime; // Heal Delay after not receiving damage
+            if (hpRegenTimer >= regenDelay)
+            {
+                HpRegen(healthRegen);
+            }
+        }
+
+        // Stamina Natural Healing
+        if (entityStam < maxStam)
+        {
+            StamRegen(stamRegen);
+        }
+    }
+
+    // Regen
+    public void HpRegen(float healAmount, string HealSpeed = "overtime")
+    {
+        entityHp += healAmount;
+        if (HealSpeed == "instant")
+        {
+            HealthbarF.fillAmount = entityHp / maxHealth;
+        }
+        entityHp = Mathf.Clamp(entityHp, 0, maxHealth);
+    }
+
     public void StamRegen(float StamAmount, string HealSpeed = "overtime")
     {
-        Debug.Log(true);
         entityStam += StamAmount;
         if (HealSpeed == "instant")
         {
@@ -278,40 +260,36 @@ public class Player : MonoBehaviour
         entityStam = Mathf.Clamp(entityStam, 0, maxStam);
     }
 
+    // Damage Receive
     public void TakeDamage(float damageTaken)
     {
-        entityHp -= damageTaken;
-        hpRegenTimer = 0f;
-    }
-
-
-    // ========================================= ANIMATION METHODS =========================================
-    private void AnimationState()
-    {
-        if (dirX == 0)
+        if (damageTaken >= entityHp)
         {
-            state = MovementAnim.idle;
+            entityHp -= entityHp;
+            Death();
         }
         else
         {
-            state = MovementAnim.run;
-            if (dirX > 0f)
-                sprite.flipX = false;
-            else
-                sprite.flipX = true;
+            entityHp -= damageTaken;
         }
 
-        if (body.velocity.y > .99f)
-        {
-            state = MovementAnim.jump;
-        }
-        else if (body.velocity.y < -1f)
-        {
-            state = MovementAnim.fall;
-        }
+        hpRegenTimer = 0f;
+    }
 
-        animator.SetInteger("state", (int)state);
+    private void Death()
+    {
+        isAlive = false;
+        Debug.Log("Player Dead!");
+    }
 
+    // Damage Give
+    private void Attack()
+    {
+        entityStam -= EqWeaponStamCost;
+
+        // Attack Animation
+        attacking = true;
+        animator.SetTrigger("attack");
         if (attacking)
         {
             animator.speed = attackSpeed;
@@ -320,28 +298,112 @@ public class Player : MonoBehaviour
         {
             animator.speed = animationSpeed;
         }
-    }
-
-    private void Attack()
-    {
-        attacking = true;
-        entityStam -= EqWeaponStamCost;
-        // Play Attack animation
-        animator.SetTrigger("attack");
-        // Detect enemy in range
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         attacking = false;
 
+        // Collision Sensing
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
         // Damage
-        foreach (Collider2D enemy in hitEnemies)
+        /*foreach (Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
-        }
+        }*/
     }
 
     private void Consume()
     {
 
+    }
+
+
+    // ========================================= CONTROLLER METHODS =========================================
+    private void Controller()
+    {
+        // Movement Animation
+        // Horizontal Movement
+        if (attacking)
+        {
+            dirX *= slideDivisor; // Slide Attack
+        }
+        else
+        {
+            dirX = Input.GetAxisRaw("Horizontal");
+        }
+        body.velocity = new Vector2(dirX * speed, body.velocity.y);
+
+        // Vertical Movement
+        if (Input.GetButtonDown("Jump") && capColl.IsTouchingLayers(groundLayers))
+        {
+            body.velocity = new Vector2(body.velocity.x, jumpForce);
+        }
+
+        // Attack Code
+        attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 11) == "Noob_Attack"; // Anti-spamming code
+        if (Input.GetKeyDown(KeyCode.Mouse0) && attacking == false && EqWeaponStamCost <= entityStam)
+        {
+            Attack();
+        }
+
+        // Pseudo Attack Speed Changer
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            attackSpeed += 0.1f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            attackSpeed -= 0.1f;
+        }
+
+        // Pseudo Damage Taken 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            TakeDamage(Random.Range(5, 10));
+        }
+
+        // Pseudo Heal
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            HpRegen(20f, "instant");
+        }
+    }
+
+
+    // ========================================= ANIMATION METHODS =========================================
+    private void AnimationState()
+    {
+        if (isAlive)
+        {
+            // Lateral Movement Animation
+            if (dirX == 0)
+            {
+                state = MovementAnim.idle;
+            }
+            else
+            {
+                state = MovementAnim.run;
+                if (dirX > 0f)
+                    sprite.flipX = false;
+                else
+                    sprite.flipX = true;
+            }
+
+            // Vertical Movement Animation
+            if (body.velocity.y > .99f)
+            {
+                state = MovementAnim.jump;
+            }
+            else if (body.velocity.y < -1f)
+            {
+                state = MovementAnim.fall;
+            }
+        }
+        else
+        {
+            state = MovementAnim.idle;
+        }
+
+        animator.SetInteger("state", (int)state);
     }
 
     void OnDrawGizmosSelected()
