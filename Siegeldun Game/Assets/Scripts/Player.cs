@@ -54,24 +54,29 @@ public class Player : Entity
         // Movement Initialization
         mvSpeed = 5f;
         jumpForce = 15.5f;
+        oldEntityPosition = rBody.position.x;
     }
 
 
     // ========================================= UNITY PROPERTIES =========================================
     // Component Declaration
-    private Rigidbody2D body;
+    private Rigidbody2D rBody;
+    private BoxCollider2D boxColl;
     private CapsuleCollider2D capColl;
-    private Animator animator;
-    private SpriteRenderer sprite;
+    private Animator anim;
+    public SpriteRenderer sprite;
+    private enum MovementAnim { idle, run, jump, fall };
+    private MovementAnim state;
 
 
     // ========================================= UNITY MAIN METHODS =========================================
     // Initializes when the Player Script is called
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
+        rBody = GetComponent<Rigidbody2D>();
+        boxColl = GetComponent<BoxCollider2D>();
         capColl = GetComponent<CapsuleCollider2D>();
-        animator = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
 
         EntityInitialization();
@@ -161,7 +166,7 @@ public class Player : Entity
 
     // ========================================= ENTITY METHODS =========================================
     // Damage Receive
-    public void TakeDamage(float damageTaken, float knockbackedForce, int kbDir)
+    public void TakeDamage(float damageTaken, int kbDir, float knockbackedForce)
     {
         hpRegenTimer = 0f;
         if (damageTaken >= entityHp)
@@ -172,11 +177,11 @@ public class Player : Entity
         else
         {
             entityHp -= damageTaken;
-            Knockback(knockbackedForce, kbDir);
+            Knockback(kbDir, knockbackedForce);
         }
     }
 
-    public void Knockback(float kbHorDisplacement, int kbDir)
+    public void Knockback(int kbDir, float kbHorDisplacement)
     {
         isKnockbacked = true;
         knockbackedForce = kbHorDisplacement * 5f;
@@ -196,7 +201,7 @@ public class Player : Entity
         entityStam -= EqWeaponStamCost;
 
         // Attack Animation
-        animator.SetTrigger("attack");
+        anim.SetTrigger("attack");
 
         // Collision Sensing
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
@@ -240,10 +245,11 @@ public class Player : Entity
 
         // Vertical Movement
         isGrounded = capColl.IsTouchingLayers(groundLayers);
-        dirY = ((isGrounded && Input.GetButtonDown("Jump")) ? jumpForce : body.velocity.y);
+        //dirY = ((isGrounded && Input.GetButtonDown("Jump")) ? jumpForce : rBody.velocity.y);
+        dirY = ((isGrounded) ? ((Input.GetButtonDown("Jump")) ? jumpForce : ((0f < rBody.velocity.y && rBody.velocity.y < 0.001f) ? 0f : rBody.velocity.y)) : rBody.velocity.y);
         jumpVelocity = (dirY) + ((isKnockbacked) ? kbVerDisplacement : 0f);
 
-        body.velocity = new Vector2(runVelocity, jumpVelocity);
+        rBody.velocity = new Vector2(runVelocity, jumpVelocity);
 
         // Attack Code
         attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 11) == "Noob_Attack"; // Anti-spamming code
@@ -266,7 +272,7 @@ public class Player : Entity
         // Pseudo Damage Taken 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            TakeDamage(Random.Range(5, 10), kbHorDisplacement, (sprite.flipX) ? 1 : -1);
+            TakeDamage(Random.Range(5, 10), (sprite.flipX) ? 1 : -1, kbHorDisplacement);
         }
 
         // Pseudo Heal
@@ -285,15 +291,21 @@ public class Player : Entity
         {
             // Horizontal Movement Animation
             runAnimationSpeed = Mathf.Abs(runVelocity);
+            bool running = rBody.velocity.x != 0;
+            newEntityPosition = rBody.position.x;
+            Debug.Log(newEntityPosition == oldEntityPosition);
+            Debug.Log(oldEntityPosition);
+            Debug.Log(newEntityPosition);
+            oldEntityPosition = rBody.position.x;
             if (dirX == 0)
             {
                 state = MovementAnim.idle;
-                animator.speed = animationSpeed;
+                anim.speed = animationSpeed;
             }
             else
             {
                 state = MovementAnim.run;
-                animator.speed = runAnimationSpeed;
+                anim.speed = runAnimationSpeed;
                 if (dirX > 0f)
                 {
                     sprite.flipX = false;
@@ -305,22 +317,22 @@ public class Player : Entity
             }
 
             // Vertical Movement Animation
-            if (body.velocity.y > .99f)
+            if (rBody.velocity.y > .99f)
             {
                 state = MovementAnim.jump;
             }
-            else if (body.velocity.y < -1f)
+            else if (rBody.velocity.y < -1f)
             {
                 state = MovementAnim.fall;
             }
 
             if (attacking)
             {
-                animator.speed = attackSpeed;
+                anim.speed = attackSpeed;
             }
             else
             {
-                animator.speed = animationSpeed;
+                anim.speed = animationSpeed;
             }
         }
         else
@@ -328,7 +340,7 @@ public class Player : Entity
             state = MovementAnim.idle;
         }
 
-        animator.SetInteger("state", (int)state);
+        anim.SetInteger("state", (int)state);
     }
 
     void OnDrawGizmosSelected()

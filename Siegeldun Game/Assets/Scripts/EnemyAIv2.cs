@@ -8,8 +8,8 @@ using Pathfinding;
 public class EnemyAIv2 : MonoBehaviour
 {
     private Seeker seeker;
-    private Rigidbody2D rb;
-    private CapsuleCollider2D coll;
+    private Rigidbody2D rBody;
+    private CapsuleCollider2D capColl;
     private Animator anim;
     private int state;
     private bool facingRight = true;
@@ -43,25 +43,34 @@ public class EnemyAIv2 : MonoBehaviour
     private int currentWaypoint = 0;
     public bool isGrounded = false;
 
+
+
+    // ========================================= UNITY MAIN METHODS =========================================
+    // Initializes when the Player Script is called
     public void Start()
     {
         currentHealth = maxHealth;
 
         seeker = GetComponent<Seeker>();
-        rb = GetComponent<Rigidbody2D>();
+        rBody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        coll = GetComponent<CapsuleCollider2D>();
+        capColl = GetComponent<CapsuleCollider2D>();
 
         InvokeRepeating("UpdatePath", 0f, pathUpdateSec);
     }
 
+
+    // Updates Every Physics Frame
     private void FixedUpdate()
     {
         if(TargetInDistance())
         {
             PathFollow();
         }
+    }
 
+    private void Update()
+    {
         AnimationState();
     }
 
@@ -74,16 +83,16 @@ public class EnemyAIv2 : MonoBehaviour
             return;
         
         // Grounded Check
-        isGrounded = coll.IsTouchingLayers(groundLayers);
+        isGrounded = capColl.IsTouchingLayers(groundLayers);
 
         // Direction Calculation
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rBody.position).normalized;
 
         if (jumpEnabled && isGrounded)
         {
             if (direction.y > jumpNodeHeight)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
+                rBody.velocity = new Vector2(rBody.velocity.x, jumpForce * Time.deltaTime);
             }
         }
 
@@ -91,13 +100,13 @@ public class EnemyAIv2 : MonoBehaviour
         float distEntity = Mathf.Abs(target.transform.position.x - transform.position.x);
         if(target.transform.position.x > transform.position.x && distEntity >= proximity)
         {
-            rb.velocity = new Vector2(speed * Time.deltaTime, rb.velocity.y);
+            rBody.velocity = new Vector2(speed * Time.deltaTime, rBody.velocity.y);
             if(!facingRight)
                 Flip();
         }
         else if(target.transform.position.x < transform.position.x && distEntity >= proximity)
         {
-            rb.velocity = new Vector2(-speed * Time.deltaTime, rb.velocity.y);
+            rBody.velocity = new Vector2(-speed * Time.deltaTime, rBody.velocity.y);
             if(facingRight)
                 Flip();
         }
@@ -108,7 +117,7 @@ public class EnemyAIv2 : MonoBehaviour
             Attack();
         }
 
-        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+        float distance = Vector2.Distance(rBody.position, path.vectorPath[currentWaypoint]);
         if (distance < proximity)
             currentWaypoint++;
     }
@@ -117,7 +126,7 @@ public class EnemyAIv2 : MonoBehaviour
     {
         if (TargetInDistance() && seeker.IsDone())
         {
-            seeker.StartPath(rb.position, target.position, OnPathComplete);
+            seeker.StartPath(rBody.position, target.position, OnPathComplete);
         }
     }
 
@@ -137,9 +146,9 @@ public class EnemyAIv2 : MonoBehaviour
 
     private void AnimationState()
     {
-        if(Mathf.Abs(rb.velocity.x) > 0)
+        if(Mathf.Abs(rBody.velocity.x) > 0)
             state = 1;
-        if(Mathf.Abs(rb.velocity.x) == 0 && Mathf.Abs(rb.velocity.y) == 0)
+        if(Mathf.Abs(rBody.velocity.x) == 0 && Mathf.Abs(rBody.velocity.y) == 0)
             state = 0;
 
         anim.SetInteger("state", state);
@@ -166,7 +175,7 @@ public class EnemyAIv2 : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach(Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<Player>().TakeDamage(attackDamage);
+            enemy.GetComponent<Player>().TakeDamage(attackDamage, (enemy.GetComponent<Player>().sprite.flipX) ? 1 : -1, enemy.GetComponent<Player>().kbHorDisplacement);
         }
         
     }

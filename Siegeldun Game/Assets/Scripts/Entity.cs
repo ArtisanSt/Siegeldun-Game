@@ -29,7 +29,7 @@ public class Entity : MonoBehaviour
     protected int knockbackFacing;
     protected int kbDir; // 1 is right, -1 is left, 0 when not attacking
     protected float kTick;
-    [SerializeField] protected float kbHorDisplacement;
+    [SerializeField] public float kbHorDisplacement;
     protected float knockbackedForce;
     [SerializeField] protected float kbVerDisplacement;
 
@@ -61,9 +61,8 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float jumpForce;
     [SerializeField] protected float jumpVelocity;
     protected float runAnimationSpeed;
-    protected enum MovementAnim { idle, run, jump, fall };
-    protected MovementAnim state;
     [SerializeField] protected LayerMask groundLayers;
+    protected float oldEntityPosition, newEntityPosition;
 
 
     // ========================================= Status Bar Properties =========================================
