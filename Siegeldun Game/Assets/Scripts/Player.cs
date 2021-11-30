@@ -1,41 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : Entity
 {
+    // ========================================= UNITY PROPERTIES =========================================
+    // Component Declaration
+    public Rigidbody2D rBody;
+    public SpriteRenderer sprite;
+    private BoxCollider2D boxColl;
+    private CapsuleCollider2D capColl;
+    private Animator anim;
+    private enum MovementAnim { idle, run, jump, fall };
+    private MovementAnim state;
+
+
     // ========================================= ENTITY PROPERTIY SCALING =========================================
     // Battle Mechanics
-    private float[] weaponStaminaCost = new float[] { 5f, 8f, 10f }; // Pseudo Stamina cost
-    private float[] weaponAttackSpeed = new float[] { 1f, 2f, 5f }; // Pseudo Attack Speed
+    protected float[] weaponStaminaCost = new float[] { 5f, 8f, 10f }; // Pseudo Stamina cost
+    protected float[] weaponAttackSpeed = new float[] { .85f, .85f, .85f }; // Pseudo Attack Speed
 
-    // HP Mechanics
-    private float[] maxHpScaling = new float[] { 100f, 200f, 400f };
-    private float[] healthRegenScaling = new float[] { .01f, .005f, .001f };
-
-    //Stamina Mechanics
-    private float[] maxStamScaling = new float[] { 100f, 200f, 400f };
-    private float[] stamRegenScaling = new float[] { .01f, .005f, .001f };
 
     // Entity Properties Initialization
     private void EntityInitialization()
     {
-        entityName = "player";
-        isAlive= true;
+        entityName = rBody.name;
+        EntityStatsInitialization(entityName);
+        isAlive = true;
 
         // Battle Initialization
         entityWeapon = 0; // Pseudo Weapon Index
         entityDamage = 30f; // Pseudo Damage
         attackSpeed = weaponAttackSpeed[idxDiff];
+        attackDelay = 0f;
+        lastAttack = 0f;
         attackRange = 0.3f; // Pseudo Weapon Range
         EqWeaponStamCost = weaponStaminaCost[entityWeapon];
-        weaponDrag = 3f; // Pseudo Weapon Drag
+        weaponDrag = 0f; // Pseudo Weapon Drag
+        weaponKbForce = .8f; // Pseudo Weapon Knockback Force
         attacking = false;
         kbDir = 0;
         kTick = 0f;
         kbHorDisplacement = .8f;
-        kbVerDisplacement = .4f;
+        kbVerDisplacement = 0f;
 
         // HP Initialization
         maxHealth = maxHpScaling[idxDiff];
@@ -52,21 +59,10 @@ public class Player : Entity
         stamRegen = stamRegenScaling[idxDiff];
 
         // Movement Initialization
-        mvSpeed = 5f;
-        jumpForce = 15.5f;
-        oldEntityPosition = rBody.position.x;
+        mvSpeed = 7.4f;
+        jumpForce = 19.5f;
+        rBody.gravityScale = 6;
     }
-
-
-    // ========================================= UNITY PROPERTIES =========================================
-    // Component Declaration
-    private Rigidbody2D rBody;
-    private BoxCollider2D boxColl;
-    private CapsuleCollider2D capColl;
-    private Animator anim;
-    public SpriteRenderer sprite;
-    private enum MovementAnim { idle, run, jump, fall };
-    private MovementAnim state;
 
 
     // ========================================= UNITY MAIN METHODS =========================================
@@ -74,10 +70,10 @@ public class Player : Entity
     void Start()
     {
         rBody = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
         boxColl = GetComponent<BoxCollider2D>();
         capColl = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
-        sprite = GetComponent<SpriteRenderer>();
 
         EntityInitialization();
     }
@@ -85,11 +81,9 @@ public class Player : Entity
     // Updates Every Frame
     void Update()
     {
-        Debug.Log(runAnimationSpeed);
-
         if (isAlive)
         {
-            PassiveSkills();
+            PassiveSkills(hpRegenAllowed, stamRegenAllowed);
 
             Controller();
         }
@@ -109,92 +103,7 @@ public class Player : Entity
         StaminaBarUpdate();
     }
 
-
     // ========================================= PLAYER METHODS =========================================
-    private void PassiveSkills()
-    {
-        // HP Natural Healing
-        if (entityHp < maxHealth)
-        {
-            if (hpRegenTimer >= regenDelay)
-            {
-                HpRegen(healthRegen);
-            }
-            else
-            {
-                hpRegenTimer += Time.deltaTime; // Heal Delay after not receiving damage
-            }
-        }
-        else
-        {
-            hpRegenTimer = 0f;
-        }
-
-        // Stamina Natural Healing
-        if (entityStam < maxStam)
-        {
-            StamRegen(stamRegen);
-        }
-    }
-
-    // Regen
-    public void HpRegen(float healAmount, string HealSpeed = "overtime")
-    {
-        if (hpRegenAllowed)
-        {
-            entityHp += healAmount;
-            if (HealSpeed == "instant")
-            {
-                HealthbarF.fillAmount = entityHp / maxHealth;
-            }
-            entityHp = Mathf.Clamp(entityHp, 0, maxHealth);
-        }
-    }
-
-    public void StamRegen(float StamAmount, string HealSpeed = "overtime")
-    {
-        if (stamRegenAllowed)
-        {
-            entityStam += StamAmount;
-            if (HealSpeed == "instant")
-            {
-                StamBar.fillAmount = entityStam / maxStam;
-            }
-            entityStam = Mathf.Clamp(entityStam, 0, maxStam);
-        }
-    }
-
-    // ========================================= ENTITY METHODS =========================================
-    // Damage Receive
-    public void TakeDamage(float damageTaken, int kbDir, float knockbackedForce)
-    {
-        hpRegenTimer = 0f;
-        if (damageTaken >= entityHp)
-        {
-            entityHp -= entityHp;
-            Death();
-        }
-        else
-        {
-            entityHp -= damageTaken;
-            Knockback(kbDir, knockbackedForce);
-        }
-    }
-
-    public void Knockback(int kbDir, float kbHorDisplacement)
-    {
-        isKnockbacked = true;
-        knockbackedForce = kbHorDisplacement * 5f;
-        this.kbDir = kbDir;
-        kTick = Time.deltaTime;
-    }
-
-    private void Death()
-    {
-        isAlive = false;
-        Debug.Log("Player Dead!");
-    }
-
     // Damage Give
     private void Attack()
     {
@@ -203,13 +112,13 @@ public class Player : Entity
         // Attack Animation
         anim.SetTrigger("attack");
 
+        /*
         // Collision Sensing
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-
-        // Damage
-        /*foreach (Collider2D enemy in hitEnemies)
+        foreach (Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+            int kbDir = (enemy.GetComponent<EnemyAIv2>().rBody.position.x > rBody.position.x) ? 1 : -1;
+            enemy.GetComponent<EnemyAIv2>().TakeDamage(entityDamage, kbDir, weaponKbForce);
         }*/
     }
 
@@ -291,12 +200,6 @@ public class Player : Entity
         {
             // Horizontal Movement Animation
             runAnimationSpeed = Mathf.Abs(runVelocity);
-            bool running = rBody.velocity.x != 0;
-            newEntityPosition = rBody.position.x;
-            Debug.Log(newEntityPosition == oldEntityPosition);
-            Debug.Log(oldEntityPosition);
-            Debug.Log(newEntityPosition);
-            oldEntityPosition = rBody.position.x;
             if (dirX == 0)
             {
                 state = MovementAnim.idle;

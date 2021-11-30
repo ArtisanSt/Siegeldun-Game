@@ -5,83 +5,153 @@ using Pathfinding;
 
 // ENEMY AI SCRIPT VERSION : V2.1
 
-public class EnemyAIv2 : MonoBehaviour
+public class EnemyAIv2 : Entity
 {
-    private Seeker seeker;
-    private Rigidbody2D rBody;
+    // ========================================= UNITY PROPERTIES =========================================
+    // Component Declaration
+    public Rigidbody2D rBody;
+    public SpriteRenderer sprite;
     private CapsuleCollider2D capColl;
     private Animator anim;
-    private int state;
+    private Seeker seeker;
+    private enum MovementAnim { idle, run, jump, fall };
+    private MovementAnim state;
+
     private bool facingRight = true;
 
-    [Header("Movement")]
-    [SerializeField] float speed = 150;
-    [SerializeField] float jumpForce = 600;
-
     [Header("Pathfinding")]
-    [SerializeField] LayerMask groundLayers;
     [SerializeField] Transform target;
-    [SerializeField] float jumpNodeHeight = 0.8f;
-    [SerializeField] float activateDistance = 10f;
-    [SerializeField] float proximity = 3f;
+    [SerializeField] float jumpNodeHeight;
+    [SerializeField] float activateDistance;
+    [SerializeField] float proximity;
 
     [Header("Custom Behavior")]
-    [SerializeField] bool jumpEnabled = true;
+    [SerializeField] bool jumpEnabled;
 
-    [Header("Battle Parameters")]
-    [SerializeField] float maxHealth = 100;
-    [SerializeField] float currentHealth;
-    [SerializeField] Transform attackPoint;
-    [SerializeField] LayerMask enemyLayers;
-    [SerializeField] public float cooldownTime = 2;
-    [SerializeField] float attackDamage;
-    [SerializeField] float attackRange = 3f;
-    private float nextAttack = 0;
-    
-    private Path path;
-    private float pathUpdateSec = 0.5f;
-    private int currentWaypoint = 0;
-    public bool isGrounded = false;
+    protected Path path;
+    protected float pathUpdateSec;
+    protected int currentWaypoint;
 
+
+    // Enemy NPC Properties Initialization
+    protected void EnemyNPCInitialization()
+    {
+        entityName = rBody.name;
+        EntityStatsInitialization(entityName);
+        isAlive = true;
+
+        // Battle Initialization
+        entityWeapon = 0; // Pseudo Weapon Index
+        entityDamage = 3f;
+        attackSpeed = .85f;
+        attackDelay = 2f;
+        lastAttack = 0f;
+        attackRange = 0.3f; // Pseudo Weapon Range
+        EqWeaponStamCost = 0f;
+        weaponDrag = 0f; // Pseudo Weapon Drag
+        weaponKbForce = .8f; // Pseudo Weapon Knockback Force
+        attacking = false;
+        kbDir = 0;
+        kTick = 0f;
+        kbHorDisplacement = .8f;
+        kbVerDisplacement = 0f;
+
+        // HP Initialization
+        maxHealth = 100f;
+        entityHp = maxHealth;
+        hpRegenAllowed = true;
+        healthRegen = healthRegenScaling[idxDiff];
+        regenDelay = 3f;
+        hpRegenTimer = 0f;
+
+        // Movement Initialization
+        isGrounded = false;
+        mvSpeed = 150f;
+        jumpForce = 600f;
+        rBody.gravityScale = 6;
+
+        // Pathfinding Initialization
+        jumpNodeHeight = 0.8f;
+        activateDistance = 10f;
+        proximity = 3f;
+        jumpEnabled = true;
+        pathUpdateSec = 0.5f;
+        currentWaypoint = 0;
+    }
 
 
     // ========================================= UNITY MAIN METHODS =========================================
     // Initializes when the Player Script is called
     public void Start()
     {
-        currentHealth = maxHealth;
-
-        seeker = GetComponent<Seeker>();
         rBody = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
         capColl = GetComponent<CapsuleCollider2D>();
+        anim = GetComponent<Animator>();
+        seeker = GetComponent<Seeker>();
 
         InvokeRepeating("UpdatePath", 0f, pathUpdateSec);
+
+        EnemyNPCInitialization();
     }
 
+    // Updates Every Frame
+    void Update()
+    {
+        if (isAlive)
+        {
+            PassiveSkills(hpRegenAllowed, stamRegenAllowed);
+        }
+        // HealthBarUpdate(); No hp bar ui yet
+    }
 
     // Updates Every Physics Frame
-    private void FixedUpdate()
-    {
-        if(TargetInDistance())
+    void FixedUpdate()
+    {   
+        if (isAlive)
         {
-            PathFollow();
+            if (TargetInDistance())
+            {
+                PathFollow();
+            }
         }
-    }
-
-    private void Update()
-    {
         AnimationState();
     }
 
+    // Updates Path Every Frame
+    private void UpdatePath()
+    {
+        if (TargetInDistance() && seeker.IsDone())
+        {
+            seeker.StartPath(rBody.position, target.position, OnPathComplete);
+        }
+    }
+
+
+    // ========================================= ENEMY METHODS =========================================
+    private void Attack()
+    {
+        lastAttack = Time.time;
+
+        anim.SetTrigger("attack");
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            int kbDir = (enemy.GetComponent<Player>().rBody.position.x > rBody.position.x) ? 1 : -1;
+            enemy.GetComponent<Player>().TakeDamage(entityDamage, kbDir, weaponKbForce);
+        }
+    }
+
+
+    // ========================================= AI PATHFINDING METHODS =========================================
     private void PathFollow()
     {
-        if(path == null)
+        if (path == null)
             return;
 
         if (currentWaypoint >= path.vectorPath.Count)
             return;
-        
+
         // Grounded Check
         isGrounded = capColl.IsTouchingLayers(groundLayers);
 
@@ -98,21 +168,22 @@ public class EnemyAIv2 : MonoBehaviour
 
         // Movement
         float distEntity = Mathf.Abs(target.transform.position.x - transform.position.x);
-        if(target.transform.position.x > transform.position.x && distEntity >= proximity)
+        if (target.transform.position.x > transform.position.x && distEntity >= proximity)
         {
-            rBody.velocity = new Vector2(speed * Time.deltaTime, rBody.velocity.y);
-            if(!facingRight)
+            rBody.velocity = new Vector2(mvSpeed * Time.deltaTime, rBody.velocity.y);
+            if (!facingRight)
                 Flip();
         }
-        else if(target.transform.position.x < transform.position.x && distEntity >= proximity)
+        else if (target.transform.position.x < transform.position.x && distEntity >= proximity)
         {
-            rBody.velocity = new Vector2(-speed * Time.deltaTime, rBody.velocity.y);
-            if(facingRight)
+            rBody.velocity = new Vector2(-mvSpeed * Time.deltaTime, rBody.velocity.y);
+            if (facingRight)
                 Flip();
         }
 
         // Attack if in proximity
-        if(distEntity <= proximity)
+        attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 13) == "Goblin_Attack"; // Anti-spamming code
+        if (distEntity <= proximity && attacking == false && Time.time - lastAttack > attackDelay)
         {
             Attack();
         }
@@ -120,14 +191,6 @@ public class EnemyAIv2 : MonoBehaviour
         float distance = Vector2.Distance(rBody.position, path.vectorPath[currentWaypoint]);
         if (distance < proximity)
             currentWaypoint++;
-    }
-
-    private void UpdatePath()
-    {
-        if (TargetInDistance() && seeker.IsDone())
-        {
-            seeker.StartPath(rBody.position, target.position, OnPathComplete);
-        }
     }
 
     private bool TargetInDistance()
@@ -144,54 +207,41 @@ public class EnemyAIv2 : MonoBehaviour
         }
     }
 
-    private void AnimationState()
-    {
-        if(Mathf.Abs(rBody.velocity.x) > 0)
-            state = 1;
-        if(Mathf.Abs(rBody.velocity.x) == 0 && Mathf.Abs(rBody.velocity.y) == 0)
-            state = 0;
-
-        anim.SetInteger("state", state);
-    }
-
     private void Flip()
     {
-		facingRight = !facingRight;
+        facingRight = !facingRight;
 
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		transform.localScale = theScale;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 
-    private void Attack()
+
+    // ========================================= ANIMATION METHODS =========================================
+    private void AnimationState()
     {
-        if(Time.time - nextAttack < cooldownTime)
+        if (isAlive)
         {
-            return;
-        }
-        nextAttack = Time.time;
+            if (Mathf.Abs(rBody.velocity.x) > 0)
+                state = MovementAnim.run;
+            if (Mathf.Abs(rBody.velocity.x) == 0 && Mathf.Abs(rBody.velocity.y) == 0)
+                state = MovementAnim.idle;
 
-        anim.SetTrigger("attack");
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        foreach(Collider2D enemy in hitEnemies)
+
+            if (attacking)
+            {
+                anim.speed = attackSpeed;
+            }
+            else
+            {
+                anim.speed = animationSpeed;
+            }
+        }
+        else
         {
-            enemy.GetComponent<Player>().TakeDamage(attackDamage, (enemy.GetComponent<Player>().sprite.flipX) ? 1 : -1, enemy.GetComponent<Player>().kbHorDisplacement);
+            state = MovementAnim.idle;
         }
-        
-    }
 
-    public void TakeDamage(float damage)
-    {
-        currentHealth -= damage;
-
-        if(currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
-    void Die()
-    {
-        Debug.Log("Enemy dead");
+        anim.SetInteger("state", (int)state);
     }
 }

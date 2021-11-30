@@ -11,6 +11,16 @@ public class Entity : MonoBehaviour
     protected float animationSpeed = 1f;
 
 
+    // ========================================= ENTITY PROPERTIY SCALING =========================================
+    // HP Mechanics
+    protected float[] maxHpScaling;
+    protected float[] healthRegenScaling;
+
+    //Stamina Mechanics
+    protected float[] maxStamScaling;
+    protected float[] stamRegenScaling;
+
+
     // ========================================= Entity Properties =========================================
     protected string entityName;
     protected bool isAlive;
@@ -20,20 +30,23 @@ public class Entity : MonoBehaviour
     [SerializeField] protected int entityWeapon;
     [SerializeField] protected float entityDamage;
     [SerializeField] protected float attackSpeed;
+    [SerializeField] protected float attackDelay;
+    protected float lastAttack;
     [SerializeField] protected float attackRange;
     [SerializeField] protected float EqWeaponStamCost;
     [SerializeField] protected float weaponDrag;
+    [SerializeField] protected float weaponKbForce;
     protected int attackFacing; // 1 is right and -1 is left
     protected bool attacking;
     protected bool isKnockbacked;
     protected int knockbackFacing;
     protected int kbDir; // 1 is right, -1 is left, 0 when not attacking
     protected float kTick;
-    [SerializeField] public float kbHorDisplacement;
     protected float knockbackedForce;
+    [SerializeField] public float kbHorDisplacement;
     [SerializeField] protected float kbVerDisplacement;
 
-    protected const float slideDivisor = 0.98f;
+    protected const float slideDivisor = 0.93f;
     [SerializeField] protected Transform attackPoint;
     [SerializeField] protected LayerMask enemyLayers;
 
@@ -62,7 +75,6 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float jumpVelocity;
     protected float runAnimationSpeed;
     [SerializeField] protected LayerMask groundLayers;
-    protected float oldEntityPosition, newEntityPosition;
 
 
     // ========================================= Status Bar Properties =========================================
@@ -153,5 +165,115 @@ public class Entity : MonoBehaviour
 
         // Stamina UI Text
         statStamText.text = Mathf.FloorToInt(entityStam).ToString() + " / " + Mathf.FloorToInt(maxStam).ToString();
+    }
+
+
+    // ========================================= HEALING METHODS =========================================
+    protected void PassiveSkills(bool hpRegenAllowed, bool stamRegenAllowed)
+    {
+        if(hpRegenAllowed)
+        {
+            // HP Natural Healing
+            if (entityHp < maxHealth)
+            {
+                if (hpRegenTimer >= regenDelay)
+                {
+                    HpRegen(healthRegen);
+                }
+                else
+                {
+                    hpRegenTimer += Time.deltaTime; // Heal Delay after not receiving damage
+                }
+            }
+            else
+            {
+                hpRegenTimer = 0f;
+            }
+        }
+
+        if(stamRegenAllowed)
+        {
+            // Stamina Natural Healing
+            if (entityStam < maxStam)
+            {
+                StamRegen(stamRegen);
+            }
+        }
+    }
+
+    // Regen
+    public void HpRegen(float healAmount, string HealSpeed = "overtime")
+    {
+        entityHp += healAmount;
+        if (HealSpeed == "instant")
+        {
+            HealthbarF.fillAmount = entityHp / maxHealth;
+        }
+        entityHp = Mathf.Clamp(entityHp, 0, maxHealth);
+    }
+
+    public void StamRegen(float StamAmount, string HealSpeed = "overtime")
+    {
+        entityStam += StamAmount;
+        if (HealSpeed == "instant")
+        {
+            StamBar.fillAmount = entityStam / maxStam;
+        }
+        entityStam = Mathf.Clamp(entityStam, 0, maxStam);
+    }
+
+
+    // ========================================= ENTITY METHODS =========================================
+    // Damage Receive
+    public void TakeDamage(float damageTaken, int kbDir, float knockbackedForce)
+    {
+        if (isAlive)
+        {
+            hpRegenTimer = 0f;
+            if (damageTaken >= entityHp)
+            {
+                entityHp -= entityHp;
+                Die();
+            }
+            else
+            {
+                entityHp -= damageTaken;
+                Knockback(kbDir, knockbackedForce);
+            }
+        }
+    }
+
+    public void Knockback(int kbDir, float kbHorDisplacement)
+    {
+        isKnockbacked = true;
+        knockbackedForce = kbHorDisplacement * 5f;
+        this.kbDir = kbDir;
+        kTick = Time.deltaTime;
+    }
+
+    private void Die()
+    {
+        isAlive = false;
+        Debug.Log(entityName + " Dead!");
+    }
+
+
+    // ========================================= ENTITY STATS INITIALIZATION =========================================
+    protected void EntityStatsInitialization(string entityName)
+    {
+        switch(entityName)
+        {
+            case "Player":
+                this.maxHpScaling = new float[] { 100f, 200f, 400f };
+                this.healthRegenScaling = new float[] { .01f, .005f, .001f };
+
+                this.maxStamScaling = new float[] { 100f, 200f, 400f };
+                this.stamRegenScaling = new float[] { .01f, .005f, .001f };
+                break;
+            case "Goblin":
+                this.maxHpScaling = new float[] { 100f, 200f, 400f };
+                this.healthRegenScaling = new float[] { .01f, .005f, .001f };
+                break;
+        }
     }
 }
