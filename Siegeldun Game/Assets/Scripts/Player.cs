@@ -112,14 +112,14 @@ public class Player : Entity
         // Attack Animation
         anim.SetTrigger("attack");
 
-        /*
+        
         // Collision Sensing
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
             int kbDir = (enemy.GetComponent<EnemyAIv2>().rBody.position.x > rBody.position.x) ? 1 : -1;
             enemy.GetComponent<EnemyAIv2>().TakeDamage(entityDamage, kbDir, weaponKbForce);
-        }*/
+        }
     }
 
     private void Consume()
