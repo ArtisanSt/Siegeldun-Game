@@ -147,16 +147,16 @@ public class Player : Entity
         }
 
         // Horizontal Movement
-        attackFacing = (attacking) ? ((sprite.flipX) ? -1 : 1) : 0; // Weapon drag when attacking
-        knockbackFacing = (isKnockbacked) ? kbDir : 0;
-        dirX = ((attacking) ? dirX * slideDivisor : Input.GetAxisRaw("Horizontal"));
-        runVelocity = (dirX * mvSpeed) + (attackFacing * weaponDrag) + (knockbackFacing * knockbackedForce);
+        attackFacing = (attacking) ? ((sprite.flipX) ? -1 : 1) : 0;
+        knockbackFacing = (isKnockbacked) ? kbDir : 0; // Knockback Effect
+        dirX = ((attacking) ? dirX * slowDownConst : Input.GetAxisRaw("Horizontal")); // Front movement with a slowdown effect when attacking
+        totalMvSpeed = mvSpeed + mvSpeedBoost;
+        runVelocity = (dirX * totalMvSpeed) + (attackFacing * weaponDrag) + (knockbackFacing * knockbackedForce);
 
         // Vertical Movement
         isGrounded = capColl.IsTouchingLayers(groundLayers);
-        //dirY = ((isGrounded && Input.GetButtonDown("Jump")) ? jumpForce : rBody.velocity.y);
-        dirY = ((isGrounded) ? ((Input.GetButtonDown("Jump")) ? jumpForce : ((0f < rBody.velocity.y && rBody.velocity.y < 0.001f) ? 0f : rBody.velocity.y)) : rBody.velocity.y);
-        jumpVelocity = (dirY) + ((isKnockbacked) ? kbVerDisplacement : 0f);
+        dirY = (Input.GetButtonDown("Jump")) ? jumpForce : ((0f < rBody.velocity.y && rBody.velocity.y < 0.001f) ? 0f : rBody.velocity.y);
+        jumpVelocity = (isGrounded) ? dirY : rBody.velocity.y;
 
         rBody.velocity = new Vector2(runVelocity, jumpVelocity);
 

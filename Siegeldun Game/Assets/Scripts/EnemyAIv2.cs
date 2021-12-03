@@ -17,20 +17,44 @@ public class EnemyAIv2 : Entity
     private enum MovementAnim { idle, run, jump, fall };
     private MovementAnim state;
 
-    private bool facingRight = true;
 
     [Header("Pathfinding")]
-    [SerializeField] Transform target;
-    [SerializeField] float jumpNodeHeight;
-    [SerializeField] float activateDistance;
-    [SerializeField] float proximity;
-
-    [Header("Custom Behavior")]
-    [SerializeField] bool jumpEnabled;
-
     protected Path path;
-    protected float pathUpdateSec;
-    protected int currentWaypoint;
+    [SerializeField] Transform target;
+    [SerializeField] protected float pathUpdateSec = 0.25f;
+    [SerializeField] protected int currentWaypoint;
+    [SerializeField] private float nextWayPointDistance;
+
+    [Header("NPC")]
+    [SerializeField] private bool doSleep = false; // Enemy might sleep
+    [SerializeField] private bool isAwake = true; // Enemy might start in a sleep mode that will only wake up when attacked or touched
+    [SerializeField] private float sleepStartTime;
+    [SerializeField] private float sleepTime = 2f;
+    [SerializeField] protected int awakeTask = 0; // 0 for standing for several seconds, 1 for walking until reaching position
+    [SerializeField] protected float awakeTaskTime = 0f;
+    [SerializeField] protected float awakeTaskLimit;
+    [SerializeField] private float[] walkMax= {0f, 0f};
+
+
+    [SerializeField] private bool isTriggered = false; // Enemy when triggered have time when it cannot reach the target
+    [SerializeField] private float triggeredTime;
+    [SerializeField] private float forgivenessTime = 3f;
+    [SerializeField] private float triggerDistance = 5f; // Target's distance to trigger the enemy
+    [SerializeField] private float targetNodalDistance; // Nodal Distance of the target
+    [SerializeField] private float targetStraightDistance; // Straigh Distance of the target
+    [SerializeField] private float distanceAlphaError = .02f; // Margin of Error of Nodal and Straight Distance
+    [SerializeField] private float backOffDistance = 0.5f; // Prevents the enemy to collide entirely with the target
+    [SerializeField] private float stayDistance = 0.8f; // Prevents the enemy to collide entirely with the target
+    [SerializeField] private int inProximity;
+
+    [SerializeField] bool jumpEnabled = true;
+    [SerializeField] private bool edgeStuck; // Toggles when stuck in the edge of obstacles
+    [SerializeField] private float edgeStuckAlphaError = 0.02f; // Edge Stuck Position Margin of Error
+    private float lastXPosition;
+    [SerializeField] private float edgeStuckTime;
+    [SerializeField] private float allowJumpAfter = .25f;
+    [SerializeField] private bool allowJump;
+
 
 
     // Enemy NPC Properties Initialization
@@ -66,17 +90,29 @@ public class EnemyAIv2 : Entity
 
         // Movement Initialization
         isGrounded = false;
-        mvSpeed = 150f;
-        jumpForce = 600f;
+        mvSpeed = 5f;
+        jumpForce = 19.5f;
         rBody.gravityScale = 6;
 
         // Pathfinding Initialization
-        jumpNodeHeight = 0.8f;
-        activateDistance = 10f;
-        proximity = 3f;
+        pathUpdateSec = 0.25f;
+        doSleep = false;
+        isAwake = true;
+        sleepTime = 2f;
+
+        isTriggered = false;
+        forgivenessTime = 3f;
+        triggerDistance = 5f;
+        distanceAlphaError = .02f; // Margin of Error of Nodal and Straight Distance
+        backOffDistance = 0.5f; // Prevents the enemy to collide entirely with the target
+        stayDistance = 0.8f; // Prevents the enemy to collide entirely with the target
+
         jumpEnabled = true;
-        pathUpdateSec = 0.5f;
-        currentWaypoint = 0;
+        edgeStuckAlphaError = 0.02f;
+        allowJumpAfter = .25f;
+
+        lastXPosition = rBody.position.x;
+        nextWayPointDistance = backOffDistance;
     }
 
 
@@ -90,9 +126,10 @@ public class EnemyAIv2 : Entity
         anim = GetComponent<Animator>();
         seeker = GetComponent<Seeker>();
 
-        InvokeRepeating("UpdatePath", 0f, pathUpdateSec);
-
         EnemyNPCInitialization();
+
+        InvokeRepeating("UpdatePath", 0f, .02f);
+
     }
 
     // Updates Every Frame
@@ -110,10 +147,65 @@ public class EnemyAIv2 : Entity
     {   
         if (isAlive)
         {
-            if (TargetInDistance())
+            if (!isTriggered)
             {
-                PathFollow();
+                if (isAwake)
+                {
+                    if (targetNodalDistance <= triggerDistance)
+                    {
+                        isTriggered = true;
+                        triggeredTime = 0;
+                    }
+                    else
+                    {
+                        if (doSleep)
+                        {
+                            // idle and walking from one place to another
+                            if (sleepStartTime >= sleepTime)
+                            {
+                                isAwake = false;
+                                sleepStartTime = 0;
+                            }
+                            else
+                            {
+                                sleepStartTime += Time.deltaTime;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (targetNodalDistance <= backOffDistance)
+                    {
+                        isAwake = true;
+                    }
+                    else
+                    {
+                        //sleep in a current position
+                    }
+                }
             }
+            else
+            {
+                if (targetNodalDistance <= triggerDistance)
+                {
+                    triggeredTime = 0;
+                }
+                else
+                {
+                    if (triggeredTime >= forgivenessTime)
+                    {
+                        isTriggered = false;
+                        triggeredTime = 0;
+                    }
+                    else
+                    {
+                        triggeredTime += Time.deltaTime;
+                    }
+                    PathFollow();
+                }
+            }
+            Movement();
         }
         AnimationState();
     }
@@ -121,7 +213,7 @@ public class EnemyAIv2 : Entity
     // Updates Path Every Frame
     private void UpdatePath()
     {
-        if (TargetInDistance() && seeker.IsDone())
+        if (seeker.IsDone())
         {
             seeker.StartPath(rBody.position, target.position, OnPathComplete);
         }
@@ -137,13 +229,153 @@ public class EnemyAIv2 : Entity
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
-            int kbDir = (enemy.GetComponent<Player>().rBody.position.x > rBody.position.x) ? 1 : -1;
-            enemy.GetComponent<Player>().TakeDamage(entityDamage, kbDir, weaponKbForce);
+            //Debug.Log(enemy.gameObject.GetComponent<Rigidbody2D>().position.x);
+            int kbDir = (enemy.gameObject.GetComponent<Rigidbody2D>().position.x > rBody.position.x) ? 1 : -1;
+            enemy.gameObject.GetComponent<Player>().TakeDamage(entityDamage, kbDir, weaponKbForce);
         }
     }
 
 
     // ========================================= AI PATHFINDING METHODS =========================================
+    private void Movement()
+    {
+        // Pseudo Knockback Timer
+        if (isKnockbacked)
+        {
+            if (kTick > .1f)
+            {
+                isKnockbacked = false;
+                knockbackedForce = kbHorDisplacement;
+                kTick = 0f;
+            }
+            else
+            {
+                kTick += Time.deltaTime;
+            }
+        }
+
+        // When chasing Player
+        if (isTriggered)
+        {
+            // Horizontal Parameter
+            dirFacing = (target.position.x > rBody.position.x) ? 1 : -1;
+
+            // Vertical Parameter
+            if (rBody.position.x <= lastXPosition + (edgeStuckAlphaError / 2) && rBody.position.x >= lastXPosition - (edgeStuckAlphaError / 2) && inProximity >= 1)
+            {
+                if (edgeStuck)
+                {
+                    if (edgeStuckTime >= allowJumpAfter)
+                    {
+                        allowJump = true;
+                        edgeStuckTime = 0f;
+                    }
+                    else
+                    {
+                        edgeStuckTime += Time.deltaTime;
+                    }
+                }
+                else
+                {
+                    edgeStuck = true;
+                    edgeStuckTime = 0f;
+                }
+            }
+            else
+            {
+                allowJump = false;
+            }
+            lastXPosition = rBody.position.x;
+        }
+
+        // When not chasing player
+        else
+        {
+            // Horizontal Parameter
+            inProximity = 1;
+
+            // Vertical Parameter
+            allowJump = false;
+
+            if (isAwake)
+            {
+                if (awakeTaskTime == 0f)
+                {
+                    awakeTask = Random.Range(0, 1);
+                    awakeTaskLimit = Random.Range(1f, 3f);
+                    awakeTaskTime += Time.deltaTime;
+
+                    if (awakeTask == 1)
+                    {
+                        dirFacing = (dirX >= 1) ? -1 : 1; // Negative value of the previous value of dirX
+                    }
+                }
+                else
+                {
+                    if (awakeTaskTime >= awakeTaskLimit)
+                    {
+                        awakeTaskTime = 0f;
+                        edgeStuckTime = 0f;
+                    }
+                    else
+                    {
+                        if (awakeTask == 1)
+                        {
+                            // Last X Position Check
+                            if (rBody.position.x <= lastXPosition + (edgeStuckAlphaError / 2) && rBody.position.x >= lastXPosition - (edgeStuckAlphaError / 2))
+                            {
+                                if (edgeStuck)
+                                {
+                                    if (edgeStuckTime >= .02f)
+                                    {
+                                        dirFacing = -dirFacing;
+                                    }
+                                    else
+                                    {
+                                        edgeStuckTime += Time.deltaTime;
+                                    }
+                                }
+                                else
+                                {
+                                    edgeStuck = true;
+                                    edgeStuckTime = 0f;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            dirFacing = 0;
+                        }
+                    }
+                }
+                lastXPosition = rBody.position.x;
+            }
+        }
+
+        // Horizontal Movement
+        attackFacing = (attacking) ? ((sprite.flipX) ? -1 : 1) : 0; // Weapondrag Effect
+        knockbackFacing = (isKnockbacked) ? kbDir : 0; // Knockback Effect
+        dirX = (attacking) ? dirX * slowDownConst : dirFacing; // Front movement with a slowdown effect when attacking
+        inProximity = (targetNodalDistance < backOffDistance) ? -1 : ((targetNodalDistance >= backOffDistance && targetNodalDistance <= stayDistance) ? 0 : 1);
+        totalMvSpeed = mvSpeed + mvSpeedBoost;
+        runVelocity = (dirX * totalMvSpeed * inProximity) + (attackFacing * weaponDrag) + (knockbackFacing * knockbackedForce);
+
+        // Vertical Movement
+        isGrounded = capColl.IsTouchingLayers(groundLayers);
+        dirY = allowJump ? jumpForce : ((0f < rBody.velocity.y && rBody.velocity.y < 0.001f) ? 0f : rBody.velocity.y);
+        jumpVelocity = (jumpEnabled && isGrounded) ? dirY : rBody.velocity.y;
+
+        rBody.velocity = new Vector2(runVelocity, jumpVelocity);
+
+        // Attack Code
+        attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 13) == "Goblin_Attack"; // Anti-spamming code
+        if (inProximity < 1 && !attacking && Time.time - lastAttack > attackDelay)
+        {
+            Debug.Log(true);
+            Attack();
+        }
+    }
+
     private void PathFollow()
     {
         if (path == null)
@@ -152,50 +384,10 @@ public class EnemyAIv2 : Entity
         if (currentWaypoint >= path.vectorPath.Count)
             return;
 
-        // Grounded Check
-        isGrounded = capColl.IsTouchingLayers(groundLayers);
-
-        // Direction Calculation
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rBody.position).normalized;
-
-        if (jumpEnabled && isGrounded)
-        {
-            if (direction.y > jumpNodeHeight)
-            {
-                rBody.velocity = new Vector2(rBody.velocity.x, jumpForce * Time.deltaTime);
-            }
-        }
-
-        // Movement
-        float distEntity = Mathf.Abs(target.transform.position.x - transform.position.x);
-        if (target.transform.position.x > transform.position.x && distEntity >= proximity)
-        {
-            rBody.velocity = new Vector2(mvSpeed * Time.deltaTime, rBody.velocity.y);
-            if (!facingRight)
-                Flip();
-        }
-        else if (target.transform.position.x < transform.position.x && distEntity >= proximity)
-        {
-            rBody.velocity = new Vector2(-mvSpeed * Time.deltaTime, rBody.velocity.y);
-            if (facingRight)
-                Flip();
-        }
-
-        // Attack if in proximity
-        attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 13) == "Goblin_Attack"; // Anti-spamming code
-        if (distEntity <= proximity && attacking == false && Time.time - lastAttack > attackDelay)
-        {
-            Attack();
-        }
-
+        // Pathfinding Update
         float distance = Vector2.Distance(rBody.position, path.vectorPath[currentWaypoint]);
-        if (distance < proximity)
+        if (distance < nextWayPointDistance)
             currentWaypoint++;
-    }
-
-    private bool TargetInDistance()
-    {
-        return Vector2.Distance(transform.position, target.transform.position) < activateDistance;
     }
 
     private void OnPathComplete(Path p)
@@ -204,16 +396,10 @@ public class EnemyAIv2 : Entity
         {
             path = p;
             currentWaypoint = 0;
+            targetNodalDistance = path.GetTotalLength();
+            targetStraightDistance = Mathf.Sqrt(Mathf.Pow(target.position.x - transform.position.x, 2) + Mathf.Pow(target.position.y - transform.position.y, 2));
+            //GraphNode node = AstarPath.active.GetNearest(transform.position).node;
         }
-    }
-
-    private void Flip()
-    {
-        facingRight = !facingRight;
-
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
     }
 
 
@@ -224,6 +410,14 @@ public class EnemyAIv2 : Entity
         {
             if (Mathf.Abs(rBody.velocity.x) > 0)
                 state = MovementAnim.run;
+                if (((target.position.x > rBody.position.x) ? 1 : -1) > 0f)
+                {
+                    sprite.flipX = false;
+                }
+                else
+                {
+                    sprite.flipX = true;
+                }
             if (Mathf.Abs(rBody.velocity.x) == 0 && Mathf.Abs(rBody.velocity.y) == 0)
                 state = MovementAnim.idle;
 

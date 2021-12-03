@@ -46,7 +46,7 @@ public class Entity : MonoBehaviour
     [SerializeField] public float kbHorDisplacement;
     [SerializeField] protected float kbVerDisplacement;
 
-    protected const float slideDivisor = 0.93f;
+    protected const float slowDownConst = 0.93f;
     [SerializeField] protected Transform attackPoint;
     [SerializeField] protected LayerMask enemyLayers;
 
@@ -67,7 +67,10 @@ public class Entity : MonoBehaviour
 
     [Header("Movement Mechanics", order = 1)]
     [SerializeField] protected float mvSpeed;
+    [SerializeField] protected float mvSpeedBoost = 0f;
+    [SerializeField] protected float totalMvSpeed;
     [SerializeField] protected float dirX;
+    [SerializeField] protected int dirFacing;
     [SerializeField] protected float dirY;
     [SerializeField] protected float runVelocity;
     [SerializeField] protected bool isGrounded;
@@ -227,7 +230,7 @@ public class Entity : MonoBehaviour
     // Damage Receive
     public void TakeDamage(float damageTaken, int kbDir, float knockbackedForce)
     {
-        if (isAlive)
+        if (isAlive && damageTaken > 0f)
         {
             hpRegenTimer = 0f;
             if (damageTaken >= entityHp)
