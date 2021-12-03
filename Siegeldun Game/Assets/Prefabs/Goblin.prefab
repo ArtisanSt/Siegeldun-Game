@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8842555541921301668}
   - component: {fileID: 8842555541921301669}
+  - component: {fileID: 4975723187414931337}
   - component: {fileID: 8842555541921301670}
   - component: {fileID: 8842555541921301671}
   - component: {fileID: 8842555541921301664}
@@ -89,6 +90,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &4975723187414931337
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8842555541921301660}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.671875
 --- !u!70 &8842555541921301670
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -192,26 +209,78 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a346521377343e7488f8a442bd21de18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 150
-  jumpForce: 600
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  target: {fileID: 0}
-  jumpNodeHeight: 0.95
-  activateDistance: 6
-  proximity: 1
-  jumpEnabled: 1
-  maxHealth: 100
-  currentHealth: 0
+  entityWeapon: 0
+  entityDamage: 0
+  attackSpeed: 0
+  attackDelay: 0
+  attackRange: 3
+  EqWeaponStamCost: 0
+  weaponDrag: 0
+  weaponKbForce: 0
+  kbHorDisplacement: 0
+  kbVerDisplacement: 0
   attackPoint: {fileID: 8842555542058620845}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
-  cooldownTime: 2
-  attackDamage: 5
-  attackRange: 3
+  maxHealth: 100
+  entityHp: 0
+  hpRegenAllowed: 0
+  healthRegen: 0
+  regenDelay: 0
+  hpRegenTimer: 0
+  maxStam: 0
+  entityStam: 0
+  stamRegenAllowed: 0
+  stamRegen: 0
+  mvSpeed: 0
+  mvSpeedBoost: 0
+  totalMvSpeed: 0
+  dirX: 0
+  dirFacing: 0
+  dirY: 0
+  runVelocity: 0
   isGrounded: 0
+  jumpForce: 600
+  jumpVelocity: 0
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  HealthbarF: {fileID: 0}
+  HealthbarB: {fileID: 0}
+  statHpText: {fileID: 0}
+  StamBar: {fileID: 0}
+  statStamText: {fileID: 0}
+  rBody: {fileID: 0}
+  sprite: {fileID: 0}
+  target: {fileID: 0}
+  pathUpdateSec: 0.25
+  currentWaypoint: 0
+  nextWayPointDistance: 0
+  doSleep: 0
+  isAwake: 1
+  sleepStartTime: 0
+  sleepTime: 2
+  awakeTask: 0
+  awakeTaskTime: 0
+  awakeTaskLimit: 0
+  isTriggered: 0
+  triggeredTime: 0
+  forgivenessTime: 2
+  triggerDistance: 3
+  targetNodalDistance: 0
+  targetStraightDistance: 0
+  distanceAlphaError: 0.2
+  isReachable: 1
+  backOffDistance: 0.5
+  stayDistance: 0.8
+  inProximity: 0
+  jumpEnabled: 1
+  edgeStuck: 0
+  edgeStuckAlphaError: 0.02
+  edgeStuckTime: 0
+  allowJumpAfter: 0.25
+  allowJump: 0
 --- !u!95 &8842555541921301667
 Animator:
   serializedVersion: 3

@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 4927532281806834483}
   - component: {fileID: 4927532281806834482}
   - component: {fileID: 4927532281806834477}
+  - component: {fileID: 6460991598128556969}
+  - component: {fileID: 4927532281806834478}
   - component: {fileID: 4927532281806834476}
   - component: {fileID: 4927532281806834479}
-  - component: {fileID: 4927532281806834478}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -128,6 +129,38 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!58 &6460991598128556969
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4927532281806834473}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.984375
+--- !u!70 &4927532281806834478
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4927532281806834473}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0041520596, y: -0.3109874}
+  m_Size: {x: 0.43558025, y: 1.3216971}
+  m_Direction: 0
 --- !u!61 &4927532281806834476
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -166,35 +199,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0768a4543bbb74d8f4f47bd4ba93bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6.4
-  jumpForce: 15.7
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 64
+  entityWeapon: 0
+  entityDamage: 0
+  attackSpeed: 0
+  attackDelay: 0
+  attackRange: 0.3
+  EqWeaponStamCost: 0
+  weaponDrag: 0
+  weaponKbForce: 0
+  kbHorDisplacement: 0
+  kbVerDisplacement: 0
   attackPoint: {fileID: 4927532282567758720}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 128
-  attackRange: 0.3
-  attackDamage: 10
   maxHealth: 100
-  currentHealth: 0
---- !u!70 &4927532281806834478
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4927532281806834473}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.0041520596, y: -0.3109874}
-  m_Size: {x: 0.43558025, y: 1.3216971}
-  m_Direction: 0
+  entityHp: 0
+  hpRegenAllowed: 0
+  healthRegen: 0
+  regenDelay: 0
+  hpRegenTimer: 0
+  maxStam: 0
+  entityStam: 0
+  stamRegenAllowed: 0
+  stamRegen: 0
+  mvSpeed: 0
+  mvSpeedBoost: 0
+  totalMvSpeed: 0
+  dirX: 0
+  dirFacing: 0
+  dirY: 0
+  runVelocity: 0
+  isGrounded: 0
+  jumpForce: 15.7
+  jumpVelocity: 0
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  HealthbarF: {fileID: 0}
+  HealthbarB: {fileID: 0}
+  statHpText: {fileID: 0}
+  StamBar: {fileID: 0}
+  statStamText: {fileID: 0}
+  rBody: {fileID: 0}
+  sprite: {fileID: 0}
 --- !u!1 &4927532282567758723
 GameObject:
   m_ObjectHideFlags: 0

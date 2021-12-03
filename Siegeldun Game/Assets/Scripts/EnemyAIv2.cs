@@ -33,16 +33,16 @@ public class EnemyAIv2 : Entity
     [SerializeField] protected int awakeTask = 0; // 0 for standing for several seconds, 1 for walking until reaching position
     [SerializeField] protected float awakeTaskTime = 0f;
     [SerializeField] protected float awakeTaskLimit;
-    [SerializeField] private float[] walkMax= {0f, 0f};
 
 
     [SerializeField] private bool isTriggered = false; // Enemy when triggered have time when it cannot reach the target
     [SerializeField] private float triggeredTime;
-    [SerializeField] private float forgivenessTime = 3f;
-    [SerializeField] private float triggerDistance = 5f; // Target's distance to trigger the enemy
+    [SerializeField] private float forgivenessTime = 2f;
+    [SerializeField] private float triggerDistance = 3f; // Target's distance to trigger the enemy
     [SerializeField] private float targetNodalDistance; // Nodal Distance of the target
     [SerializeField] private float targetStraightDistance; // Straigh Distance of the target
-    [SerializeField] private float distanceAlphaError = .02f; // Margin of Error of Nodal and Straight Distance
+    [SerializeField] private float distanceAlphaError = 0.2f; // Straigh Distance of the target
+    [SerializeField] private int isReachable = 0;
     [SerializeField] private float backOffDistance = 0.5f; // Prevents the enemy to collide entirely with the target
     [SerializeField] private float stayDistance = 0.8f; // Prevents the enemy to collide entirely with the target
     [SerializeField] private int inProximity;
@@ -52,7 +52,7 @@ public class EnemyAIv2 : Entity
     [SerializeField] private float edgeStuckAlphaError = 0.02f; // Edge Stuck Position Margin of Error
     private float lastXPosition;
     [SerializeField] private float edgeStuckTime;
-    [SerializeField] private float allowJumpAfter = .25f;
+    [SerializeField] private float allowJumpAfter = .05f;
     [SerializeField] private bool allowJump;
 
 
@@ -91,7 +91,7 @@ public class EnemyAIv2 : Entity
         // Movement Initialization
         isGrounded = false;
         mvSpeed = 5f;
-        jumpForce = 19.5f;
+        jumpForce = 15.5f;
         rBody.gravityScale = 6;
 
         // Pathfinding Initialization
@@ -103,7 +103,6 @@ public class EnemyAIv2 : Entity
         isTriggered = false;
         forgivenessTime = 3f;
         triggerDistance = 5f;
-        distanceAlphaError = .02f; // Margin of Error of Nodal and Straight Distance
         backOffDistance = 0.5f; // Prevents the enemy to collide entirely with the target
         stayDistance = 0.8f; // Prevents the enemy to collide entirely with the target
 
@@ -284,8 +283,17 @@ public class EnemyAIv2 : Entity
             else
             {
                 allowJump = false;
+                edgeStuckTime = 0f;
             }
             lastXPosition = rBody.position.x;
+
+            Debug.Log(Mathf.Abs(target.position.y - rBody.position.y));
+            inProximity = (targetNodalDistance < backOffDistance) ? -1 : ((targetNodalDistance >= backOffDistance && targetNodalDistance <= stayDistance) ? 0 : 1);
+            if (triggeredTime > 0f && (Mathf.Abs(target.position.y - rBody.position.y) > 1) && (Mathf.Abs(target.position.x - rBody.position.x) < .1))
+            {
+                isTriggered = false;
+                triggeredTime = 0;
+            }
         }
 
         // When not chasing player
@@ -293,7 +301,7 @@ public class EnemyAIv2 : Entity
         {
             // Horizontal Parameter
             inProximity = 1;
-
+            isReachable = 1;
             // Vertical Parameter
             allowJump = false;
 
@@ -356,7 +364,6 @@ public class EnemyAIv2 : Entity
         attackFacing = (attacking) ? ((sprite.flipX) ? -1 : 1) : 0; // Weapondrag Effect
         knockbackFacing = (isKnockbacked) ? kbDir : 0; // Knockback Effect
         dirX = (attacking) ? dirX * slowDownConst : dirFacing; // Front movement with a slowdown effect when attacking
-        inProximity = (targetNodalDistance < backOffDistance) ? -1 : ((targetNodalDistance >= backOffDistance && targetNodalDistance <= stayDistance) ? 0 : 1);
         totalMvSpeed = mvSpeed + mvSpeedBoost;
         runVelocity = (dirX * totalMvSpeed * inProximity) + (attackFacing * weaponDrag) + (knockbackFacing * knockbackedForce);
 
@@ -408,9 +415,18 @@ public class EnemyAIv2 : Entity
     {
         if (isAlive)
         {
-            if (Mathf.Abs(rBody.velocity.x) > 0)
+            // Horizontal Movement Animation
+            runAnimationSpeed = Mathf.Abs(runVelocity);
+            if (dirX == 0)
+            {
+                state = MovementAnim.idle;
+                anim.speed = animationSpeed;
+            }
+            else
+            {
                 state = MovementAnim.run;
-                if (((target.position.x > rBody.position.x) ? 1 : -1) > 0f)
+                anim.speed = runAnimationSpeed;
+                if (dirX > 0f)
                 {
                     sprite.flipX = false;
                 }
@@ -418,8 +434,17 @@ public class EnemyAIv2 : Entity
                 {
                     sprite.flipX = true;
                 }
-            if (Mathf.Abs(rBody.velocity.x) == 0 && Mathf.Abs(rBody.velocity.y) == 0)
-                state = MovementAnim.idle;
+            }
+
+            // Vertical Movement Animation
+            if (rBody.velocity.y > .99f)
+            {
+                state = MovementAnim.jump;
+            }
+            else if (rBody.velocity.y < -1f)
+            {
+                state = MovementAnim.fall;
+            }
 
 
             if (attacking)
