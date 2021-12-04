@@ -41,8 +41,6 @@ public class EnemyAIv2 : Entity
     [SerializeField] private float triggerDistance = 3f; // Target's distance to trigger the enemy
     [SerializeField] private float targetNodalDistance; // Nodal Distance of the target
     [SerializeField] private float targetStraightDistance; // Straigh Distance of the target
-    [SerializeField] private float distanceAlphaError = 0.2f; // Straigh Distance of the target
-    [SerializeField] private int isReachable = 0;
     [SerializeField] private float backOffDistance = 0.5f; // Prevents the enemy to collide entirely with the target
     [SerializeField] private float stayDistance = 0.8f; // Prevents the enemy to collide entirely with the target
     [SerializeField] private int inProximity;
@@ -60,6 +58,8 @@ public class EnemyAIv2 : Entity
     // Enemy NPC Properties Initialization
     protected void EnemyNPCInitialization()
     {
+        transform.localScale = new Vector3(-1, 1, 1);
+
         entityName = rBody.name;
         EntityStatsInitialization(entityName);
         isAlive = true;
@@ -143,7 +143,8 @@ public class EnemyAIv2 : Entity
 
     // Updates Every Physics Frame
     void FixedUpdate()
-    {   
+    {
+        Debug.Log(entityHp);
         if (isAlive)
         {
             if (!isTriggered)
@@ -230,7 +231,7 @@ public class EnemyAIv2 : Entity
         {
             //Debug.Log(enemy.gameObject.GetComponent<Rigidbody2D>().position.x);
             int kbDir = (enemy.gameObject.GetComponent<Rigidbody2D>().position.x > rBody.position.x) ? 1 : -1;
-            enemy.gameObject.GetComponent<Player>().TakeDamage(entityDamage, kbDir, weaponKbForce);
+            enemy.gameObject.GetComponent<Player>().TakeDamage(entityDamage / 3, kbDir, weaponKbForce);
         }
     }
 
@@ -256,8 +257,15 @@ public class EnemyAIv2 : Entity
         // When chasing Player
         if (isTriggered)
         {
-            // Horizontal Parameter
-            dirFacing = (target.position.x > rBody.position.x) ? 1 : -1;
+            inProximity = (targetNodalDistance < backOffDistance) ? -1 : ((targetNodalDistance >= backOffDistance && targetNodalDistance <= stayDistance) ? 0 : 1);
+            dirFacing = ((inProximity < 1) ? 0 : ((target.position.x > rBody.position.x) ? 1 : -1));
+
+            // Anti-glitching code when target is on unreacheable location
+            if (triggeredTime > 0f && (Mathf.Abs(target.position.y - rBody.position.y) > 1) && (Mathf.Abs(target.position.x - rBody.position.x) < .1))
+            {
+                isTriggered = false;
+                triggeredTime = 0;
+            }
 
             // Vertical Parameter
             if (rBody.position.x <= lastXPosition + (edgeStuckAlphaError / 2) && rBody.position.x >= lastXPosition - (edgeStuckAlphaError / 2) && inProximity >= 1)
@@ -286,14 +294,6 @@ public class EnemyAIv2 : Entity
                 edgeStuckTime = 0f;
             }
             lastXPosition = rBody.position.x;
-
-            Debug.Log(Mathf.Abs(target.position.y - rBody.position.y));
-            inProximity = (targetNodalDistance < backOffDistance) ? -1 : ((targetNodalDistance >= backOffDistance && targetNodalDistance <= stayDistance) ? 0 : 1);
-            if (triggeredTime > 0f && (Mathf.Abs(target.position.y - rBody.position.y) > 1) && (Mathf.Abs(target.position.x - rBody.position.x) < .1))
-            {
-                isTriggered = false;
-                triggeredTime = 0;
-            }
         }
 
         // When not chasing player
@@ -301,7 +301,6 @@ public class EnemyAIv2 : Entity
         {
             // Horizontal Parameter
             inProximity = 1;
-            isReachable = 1;
             // Vertical Parameter
             allowJump = false;
 
@@ -378,7 +377,6 @@ public class EnemyAIv2 : Entity
         attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 13) == "Goblin_Attack"; // Anti-spamming code
         if (inProximity < 1 && !attacking && Time.time - lastAttack > attackDelay)
         {
-            Debug.Log(true);
             Attack();
         }
     }
@@ -426,14 +424,7 @@ public class EnemyAIv2 : Entity
             {
                 state = MovementAnim.run;
                 anim.speed = runAnimationSpeed;
-                if (dirX > 0f)
-                {
-                    sprite.flipX = false;
-                }
-                else
-                {
-                    sprite.flipX = true;
-                }
+                transform.localScale = new Vector3((dirX > 0f) ? -1 : 1, 1, 1);
             }
 
             // Vertical Movement Animation

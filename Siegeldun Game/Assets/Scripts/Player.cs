@@ -118,7 +118,7 @@ public class Player : Entity
         foreach (Collider2D enemy in hitEnemies)
         {
             int kbDir = (enemy.GetComponent<EnemyAIv2>().rBody.position.x > rBody.position.x) ? 1 : -1;
-            enemy.GetComponent<EnemyAIv2>().TakeDamage(entityDamage, kbDir, weaponKbForce);
+            enemy.GetComponent<EnemyAIv2>().TakeDamage(entityDamage / 3, kbDir, weaponKbForce);
         }
     }
 
@@ -209,14 +209,7 @@ public class Player : Entity
             {
                 state = MovementAnim.run;
                 anim.speed = runAnimationSpeed;
-                if (dirX > 0f)
-                {
-                    sprite.flipX = false;
-                }
-                else
-                {
-                    sprite.flipX = true;
-                }
+                transform.localScale = new Vector3((dirX > 0f) ? 1 : -1, 1, 1);
             }
 
             // Vertical Movement Animation
