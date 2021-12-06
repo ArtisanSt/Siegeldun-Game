@@ -83,8 +83,18 @@ public class Player : MonoBehaviour
             state = MovementAnim.fall;
         }
 
+<<<<<<< Updated upstream
         animator.SetInteger("state", (int)state);
     }
+=======
+        // Pseudo Damage Taken 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            TakeDamage(Random.Range(5, 10), (sprite.flipX) ? 1 : -1, kbHorDisplacement);
+            // Pseudo Hurt Anim
+            anim.SetTrigger("hurt");
+        }
+>>>>>>> Stashed changes
 
     private void Attack()
     {
