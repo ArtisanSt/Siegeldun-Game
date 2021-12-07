@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 23c94f6de62fd9a4981d43c3ed00a830
+guid: eff12de68c37ae443b7dc01f504d0f1a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2951605664687625262
-    second: Noob_Attack_1_0
+      213: -4482283622297021551
+    second: Noob_Attack2_NW_0
   - first:
-      213: -6414003962518592529
-    second: Noob_Attack_1_1
+      213: 7219211360119629509
+    second: Noob_Attack2_NW_1
   - first:
-      213: 7944273677324650992
-    second: Noob_Attack_1_2
+      213: -5992816284933698571
+    second: Noob_Attack2_NW_2
   - first:
-      213: 1924747894979341130
-    second: Noob_Attack_1_3
+      213: 1294755367596830915
+    second: Noob_Attack2_NW_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -103,7 +103,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Noob_Attack_1_0
+      name: Noob_Attack2_NW_0
       rect:
         serializedVersion: 2
         x: 0
@@ -117,14 +117,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e249cb8b6b536f820800000000000000
-      internalID: 2951605664687625262
+      spriteID: 1935f6e2bcabbc1c0800000000000000
+      internalID: -4482283622297021551
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Noob_Attack_1_1
+      name: Noob_Attack2_NW_1
       rect:
         serializedVersion: 2
         x: 64
@@ -138,14 +138,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe3a1220161ecf6a0800000000000000
-      internalID: -6414003962518592529
+      spriteID: 5c62566ab7acf2460800000000000000
+      internalID: 7219211360119629509
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Noob_Attack_1_2
+      name: Noob_Attack2_NW_2
       rect:
         serializedVersion: 2
         x: 128
@@ -159,14 +159,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0f90c67a1dabf3e60800000000000000
-      internalID: 7944273677324650992
+      spriteID: 5fbc954175d35dca0800000000000000
+      internalID: -5992816284933698571
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Noob_Attack_1_3
+      name: Noob_Attack2_NW_3
       rect:
         serializedVersion: 2
         x: 192
@@ -180,8 +180,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4bac62430416ba10800000000000000
-      internalID: 1924747894979341130
+      spriteID: 3c0b3ac9525e7f110800000000000000
+      internalID: 1294755367596830915
       vertices: []
       indices: 
       edges: []

@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 23c94f6de62fd9a4981d43c3ed00a830
+guid: c0fe48a2e223e6141ac2362a1f272dbf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2951605664687625262
-    second: Noob_Attack_1_0
+      213: 2529298190032878728
+    second: Sword_Effect_0
   - first:
-      213: -6414003962518592529
-    second: Noob_Attack_1_1
+      213: 7176260090346341610
+    second: Sword_Effect_1
   - first:
-      213: 7944273677324650992
-    second: Noob_Attack_1_2
+      213: 2595411658410568944
+    second: Sword_Effect_2
   - first:
-      213: 1924747894979341130
-    second: Noob_Attack_1_3
+      213: -8309064712035308193
+    second: Sword_Effect_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -103,12 +103,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Noob_Attack_1_0
+      name: Sword_Effect_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -117,19 +117,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e249cb8b6b536f820800000000000000
-      internalID: 2951605664687625262
+      spriteID: 88cb2f39d4fd91320800000000000000
+      internalID: 2529298190032878728
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Noob_Attack_1_1
+      name: Sword_Effect_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 80
         y: 0
-        width: 64
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -138,19 +138,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe3a1220161ecf6a0800000000000000
-      internalID: -6414003962518592529
+      spriteID: ae408ecd782379360800000000000000
+      internalID: 7176260090346341610
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Noob_Attack_1_2
+      name: Sword_Effect_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 160
         y: 0
-        width: 64
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -159,19 +159,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0f90c67a1dabf3e60800000000000000
-      internalID: 7944273677324650992
+      spriteID: 0fc2879f621c40420800000000000000
+      internalID: 2595411658410568944
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Noob_Attack_1_3
+      name: Sword_Effect_3
       rect:
         serializedVersion: 2
-        x: 192
+        x: 240
         y: 0
-        width: 64
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -180,8 +180,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4bac62430416ba10800000000000000
-      internalID: 1924747894979341130
+      spriteID: f5de66feaa540bc80800000000000000
+      internalID: -8309064712035308193
       vertices: []
       indices: 
       edges: []

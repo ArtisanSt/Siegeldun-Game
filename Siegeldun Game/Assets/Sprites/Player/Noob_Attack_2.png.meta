@@ -1,22 +1,16 @@
 fileFormatVersion: 2
-guid: bfcad2e1c9ad646479bc37f505648d6d
+guid: 2b4271a8607510b49b2d46cbed9fa8bc
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: -2418691275573180360
     second: Noob_Attack_2_0
   - first:
-      213: -3568335687574543413
-    second: Noob_Attack_2_2
-  - first:
-      213: 6147648577783134776
-    second: Noob_Attack_2_4
-  - first:
-      213: -7689413543919043649
-    second: Noob_Attack_2_6
-  - first:
       213: -2562590017880387481
     second: Noob_Attack_2_1
+  - first:
+      213: -3568335687574543413
+    second: Noob_Attack_2_2
   - first:
       213: 2751245011985521343
     second: Noob_Attack_2_3
@@ -105,18 +99,6 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -142,27 +124,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Noob_Attack_2_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bc325c61999ba7ec0800000000000000
-      internalID: -3568335687574543413
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Noob_Attack_2_1
       rect:
         serializedVersion: 2
@@ -179,6 +140,27 @@ TextureImporter:
       bones: []
       spriteID: 7601747b4f9df6cd0800000000000000
       internalID: -2562590017880387481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Noob_Attack_2_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc325c61999ba7ec0800000000000000
+      internalID: -3568335687574543413
       vertices: []
       indices: 
       edges: []
