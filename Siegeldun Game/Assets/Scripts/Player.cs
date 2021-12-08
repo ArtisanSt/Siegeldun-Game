@@ -18,7 +18,7 @@ public class Player : Entity
     // ========================================= ENTITY PROPERTIY SCALING =========================================
     // Battle Mechanics
     protected float[] weaponStaminaCost = new float[] { 5f, 8f, 10f }; // Pseudo Stamina cost
-    protected float[] weaponAttackSpeed = new float[] { .85f, .85f, .85f }; // Pseudo Attack Speed
+    protected float[] weaponAttackSpeed = new float[] { 1.17f, .95f, .5f }; // Pseudo Attack Speed
 
 
     // Entity Properties Initialization
@@ -31,9 +31,11 @@ public class Player : Entity
         // Battle Initialization
         entityWeapon = 0; // Pseudo Weapon Index
         entityDamage = 30f; // Pseudo Damage
-        attackSpeed = weaponAttackSpeed[idxDiff];
-        attackDelay = 0f;
+        attackSpeed = 1 / weaponAttackSpeed[idxDiff];
+        attackDelay = (1 / attackSpeed) + .1f;
         lastAttack = 0f;
+        attackCombo = 0;
+        comboTime = 0f;
         attackRange = 0.3f; // Pseudo Weapon Range
         EqWeaponStamCost = weaponStaminaCost[entityWeapon];
         weaponDrag = 0f; // Pseudo Weapon Drag
@@ -84,7 +86,9 @@ public class Player : Entity
         if (isAlive)
         {
             PassiveSkills(hpRegenAllowed, stamRegenAllowed);
-
+            Debug.Log(attackCombo);
+            Debug.Log(comboTime);
+            Timer();
             Controller();
         }
 
@@ -107,12 +111,13 @@ public class Player : Entity
     // Damage Give
     private void Attack()
     {
-        entityStam -= EqWeaponStamCost;
-
         // Attack Animation
-        anim.SetTrigger("attack");
+        anim.SetTrigger("attack" + attackCombo.ToString());
+        //attacking = true;
+        comboTime = 0f;
+        entityStam -= EqWeaponStamCost;
+        lastAttack = Time.time;
 
-        
         // Collision Sensing
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
@@ -125,6 +130,28 @@ public class Player : Entity
     private void Consume()
     {
 
+    }
+
+
+    // ========================================= CONTROLLER METHODS =========================================
+    private void Timer()
+    {
+        if (attackCombo != 0)
+        {
+            if (comboTime >= attackSpeed * 2)
+            {
+                comboTime = 0f;
+                attackCombo = 0;
+            }
+            else
+            {
+                comboTime += Time.deltaTime;
+            }
+        }
+        else
+        {
+            comboTime = 0f;
+        }
     }
 
 
@@ -161,9 +188,10 @@ public class Player : Entity
         rBody.velocity = new Vector2(runVelocity, jumpVelocity);
 
         // Attack Code
-        attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 11) == "Noob_Attack"; // Anti-spamming code
-        if (Input.GetKeyDown(KeyCode.Mouse0) && attacking == false && EqWeaponStamCost <= entityStam)
+        attacking = anim.GetCurrentAnimatorStateInfo(0).IsName("Noob_Attack_" + attackCombo.ToString()); // Anti-spamming code
+        if (Input.GetKeyDown(KeyCode.Mouse0) && attacking == false && Time.time - lastAttack > attackDelay && EqWeaponStamCost <= entityStam)
         {
+            attackCombo = (attackCombo == 3) ? 1 : attackCombo + 1;
             Attack();
         }
 
@@ -200,7 +228,7 @@ public class Player : Entity
         {
             // Horizontal Movement Animation
             runAnimationSpeed = Mathf.Abs(runVelocity);
-            if (dirX == 0)
+            if (runVelocity == 0)
             {
                 state = MovementAnim.idle;
                 anim.speed = animationSpeed;
@@ -213,22 +241,13 @@ public class Player : Entity
             }
 
             // Vertical Movement Animation
-            if (rBody.velocity.y > .99f)
+            if (jumpVelocity > .99f)
             {
                 state = MovementAnim.jump;
             }
-            else if (rBody.velocity.y < -1f)
+            else if (jumpVelocity < -1f)
             {
                 state = MovementAnim.fall;
-            }
-
-            if (attacking)
-            {
-                anim.speed = attackSpeed;
-            }
-            else
-            {
-                anim.speed = animationSpeed;
             }
         }
         else
@@ -236,7 +255,20 @@ public class Player : Entity
             state = MovementAnim.idle;
         }
 
-        anim.SetInteger("state", (int)state);
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Noob_Attack_" + attackCombo.ToString()))
+        {
+            anim.speed = attackSpeed;
+        }
+        else
+        {
+            anim.speed = animationSpeed;
+        }
+
+        if (!attacking)
+        {
+            anim.SetInteger("state", (int)state);
+        }
+
     }
 
     void OnDrawGizmosSelected()

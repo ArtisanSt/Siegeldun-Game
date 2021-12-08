@@ -144,7 +144,6 @@ public class EnemyAIv2 : Entity
     // Updates Every Physics Frame
     void FixedUpdate()
     {
-        Debug.Log(entityHp);
         if (isAlive)
         {
             if (!isTriggered)

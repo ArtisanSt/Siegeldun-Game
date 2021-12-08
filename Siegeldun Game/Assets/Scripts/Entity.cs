@@ -32,6 +32,8 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float attackSpeed;
     [SerializeField] protected float attackDelay;
     protected float lastAttack;
+    protected int attackCombo;
+    protected float comboTime;
     [SerializeField] protected float attackRange;
     [SerializeField] protected float EqWeaponStamCost;
     [SerializeField] protected float weaponDrag;
@@ -46,7 +48,7 @@ public class Entity : MonoBehaviour
     [SerializeField] public float kbHorDisplacement;
     [SerializeField] protected float kbVerDisplacement;
 
-    protected const float slowDownConst = 0.93f;
+    protected const float slowDownConst = 0.95f;
     [SerializeField] protected Transform attackPoint;
     [SerializeField] protected LayerMask enemyLayers;
 

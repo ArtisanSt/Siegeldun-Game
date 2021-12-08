@@ -13,10 +13,10 @@ TextureImporter:
     second: Noob_Death-Sheet_2
   - first:
       213: 7033921650828931110
-    second: Noob_Death-Sheet_3
+    second: Noob_Death-Sheet_1
   - first:
       213: -8413045401880177951
-    second: Noob_Death-Sheet_4
+    second: Noob_Death-Sheet_0
   - first:
       213: 5771980789267164449
     second: Noob_Death-Sheet_5
@@ -121,15 +121,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Noob_Death-Sheet_0
+      name: Noob_Death-Sheet_4
       rect:
         serializedVersion: 2
-        x: 0
+        x: 256
         y: 0
         width: 64
         height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.30246913, y: 0.50705475}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,15 +142,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Noob_Death-Sheet_1
+      name: Noob_Death-Sheet_3
       rect:
         serializedVersion: 2
-        x: 64
+        x: 192
         y: 0
         width: 64
         height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.30599648, y: 0.5035274}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -170,8 +170,8 @@ TextureImporter:
         y: 0
         width: 64
         height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.30599648, y: 0.50705475}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -184,15 +184,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Noob_Death-Sheet_3
+      name: Noob_Death-Sheet_1
       rect:
         serializedVersion: 2
-        x: 192
+        x: 64
         y: 0
         width: 64
         height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.30246913, y: 0.5105821}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -205,15 +205,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Noob_Death-Sheet_4
+      name: Noob_Death-Sheet_0
       rect:
         serializedVersion: 2
-        x: 256
+        x: 0
         y: 0
         width: 64
         height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.30599648, y: 0.50705475}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -233,8 +233,8 @@ TextureImporter:
         y: 0
         width: 64
         height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.30702224, y: 0.5000001}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
