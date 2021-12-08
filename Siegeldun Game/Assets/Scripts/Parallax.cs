@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
+    Transform cameraTransform;
     [SerializeField] Vector2 parallaxMultiplier;
-    [SerializeField] Transform cameraTransform;
-    public float parallaxYPos = 0.9f;
+    [SerializeField] float parallaxYPos = 0.9f;
     private Vector3 lastCameraPosition;
 
     private void Start()
