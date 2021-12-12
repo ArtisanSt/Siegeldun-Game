@@ -1,22 +1,25 @@
 fileFormatVersion: 2
-guid: 540e84049ff30c3458bf40575e4439bb
+guid: b505737ad5caf2240aeab156998b1404
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3124397096073141363
-    second: Goblin_Death_0
+      213: 1802653224941452304
+    second: Noob_Death_0
   - first:
-      213: -749724090643427790
-    second: Goblin_Death_1
+      213: 2226099175196623122
+    second: Noob_Death_1
   - first:
-      213: 9016763863700688465
-    second: Goblin_Death_2
+      213: 6026024711492593504
+    second: Noob_Death_2
   - first:
-      213: 3317473751703856157
-    second: Goblin_Death_3
+      213: 7033921650828931110
+    second: Noob_Death_1
   - first:
-      213: 7582932328158126267
-    second: Goblin_Death_4
+      213: -8413045401880177951
+    second: Noob_Death_0
+  - first:
+      213: 5771980789267164449
+    second: Noob_Death_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -102,110 +105,143 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Goblin_Death_0
+      name: Noob_Death_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.30246913, y: 0.50705475}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01cf8d5ae8f440910800000000000000
+      internalID: 1802653224941452304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Noob_Death_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.30599648, y: 0.5035274}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 211826cc761b4ee10800000000000000
+      internalID: 2226099175196623122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Noob_Death_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.30599648, y: 0.50705475}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 067ed304c8db0a350800000000000000
+      internalID: 6026024711492593504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Noob_Death_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.30246913, y: 0.5105821}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 620769f59728d9160800000000000000
+      internalID: 7033921650828931110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Noob_Death_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 80
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.30599648, y: 0.50705475}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d836c471569e3a4d0800000000000000
-      internalID: -3124397096073141363
+      spriteID: 1e2d2bdf7cbde3b80800000000000000
+      internalID: -8413045401880177951
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Goblin_Death_1
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 0
-        width: 80
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 23e45a969e17895f0800000000000000
-      internalID: -749724090643427790
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Goblin_Death_2
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 80
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 15e457f06faf12d70800000000000000
-      internalID: 9016763863700688465
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Goblin_Death_3
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 0
-        width: 80
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d14adf9ecc80a0e20800000000000000
-      internalID: 3317473751703856157
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Goblin_Death_4
+      name: Noob_Death_5
       rect:
         serializedVersion: 2
         x: 320
         y: 0
-        width: 80
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.30702224, y: 0.5000001}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb0e0bfb6ccfb3960800000000000000
-      internalID: 7582932328158126267
+      spriteID: 12de5a252f13a1050800000000000000
+      internalID: 5771980789267164449
       vertices: []
       indices: 
       edges: []

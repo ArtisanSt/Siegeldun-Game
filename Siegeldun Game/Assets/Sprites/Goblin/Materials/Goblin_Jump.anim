@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Goblin_Fall
+  m_Name: Goblin_Jump
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,7 +20,11 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -136304958890925123, guid: 7a78034074b99494cb9d108c75f1b05a, type: 3}
+      value: {fileID: 7760682860835678084, guid: 7a78034074b99494cb9d108c75f1b05a, type: 3}
+    - time: 1
+      value: {fileID: -2444546916899875742, guid: 7a78034074b99494cb9d108c75f1b05a, type: 3}
+    - time: 2
+      value: {fileID: 7859211917447780126, guid: 7a78034074b99494cb9d108c75f1b05a, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -40,13 +44,15 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -136304958890925123, guid: 7a78034074b99494cb9d108c75f1b05a, type: 3}
+    - {fileID: 7760682860835678084, guid: 7a78034074b99494cb9d108c75f1b05a, type: 3}
+    - {fileID: -2444546916899875742, guid: 7a78034074b99494cb9d108c75f1b05a, type: 3}
+    - {fileID: 7859211917447780126, guid: 7a78034074b99494cb9d108c75f1b05a, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 3
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Entity : MonoBehaviour
 {
     // ========================================= Game Properties =========================================
-    [SerializeField] protected static int difficulty = 3; // Pseudo Difficulty
+    [SerializeField] protected static int difficulty = 1; // Pseudo Difficulty
     protected int idxDiff = difficulty - 1;
     protected float animationSpeed = 1f;
 
@@ -21,9 +21,29 @@ public class Entity : MonoBehaviour
     protected float[] stamRegenScaling;
 
 
+    // ========================================= UNITY PROPERTIES =========================================
+    // Component Declaration
+    public Rigidbody2D rBody;
+    public SpriteRenderer sprite;
+    protected CircleCollider2D cirColl;
+    protected BoxCollider2D boxColl;
+    protected CapsuleCollider2D capColl;
+    protected Animator anim;
+
+    protected void ComponentInitialization()
+    {
+        rBody = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
+        cirColl = GetComponent<CircleCollider2D>();
+        boxColl = GetComponent<BoxCollider2D>();
+        capColl = GetComponent<CapsuleCollider2D>();
+        anim = GetComponent<Animator>();
+    }
+
+
     // ========================================= Entity Properties =========================================
     protected string entityName;
-    protected bool isAlive;
+    public bool isAlive;
 
     [Header("ENTITY PROPERTIES", order = 0)]
     [Header("Battle Mechanics", order = 1)]
@@ -60,6 +80,7 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float regenDelay;
     [SerializeField] protected float hpRegenTimer;
     private float hpTick = 0f;
+    private float hpHideTime = 4f;
 
     [Header("Stamina Mechanics", order = 1)]
     [SerializeField] protected float maxStam;
@@ -106,6 +127,13 @@ public class Entity : MonoBehaviour
         // Health Bar UI Updater
         if (fillB != fillF || fillF != hpFraction || fillB != hpFraction)
         {
+            if (entityName != "Player")
+            {
+                HealthbarF.enabled = true;
+                HealthbarB.enabled = true;
+                statHpText.enabled = true;
+                hpHideTime = 0f;
+            }
             float netRegenF = hpFraction - fillF;
             float netRegenB = fillF - fillB;
             float percentChangeB, percentChangeF;
@@ -140,6 +168,19 @@ public class Entity : MonoBehaviour
         {
             hpTick = 0f;
             HealthbarF.color = Color.cyan;
+            if (entityName != "Player")
+            {
+                if (hpHideTime > 3f)
+                {
+                    HealthbarF.enabled = false;
+                    HealthbarB.enabled = false;
+                    statHpText.enabled = false;
+                }
+                else
+                {
+                    hpHideTime += Time.deltaTime;
+                }
+            }
         }
 
         // HP UI Text
@@ -167,6 +208,10 @@ public class Entity : MonoBehaviour
                 StamBar.fillAmount += Mathf.Lerp(0, netRegenS, percentChangeS);
             }
         }
+        else
+        {
+            StamBar.color = Color.yellow;
+        }
 
         // Stamina UI Text
         statStamText.text = Mathf.FloorToInt(entityStam).ToString() + " / " + Mathf.FloorToInt(maxStam).ToString();
@@ -174,12 +219,12 @@ public class Entity : MonoBehaviour
 
 
     // ========================================= HEALING METHODS =========================================
-    protected void PassiveSkills(bool hpRegenAllowed, bool stamRegenAllowed)
+    protected void PassiveSkills(bool hpRegenAllowed, bool stamRegenAllowed, float regenDelay, bool hpParam = true)
     {
         if(hpRegenAllowed)
         {
             // HP Natural Healing
-            if (entityHp < maxHealth)
+            if (entityHp < maxHealth && hpParam)
             {
                 if (hpRegenTimer >= regenDelay)
                 {
@@ -235,15 +280,17 @@ public class Entity : MonoBehaviour
         if (isAlive && damageTaken > 0f)
         {
             hpRegenTimer = 0f;
-            if (damageTaken >= entityHp)
+            if (damageTaken >= Mathf.Floor(entityHp))
             {
                 entityHp -= entityHp;
                 Die();
             }
             else
             {
+                anim.SetTrigger("hurt");
                 entityHp -= damageTaken;
                 Knockback(kbDir, knockbackedForce);
+
             }
         }
     }
@@ -258,8 +305,15 @@ public class Entity : MonoBehaviour
 
     private void Die()
     {
-        isAlive = false;
+        anim.SetBool("death", true);
         Debug.Log(entityName + " Dead!");
+        isAlive = false;
+        capColl.enabled = false;
+        cirColl.enabled = false;
+        boxColl.enabled = false;
+        // this.enabled = false;
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+        //Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
     }
 
 

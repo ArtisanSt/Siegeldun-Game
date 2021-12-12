@@ -1,19 +1,25 @@
 fileFormatVersion: 2
-guid: eff12de68c37ae443b7dc01f504d0f1a
+guid: 7a78034074b99494cb9d108c75f1b05a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4482283622297021551
-    second: Noob_Attack2_NW_0
+      213: 7760682860835678084
+    second: Goblin_Jump_0
   - first:
-      213: 7219211360119629509
-    second: Noob_Attack2_NW_1
+      213: -2444546916899875742
+    second: Goblin_Jump_1
   - first:
-      213: -5992816284933698571
-    second: Noob_Attack2_NW_2
+      213: 7859211917447780126
+    second: Goblin_Jump_2
   - first:
-      213: 1294755367596830915
-    second: Noob_Attack2_NW_3
+      213: -136304958890925123
+    second: Goblin_Jump_3
+  - first:
+      213: 5829297225879380079
+    second: Goblin_Jump_4
+  - first:
+      213: 4732124324608366653
+    second: Goblin_Jump_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -103,12 +109,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Noob_Attack2_NW_0
+      name: Goblin_Jump_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 32
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -117,19 +123,40 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1935f6e2bcabbc1c0800000000000000
-      internalID: -4482283622297021551
+      spriteID: 487a29ea1fb73bb60800000000000000
+      internalID: 7760682860835678084
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Noob_Attack2_NW_1
+      name: Goblin_Jump_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2641865e789331ed0800000000000000
+      internalID: -2444546916899875742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Jump_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
-        width: 64
+        width: 32
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -138,50 +165,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c62566ab7acf2460800000000000000
-      internalID: 7219211360119629509
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Noob_Attack2_NW_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5fbc954175d35dca0800000000000000
-      internalID: -5992816284933698571
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Noob_Attack2_NW_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3c0b3ac9525e7f110800000000000000
-      internalID: 1294755367596830915
+      spriteID: e17ddf95997811d60800000000000000
+      internalID: 7859211917447780126
       vertices: []
       indices: 
       edges: []

@@ -1,25 +1,16 @@
 fileFormatVersion: 2
-guid: b505737ad5caf2240aeab156998b1404
+guid: 19387ed3c5d63a6469b0c9252b5a072f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1802653224941452304
-    second: Noob_Death-Sheet_0
+      213: -1470927511265249385
+    second: Goblin_Fall_0
   - first:
-      213: 2226099175196623122
-    second: Noob_Death-Sheet_1
+      213: 377045022019341463
+    second: Goblin_Fall_1
   - first:
-      213: 6026024711492593504
-    second: Noob_Death-Sheet_2
-  - first:
-      213: 7033921650828931110
-    second: Noob_Death-Sheet_1
-  - first:
-      213: -8413045401880177951
-    second: Noob_Death-Sheet_0
-  - first:
-      213: 5771980789267164449
-    second: Noob_Death-Sheet_5
+      213: -4469614651049406530
+    second: Goblin_Fall_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -121,127 +112,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Noob_Death-Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.30246913, y: 0.50705475}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 01cf8d5ae8f440910800000000000000
-      internalID: 1802653224941452304
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Noob_Death-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.30599648, y: 0.5035274}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 211826cc761b4ee10800000000000000
-      internalID: 2226099175196623122
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Noob_Death-Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.30599648, y: 0.50705475}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 067ed304c8db0a350800000000000000
-      internalID: 6026024711492593504
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Noob_Death-Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.30246913, y: 0.5105821}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 620769f59728d9160800000000000000
-      internalID: 7033921650828931110
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Noob_Death-Sheet_0
+      name: Goblin_Fall_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 32
         height: 64
-      alignment: 9
-      pivot: {x: 0.30599648, y: 0.50705475}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e2d2bdf7cbde3b80800000000000000
-      internalID: -8413045401880177951
+      spriteID: 7977fa8c837369be0800000000000000
+      internalID: -1470927511265249385
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Noob_Death-Sheet_5
+      name: Goblin_Fall_1
       rect:
         serializedVersion: 2
-        x: 320
+        x: 32
         y: 0
-        width: 64
+        width: 32
         height: 64
-      alignment: 9
-      pivot: {x: 0.30702224, y: 0.5000001}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12de5a252f13a1050800000000000000
-      internalID: 5771980789267164449
+      spriteID: 79ccac923788b3500800000000000000
+      internalID: 377045022019341463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Fall_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebf8159e72db8f1c0800000000000000
+      internalID: -4469614651049406530
       vertices: []
       indices: 
       edges: []
