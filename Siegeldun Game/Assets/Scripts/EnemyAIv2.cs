@@ -17,7 +17,7 @@ public class EnemyAIv2 : Entity
     [Header("Pathfinding")]
     protected Path path;
     [SerializeField] Transform target;
-    private bool targetAlive;
+    private bool targetAlive = true;
     [SerializeField] protected float pathUpdateSec = 0.25f;
     [SerializeField] protected int currentWaypoint;
     [SerializeField] private float nextWayPointDistance;
@@ -125,6 +125,7 @@ public class EnemyAIv2 : Entity
         EnemyNPCInitialization();
 
         targetAlive = target.GetComponent<Player>().isAlive;
+        Debug.Log(target.GetComponent<Player>().isAlive);
         InvokeRepeating("UpdatePath", 0f, .02f);
 
     }
@@ -204,8 +205,8 @@ public class EnemyAIv2 : Entity
                         triggeredTime += Time.deltaTime;
                     }
 
-                    PathFollow(); // Updates the nodal position of the target
                 }
+                PathFollow(); // Updates the nodal position of the target
             }
             Timer();
             Movement(); // Updates the movements of the AI
@@ -216,16 +217,15 @@ public class EnemyAIv2 : Entity
     // Updates Path Every Frame
     private void UpdatePath()
     {
+        targetAlive = target.GetComponent<Player>().isAlive;
         if (seeker.IsDone() && targetAlive)
         {
             try
             {
-                targetAlive = true;
                 seeker.StartPath(rBody.position, target.position, OnPathComplete);
             }
             catch (MissingReferenceException)
             {
-                targetAlive = false;
                 isTriggered = false;
                 triggeredTime = 0;
             }
@@ -420,10 +420,6 @@ public class EnemyAIv2 : Entity
             }
         }
         lastXPosition = rBody.position.x; // Updates the last X position of the AI
-        Debug.Log("isTriggered " + isTriggered.ToString());
-        Debug.Log("awakeTask " + awakeTask.ToString());
-        Debug.Log("awakeTaskLimit " + awakeTaskLimit.ToString());
-        Debug.Log("awakeTaskTime " + awakeTaskTime.ToString());
 
         // Horizontal Movement
         attackFacing = (attacking) ? ((sprite.flipX) ? -1 : 1) : 0; // Weapondrag Effect

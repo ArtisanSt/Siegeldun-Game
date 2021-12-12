@@ -43,7 +43,7 @@ public class Entity : MonoBehaviour
 
     // ========================================= Entity Properties =========================================
     protected string entityName;
-    public bool isAlive;
+    public bool isAlive = true;
 
     [Header("ENTITY PROPERTIES", order = 0)]
     [Header("Battle Mechanics", order = 1)]
@@ -311,8 +311,8 @@ public class Entity : MonoBehaviour
         capColl.enabled = false;
         cirColl.enabled = false;
         boxColl.enabled = false;
-        // this.enabled = false;
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+        // this.enabled = false;
         //Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
     }
 
