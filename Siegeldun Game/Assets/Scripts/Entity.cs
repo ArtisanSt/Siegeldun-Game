@@ -44,6 +44,7 @@ public class Entity : MonoBehaviour
     // ========================================= Entity Properties =========================================
     protected string entityName;
     public bool isAlive = true;
+    public bool isBreakable;
 
     [Header("ENTITY PROPERTIES", order = 0)]
     [Header("Battle Mechanics", order = 1)]
@@ -287,7 +288,10 @@ public class Entity : MonoBehaviour
             }
             else
             {
-                anim.SetTrigger("hurt");
+                if(!isBreakable)
+                {
+                    anim.SetTrigger("hurt");
+                }
                 entityHp -= damageTaken;
                 Knockback(kbDir, knockbackedForce);
 
@@ -305,15 +309,23 @@ public class Entity : MonoBehaviour
 
     private void Die()
     {
-        anim.SetBool("death", true);
-        Debug.Log(entityName + " Dead!");
-        isAlive = false;
-        capColl.enabled = false;
-        cirColl.enabled = false;
-        boxColl.enabled = false;
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
-        // this.enabled = false;
-        //Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
+        if(!isBreakable)
+        {
+            anim.SetBool("death", true);
+            Debug.Log(entityName + " Dead!");
+            isAlive = false;
+            capColl.enabled = false;
+            cirColl.enabled = false;
+            boxColl.enabled = false;
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+            // this.enabled = false;
+            //Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
     }
 
 
