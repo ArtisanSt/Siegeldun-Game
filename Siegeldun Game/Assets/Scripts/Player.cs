@@ -256,10 +256,6 @@ public class Player : Entity
                 anim.SetInteger("state", (int)state);
             }
         }
-        else
-        {
-
-        }
 
     }
 

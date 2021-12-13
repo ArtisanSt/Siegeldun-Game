@@ -14,42 +14,42 @@ public class EnemyAIv2 : Entity
     private MovementAnim state;
 
 
-    [Header("Pathfinding")]
-    protected Path path;
-    [SerializeField] Transform target;
-    private bool targetAlive = true;
+    [Header("Pathfinding", order = 1)]
+    private Path path;
+    [SerializeField] protected Transform target;
+    protected bool targetAlive = true;
     [SerializeField] protected float pathUpdateSec = 0.25f;
     [SerializeField] protected int currentWaypoint;
-    [SerializeField] private float nextWayPointDistance;
+    [SerializeField] protected float nextWayPointDistance;
 
-    [Header("NPC")]
-    [SerializeField] private bool doSleep = false; // Enemy might sleep
-    [SerializeField] private bool isAwake = true; // Enemy might start in a sleep mode that will only wake up when attacked or touched
-    [SerializeField] private float sleepStartTime;
-    [SerializeField] private float sleepTime = 10f;
+    [Header("NPC", order = 1)]
+    [SerializeField] protected bool doSleep = false; // Enemy might sleep
+    [SerializeField] protected bool isAwake = true; // Enemy might start in a sleep mode that will only wake up when attacked or touched
+    [SerializeField] protected float sleepStartTime;
+    [SerializeField] protected float sleepTime = 10f;
     [SerializeField] protected int awakeTask = 0; // 0 for standing for several seconds, 1 for walking until timer stops
     [SerializeField] protected float wanderMvSpeed = 3f; // 0 for standing for several seconds, 1 for walking until timer stops
     [SerializeField] protected float awakeTaskTime = 0f;
     [SerializeField] protected float awakeTaskLimit = 1f;
+    [SerializeField] protected ParticleSystem sleepParticle;
 
+    [SerializeField] protected bool isTriggered = false; // Enemy when triggered have time when it cannot reach the target
+    [SerializeField] protected float triggeredTime;
+    [SerializeField] protected float forgivenessTime = 2f;
+    [SerializeField] protected float triggerDistance = 3f; // Target's distance to trigger the enemy
+    [SerializeField] protected float targetNodalDistance; // Nodal Distance of the target
+    [SerializeField] protected float targetStraightDistance; // Straigh Distance of the target
+    [SerializeField] protected float backOffDistance = 0.5f; // Prevents the enemy to collide entirely with the target
+    [SerializeField] protected float stayDistance = 0.8f; // Prevents the enemy to collide entirely with the target
+    [SerializeField] protected int inProximity;
 
-    [SerializeField] private bool isTriggered = false; // Enemy when triggered have time when it cannot reach the target
-    [SerializeField] private float triggeredTime;
-    [SerializeField] private float forgivenessTime = 2f;
-    [SerializeField] private float triggerDistance = 3f; // Target's distance to trigger the enemy
-    [SerializeField] private float targetNodalDistance; // Nodal Distance of the target
-    [SerializeField] private float targetStraightDistance; // Straigh Distance of the target
-    [SerializeField] private float backOffDistance = 0.5f; // Prevents the enemy to collide entirely with the target
-    [SerializeField] private float stayDistance = 0.8f; // Prevents the enemy to collide entirely with the target
-    [SerializeField] private int inProximity;
-
-    [SerializeField] bool jumpEnabled = true;
-    [SerializeField] private bool edgeStuck; // Toggles when stuck in the edge of obstacles
-    [SerializeField] private float edgeStuckAlphaError = 0.02f; // Edge Stuck Position Margin of Error
-    private float lastXPosition;
-    [SerializeField] private float edgeStuckTime;
-    [SerializeField] private float allowJumpAfter = .05f;
-    [SerializeField] private bool allowJump;
+    [SerializeField] protected bool jumpEnabled = true;
+    [SerializeField] protected bool edgeStuck; // Toggles when stuck in the edge of obstacles
+    [SerializeField] protected float edgeStuckAlphaError = 0.02f; // Edge Stuck Position Margin of Error
+    protected float lastXPosition;
+    [SerializeField] protected float edgeStuckTime;
+    [SerializeField] protected float allowJumpAfter = .05f;
+    [SerializeField] protected bool allowJump;
 
 
 
@@ -57,57 +57,17 @@ public class EnemyAIv2 : Entity
     protected void EnemyNPCInitialization()
     {
         transform.localScale = new Vector3(-1, 1, 1);
-
-        entityName = rBody.name;
-        EntityStatsInitialization(entityName);
         isAlive = true;
-
-        // Battle Initialization
-        entityWeapon = 0; // Pseudo Weapon Index
-        entityDamage = 20f;
-        attackSpeed = .85f;
-        attackDelay = 2f;
-        lastAttack = 0f;
-        attackRange = 0.3f; // Pseudo Weapon Range
-        EqWeaponStamCost = 0f;
-        weaponDrag = 0f; // Pseudo Weapon Drag
-        weaponKbForce = .8f; // Pseudo Weapon Knockback Force
-        attacking = false;
-        kbDir = 0;
-        kTick = 0f;
-        kbHorDisplacement = .8f;
-        kbVerDisplacement = 0f;
-
-        // HP Initialization
-        maxHealth = 100f;
-        entityHp = maxHealth;
-        hpRegenAllowed = true;
-        healthRegen = healthRegenScaling[idxDiff];
-        regenDelay = 3f;
-        hpRegenTimer = 0f;
-
-        // Movement Initialization
-        isGrounded = false;
-        mvSpeed = 5f;
-        jumpForce = 15.5f;
-        rBody.gravityScale = 6;
 
         // Pathfinding Initialization
         pathUpdateSec = 0.25f;
-        sleepTime = 10f;
-        doSleep = false;
-        isAwake = true;
-        wanderMvSpeed = 3f;
         awakeTaskTime = 0f;
         awakeTaskLimit = 1f;
 
         isTriggered = false;
-        forgivenessTime = 3f;
-        triggerDistance = 5f;
         backOffDistance = 0.5f; // Prevents the enemy to collide entirely with the target
         stayDistance = 0.8f; // Prevents the enemy to collide entirely with the target
 
-        jumpEnabled = true;
         edgeStuckAlphaError = 0.02f;
         allowJumpAfter = .05f;
 
@@ -118,20 +78,20 @@ public class EnemyAIv2 : Entity
 
     // ========================================= UNITY MAIN METHODS =========================================
     // Initializes when the Player Script is called
-    public void Start()
+    protected void EnemyNPCStart()
     {
         seeker = GetComponent<Seeker>();
+        sleepParticle = GameObject.Find("SleepingParticle").GetComponent<ParticleSystem>();;
         ComponentInitialization();
         EnemyNPCInitialization();
 
         targetAlive = target.GetComponent<Player>().isAlive;
-        Debug.Log(target.GetComponent<Player>().isAlive);
         InvokeRepeating("UpdatePath", 0f, .02f);
 
     }
 
     // Updates Every Frame
-    void Update()
+    protected void EnemyNPCUpdate()
     {
         if (isAlive)
         {
@@ -141,12 +101,14 @@ public class EnemyAIv2 : Entity
     }
 
     // Updates Every Physics Frame
-    void FixedUpdate()
+    protected void EnemyNPCFixedUpdate()
     {
         if (isAlive)
         {
             if (!isTriggered)
             {
+                var sleepingParticleShape = sleepParticle.shape;
+                sleepingParticleShape.rotation = new Vector3(0,0, transform.localScale.x * -45);
                 // AI does tasks when awake and not triggered
                 if (isAwake)
                 {
@@ -169,6 +131,7 @@ public class EnemyAIv2 : Entity
                             {
                                 isAwake = false;
                                 sleepStartTime = 0;
+                                sleepParticle.Play();
                             }
                             else
                             {
@@ -181,6 +144,7 @@ public class EnemyAIv2 : Entity
                 else if (targetNodalDistance <= triggerDistance / 2)
                 {
                     isAwake = true;
+                    sleepParticle.Stop();
                 }
             }
             // AI will chase the player and will try to kill him when detected
@@ -436,7 +400,7 @@ public class EnemyAIv2 : Entity
         rBody.velocity = new Vector2(runVelocity, jumpVelocity);
 
         // Attack Code
-        attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 13) == "Goblin_Attack"; // Anti-spamming code
+        attacking = GetComponent<SpriteRenderer>().sprite.ToString().Substring(0, 13) == entityName + "_Attack"; // Anti-spamming code
         if (inProximity < 1 && !attacking && Time.time - lastAttack > attackDelay)
         {
             Attack();
