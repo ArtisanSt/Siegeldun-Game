@@ -15,6 +15,7 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
+        GameObject newMob = Instantiate(mobPrefab, spawnPoint.transform.position, Quaternion.identity);
         //StartCoroutine(spawnMob(mobInterval, mobPrefab));
     }
 
@@ -37,6 +38,5 @@ public class Spawner : MonoBehaviour
         // Create new game object
         GameObject newMob = Instantiate(enemy, spawnPoint.transform.position, Quaternion.identity);
         StartCoroutine(spawnMob(interval, enemy));
-        isColliding = false;
     }
 }

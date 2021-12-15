@@ -15,7 +15,6 @@ public class Player : Entity
     protected float[] weaponStaminaCost = new float[] { 20f, 25f, 33f }; // Pseudo Stamina cost
     protected float[] weaponAttackSpeed = new float[] { 1.17f, .95f, .5f }; // Pseudo Attack Speed
 
-
     // Entity Properties Initialization
     private void EntityInitialization()
     {
@@ -54,7 +53,7 @@ public class Player : Entity
         maxStam = maxStamScaling[idxDiff];
         entityStam = maxStam;
         stamRegenAllowed = true;
-        stamRegen = 0.11f; //stamRegenScaling[idxDiff];
+        stamRegen = 0.13f; //stamRegenScaling[idxDiff];
 
         // Movement Initialization
         mvSpeed = 7.4f;
@@ -183,7 +182,7 @@ public class Player : Entity
 
         // Attack Code
         attacking = anim.GetCurrentAnimatorStateInfo(0).IsName("Noob_Attack_" + attackCombo.ToString()); // Anti-spamming code
-        if (Input.GetKeyDown(KeyCode.Mouse0) && attacking == false && Time.time - lastAttack > attackDelay && EqWeaponStamCost <= entityStam)
+        if (Input.GetKeyDown(KeyCode.Mouse1) && attacking == false && Time.time - lastAttack > attackDelay && EqWeaponStamCost <= entityStam)
         {
             Attack();
         }

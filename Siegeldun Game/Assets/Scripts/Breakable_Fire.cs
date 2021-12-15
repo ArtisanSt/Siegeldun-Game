@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreakableObject : Entity
+public class Breakable_Fire : Entity
 {
     protected void BreakableObjectInit()
     {
+        entityName = "Fire";
         isBreakable = true;
-        entityName = "Object";
 
         maxHealth = 1;
         entityHp = maxHealth;
@@ -15,12 +15,7 @@ public class BreakableObject : Entity
 
     void Start()
     {
-        rBody = transform.GetComponent<Rigidbody2D>();
+        ComponentInitialization();
         BreakableObjectInit();
-    }
-
-    private void Die()
-    {
-        Destroy(gameObject);
     }
 }

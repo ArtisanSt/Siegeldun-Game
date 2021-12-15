@@ -51,6 +51,10 @@ public class EnemyAIv2 : Entity
     [SerializeField] protected float allowJumpAfter = .05f;
     [SerializeField] protected bool allowJump;
 
+    [Header("Item Drop", order = 1)]
+    [SerializeField] GameObject itemPrefab;
+    [SerializeField] public int dropChance;
+
 
 
     // Enemy NPC Properties Initialization
@@ -58,6 +62,7 @@ public class EnemyAIv2 : Entity
     {
         transform.localScale = new Vector3(-1, 1, 1);
         isAlive = true;
+        isBreakable = false;
 
         // Pathfinding Initialization
         pathUpdateSec = 0.25f;
@@ -451,6 +456,17 @@ public class EnemyAIv2 : Entity
             {
                 anim.SetInteger("state", (int)state);
             }
+        }
+    }
+
+
+        // ========================================= DROP METHODS =========================================
+    protected void DropItem()
+    {
+        if(drop == true)
+        {
+            Drop(itemPrefab, dropChance, 1);
+            drop = false;
         }
     }
 }

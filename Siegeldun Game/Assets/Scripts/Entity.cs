@@ -45,6 +45,7 @@ public class Entity : MonoBehaviour
     protected string entityName;
     public bool isAlive = true;
     public bool isBreakable;
+    public bool drop = false;
 
     [Header("ENTITY PROPERTIES", order = 0)]
     [Header("Battle Mechanics", order = 1)]
@@ -320,14 +321,33 @@ public class Entity : MonoBehaviour
             GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
             // this.enabled = false;
             //Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
+
+            drop = true;
         }
         else
         {
-            Destroy(gameObject);
+            if(entityName == "Fire")
+            {
+                Destroy(gameObject);
+            }
+            if(entityName == "Crate")
+            {
+                drop = true;
+                anim.SetBool("death", true);
+                boxColl.enabled = false;
+            }
         }
-        
     }
 
+
+    // ========================================= GAMEPLAY METHODS INITIALIZATION =====================================
+    public void Drop(GameObject itemPrefab, int chance, float xPos)
+    {
+        if(Random.Range(1,chance + 1) == chance)
+        {
+            Instantiate(itemPrefab, new Vector3(transform.position.x + xPos,transform.position.y,0), Quaternion.identity);
+        }
+    }
 
     // ========================================= ENTITY STATS INITIALIZATION =========================================
     protected void EntityStatsInitialization(string entityName)
