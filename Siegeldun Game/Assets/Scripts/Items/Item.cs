@@ -5,5 +5,5 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public string itemType;
-    public int amount;
+    public int amount = 0;
 }
