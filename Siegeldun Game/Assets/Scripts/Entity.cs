@@ -349,7 +349,7 @@ public class Entity : MonoBehaviour
             capColl.enabled = false;
             boxColl.enabled = false;
             GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
-            
+
             StartCoroutine(DestroyInstance());
         }
     }

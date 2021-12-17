@@ -49,8 +49,6 @@ public class EnemyAIv2 : Entity
     [SerializeField] protected float edgeStuckTime;
     [SerializeField] protected float allowJumpAfter = .05f;
 
-    protected bool glitchEscape;
-
     [Header("Item Drop", order = 1)]
     [SerializeField] GameObject itemPrefab;
     [SerializeField] public int dropChance;
@@ -77,8 +75,6 @@ public class EnemyAIv2 : Entity
 
         lastXPosition = rBody.position.x;
         nextWayPointDistance = backOffDistance;
-
-        glitchEscape = false;
     }
 
 
@@ -115,6 +111,7 @@ public class EnemyAIv2 : Entity
         }
         else
         {
+            DropItem();
             ClearInstance();
         }
 

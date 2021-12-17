@@ -70,7 +70,6 @@ public class Goblin : EnemyAIv2
     void Update()
     {
         EnemyNPCUpdate();
-        DropItem();
     }
     // Updates Every Physics Frame
     void FixedUpdate()
