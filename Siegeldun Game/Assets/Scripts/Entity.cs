@@ -339,7 +339,6 @@ public class Entity : MonoBehaviour
             
             StartCoroutine(DestroyInstance());
         }
-
     }
 
     private IEnumerator DestroyInstance()
