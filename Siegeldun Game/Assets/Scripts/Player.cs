@@ -6,22 +6,26 @@ public class Player : Entity
 {
     // ========================================= UNITY PROPERTIES =========================================
     // Component Declaration
-    private enum MovementAnim { idle, run, jump, fall };
+    private enum MovementAnim { idle, run, jump, fall};
+    private float[] animationTime = new float[9]; 
     private MovementAnim state;
+
 
 
     // ========================================= ENTITY PROPERTIY SCALING =========================================
     // Battle Mechanics
     protected float[] weaponStaminaCost = new float[] { 5f, 8f, 10f }; // Pseudo Stamina cost
-    protected float[] weaponAttackSpeed = new float[] { 1.17f, .95f, .5f }; // Pseudo Attack Speed
+    protected float[] weaponAttackSpeed = new float[] { .5f, .95f, .5f }; // Pseudo Attack Speed
 
 
     // Entity Properties Initialization
     private void EntityInitialization()
     {
-        entityName = rBody.name;
+        entityName = "Player";
+        defaultFacing = 1;
         EntityStatsInitialization(entityName);
         isAlive = true;
+        isBreakable = false;
 
         // Battle Initialization
         entityWeapon = 0; // Pseudo Weapon Index
@@ -35,7 +39,7 @@ public class Player : Entity
         EqWeaponStamCost = weaponStaminaCost[entityWeapon];
         weaponDrag = 0f; // Pseudo Weapon Drag
         weaponKbForce = .8f; // Pseudo Weapon Knockback Force
-        attacking = false;
+        isAttacking = false;
         kbDir = 0;
         kTick = 0f;
         kbHorDisplacement = .8f;
@@ -61,6 +65,44 @@ public class Player : Entity
         rBody.gravityScale = 6;
     }
 
+    protected void AnimClipTime()
+    {
+        AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+        foreach (AnimationClip clip in clips)
+        {
+            switch (clip.name.Substring(entityName.Length + 1))
+            {
+                case "Idle":
+                    animationTime[0] = clip.length;
+                    break;
+                case "Run":
+                    animationTime[1] = clip.length;
+                    break;
+                case "Jump":
+                    animationTime[2] = clip.length;
+                    break;
+                case "Fall":
+                    animationTime[3] = clip.length;
+                    break;
+                case "Hurt":
+                    animationTime[4] = clip.length;
+                    break;
+                case "Death":
+                    animationTime[5] = clip.length;
+                    break;
+                case "Attack_1":
+                    animationTime[6] = clip.length;
+                    break;
+                case "Attack_2":
+                    animationTime[7] = clip.length;
+                    break;
+                case "Attack_3":
+                    animationTime[8] = clip.length;
+                    break;
+            }
+        }
+    }
+
 
     // ========================================= UNITY MAIN METHODS =========================================
     // Initializes when the Player Script is called
@@ -77,23 +119,13 @@ public class Player : Entity
         {
             PassiveSkills(hpRegenAllowed, stamRegenAllowed, regenDelay);
             Timer();
-            Controller();
         }
-
-        // Pseudo Revive
         else
         {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                HpRegen(maxHealth, "instant");
-                isAlive = true;
-                capColl.enabled = true;
-                cirColl.enabled = true;
-                boxColl.enabled = true;
-                GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-            }
+            ClearInstance();
         }
 
+        Controller();
         AnimationState();
         HealthBarUpdate();
         StaminaBarUpdate();
@@ -105,7 +137,6 @@ public class Player : Entity
     {
         // Attack Animation
         anim.SetTrigger("attack" + attackCombo.ToString());
-        //attacking = true;
         comboTime = 0f;
         entityStam -= EqWeaponStamCost;
         lastAttack = Time.time;
@@ -115,8 +146,8 @@ public class Player : Entity
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
-            int kbDir = (enemy.GetComponent<EnemyAIv2>().rBody.position.x > rBody.position.x) ? 1 : -1;
-            enemy.GetComponent<EnemyAIv2>().TakeDamage(entityDamage / 3, kbDir, weaponKbForce);
+            int kbDir = (enemy.GetComponent<Rigidbody2D>().position.x > rBody.position.x) ? 1 : -1;
+            enemy.GetComponent<Entity>().TakeDamage(entityDamage / 3, kbDir, weaponKbForce);
         }
     }
 
@@ -145,12 +176,7 @@ public class Player : Entity
         {
             comboTime = 0f;
         }
-    }
 
-
-    // ========================================= CONTROLLER METHODS =========================================
-    private void Controller()
-    {
         // Pseudo Knockback Timer
         if (isKnockbacked)
         {
@@ -165,50 +191,57 @@ public class Player : Entity
                 kTick += Time.deltaTime;
             }
         }
+    }
 
+
+    // ========================================= CONTROLLER METHODS =========================================
+    private void Controller()
+    {
         // Horizontal Movement
-        attackFacing = (attacking) ? ((sprite.flipX) ? -1 : 1) : 0;
         knockbackFacing = (isKnockbacked) ? kbDir : 0; // Knockback Effect
-        dirX = ((attacking) ? dirX * slowDownConst : Input.GetAxisRaw("Horizontal")); // Front movement with a slowdown effect when attacking
+        dirFacing = (isAlive) ? Input.GetAxisRaw("Horizontal") : 0;
+        dirX = (isAttacking) ? dirX * slowDownConst : dirFacing; // Front movement with a slowdown effect when attacking
         totalMvSpeed = mvSpeed + mvSpeedBoost;
-        runVelocity = (dirX * totalMvSpeed) + (attackFacing * weaponDrag) + (knockbackFacing * knockbackedForce);
+        runVelocity = (isAlive) ? ((dirX * totalMvSpeed) + (knockbackFacing * knockbackedForce)) : dirX * slowDownConst;
 
         // Vertical Movement
-        isGrounded = capColl.IsTouchingLayers(groundLayers);
-        dirY = (Input.GetButtonDown("Jump")) ? jumpForce : ((0f < rBody.velocity.y && rBody.velocity.y < 0.001f) ? 0f : rBody.velocity.y);
+        isGrounded = capColl.IsTouchingLayers(groundLayers) || capColl.IsTouchingLayers(enemyLayers);
+        allowJump = (isAlive) ? Input.GetButtonDown("Jump") : false;
+        dirY = allowJump ? jumpForce : ((0f < rBody.velocity.y && rBody.velocity.y < 0.001f) ? 0f : rBody.velocity.y);
         jumpVelocity = (isGrounded) ? dirY : rBody.velocity.y;
 
         rBody.velocity = new Vector2(runVelocity, jumpVelocity);
-
-        // Attack Code
-        attacking = anim.GetCurrentAnimatorStateInfo(0).IsName("Noob_Attack_" + attackCombo.ToString()); // Anti-spamming code
-        if (Input.GetKeyDown(KeyCode.Mouse0) && attacking == false && Time.time - lastAttack > attackDelay && EqWeaponStamCost <= entityStam)
+        if (isAlive)
         {
-            Attack();
-        }
+            // Attack Code
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !isAttacking && !isHurting && Time.time - lastAttack > attackDelay && EqWeaponStamCost <= entityStam)
+            {
+                Attack();
+            }
 
-        // Pseudo Attack Speed Changer
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            attackSpeed += 0.1f;
-        }
+            // Pseudo Attack Speed Changer
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                attackSpeed += 0.1f;
+            }
 
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            attackSpeed -= 0.1f;
-        }
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                attackSpeed -= 0.1f;
+            }
 
-        // Pseudo Damage Taken 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            TakeDamage(50, (sprite.flipX) ? 1 : -1, kbHorDisplacement);
-        }
+            // Pseudo Damage Taken 
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                TakeDamage(50, (sprite.flipX) ? 1 : -1, kbHorDisplacement);
+            }
 
-        // Pseudo Heal
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            HpRegen(20f, "instant");
-            StamRegen(20f, "instant");
+            // Pseudo Heal
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                HpRegen(20f, "instant");
+                StamRegen(20f, "instant");
+            }
         }
     }
 
@@ -216,47 +249,59 @@ public class Player : Entity
     // ========================================= ANIMATION METHODS =========================================
     private void AnimationState()
     {
-        if (isAlive)
+        currentSprite = sprite.sprite.name;
+        animationCurrentState = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
+        if (animationCurrentState == "Hurt")
         {
-            // Horizontal Movement Animation
-            runAnimationSpeed = Mathf.Abs(runVelocity);
-            if (dirX == 0)
-            {
-                state = MovementAnim.idle;
-                anim.speed = animationSpeed;
-            }
-            else
-            {
-                state = MovementAnim.run;
-                anim.speed = runAnimationSpeed;
-                transform.localScale = new Vector3((dirX > 0f) ? 1 : -1, 1, 1);
-            }
-
-            // Vertical Movement Animation
-            if (jumpVelocity > .99f)
-            {
-                state = MovementAnim.jump;
-            }
-            else if (jumpVelocity < -1f)
-            {
-                state = MovementAnim.fall;
-            }
-
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Noob_Attack_" + attackCombo.ToString()))
-            {
-                anim.speed = attackSpeed;
-            }
-            else
-            {
-                anim.speed = totalMvSpeed / mvSpeed;
-            }
-
-            if (!attacking)
-            {
-                anim.SetInteger("state", (int)state);
-            }
+            isHurting = true;
+        }
+        else
+        {
+            isHurting = false;
         }
 
+        if (animationCurrentState == "Attack_1" || animationCurrentState == "Attack_2" || animationCurrentState == "Attack_3")
+        {
+            isAttacking = true;
+            anim.speed = attackSpeed;
+        }
+        else
+        {
+            isAttacking = false;
+        }
+
+        if (isAlive)
+        {
+            if (!isHurting && !isAttacking && !isDying)
+            {
+                // Vertical Movement Animation
+                if (jumpVelocity > .99f)
+                {
+                    state = MovementAnim.jump;
+                }
+                else if (jumpVelocity < -1f)
+                {
+                    state = MovementAnim.fall;
+                }
+                else
+                {
+                    // Horizontal Movement Animation
+                    runAnimationSpeed = totalMvSpeed / mvSpeed;
+                    if (dirX == 0)
+                    {
+                        state = MovementAnim.idle;
+                        anim.speed = animationSpeed;
+                    }
+                    else
+                    {
+                        state = MovementAnim.run;
+                        anim.speed = runAnimationSpeed;
+                        transform.localScale = new Vector3(((dirX > 0f) ? 1 : -1) * defaultFacing, 1, 1);
+                    }
+                }
+            }
+            anim.SetInteger("state", (int)state);
+        }
     }
 
     void OnDrawGizmosSelected()

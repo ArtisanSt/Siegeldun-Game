@@ -9,6 +9,7 @@ public class Goblin : EnemyAIv2
     protected void GoblinInitialization()
     {
         entityName = "Goblin";
+        defaultFacing = -1;
         EntityStatsInitialization(entityName);
 
         // Battle Initialization
@@ -45,6 +46,8 @@ public class Goblin : EnemyAIv2
         sleepTime = 10f;
         doSleep = (Random.Range(0,2) == 0) ? true: false;
         isAwake = (doSleep) ? ((Random.Range(0, 2) == 0) ? true : false) : true;
+        backOffDistance = Mathf.Abs(rBody.position.x - attackPoint.position.x); // Prevents the enemy to collide entirely with the target
+        stayDistance = backOffDistance + attackRange; // Prevents the enemy to collide entirely with the target
 
         wanderMvSpeed = 3f;
 

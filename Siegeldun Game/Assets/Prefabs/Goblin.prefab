@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5652105491266645608}
   - component: {fileID: 5652105491266645609}
-  - component: {fileID: 8199383069041409349}
   - component: {fileID: 5652105491266645610}
   - component: {fileID: 5652105491266645611}
   - component: {fileID: 5652105491266645612}
@@ -92,22 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &8199383069041409349
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5652105491266645584}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.06750858, y: 0.39626044}
-  serializedVersion: 2
-  m_Radius: 0.17933476
 --- !u!70 &5652105491266645610
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -233,6 +216,7 @@ MonoBehaviour:
   rBody: {fileID: 5652105491266645612}
   sprite: {fileID: 5652105491266645609}
   isAlive: 1
+  isBreakable: 0
   entityWeapon: 0
   entityDamage: 0
   attackSpeed: 0
@@ -263,6 +247,7 @@ MonoBehaviour:
   dirX: 0
   dirFacing: 0
   dirY: 0
+  allowJump: 0
   runVelocity: 0
   isGrounded: 0
   jumpForce: 0
@@ -279,6 +264,7 @@ MonoBehaviour:
   pathUpdateSec: 0.25
   currentWaypoint: 0
   nextWayPointDistance: 0
+  isChasing: 0
   doSleep: 0
   isAwake: 1
   sleepStartTime: 0
@@ -289,7 +275,8 @@ MonoBehaviour:
   awakeTaskLimit: 1
   sleepParticle: {fileID: 7112013099995435950}
   isTriggered: 0
-  triggeredTime: 0
+  targetSeen: 0
+  unseenTime: 0
   forgivenessTime: 2
   triggerDistance: 3
   targetNodalDistance: 0
@@ -302,7 +289,6 @@ MonoBehaviour:
   edgeStuckAlphaError: 0.02
   edgeStuckTime: 0
   allowJumpAfter: 0.05
-  allowJump: 0
 --- !u!1 &5652105492173618530
 GameObject:
   m_ObjectHideFlags: 0

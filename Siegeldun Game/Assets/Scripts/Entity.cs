@@ -25,7 +25,6 @@ public class Entity : MonoBehaviour
     // Component Declaration
     public Rigidbody2D rBody;
     public SpriteRenderer sprite;
-    protected CircleCollider2D cirColl;
     protected BoxCollider2D boxColl;
     protected CapsuleCollider2D capColl;
     protected Animator anim;
@@ -34,7 +33,6 @@ public class Entity : MonoBehaviour
     {
         rBody = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-        cirColl = GetComponent<CircleCollider2D>();
         boxColl = GetComponent<BoxCollider2D>();
         capColl = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
@@ -44,6 +42,13 @@ public class Entity : MonoBehaviour
     // ========================================= Entity Properties =========================================
     protected string entityName;
     public bool isAlive = true;
+    public bool isBreakable;
+    protected bool isHurting;
+    protected bool isAttacking;
+    protected bool isDying;
+    protected string animationCurrentState;
+    protected string currentSprite;
+    protected int defaultFacing; // 1 is right, -1 is left, 0 when not attacking
 
     [Header("ENTITY PROPERTIES", order = 0)]
     [Header("Battle Mechanics", order = 1)]
@@ -93,10 +98,11 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float mvSpeedBoost = 0f;
     [SerializeField] protected float totalMvSpeed;
     [SerializeField] protected float dirX;
-    [SerializeField] protected int dirFacing;
+    [SerializeField] protected float dirFacing;
     [SerializeField] protected float dirY;
+    [SerializeField] protected bool allowJump;
     [SerializeField] protected float runVelocity;
-    [SerializeField] protected bool isGrounded;
+    [SerializeField] public bool isGrounded;
     [SerializeField] protected float jumpForce;
     [SerializeField] protected float jumpVelocity;
     protected float runAnimationSpeed;
@@ -178,7 +184,7 @@ public class Entity : MonoBehaviour
                 }
                 else
                 {
-                    hpHideTime += Time.deltaTime;
+                    hpHideTime += Time.deltaTime + ((attackDelay * 4) / 5);
                 }
             }
         }
@@ -287,10 +293,16 @@ public class Entity : MonoBehaviour
             }
             else
             {
-                anim.SetTrigger("hurt");
                 entityHp -= damageTaken;
-                Knockback(kbDir, knockbackedForce);
-
+                if (!isBreakable)
+                {
+                    if (Random.Range(1, 101) == 1)
+                    {
+                        lastAttack = Time.time;
+                        anim.SetTrigger("hurt");
+                        Knockback(kbDir, knockbackedForce);
+                    }
+                }
             }
         }
     }
@@ -305,15 +317,31 @@ public class Entity : MonoBehaviour
 
     private void Die()
     {
-        anim.SetBool("death", true);
         Debug.Log(entityName + " Dead!");
-        isAlive = false;
-        capColl.enabled = false;
-        cirColl.enabled = false;
-        boxColl.enabled = false;
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
-        // this.enabled = false;
-        //Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
+        if (!isBreakable)
+        {
+            anim.SetBool("death", true);
+            isAlive = false;
+        }
+    }
+
+    protected void ClearInstance()
+    {
+        if (capColl.enabled && rBody.velocity == new Vector2(0, 0))
+        {
+            capColl.enabled = false;
+            boxColl.enabled = false;
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+            
+            StartCoroutine(DestroyInstance());
+        }
+
+    }
+
+    private IEnumerator DestroyInstance()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
     }
 
 
