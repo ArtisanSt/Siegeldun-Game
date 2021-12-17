@@ -321,31 +321,11 @@ public class Entity : MonoBehaviour
 
     private void Die()
     {
-        if(!isBreakable)
+        Debug.Log(entityName + " Dead!");
+        if (!isBreakable)
         {
             anim.SetBool("death", true);
-            Debug.Log(entityName + " Dead!");
             isAlive = false;
-            capColl.enabled = false;
-            boxColl.enabled = false;
-            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
-            // this.enabled = false;
-            //Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
-
-            drop = true;
-        }
-        else
-        {
-            if(entityName == "Fire")
-            {
-                Destroy(gameObject);
-            }
-            if(entityName == "Crate")
-            {
-                drop = true;
-                anim.SetBool("death", true);
-                boxColl.enabled = false;
-            }
         }
         else
         {
