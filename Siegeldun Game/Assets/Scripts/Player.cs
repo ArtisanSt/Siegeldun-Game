@@ -15,6 +15,9 @@ public class Player : Entity
     protected float[] weaponStaminaCost = new float[] { 20f, 25f, 33f }; // Pseudo Stamina cost
     protected float[] weaponAttackSpeed = new float[] { 1.17f, .95f, .5f }; // Pseudo Attack Speed
 
+    // ITEM MECHANICS
+    private InventorySystem inventory;
+
     // Entity Properties Initialization
     private void EntityInitialization()
     {
@@ -68,6 +71,7 @@ public class Player : Entity
     {
         ComponentInitialization();
         EntityInitialization();
+        inventory = GetComponent<InventorySystem>();
     }
 
     // Updates Every Frame
@@ -199,10 +203,10 @@ public class Player : Entity
         }
 
         // Pseudo Damage Taken 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            TakeDamage(50, (sprite.flipX) ? 1 : -1, kbHorDisplacement);
-        }
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    TakeDamage(50, (sprite.flipX) ? 1 : -1, kbHorDisplacement);
+        //}
 
         // Pseudo Heal
         if (Input.GetKeyDown(KeyCode.E))

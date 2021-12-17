@@ -336,6 +336,7 @@ MonoBehaviour:
   sprite: {fileID: 2527850889189109507}
   isAlive: 1
   isBreakable: 0
+  drop: 0
   entityWeapon: 0
   entityDamage: 0
   attackSpeed: 0
@@ -406,6 +407,8 @@ MonoBehaviour:
   edgeStuckTime: 0
   allowJumpAfter: 0.05
   allowJump: 0
+  itemPrefab: {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
+  dropChance: 0
 --- !u!1 &2527850889268182320
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    public GameObject itemPrefab;
+    public string itemName;
     public string itemType;
     public int amount = 0;
+
+    public List<string> itemTypes = new List<string>()
+    {
+        "Consumable",
+        "Weapon"
+    };
 }
