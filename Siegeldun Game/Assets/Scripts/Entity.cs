@@ -29,6 +29,9 @@ public class Entity : MonoBehaviour
     protected CapsuleCollider2D capColl;
     protected Animator anim;
 
+    private enum MovementAnim { idle, run, jump, fall };
+    private MovementAnim state;
+
     protected void ComponentInitialization()
     {
         rBody = GetComponent<Rigidbody2D>();
@@ -361,6 +364,83 @@ public class Entity : MonoBehaviour
                 this.maxHpScaling = new float[] { 100f, 200f, 400f };
                 this.healthRegenScaling = new float[] { .01f, .005f, .001f };
                 break;
+        }
+    }
+
+
+    // ========================================= MOVEMENT METHODS =========================================
+    protected void Movement()
+    {
+        // Horizontal Movement
+        knockbackFacing = (isKnockbacked) ? kbDir : 0; // Knockback Effect
+        dirX = (isAttacking) ? dirX * slowDownConst : dirFacing; // Front movement with a slowdown effect when attacking
+        totalMvSpeed = mvSpeed + mvSpeedBoost;
+        runVelocity = (isAlive) ? ((dirX * totalMvSpeed) + (knockbackFacing * knockbackedForce)) : dirX * slowDownConst;
+
+        // Vertical Movement
+        isGrounded = capColl.IsTouchingLayers(groundLayers) || capColl.IsTouchingLayers(enemyLayers);
+        dirY = allowJump ? jumpForce : ((0f < rBody.velocity.y && rBody.velocity.y < 0.001f) ? 0f : rBody.velocity.y);
+        jumpVelocity = (isGrounded) ? dirY : rBody.velocity.y;
+
+        rBody.velocity = new Vector2(runVelocity, jumpVelocity);
+    }
+
+
+    // ========================================= ANIMATION METHODS =========================================
+    protected void AnimationState()
+    {
+        currentSprite = sprite.sprite.name;
+        animationCurrentState = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
+        if (animationCurrentState == "Hurt")
+        {
+            isHurting = true;
+        }
+        else
+        {
+            isHurting = false;
+        }
+
+        if (animationCurrentState == "Attack")
+        {
+            isAttacking = true;
+            anim.speed = attackSpeed;
+        }
+        else
+        {
+            isAttacking = false;
+        }
+
+        if (isAlive)
+        {
+            if (!isHurting && !isAttacking && !isDying)
+            {
+                // Vertical Movement Animation
+                if (jumpVelocity > .99f)
+                {
+                    state = MovementAnim.jump;
+                }
+                else if (jumpVelocity < -1f)
+                {
+                    state = MovementAnim.fall;
+                }
+                else
+                {
+                    // Horizontal Movement Animation
+                    runAnimationSpeed = totalMvSpeed / mvSpeed;
+                    if (dirX == 0)
+                    {
+                        state = MovementAnim.idle;
+                        anim.speed = animationSpeed;
+                    }
+                    else
+                    {
+                        state = MovementAnim.run;
+                        anim.speed = runAnimationSpeed;
+                        transform.localScale = new Vector3(((dirX > 0f) ? 1 : -1) * defaultFacing, 1, 1);
+                    }
+                }
+            }
+            anim.SetInteger("state", (int)state);
         }
     }
 }

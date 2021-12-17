@@ -10,11 +10,6 @@ public class EnemyAIv2 : Entity
     // ========================================= UNITY PROPERTIES =========================================
     // Component Declaration
     private Seeker seeker;
-    private enum MovementAnim { idle, run, jump, fall };
-    private MovementAnim state;
-
-    protected Collision2D collisionWith;
-
 
     [Header("Pathfinding", order = 1)]
     private Path path;
@@ -119,7 +114,8 @@ public class EnemyAIv2 : Entity
             ClearInstance();
         }
 
-        Movement(); // Updates the movements of the AI
+        Controller();
+        Movement();
         AnimationState(); // Updates the Animation of the Entity
     }
 
@@ -319,7 +315,7 @@ public class EnemyAIv2 : Entity
         }
     }
 
-    private void Movement()
+    private void Controller()
     {
         // Anti-glitching code when target is on unreacheable location
         if ((Mathf.Abs(target.position.y - rBody.position.y) > 1) && (Mathf.Abs(target.position.x - rBody.position.x) < backOffDistance))
@@ -354,8 +350,8 @@ public class EnemyAIv2 : Entity
             }
         }
 
-        inProximity = (targetAlive) ? ((targetNodalDistance < backOffDistance) ? -1 : ((targetNodalDistance >= backOffDistance && targetNodalDistance <= stayDistance) ? 0 : 1)) : 1;
         // Horizontal Parameter
+        inProximity = (targetAlive) ? ((targetNodalDistance < backOffDistance) ? -1 : ((targetNodalDistance >= backOffDistance && targetNodalDistance <= stayDistance) ? 0 : 1)) : 1;
         if (isTriggered)
         {
             if (target.GetComponent<Player>().isGrounded || (!target.GetComponent<Player>().isGrounded && Mathf.Abs(target.position.x - rBody.position.x) >= stayDistance))
@@ -375,19 +371,6 @@ public class EnemyAIv2 : Entity
         }
         lastXPosition = rBody.position.x; // Updates the last X position of the AI
 
-        // Horizontal Movement
-        knockbackFacing = (isKnockbacked) ? kbDir : 0; // Knockback Effect
-        dirX = (attacking) ? dirX * slowDownConst : dirFacing; // Front movement with a slowdown effect when attacking
-        totalMvSpeed = ((isTriggered) ? mvSpeed : wanderMvSpeed) + mvSpeedBoost; // Run when triggered but walk when wandering
-        runVelocity = ((isAlive) ? ((dirX * totalMvSpeed) + (knockbackFacing * knockbackedForce)) : 0);
-
-        // Vertical Movement
-        isGrounded = capColl.IsTouchingLayers(groundLayers);
-        dirY = allowJump ? jumpForce : ((0f < rBody.velocity.y && rBody.velocity.y < 0.001f) ? 0f : rBody.velocity.y);
-        jumpVelocity = (jumpEnabled && isGrounded) ? dirY : rBody.velocity.y;
-
-        rBody.velocity = new Vector2(runVelocity, jumpVelocity);
-
         if (isAlive)
         {
             // Attack Code
@@ -395,65 +378,6 @@ public class EnemyAIv2 : Entity
             {
                 Attack();
             }
-        }
-    }
-
-
-    // ========================================= ANIMATION METHODS =========================================
-    private void AnimationState()
-    {
-        currentSprite = sprite.sprite.name;
-        animationCurrentState = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
-        if (animationCurrentState == "Hurt")
-        {
-            isHurting = true;
-        }
-        else
-        {
-            isHurting = false;
-        }
-
-        if (animationCurrentState == "Attack")
-        {
-            isAttacking = true;
-            anim.speed = attackSpeed;
-        }
-        else
-        {
-            isAttacking = false;
-        }
-
-        if (isAlive)
-        {
-            if (!isHurting && !isAttacking && !isDying)
-            {
-                // Vertical Movement Animation
-                if (jumpVelocity > .99f)
-                {
-                    state = MovementAnim.jump;
-                }
-                else if (jumpVelocity < -1f)
-                {
-                    state = MovementAnim.fall;
-                }
-                else
-                {
-                    // Horizontal Movement Animation
-                    runAnimationSpeed = totalMvSpeed / mvSpeed;
-                    if (dirX == 0)
-                    {
-                        state = MovementAnim.idle;
-                        anim.speed = animationSpeed;
-                    }
-                    else
-                    {
-                        state = MovementAnim.run;
-                        anim.speed = runAnimationSpeed;
-                        transform.localScale = new Vector3(((dirX > 0f) ? 1 : -1) * defaultFacing, 1, 1);
-                    }
-                }
-            }
-            anim.SetInteger("state", (int)state);
         }
     }
 }

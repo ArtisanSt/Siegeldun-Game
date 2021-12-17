@@ -5,10 +5,7 @@ using UnityEngine;
 public class Player : Entity
 {
     // ========================================= UNITY PROPERTIES =========================================
-    // Component Declaration
-    private enum MovementAnim { idle, run, jump, fall};
-    private float[] animationTime = new float[9]; 
-    private MovementAnim state;
+    private float[] animationTime = new float[9];
 
 
 
@@ -126,6 +123,7 @@ public class Player : Entity
         }
 
         Controller();
+        Movement();
         AnimationState();
         HealthBarUpdate();
         StaminaBarUpdate();
@@ -197,20 +195,12 @@ public class Player : Entity
     // ========================================= CONTROLLER METHODS =========================================
     private void Controller()
     {
-        // Horizontal Movement
-        knockbackFacing = (isKnockbacked) ? kbDir : 0; // Knockback Effect
-        dirFacing = (isAlive) ? Input.GetAxisRaw("Horizontal") : 0;
-        dirX = (isAttacking) ? dirX * slowDownConst : dirFacing; // Front movement with a slowdown effect when attacking
-        totalMvSpeed = mvSpeed + mvSpeedBoost;
-        runVelocity = (isAlive) ? ((dirX * totalMvSpeed) + (knockbackFacing * knockbackedForce)) : dirX * slowDownConst;
-
         // Vertical Movement
-        isGrounded = capColl.IsTouchingLayers(groundLayers) || capColl.IsTouchingLayers(enemyLayers);
         allowJump = (isAlive) ? Input.GetButtonDown("Jump") : false;
-        dirY = allowJump ? jumpForce : ((0f < rBody.velocity.y && rBody.velocity.y < 0.001f) ? 0f : rBody.velocity.y);
-        jumpVelocity = (isGrounded) ? dirY : rBody.velocity.y;
 
-        rBody.velocity = new Vector2(runVelocity, jumpVelocity);
+        // Horizontal Movement
+        dirFacing = (isAlive) ? Input.GetAxisRaw("Horizontal") : 0;
+
         if (isAlive)
         {
             // Attack Code
@@ -242,65 +232,6 @@ public class Player : Entity
                 HpRegen(20f, "instant");
                 StamRegen(20f, "instant");
             }
-        }
-    }
-
-
-    // ========================================= ANIMATION METHODS =========================================
-    private void AnimationState()
-    {
-        currentSprite = sprite.sprite.name;
-        animationCurrentState = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
-        if (animationCurrentState == "Hurt")
-        {
-            isHurting = true;
-        }
-        else
-        {
-            isHurting = false;
-        }
-
-        if (animationCurrentState == "Attack_1" || animationCurrentState == "Attack_2" || animationCurrentState == "Attack_3")
-        {
-            isAttacking = true;
-            anim.speed = attackSpeed;
-        }
-        else
-        {
-            isAttacking = false;
-        }
-
-        if (isAlive)
-        {
-            if (!isHurting && !isAttacking && !isDying)
-            {
-                // Vertical Movement Animation
-                if (jumpVelocity > .99f)
-                {
-                    state = MovementAnim.jump;
-                }
-                else if (jumpVelocity < -1f)
-                {
-                    state = MovementAnim.fall;
-                }
-                else
-                {
-                    // Horizontal Movement Animation
-                    runAnimationSpeed = totalMvSpeed / mvSpeed;
-                    if (dirX == 0)
-                    {
-                        state = MovementAnim.idle;
-                        anim.speed = animationSpeed;
-                    }
-                    else
-                    {
-                        state = MovementAnim.run;
-                        anim.speed = runAnimationSpeed;
-                        transform.localScale = new Vector3(((dirX > 0f) ? 1 : -1) * defaultFacing, 1, 1);
-                    }
-                }
-            }
-            anim.SetInteger("state", (int)state);
         }
     }
 
