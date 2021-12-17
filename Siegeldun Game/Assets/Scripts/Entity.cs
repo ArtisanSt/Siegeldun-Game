@@ -347,6 +347,19 @@ public class Entity : MonoBehaviour
                 boxColl.enabled = false;
             }
         }
+        else
+        {
+            if (entityName == "Fire")
+            {
+                Destroy(gameObject);
+            }
+            if (entityName == "Crate")
+            {
+                drop = true;
+                anim.SetBool("death", true);
+                boxColl.enabled = false;
+            }
+        }
     }
 
     protected void ClearInstance()
