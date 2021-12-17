@@ -203,7 +203,7 @@ public class Player : Entity
         if (isAlive)
         {
             // Attack Code
-            if (Input.GetKeyDown(KeyCode.Mouse0) && !isAttacking && !isHurting && Time.time - lastAttack > attackDelay && EqWeaponStamCost <= entityStam)
+            if (Input.GetKeyDown(KeyCode.Mouse1) && !isAttacking && !isHurting && Time.time - lastAttack > attackDelay && EqWeaponStamCost <= entityStam)
             {
                 Attack();
             }

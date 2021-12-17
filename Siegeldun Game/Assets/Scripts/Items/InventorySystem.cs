@@ -7,7 +7,6 @@ public class InventorySystem : MonoBehaviour
     // Inventory
     public GameObject[] slots;
     private GameObject playerEntity;
-    public Item forConsumption;
     public Dictionary<string, int> inventoryItems = new Dictionary<string, int>();
     public bool[] isFull;
     private Item item;

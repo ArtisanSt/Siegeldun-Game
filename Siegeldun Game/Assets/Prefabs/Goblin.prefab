@@ -392,7 +392,7 @@ MonoBehaviour:
   edgeStuckAlphaError: 0.02
   edgeStuckTime: 0
   allowJumpAfter: 0.05
-  itemPrefab: {fileID: 0}
+  itemPrefab: {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
   dropChance: 0
 --- !u!1 &2527850889268182320
 GameObject:
