@@ -52,6 +52,7 @@ public class Entity : MonoBehaviour
     protected string animationCurrentState;
     protected string currentSprite;
     protected int defaultFacing; // 1 is right, -1 is left, 0 when not attacking
+    public bool drop = false;
 
     [Header("ENTITY PROPERTIES", order = 0)]
     [Header("Battle Mechanics", order = 1)]
@@ -347,6 +348,15 @@ public class Entity : MonoBehaviour
         Destroy(gameObject);
     }
 
+
+    // ========================================= GAMEPLAY METHODS INITIALIZATION =====================================
+    public void Drop(GameObject itemPrefab, int chance, float xPos)
+    {
+        if(Random.Range(1,chance + 1) == chance)
+        {
+            Instantiate(itemPrefab, new Vector3(transform.position.x + xPos,transform.position.y,0), Quaternion.identity);
+        }
+    }
 
     // ========================================= ENTITY STATS INITIALIZATION =========================================
     protected void EntityStatsInitialization(string entityName)

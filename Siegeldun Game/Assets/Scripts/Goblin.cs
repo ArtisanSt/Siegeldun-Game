@@ -54,6 +54,9 @@ public class Goblin : EnemyAIv2
         forgivenessTime = 3f;
         triggerDistance = 5f;
         jumpEnabled = true;
+
+        // Item Drop Parameters
+        dropChance = 3;
     }
 
     // Start is called before the first frame update
@@ -67,6 +70,7 @@ public class Goblin : EnemyAIv2
     void Update()
     {
         EnemyNPCUpdate();
+        DropItem();
     }
     // Updates Every Physics Frame
     void FixedUpdate()

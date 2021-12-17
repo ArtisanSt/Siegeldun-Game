@@ -11,9 +11,8 @@ public class Player : Entity
 
     // ========================================= ENTITY PROPERTIY SCALING =========================================
     // Battle Mechanics
-    protected float[] weaponStaminaCost = new float[] { 5f, 8f, 10f }; // Pseudo Stamina cost
-    protected float[] weaponAttackSpeed = new float[] { .5f, .95f, .5f }; // Pseudo Attack Speed
-
+    protected float[] weaponStaminaCost = new float[] { 20f, 25f, 33f }; // Pseudo Stamina cost
+    protected float[] weaponAttackSpeed = new float[] { 1.17f, .95f, .5f }; // Pseudo Attack Speed
 
     // Entity Properties Initialization
     private void EntityInitialization()
@@ -28,7 +27,7 @@ public class Player : Entity
         entityWeapon = 0; // Pseudo Weapon Index
         entityDamage = 30f; // Pseudo Damage
         attackSpeed = 1 / weaponAttackSpeed[idxDiff];
-        attackDelay = (1 / attackSpeed) + .1f;
+        attackDelay = 0.3f; //(1 / attackSpeed) + .1f;
         lastAttack = 0f;
         attackCombo = 1;
         comboTime = 0f;
@@ -54,7 +53,7 @@ public class Player : Entity
         maxStam = maxStamScaling[idxDiff];
         entityStam = maxStam;
         stamRegenAllowed = true;
-        stamRegen = stamRegenScaling[idxDiff];
+        stamRegen = 0.13f; //stamRegenScaling[idxDiff];
 
         // Movement Initialization
         mvSpeed = 7.4f;

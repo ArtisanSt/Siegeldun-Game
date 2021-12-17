@@ -51,6 +51,10 @@ public class EnemyAIv2 : Entity
 
     protected bool glitchEscape;
 
+    [Header("Item Drop", order = 1)]
+    [SerializeField] GameObject itemPrefab;
+    [SerializeField] public int dropChance;
+
 
 
     // Enemy NPC Properties Initialization
@@ -378,6 +382,17 @@ public class EnemyAIv2 : Entity
             {
                 Attack();
             }
+        }
+    }
+
+
+        // ========================================= DROP METHODS =========================================
+    protected void DropItem()
+    {
+        if(drop == true)
+        {
+            Drop(itemPrefab, dropChance, 1);
+            drop = false;
         }
     }
 }

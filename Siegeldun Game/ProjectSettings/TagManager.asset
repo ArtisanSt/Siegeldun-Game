@@ -6,7 +6,9 @@ TagManager:
   tags:
   - Ground
   - Enemy
-  - Entity
+  - Item
+  - Region
+  - Player Event Collider
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - Ground
   - Enemy
   - Player
-  - CollisionBlocker
+  - Breakable
   - 
   - 
   - 
