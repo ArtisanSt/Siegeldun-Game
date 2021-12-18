@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Potion : Item
 {
-    // Start is called before the first frame update
     void Start()
     {
-        itemType = "Health_Potion";
+        itemName = "Health_Potion";
+        itemType = itemTypes[0];
     }
 }

@@ -45,7 +45,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.117777705
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -98,7 +98,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.19592571
   m_TransitionOffset: 0
   m_ExitTime: 0.9968397
-  m_HasExitTime: 0
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -123,7 +123,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.19592571
   m_TransitionOffset: 0
   m_ExitTime: 0.9968397
-  m_HasExitTime: 0
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -173,7 +173,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.16716051
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -298,7 +298,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.18262666
   m_TransitionOffset: 0
   m_ExitTime: 0.65000004
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -427,7 +427,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.12160498
   m_TransitionOffset: 0
   m_ExitTime: 0.65000004
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -452,7 +452,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.09250313
   m_TransitionOffset: 0
   m_ExitTime: 0.99831456
-  m_HasExitTime: 0
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -523,7 +523,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.12785631
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -590,7 +590,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.17012346
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -615,7 +615,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.19592571
   m_TransitionOffset: 0
   m_ExitTime: 0.9968397
-  m_HasExitTime: 0
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -752,7 +752,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.19592571
   m_TransitionOffset: 0
   m_ExitTime: 0.9968397
-  m_HasExitTime: 0
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1

@@ -112,12 +112,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2527850889189109532}
   - component: {fileID: 2527850889189109507}
-  - component: {fileID: 2527850889189109506}
+  - component: {fileID: 2527850889189109509}
+  - component: {fileID: 2527850889189109511}
   - component: {fileID: 2527850889189109505}
   - component: {fileID: 2527850889189109504}
-  - component: {fileID: 2527850889189109511}
   - component: {fileID: 2527850889189109510}
-  - component: {fileID: 2527850889189109509}
   - component: {fileID: 2527850889189109508}
   m_Layer: 7
   m_Name: Goblin
@@ -194,22 +193,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &2527850889189109506
-CircleCollider2D:
+--- !u!95 &2527850889189109509
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2527850889189109515}
   m_Enabled: 1
-  m_Density: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 734d63865ddf2b04f835676ef01d5938, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &2527850889189109511
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2527850889189109515}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 20
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 6
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.06750858, y: 0.39626044}
-  serializedVersion: 2
-  m_Radius: 0.17933476
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!70 &2527850889189109505
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -252,27 +275,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.41350794, y: 0.8148539}
   m_EdgeRadius: 0
---- !u!50 &2527850889189109511
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2527850889189109515}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 20
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 6
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
 --- !u!114 &2527850889189109510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,25 +303,6 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!95 &2527850889189109509
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2527850889189109515}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 734d63865ddf2b04f835676ef01d5938, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &2527850889189109508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +319,7 @@ MonoBehaviour:
   sprite: {fileID: 2527850889189109507}
   isAlive: 1
   isBreakable: 0
+  drop: 0
   entityWeapon: 0
   entityDamage: 0
   attackSpeed: 0
@@ -366,6 +350,7 @@ MonoBehaviour:
   dirX: 0
   dirFacing: 0
   dirY: 0
+  allowJump: 0
   runVelocity: 0
   isGrounded: 0
   jumpForce: 0
@@ -382,6 +367,7 @@ MonoBehaviour:
   pathUpdateSec: 0.25
   currentWaypoint: 0
   nextWayPointDistance: 0
+  isChasing: 0
   doSleep: 0
   isAwake: 1
   sleepStartTime: 0
@@ -392,7 +378,8 @@ MonoBehaviour:
   awakeTaskLimit: 1
   sleepParticle: {fileID: 2527850889312788275}
   isTriggered: 0
-  triggeredTime: 0
+  targetSeen: 0
+  unseenTime: 0
   forgivenessTime: 2
   triggerDistance: 3
   targetNodalDistance: 0
@@ -405,7 +392,8 @@ MonoBehaviour:
   edgeStuckAlphaError: 0.02
   edgeStuckTime: 0
   allowJumpAfter: 0.05
-  allowJump: 0
+  itemPrefab: {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
+  dropChance: 0
 --- !u!1 &2527850889268182320
 GameObject:
   m_ObjectHideFlags: 0

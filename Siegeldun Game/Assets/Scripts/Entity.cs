@@ -25,16 +25,17 @@ public class Entity : MonoBehaviour
     // Component Declaration
     public Rigidbody2D rBody;
     public SpriteRenderer sprite;
-    protected CircleCollider2D cirColl;
     protected BoxCollider2D boxColl;
     protected CapsuleCollider2D capColl;
     protected Animator anim;
+
+    private enum MovementAnim { idle, run, jump, fall };
+    private MovementAnim state;
 
     protected void ComponentInitialization()
     {
         rBody = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-        cirColl = GetComponent<CircleCollider2D>();
         boxColl = GetComponent<BoxCollider2D>();
         capColl = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
@@ -45,6 +46,12 @@ public class Entity : MonoBehaviour
     protected string entityName;
     public bool isAlive = true;
     public bool isBreakable;
+    protected bool isHurting;
+    protected bool isAttacking;
+    protected bool isDying;
+    protected string animationCurrentState;
+    protected string currentSprite;
+    protected int defaultFacing; // 1 is right, -1 is left, 0 when not attacking
     public bool drop = false;
 
     [Header("ENTITY PROPERTIES", order = 0)]
@@ -95,10 +102,11 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float mvSpeedBoost = 0f;
     [SerializeField] protected float totalMvSpeed;
     [SerializeField] protected float dirX;
-    [SerializeField] protected int dirFacing;
+    [SerializeField] protected float dirFacing;
     [SerializeField] protected float dirY;
+    [SerializeField] protected bool allowJump;
     [SerializeField] protected float runVelocity;
-    [SerializeField] protected bool isGrounded;
+    [SerializeField] public bool isGrounded;
     [SerializeField] protected float jumpForce;
     [SerializeField] protected float jumpVelocity;
     protected float runAnimationSpeed;
@@ -180,7 +188,7 @@ public class Entity : MonoBehaviour
                 }
                 else
                 {
-                    hpHideTime += Time.deltaTime;
+                    hpHideTime += Time.deltaTime + ((attackDelay * 4) / 5);
                 }
             }
         }
@@ -289,13 +297,16 @@ public class Entity : MonoBehaviour
             }
             else
             {
-                if(!isBreakable)
-                {
-                    anim.SetTrigger("hurt");
-                }
                 entityHp -= damageTaken;
-                Knockback(kbDir, knockbackedForce);
-
+                if (!isBreakable)
+                {
+                    if (Random.Range(1, 101) == 1)
+                    {
+                        lastAttack = Time.time;
+                        anim.SetTrigger("hurt");
+                        Knockback(kbDir, knockbackedForce);
+                    }
+                }
             }
         }
     }
@@ -310,33 +321,43 @@ public class Entity : MonoBehaviour
 
     private void Die()
     {
-        if(!isBreakable)
+        Debug.Log(entityName + " Dead!");
+        if (!isBreakable)
         {
             anim.SetBool("death", true);
-            Debug.Log(entityName + " Dead!");
             isAlive = false;
-            capColl.enabled = false;
-            cirColl.enabled = false;
-            boxColl.enabled = false;
-            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
-            // this.enabled = false;
-            //Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
-
-            drop = true;
         }
         else
         {
-            if(entityName == "Fire")
+            if (entityName == "Fire")
             {
                 Destroy(gameObject);
             }
-            if(entityName == "Crate")
+            if (entityName == "Crate")
             {
                 drop = true;
                 anim.SetBool("death", true);
                 boxColl.enabled = false;
             }
         }
+    }
+
+    protected void ClearInstance()
+    {
+        if (capColl.enabled && rBody.velocity == new Vector2(0, 0))
+        {
+            capColl.enabled = false;
+            boxColl.enabled = false;
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+
+            StartCoroutine(DestroyInstance());
+        }
+    }
+
+    private IEnumerator DestroyInstance()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
     }
 
 
@@ -365,6 +386,83 @@ public class Entity : MonoBehaviour
                 this.maxHpScaling = new float[] { 100f, 200f, 400f };
                 this.healthRegenScaling = new float[] { .01f, .005f, .001f };
                 break;
+        }
+    }
+
+
+    // ========================================= MOVEMENT METHODS =========================================
+    protected void Movement()
+    {
+        // Horizontal Movement
+        knockbackFacing = (isKnockbacked) ? kbDir : 0; // Knockback Effect
+        dirX = (isAttacking) ? dirX * slowDownConst : dirFacing; // Front movement with a slowdown effect when attacking
+        totalMvSpeed = mvSpeed + mvSpeedBoost;
+        runVelocity = (isAlive) ? ((dirX * totalMvSpeed) + (knockbackFacing * knockbackedForce)) : dirX * slowDownConst;
+
+        // Vertical Movement
+        isGrounded = capColl.IsTouchingLayers(groundLayers) || capColl.IsTouchingLayers(enemyLayers);
+        dirY = allowJump ? jumpForce : ((0f < rBody.velocity.y && rBody.velocity.y < 0.001f) ? 0f : rBody.velocity.y);
+        jumpVelocity = (isGrounded) ? dirY : rBody.velocity.y;
+
+        rBody.velocity = new Vector2(runVelocity, jumpVelocity);
+    }
+
+
+    // ========================================= ANIMATION METHODS =========================================
+    protected void AnimationState()
+    {
+        currentSprite = sprite.sprite.name;
+        animationCurrentState = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
+        if (animationCurrentState == "Hurt")
+        {
+            isHurting = true;
+        }
+        else
+        {
+            isHurting = false;
+        }
+
+        if (animationCurrentState == "Attack")
+        {
+            isAttacking = true;
+            anim.speed = attackSpeed;
+        }
+        else
+        {
+            isAttacking = false;
+        }
+
+        if (isAlive)
+        {
+            if (!isHurting && !isAttacking && !isDying)
+            {
+                // Vertical Movement Animation
+                if (jumpVelocity > .99f)
+                {
+                    state = MovementAnim.jump;
+                }
+                else if (jumpVelocity < -1f)
+                {
+                    state = MovementAnim.fall;
+                }
+                else
+                {
+                    // Horizontal Movement Animation
+                    runAnimationSpeed = totalMvSpeed / mvSpeed;
+                    if (dirX == 0)
+                    {
+                        state = MovementAnim.idle;
+                        anim.speed = animationSpeed;
+                    }
+                    else
+                    {
+                        state = MovementAnim.run;
+                        anim.speed = runAnimationSpeed;
+                        transform.localScale = new Vector3(((dirX > 0f) ? 1 : -1) * defaultFacing, 1, 1);
+                    }
+                }
+            }
+            anim.SetInteger("state", (int)state);
         }
     }
 }
