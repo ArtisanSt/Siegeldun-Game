@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventorySystem : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class InventorySystem : MonoBehaviour
 
     // Game Parameters
     private bool pickUp;
+    private bool isOn;
 
     private void Start()
     {
@@ -25,22 +27,17 @@ public class InventorySystem : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            RemoveItem("Health_Potion");
-        }
-
         if (Input.GetKeyDown(KeyCode.R))
         {
-            RemoveItem("Sword");
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
             if(consumeSlot != null)
+            {
                 Consume(consumeSlot);
                 RemoveItem(consumeSlot);   
+            }
         }
+
+        if(consumeSlot == null)
+            Destroy(GameObject.Find("SlotB_Item"));
 
         pickUp = false;
     }
@@ -59,6 +56,7 @@ public class InventorySystem : MonoBehaviour
 
     private void AddItem(GameObject item)
     {
+        isOn = GameObject.Find("UI_System").GetComponent<UI_Events>().invOn;
         this.item = item.GetComponent<Item>();
 
         if(inventoryItems.ContainsKey(this.item.itemName))
@@ -79,6 +77,10 @@ public class InventorySystem : MonoBehaviour
 
                     GameObject icon = (GameObject)Instantiate(this.item.itemPrefab, slots[i].transform, false);
                     icon.name = this.item.itemName + "_Prefab";
+                    if(isOn)
+                        icon.GetComponent<Image>().enabled = true;
+                    else if(!isOn)
+                        icon.GetComponent<Image>().enabled = false;
 
                     Destroy(item);
                     break;
@@ -123,6 +125,10 @@ public class InventorySystem : MonoBehaviour
             case "Health_Potion":
                 playerEntity.GetComponent<Entity>().HpRegen(30f, "instant");
                 Debug.Log("+30 HP!");
+                break;
+            case "Stamina_Potion":
+                playerEntity.GetComponent<Entity>().StamRegen(30f, "instant");
+                Debug.Log("+30 Stamina!");
                 break;
         }
     }

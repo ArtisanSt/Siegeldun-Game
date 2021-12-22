@@ -46,9 +46,15 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         if (droppedOnSlot == false)
         {
             if(eventData.pointerDrag.GetComponent<Item>().itemName == inventory.consumeSlot)
+            {
                 inventory.consumeSlot = null;
+                Destroy(GameObject.Find("SlotB_Item"));
+            }
             if(eventData.pointerDrag.GetComponent<Item>().itemName == inventory.weaponSlot)
+            {
                 inventory.weaponSlot = null;
+                Destroy(GameObject.Find("SlotA_Item"));
+            }
             transform.position = defaultPos;
         }
     }

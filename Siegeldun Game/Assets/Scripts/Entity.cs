@@ -325,6 +325,7 @@ public class Entity : MonoBehaviour
         if (!isBreakable)
         {
             anim.SetBool("death", true);
+            drop = true;
             isAlive = false;
         }
         else
@@ -383,6 +384,10 @@ public class Entity : MonoBehaviour
                 this.stamRegenScaling = new float[] { .01f, .005f, .001f };
                 break;
             case "Goblin":
+                this.maxHpScaling = new float[] { 100f, 200f, 400f };
+                this.healthRegenScaling = new float[] { .01f, .005f, .001f };
+                break;
+            case "Crawler":
                 this.maxHpScaling = new float[] { 100f, 200f, 400f };
                 this.healthRegenScaling = new float[] { .01f, .005f, .001f };
                 break;

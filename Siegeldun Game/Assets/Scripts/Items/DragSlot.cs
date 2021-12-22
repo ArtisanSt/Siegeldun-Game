@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class DragSlot : MonoBehaviour, IDropHandler
@@ -22,15 +23,31 @@ public class DragSlot : MonoBehaviour, IDropHandler
             eventData.pointerDrag.transform.position = this.transform.position;
 
             if(transform.name == "Main_SlotB")
+            {
                 if(eventData.pointerDrag.GetComponent<Item>().itemType == "Consumable")
+                {
                     inventory.consumeSlot = eventData.pointerDrag.GetComponent<Item>().itemName;
+                    GameObject icon = (GameObject)Instantiate(eventData.pointerDrag, transform, false);
+                    icon.transform.position = this.transform.position;
+                    icon.name = "SlotB_Item";
+                    icon.GetComponent<CanvasGroup>().alpha = 1f;
+                }
                 else
                     eventData.pointerDrag.GetComponent<DragDrop>().droppedOnSlot = false;
+            }
             else if(transform.name == "Main_SlotA")
+            {
                 if(eventData.pointerDrag.GetComponent<Item>().itemType == "Weapon")
-                    inventory.weaponSlot = eventData.pointerDrag.GetComponent<Item>().itemName;
+                {
+                    inventory.consumeSlot = eventData.pointerDrag.GetComponent<Item>().itemName;
+                    GameObject icon = (GameObject)Instantiate(eventData.pointerDrag, transform, false);
+                    icon.transform.position = this.transform.position;
+                    icon.name = "SlotA_Item";
+                    icon.GetComponent<CanvasGroup>().alpha = 1f;
+                }
                 else
                     eventData.pointerDrag.GetComponent<DragDrop>().droppedOnSlot = false;
+            }
             //Debug.Log(eventData.pointerDrag.name);
         }
     }

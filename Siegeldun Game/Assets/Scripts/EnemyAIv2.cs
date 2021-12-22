@@ -97,6 +97,7 @@ public class EnemyAIv2 : Entity
         if (isAlive)
         {
             PassiveSkills(hpRegenAllowed, stamRegenAllowed, forgivenessTime, !isTriggered);
+            
         }
         HealthBarUpdate();
     }
@@ -111,7 +112,6 @@ public class EnemyAIv2 : Entity
         }
         else
         {
-            DropItem();
             ClearInstance();
         }
 
@@ -388,6 +388,7 @@ public class EnemyAIv2 : Entity
     {
         if(drop == true)
         {
+            Debug.Log(dropChance);
             Drop(itemPrefab, dropChance, 1);
             drop = false;
         }
