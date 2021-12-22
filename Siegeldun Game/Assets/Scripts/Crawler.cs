@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Goblin : EnemyAIv2
+public class Crawler : EnemyAIv2
 {
 
     // Enemy NPC Properties Initialization
-    protected void GoblinInitialization()
+    protected void CrawlerInitialization()
     {
-        entityName = "Goblin";
+        entityName = "Crawler";
         defaultFacing = -1;
         EntityStatsInitialization(entityName);
 
         // Battle Initialization
         entityWeapon = 0; // Pseudo Weapon Index
         entityDamage = 20f;
-        attackSpeed = .85f;
+        attackSpeed = .3f;
         attackDelay = 2f;
         lastAttack = 0f;
         attackRange = 0.3f; // Pseudo Weapon Range
@@ -62,7 +62,7 @@ public class Goblin : EnemyAIv2
     // Start is called before the first frame update
     void Start()
     {
-        GoblinInitialization();
+        CrawlerInitialization();
         EnemyNPCStart();
     }
 
