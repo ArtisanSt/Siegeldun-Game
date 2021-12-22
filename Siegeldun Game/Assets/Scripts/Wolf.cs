@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Crawler : EnemyAIv2
+public class Wolf : EnemyAIv2
 {
 
     // Enemy NPC Properties Initialization
     protected void CrawlerInitialization()
     {
-        entityName = "Crawler";
+        entityName = "Wolf";
         defaultFacing = -1;
         EntityStatsInitialization(entityName);
 
