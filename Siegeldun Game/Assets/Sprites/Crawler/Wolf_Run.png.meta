@@ -114,8 +114,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 96
-        height: 48
+        width: 112
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,10 +133,10 @@ TextureImporter:
       name: Wolf_Run_1
       rect:
         serializedVersion: 2
-        x: 96
+        x: 112
         y: 0
-        width: 96
-        height: 48
+        width: 112
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,10 +154,10 @@ TextureImporter:
       name: Wolf_Run_2
       rect:
         serializedVersion: 2
-        x: 192
+        x: 224
         y: 0
-        width: 96
-        height: 48
+        width: 112
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,10 +175,10 @@ TextureImporter:
       name: Wolf_Run_3
       rect:
         serializedVersion: 2
-        x: 288
+        x: 336
         y: 0
-        width: 96
-        height: 48
+        width: 112
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -196,10 +196,10 @@ TextureImporter:
       name: Wolf_Run_4
       rect:
         serializedVersion: 2
-        x: 384
+        x: 448
         y: 0
-        width: 96
-        height: 48
+        width: 112
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -217,10 +217,10 @@ TextureImporter:
       name: Wolf_Run_5
       rect:
         serializedVersion: 2
-        x: 480
+        x: 560
         y: 0
-        width: 96
-        height: 48
+        width: 112
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
