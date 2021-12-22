@@ -12,7 +12,7 @@ public class Player : Entity
     // ========================================= ENTITY PROPERTIY SCALING =========================================
     // Battle Mechanics
     protected float[] weaponStaminaCost = new float[] { 20f, 25f, 33f }; // Pseudo Stamina cost
-    protected float[] weaponAttackSpeed = new float[] { 1.17f, .95f, .5f }; // Pseudo Attack Speed
+    protected float[] weaponAttackSpeed = new float[] { .5f, 1.17f, .95f }; // Pseudo Attack Speed
 
     // Entity Properties Initialization
     private void EntityInitialization()
@@ -26,8 +26,10 @@ public class Player : Entity
         // Battle Initialization
         entityWeapon = 0; // Pseudo Weapon Index
         entityDamage = 30f; // Pseudo Damage
-        attackSpeed = 1 / weaponAttackSpeed[idxDiff];
+        attackSpeed = weaponAttackSpeed[idxDiff];
         attackDelay = 0.3f; //(1 / attackSpeed) + .1f;
+        critHit = .3f; // Pseudo critHit
+        critChance = 100; // Pseudo critChance
         lastAttack = 0f;
         attackCombo = 1;
         comboTime = 0f;
@@ -128,6 +130,12 @@ public class Player : Entity
         StaminaBarUpdate();
     }
 
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+
+    }
+
+
     // ========================================= PLAYER METHODS =========================================
     // Damage Give
     private void Attack()
@@ -138,13 +146,15 @@ public class Player : Entity
         entityStam -= EqWeaponStamCost;
         lastAttack = Time.time;
         attackCombo = (attackCombo == 3) ? 1 : attackCombo + 1;
+        isCrit = Random.Range(1, critChance + 1) == 1;
+        float totalDamage = (entityDamage * (1 + critHit)) / 3;
 
         // Collision Sensing
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
             int kbDir = (enemy.GetComponent<Rigidbody2D>().position.x > rBody.position.x) ? 1 : -1;
-            enemy.GetComponent<Entity>().TakeDamage(entityDamage / 3, kbDir, weaponKbForce);
+            enemy.GetComponent<Entity>().TakeDamage(totalDamage, kbDir, weaponKbForce, isCrit);
         }
     }
 
@@ -224,13 +234,15 @@ public class Player : Entity
             {
                 TakeDamage(50, (sprite.flipX) ? 1 : -1, kbHorDisplacement);
             }
-
+            
+            /*
             // Pseudo Heal
             if (Input.GetKeyDown(KeyCode.E))
             {
                 HpRegen(20f, "instant");
                 StamRegen(20f, "instant");
             }
+            */
         }
     }
 

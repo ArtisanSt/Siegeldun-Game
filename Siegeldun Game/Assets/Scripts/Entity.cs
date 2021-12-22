@@ -60,6 +60,9 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float entityDamage;
     [SerializeField] protected float attackSpeed;
     [SerializeField] protected float attackDelay;
+    protected bool isCrit;
+    protected float critHit;
+    protected int critChance;
     protected float lastAttack;
     protected int attackCombo;
     protected float comboTime;
@@ -285,7 +288,7 @@ public class Entity : MonoBehaviour
 
     // ========================================= ENTITY METHODS =========================================
     // Damage Receive
-    public void TakeDamage(float damageTaken, int kbDir, float knockbackedForce)
+    public void TakeDamage(float damageTaken, int kbDir, float knockbackedForce, bool isCrit = false)
     {
         if (isAlive && damageTaken > 0f)
         {
@@ -300,7 +303,7 @@ public class Entity : MonoBehaviour
                 entityHp -= damageTaken;
                 if (!isBreakable)
                 {
-                    if (Random.Range(1, 101) == 1)
+                    if (isCrit)
                     {
                         lastAttack = Time.time;
                         anim.SetTrigger("hurt");

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class InventorySystem : MonoBehaviour
 {
     // Inventory
-    public GameObject[] slots;
+    public GameObject[] slots = new GameObject[6];
     private GameObject playerEntity;
     public Dictionary<string, int> inventoryItems = new Dictionary<string, int>();
     public bool[] isFull;
@@ -42,13 +42,13 @@ public class InventorySystem : MonoBehaviour
         pickUp = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if(collision.CompareTag("Item"))
+        if(col.CompareTag("Item"))
         {
             if(pickUp) return;
 
-            AddItem(collision.gameObject);
+            AddItem(col.gameObject);
 
             pickUp = true;
         }
