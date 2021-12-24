@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5605596084246232113}
   - component: {fileID: 7890420365836109416}
   - component: {fileID: 8960846998353679849}
-  - component: {fileID: 3646855038604865361}
   - component: {fileID: 2482536206471902620}
   - component: {fileID: 773871630358075778}
   - component: {fileID: 4366807926303106823}
@@ -79,19 +78,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3646855038604865361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5336195007643097998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8cd9225a4e25d149bfb38f7191ea22a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  droppedOnSlot: 0
 --- !u!225 &2482536206471902620
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -172,9 +158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2777d091f075f744fb4279d8ee3cd987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPrefab: {fileID: 0}
   itemName: 
   itemType: 
+  maxQuantity: 0
+  itemPrefab: {fileID: 0}
   amount: 0
   itemTypes:
   - Consumable

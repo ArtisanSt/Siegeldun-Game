@@ -13,5 +13,11 @@ public class Weapon : Item
     protected int critChance;
     protected float critHit;
     protected int tier;
-    protected string type; // Melee or Range
+    protected string weaponType; // Melee or Range
+
+    protected void WeaponInitialization()
+    {
+        ItemEffectInitialization();
+        itemType = "Weapon";
+    }
 }

@@ -6,12 +6,18 @@ public class Potion : Consumable
 {
     void Start()
     {
-        // ========================================= James's Intialization =========================================
-        itemName = "Health_Potion";
-        itemType = itemTypes[0];
-
-
+        ConsumableInitialization();
         // ========================================= Potion Initialization =========================================
-        type = "Potion";
+        itemName = "Health_Potion";
+        maxQuantity = 64;
+
+        consumableType = "Potion";
+        effectDict["HP"] = new Dictionary<string, float>()
+        {
+            ["hasEffect"] = 1f, // 0: false, 1: true
+            ["effectParam"] = 30f, // How much it heals
+            ["effectSpeed"] = 0f, // 0: instant, 1: overtime
+            ["effectTimer"] = 0f, // Time of effect
+        };
     }
 }

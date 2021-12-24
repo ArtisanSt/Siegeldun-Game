@@ -6,13 +6,11 @@ public class Sword : Weapon
 {
     void Start()
     {
-        // ========================================= James's Intialization =========================================
-        itemName = "Sword";
-        itemType = itemTypes[1];
-
-
+        WeaponInitialization();
         // ========================================= Sword Initialization =========================================
         itemName = "Sword";
+        maxQuantity = 1;
+
         damage = 30f; // Pseudo Damage
         attackRange = 0.3f; // Pseudo Range
         attackSpeed = 1;
@@ -21,6 +19,6 @@ public class Sword : Weapon
         critChance = 100; // 1 out of 100
         critHit = .3f;
         tier = 0; // Pseudo Tier
-        type = "Melee";
+        weaponType = "Melee";
     }
 }

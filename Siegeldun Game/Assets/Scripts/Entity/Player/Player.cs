@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Entity
+public class Player : Inventory
 {
     // ========================================= UNITY PROPERTIES =========================================
     private float[] animationTime = new float[9];
@@ -15,13 +15,11 @@ public class Player : Entity
     protected float[] weaponAttackSpeed = new float[] { .5f, 1.17f, .95f }; // Pseudo Attack Speed
 
     // Entity Properties Initialization
-    private void EntityInitialization()
+    private void EntityInitilization()
     {
         entityName = "Player";
         defaultFacing = 1;
         EntityStatsInitialization(entityName);
-        isAlive = true;
-        isBreakable = false;
 
         // Battle Initialization
         entityWeapon = 0; // Pseudo Weapon Index
@@ -106,8 +104,9 @@ public class Player : Entity
     // Initializes when the Player Script is called
     void Start()
     {
-        ComponentInitialization();
-        EntityInitialization();
+        BeingsInitialization();
+        EntityInitilization();
+        InventoryInitialization();
     }
 
     // Updates Every Frame
@@ -120,19 +119,17 @@ public class Player : Entity
         }
         else
         {
-            ClearInstance();
+            DeathInitialization();
+            ClearInstance(5);
         }
 
         Controller();
+        isGrounded = capColl.IsTouchingLayers(groundLayers) || capColl.IsTouchingLayers(enemyLayers);
         Movement();
         AnimationState();
+
         HealthBarUpdate();
         StaminaBarUpdate();
-    }
-
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-
     }
 
 
@@ -140,6 +137,7 @@ public class Player : Entity
     // Damage Give
     private void Attack()
     {
+        int attackID = Random.Range(-9999, 10000);
         // Attack Animation
         anim.SetTrigger("attack" + attackCombo.ToString());
         comboTime = 0f;
@@ -147,20 +145,28 @@ public class Player : Entity
         lastAttack = Time.time;
         attackCombo = (attackCombo == 3) ? 1 : attackCombo + 1;
         isCrit = Random.Range(1, critChance + 1) == 1;
-        float totalDamage = (entityDamage * (1 + critHit)) / 3;
+        float totalDamage = entityDamage * (1 + critHit);
 
         // Collision Sensing
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
             int kbDir = (enemy.GetComponent<Rigidbody2D>().position.x > rBody.position.x) ? 1 : -1;
-            enemy.GetComponent<Entity>().TakeDamage(totalDamage, kbDir, weaponKbForce, isCrit);
+            enemy.GetComponent<Entity>().TakeDamage(totalDamage, attackID, kbDir, weaponKbForce, isCrit);
         }
     }
 
-    private void Consume()
+    protected void DeathInitialization()
     {
-
+        // Inventory Reset
+        foreach(GameObject slot in inventorySlots)
+        {
+            if (slot.transform.childCount > 0)
+            {
+                Destroy(slot.transform.GetChild(0).gameObject);
+            }
+        }
+        inventoryItems.Clear();
     }
 
 
@@ -232,19 +238,26 @@ public class Player : Entity
             // Pseudo Damage Taken 
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                TakeDamage(50, (sprite.flipX) ? 1 : -1, kbHorDisplacement);
+                TakeDamage(50, Random.Range(-9999, 10000), (sprite.flipX) ? 1 : -1, kbHorDisplacement);
             }
             
-            /*
             // Pseudo Heal
             if (Input.GetKeyDown(KeyCode.E))
             {
-                HpRegen(20f, "instant");
-                StamRegen(20f, "instant");
+                Consume();
             }
-            */
         }
     }
+    
+
+    // ========================================= ANIMATION METHODS =========================================
+    protected void AnimationState()
+    {
+        animationCurrentState = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
+        EntityAnimationState();
+    }
+
+
 
     void OnDrawGizmosSelected()
     {

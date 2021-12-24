@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-// ENEMY AI SCRIPT VERSION : V2.1
-
-public class EnemyAIv2 : Entity
+public class EnemyAI : Beings
 {
     // ========================================= UNITY PROPERTIES =========================================
     // Component Declaration
     private Seeker seeker;
 
-    [Header("Pathfinding", order = 1)]
+    [Header("Pathfinding", order = 0)]
     private Path path;
     [SerializeField] protected Transform target;
     protected bool targetAlive = true;
@@ -21,6 +19,7 @@ public class EnemyAIv2 : Entity
     [SerializeField] protected bool isChasing;
 
     [Header("NPC", order = 1)]
+    [Header("Sleeping", order = 2)]
     [SerializeField] protected bool doSleep = false; // Enemy might sleep
     [SerializeField] protected bool isAwake = true; // Enemy might start in a sleep mode that will only wake up when attacked or touched
     [SerializeField] protected float sleepStartTime;
@@ -31,6 +30,7 @@ public class EnemyAIv2 : Entity
     [SerializeField] protected float awakeTaskLimit = 1f;
     [SerializeField] protected ParticleSystem sleepParticle;
 
+    [Header("Triggering", order = 2)]
     [SerializeField] protected bool isTriggered = false; // Enemy when triggered have time when it cannot reach the target
     [SerializeField] protected bool targetSeen = false;
     [SerializeField] protected float unseenTime;
@@ -42,6 +42,7 @@ public class EnemyAIv2 : Entity
     [SerializeField] protected float stayDistance; // Prevents the enemy to collide entirely with the target
     [SerializeField] protected int inProximity;
 
+    [Header("Stuck Escaping", order = 2)]
     [SerializeField] protected bool jumpEnabled = true;
     [SerializeField] protected bool edgeStuck; // Toggles when stuck in the edge of obstacles
     [SerializeField] protected float edgeStuckAlphaError = 0.02f; // Edge Stuck Position Margin of Error
@@ -49,17 +50,24 @@ public class EnemyAIv2 : Entity
     [SerializeField] protected float edgeStuckTime;
     [SerializeField] protected float allowJumpAfter = .05f;
 
-    [Header("Item Drop", order = 1)]
-    [SerializeField] GameObject itemPrefab;
-    [SerializeField] public int dropChance;
+    [Header("Limitations", order = 2)]
+    public bool hasLimitations;
+    [SerializeField] public List<Transform> activePoints = new List<Transform>();
+    protected bool inLimitation;
 
+    // Entity Static Properties
+    protected static List<int> EnemyAIIDs = new List<int>();
 
 
     // Enemy NPC Properties Initialization
     protected void EnemyNPCInitialization()
     {
-        isAlive = true;
-        isBreakable = false;
+        if (hasLimitations)
+        {
+            Debug.Log(entityName + " " + entityID.ToString());
+            Debug.Log(activePoints[0]);
+            Debug.Log(activePoints[1]);
+        }
 
         // Pathfinding Initialization
         pathUpdateSec = 0.25f;
@@ -67,6 +75,7 @@ public class EnemyAIv2 : Entity
         awakeTaskTime = 0f;
         awakeTaskLimit = 1f;
 
+        target = GameObject.Find("Player").transform;
         isTriggered = false;
         targetSeen = false;
 
@@ -75,6 +84,11 @@ public class EnemyAIv2 : Entity
 
         lastXPosition = rBody.position.x;
         nextWayPointDistance = backOffDistance;
+
+        if (!EnemyAIIDs.Contains(entityID))
+        {
+            EnemyAIIDs.Add(entityID);
+        }
     }
 
 
@@ -84,7 +98,7 @@ public class EnemyAIv2 : Entity
     {
         seeker = GetComponent<Seeker>();
         sleepParticle = GameObject.Find("SleepingParticle").GetComponent<ParticleSystem>();;
-        ComponentInitialization();
+        BeingsInitialization();
         EnemyNPCInitialization();
 
         InvokeRepeating("UpdatePath", 0f, .02f);
@@ -97,7 +111,6 @@ public class EnemyAIv2 : Entity
         if (isAlive)
         {
             PassiveSkills(hpRegenAllowed, stamRegenAllowed, forgivenessTime, !isTriggered);
-            
         }
         HealthBarUpdate();
     }
@@ -112,12 +125,8 @@ public class EnemyAIv2 : Entity
         }
         else
         {
-            ClearInstance();
+            ClearInstance(5);
         }
-
-        Controller();
-        Movement();
-        AnimationState(); // Updates the Animation of the Entity
     }
 
     // Updates Path Every Frame
@@ -150,15 +159,15 @@ public class EnemyAIv2 : Entity
     // ========================================= ENEMY METHODS =========================================
     private void Attack()
     {
+        int attackID = Random.Range(-9999, 10000);
         lastAttack = Time.time;
-
         anim.SetTrigger("attack");
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
             //Debug.Log(enemy.gameObject.GetComponent<Rigidbody2D>().position.x);
             int kbDir = (enemy.GetComponent<Rigidbody2D>().position.x > rBody.position.x) ? 1 : -1;
-            enemy.GetComponent<Entity>().TakeDamage(entityDamage / 3, kbDir, weaponKbForce);
+            enemy.GetComponent<Entity>().TakeDamage(entityDamage, attackID, kbDir, weaponKbForce);
         }
     }
 
@@ -186,7 +195,6 @@ public class EnemyAIv2 : Entity
             currentWaypoint = 0;
             targetNodalDistance = path.GetTotalLength();
             targetStraightDistance = Mathf.Sqrt(Mathf.Pow(target.position.x - transform.position.x, 2) + Mathf.Pow(target.position.y - transform.position.y, 2));
-            //GraphNode node = AstarPath.active.GetNearest(transform.position).node;
         }
     }
 
@@ -228,6 +236,7 @@ public class EnemyAIv2 : Entity
     // ========================================= NPC MOVEMENT METHODS =========================================
     private void NPCDecisionMakingSystem()
     {
+        inLimitation = (hasLimitations) ? target.position.x >= activePoints[0].position.x && target.position.x <= activePoints[1].position.x : true;
         if (!isTriggered)
         {
             var sleepingParticleShape = sleepParticle.shape;
@@ -235,8 +244,8 @@ public class EnemyAIv2 : Entity
             // AI does tasks when awake and not triggered
             if (isAwake)
             {
-                // The AI chases the player when triggered and in reacable location
-                if (targetNodalDistance <= triggerDistance && targetAlive)
+                // The AI chases the player when triggered and in reachable location
+                if (targetNodalDistance <= triggerDistance && targetAlive && inLimitation)
                 {
                     isTriggered = true;
                     targetSeen = true;
@@ -261,7 +270,7 @@ public class EnemyAIv2 : Entity
                 }
             }
             // AI awakens when the player entered half of its trigger distance
-            else if (targetNodalDistance <= triggerDistance / 2)
+            else if (targetNodalDistance <= triggerDistance / 2 && targetAlive && inLimitation)
             {
                 isAwake = true;
                 sleepParticle.Stop();
@@ -271,7 +280,7 @@ public class EnemyAIv2 : Entity
         else
         {
             // The trigger timer resets when the player stays inside the trigger distance
-            if (targetNodalDistance <= triggerDistance && targetAlive)
+            if (targetNodalDistance <= triggerDistance && targetAlive && inLimitation)
             {
                 targetSeen = true;
             }
@@ -316,10 +325,10 @@ public class EnemyAIv2 : Entity
         }
     }
 
-    private void Controller()
+    protected void Controller()
     {
         // Anti-glitching code when target is on unreacheable location
-        if ((Mathf.Abs(target.position.y - rBody.position.y) > 1) && (Mathf.Abs(target.position.x - rBody.position.x) < backOffDistance))
+        if (((Mathf.Abs(target.position.y - rBody.position.y) > 1) && (Mathf.Abs(target.position.x - rBody.position.x) < backOffDistance)) || !inLimitation)
         {
             isTriggered = false;
         }
@@ -379,18 +388,6 @@ public class EnemyAIv2 : Entity
             {
                 Attack();
             }
-        }
-    }
-
-
-        // ========================================= DROP METHODS =========================================
-    protected void DropItem()
-    {
-        if(drop == true)
-        {
-            Debug.Log(dropChance);
-            Drop(itemPrefab, dropChance, 1);
-            drop = false;
         }
     }
 }

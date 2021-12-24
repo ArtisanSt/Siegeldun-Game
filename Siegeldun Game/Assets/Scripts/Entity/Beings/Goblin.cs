@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wolf : EnemyAIv2
+public class Goblin : EnemyAI
 {
+    [SerializeField] protected static List<int> GoblinIDs = new List<int>();
 
     // Enemy NPC Properties Initialization
-    protected void CrawlerInitialization()
+    protected void EntityInitilization()
     {
-        entityName = "Wolf";
+        entityName = "Goblin";
         defaultFacing = -1;
         EntityStatsInitialization(entityName);
 
         // Battle Initialization
         entityWeapon = 0; // Pseudo Weapon Index
         entityDamage = 20f;
-        attackSpeed = .3f;
+        attackSpeed = .85f;
         attackDelay = 2f;
         lastAttack = 0f;
         attackRange = 0.3f; // Pseudo Weapon Range
@@ -57,13 +58,31 @@ public class Wolf : EnemyAIv2
 
         // Item Drop Parameters
         dropChance = 3;
+
+        if (!EnemyAIIDs.Contains(entityID))
+        {
+            EnemyAIIDs.Add(entityID);
+        }
     }
 
+
+    // ========================================= UNITY MAIN METHODS =========================================
     // Start is called before the first frame update
     void Start()
     {
-        CrawlerInitialization();
         EnemyNPCStart();
+        EntityInitilization();
+    }
+
+    // Updates Every Physics Frame
+    void FixedUpdate()
+    {
+        EnemyNPCFixedUpdate();
+
+        Controller();
+        isGrounded = capColl.IsTouchingLayers(groundLayers) || capColl.IsTouchingLayers(enemyLayers);
+        Movement();
+        AnimationState(); // Updates the Animation of the Entity
     }
 
     // Update is called once per frame
@@ -71,10 +90,12 @@ public class Wolf : EnemyAIv2
     {
         EnemyNPCUpdate();
     }
-    // Updates Every Physics Frame
-    void FixedUpdate()
+
+
+    // ========================================= ANIMATION METHODS =========================================
+    protected void AnimationState()
     {
-        EnemyNPCFixedUpdate();
-        DropItem();
+        animationCurrentState = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
+        EntityAnimationState();
     }
 }

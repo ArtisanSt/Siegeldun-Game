@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 6000648192351702397}
   - component: {fileID: 6000648192351702398}
   - component: {fileID: 6000648192351702399}
-  - component: {fileID: 6000648192351702386}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -261,25 +260,14 @@ MonoBehaviour:
   statHpText: {fileID: 0}
   StamBar: {fileID: 0}
   statStamText: {fileID: 0}
---- !u!114 &6000648192351702386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6000648192351702392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0eacdba79197ccd498251f0c17685948, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slots:
+  inventorySlots:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  isFull: 000000000000
-  consumeSlot: 
-  weaponSlot: 
+  itemProperties: 000000000000000000000000
+  itemInteracted: {fileID: 0}
+  weaponSlot: {fileID: 0}
+  consumableSlot: {fileID: 0}

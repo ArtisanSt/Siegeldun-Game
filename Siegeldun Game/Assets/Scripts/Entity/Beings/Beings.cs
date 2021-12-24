@@ -3,14 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Entity : MonoBehaviour
+public class Beings : Entity
 {
-    // ========================================= Game Properties =========================================
-    [SerializeField] protected static int difficulty = 1; // Pseudo Difficulty
-    protected int idxDiff = difficulty - 1;
-    protected float animationSpeed = 1f;
-
-
     // ========================================= ENTITY PROPERTIY SCALING =========================================
     // HP Mechanics
     protected float[] maxHpScaling;
@@ -21,76 +15,43 @@ public class Entity : MonoBehaviour
     protected float[] stamRegenScaling;
 
 
-    // ========================================= UNITY PROPERTIES =========================================
-    // Component Declaration
-    public Rigidbody2D rBody;
-    public SpriteRenderer sprite;
-    protected BoxCollider2D boxColl;
-    protected CapsuleCollider2D capColl;
-    protected Animator anim;
-
-    private enum MovementAnim { idle, run, jump, fall };
-    private MovementAnim state;
-
-    protected void ComponentInitialization()
-    {
-        rBody = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
-        boxColl = GetComponent<BoxCollider2D>();
-        capColl = GetComponent<CapsuleCollider2D>();
-        anim = GetComponent<Animator>();
-    }
-
-
-    // ========================================= Entity Properties =========================================
-    protected string entityName;
-    public bool isAlive = true;
-    public bool isBreakable;
+    // ========================================= BEINGS PROPERTIES =========================================
+    // Function Parameters
     protected bool isHurting;
     protected bool isAttacking;
     protected bool isDying;
+
+    // Animation Properties
+    protected int defaultFacing; // 1 is right, -1 is left, 0 when not attacking
     protected string animationCurrentState;
     protected string currentSprite;
-    protected int defaultFacing; // 1 is right, -1 is left, 0 when not attacking
-    public bool drop = false;
 
     [Header("ENTITY PROPERTIES", order = 0)]
     [Header("Battle Mechanics", order = 1)]
+    protected bool attacking;
+    protected int attackFacing; // 1 is right and -1 is left
     [SerializeField] protected int entityWeapon;
+    [SerializeField] protected float weaponDrag;
+    [SerializeField] protected float weaponKbForce;
+    [SerializeField] protected float EqWeaponStamCost;
     [SerializeField] protected float entityDamage;
-    [SerializeField] protected float attackSpeed;
     [SerializeField] protected float attackDelay;
     protected bool isCrit;
     protected float critHit;
     protected int critChance;
-    protected float lastAttack;
     protected int attackCombo;
     protected float comboTime;
     [SerializeField] protected float attackRange;
-    [SerializeField] protected float EqWeaponStamCost;
-    [SerializeField] protected float weaponDrag;
-    [SerializeField] protected float weaponKbForce;
-    protected int attackFacing; // 1 is right and -1 is left
-    protected bool attacking;
-    protected bool isKnockbacked;
     protected int knockbackFacing;
-    protected int kbDir; // 1 is right, -1 is left, 0 when not attacking
-    protected float kTick;
-    protected float knockbackedForce;
     [SerializeField] public float kbHorDisplacement;
     [SerializeField] protected float kbVerDisplacement;
-
-    protected const float slowDownConst = 0.95f;
     [SerializeField] protected Transform attackPoint;
     [SerializeField] protected LayerMask enemyLayers;
 
     [Header("HP Mechanics", order = 1)]
-    [SerializeField] protected float maxHealth;
-    [SerializeField] protected float entityHp;
     [SerializeField] protected bool hpRegenAllowed;
     [SerializeField] protected float healthRegen;
     [SerializeField] protected float regenDelay;
-    [SerializeField] protected float hpRegenTimer;
     private float hpTick = 0f;
     private float hpHideTime = 4f;
 
@@ -101,19 +62,30 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float stamRegen;
 
     [Header("Movement Mechanics", order = 1)]
+    protected const float slowDownConst = 0.95f;
     [SerializeField] protected float mvSpeed;
     [SerializeField] protected float mvSpeedBoost = 0f;
     [SerializeField] protected float totalMvSpeed;
-    [SerializeField] protected float dirX;
     [SerializeField] protected float dirFacing;
-    [SerializeField] protected float dirY;
-    [SerializeField] protected bool allowJump;
+    [SerializeField] protected float dirX;
     [SerializeField] protected float runVelocity;
+    [SerializeField] protected bool allowJump;
     [SerializeField] public bool isGrounded;
     [SerializeField] protected float jumpForce;
+    [SerializeField] protected float dirY;
     [SerializeField] protected float jumpVelocity;
     protected float runAnimationSpeed;
     [SerializeField] protected LayerMask groundLayers;
+
+
+    protected void BeingsInitialization()
+    {
+        entityType = "Beings";
+        ComponentInitialization();
+        entityID = rBody.gameObject.GetInstanceID();
+        isAlive = true;
+        willBeDestroyed = false;
+    }
 
 
     // ========================================= Status Bar Properties =========================================
@@ -234,14 +206,14 @@ public class Entity : MonoBehaviour
     // ========================================= HEALING METHODS =========================================
     protected void PassiveSkills(bool hpRegenAllowed, bool stamRegenAllowed, float regenDelay, bool hpParam = true)
     {
-        if(hpRegenAllowed)
+        if (hpRegenAllowed)
         {
             // HP Natural Healing
             if (entityHp < maxHealth && hpParam)
             {
                 if (hpRegenTimer >= regenDelay)
                 {
-                    HpRegen(healthRegen);
+                    bool didEffect = HPRegen(healthRegen, "Passive");
                 }
                 else
                 {
@@ -254,130 +226,88 @@ public class Entity : MonoBehaviour
             }
         }
 
-        if(stamRegenAllowed)
+        if (stamRegenAllowed)
         {
             // Stamina Natural Healing
             if (entityStam < maxStam)
             {
-                StamRegen(stamRegen);
+                bool didEffect = StamRegen(stamRegen, "Passive");
             }
         }
     }
 
     // Regen
-    public void HpRegen(float healAmount, string HealSpeed = "overtime")
+    public bool HPRegen(float healAmount, string healSpeed = "instant", float timeHeal = 0f)
     {
-        entityHp += healAmount;
-        if (HealSpeed == "instant")
+        if (entityHp != maxHealth)
         {
-            HealthbarF.fillAmount = entityHp / maxHealth;
-        }
-        entityHp = Mathf.Clamp(entityHp, 0, maxHealth);
-    }
-
-    public void StamRegen(float StamAmount, string HealSpeed = "overtime")
-    {
-        entityStam += StamAmount;
-        if (HealSpeed == "instant")
-        {
-            StamBar.fillAmount = entityStam / maxStam;
-        }
-        entityStam = Mathf.Clamp(entityStam, 0, maxStam);
-    }
-
-
-    // ========================================= ENTITY METHODS =========================================
-    // Damage Receive
-    public void TakeDamage(float damageTaken, int kbDir, float knockbackedForce, bool isCrit = false)
-    {
-        if (isAlive && damageTaken > 0f)
-        {
-            hpRegenTimer = 0f;
-            if (damageTaken >= Mathf.Floor(entityHp))
+            if (healSpeed == "instant" || healSpeed == "Passive")
             {
-                entityHp -= entityHp;
-                Die();
-            }
-            else
-            {
-                entityHp -= damageTaken;
-                if (!isBreakable)
+                entityHp += healAmount;
+                if (healSpeed == "instant")
                 {
-                    if (isCrit)
-                    {
-                        lastAttack = Time.time;
-                        anim.SetTrigger("hurt");
-                        Knockback(kbDir, knockbackedForce);
-                    }
+                    HealthbarF.fillAmount = entityHp / maxHealth;
                 }
+                entityHp = Mathf.Clamp(entityHp, 0, maxHealth);
             }
-        }
-    }
-
-    public void Knockback(int kbDir, float kbHorDisplacement)
-    {
-        isKnockbacked = true;
-        knockbackedForce = kbHorDisplacement * 5f;
-        this.kbDir = kbDir;
-        kTick = Time.deltaTime;
-    }
-
-    private void Die()
-    {
-        Debug.Log(entityName + " Dead!");
-        if (!isBreakable)
-        {
-            anim.SetBool("death", true);
-            drop = true;
-            isAlive = false;
+            else if (healSpeed == "overtime")
+            {
+                HealOvertime(healAmount, timeHeal, true);
+            }
+            return true;
         }
         else
         {
-            if (entityName == "Fire")
-            {
-                Destroy(gameObject);
-            }
-            if (entityName == "Crate")
-            {
-                drop = true;
-                anim.SetBool("death", true);
-                boxColl.enabled = false;
-            }
+            return false;
         }
     }
 
-    protected void ClearInstance()
+    public bool StamRegen(float stamAmount, string healSpeed = "instant", float timeHeal = 0f)
     {
-        if (capColl.enabled && rBody.velocity == new Vector2(0, 0))
+        if (entityStam != maxStam)
         {
-            capColl.enabled = false;
-            boxColl.enabled = false;
-            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
-
-            StartCoroutine(DestroyInstance());
+            if (healSpeed == "instant" || healSpeed == "Passive")
+            {
+                entityStam += stamAmount;
+                if (healSpeed == "instant")
+                {
+                    StamBar.fillAmount = entityStam / maxStam;
+                }
+                entityStam = Mathf.Clamp(entityStam, 0, maxStam);
+            }
+            else if (healSpeed == "overtime")
+            {
+                HealOvertime(stamAmount, timeHeal, false);
+            }
+            return true;
         }
-    }
-
-    private IEnumerator DestroyInstance()
-    {
-        yield return new WaitForSeconds(5);
-        Destroy(gameObject);
-    }
-
-
-    // ========================================= GAMEPLAY METHODS INITIALIZATION =====================================
-    public void Drop(GameObject itemPrefab, int chance, float xPos)
-    {
-        if(Random.Range(1,chance + 1) == chance)
+        else
         {
-            Instantiate(itemPrefab, new Vector3(transform.position.x + xPos,transform.position.y,0), Quaternion.identity);
+            return false;
         }
+    }
+
+    private IEnumerator HealOvertime(float healAmount, float timeHeal, bool isHealth)
+    {
+        float startTime = Time.time;
+        while (Time.time - timeHeal <= startTime)
+        {
+            if (isHealth)
+            {
+                entityHp += healAmount;
+            }
+            else
+            {
+                entityStam += healAmount;
+            }
+        }
+        yield return 0;
     }
 
     // ========================================= ENTITY STATS INITIALIZATION =========================================
     protected void EntityStatsInitialization(string entityName)
     {
-        switch(entityName)
+        switch (entityName)
         {
             case "Player":
                 this.maxHpScaling = new float[] { 100f, 200f, 400f };
@@ -408,7 +338,6 @@ public class Entity : MonoBehaviour
         runVelocity = (isAlive) ? ((dirX * totalMvSpeed) + (knockbackFacing * knockbackedForce)) : dirX * slowDownConst;
 
         // Vertical Movement
-        isGrounded = capColl.IsTouchingLayers(groundLayers) || capColl.IsTouchingLayers(enemyLayers);
         dirY = allowJump ? jumpForce : ((0f < rBody.velocity.y && rBody.velocity.y < 0.001f) ? 0f : rBody.velocity.y);
         jumpVelocity = (isGrounded) ? dirY : rBody.velocity.y;
 
@@ -417,10 +346,9 @@ public class Entity : MonoBehaviour
 
 
     // ========================================= ANIMATION METHODS =========================================
-    protected void AnimationState()
+    protected void EntityAnimationState()
     {
         currentSprite = sprite.sprite.name;
-        animationCurrentState = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
         if (animationCurrentState == "Hurt")
         {
             isHurting = true;

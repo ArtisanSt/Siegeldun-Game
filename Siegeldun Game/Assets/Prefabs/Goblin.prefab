@@ -317,29 +317,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rBody: {fileID: 2527850889189109511}
   sprite: {fileID: 2527850889189109507}
+  entityPrefab: {fileID: 0}
+  entityDrops:
+  - {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
+  - {fileID: 8502316654925628256, guid: c1cb39b5ef1805447bb7db25385b4140, type: 3}
+  entityID: 0
   isAlive: 1
-  isBreakable: 0
-  drop: 0
-  entityWeapon: 0
-  entityDamage: 0
+  maxHealth: 0
+  entityHp: 0
   attackSpeed: 0
-  attackDelay: 0
-  attackRange: 0
-  EqWeaponStamCost: 0
+  hpRegenTimer: 0
+  entityWeapon: 0
   weaponDrag: 0
   weaponKbForce: 0
+  EqWeaponStamCost: 0
+  entityDamage: 0
+  attackDelay: 0
+  attackRange: 0
   kbHorDisplacement: 0
   kbVerDisplacement: 0
   attackPoint: {fileID: 2527850889545206603}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
-  maxHealth: 0
-  entityHp: 0
   hpRegenAllowed: 0
   healthRegen: 0
   regenDelay: 0
-  hpRegenTimer: 0
   maxStam: 0
   entityStam: 0
   stamRegenAllowed: 0
@@ -347,13 +350,13 @@ MonoBehaviour:
   mvSpeed: 0
   mvSpeedBoost: 0
   totalMvSpeed: 0
-  dirX: 0
   dirFacing: 0
-  dirY: 0
-  allowJump: 0
+  dirX: 0
   runVelocity: 0
+  allowJump: 0
   isGrounded: 0
   jumpForce: 0
+  dirY: 0
   jumpVelocity: 0
   groundLayers:
     serializedVersion: 2
@@ -392,8 +395,8 @@ MonoBehaviour:
   edgeStuckAlphaError: 0.02
   edgeStuckTime: 0
   allowJumpAfter: 0.05
-  itemPrefab: {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
-  dropChance: 0
+  hasLimitations: 0
+  activePoints: []
 --- !u!1 &2527850889268182320
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6525647870431851529}
   - component: {fileID: 8846396082094444112}
   - component: {fileID: 7719032356634484177}
-  - component: {fileID: 2727187462579038057}
   - component: {fileID: -5388719272014676572}
   - component: {fileID: -7063462823104343622}
   - component: {fileID: -7607789678989425805}
@@ -79,19 +78,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2727187462579038057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6721948792633512886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8cd9225a4e25d149bfb38f7191ea22a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  droppedOnSlot: 0
 --- !u!225 &-5388719272014676572
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -172,6 +158,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f194a550a0fd14081503d01e0a0a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPrefab: {fileID: 0}
   itemName: 
+  itemType: 
+  maxQuantity: 0
+  itemPrefab: {fileID: 0}
   amount: 0
+  itemTypes:
+  - Consumable
+  - Weapon

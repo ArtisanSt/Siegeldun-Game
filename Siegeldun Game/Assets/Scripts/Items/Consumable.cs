@@ -5,7 +5,12 @@ using UnityEngine;
 public class Consumable : Item
 {
     // ========================================= Consumable Properties =========================================
-    protected string type; // Food or Potion
+    protected string consumableType; // Food or Potion
 
+    protected void ConsumableInitialization()
+    {
+        ItemEffectInitialization();
+        itemType = "Consumable";
+    }
 
 }
