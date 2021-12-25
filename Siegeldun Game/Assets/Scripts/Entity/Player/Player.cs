@@ -236,7 +236,7 @@ public class Player : Inventory
             }
 
             // Pseudo Damage Taken 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Tab))
             {
                 TakeDamage(50, Random.Range(-9999, 10000), (sprite.flipX) ? 1 : -1, kbHorDisplacement);
             }
