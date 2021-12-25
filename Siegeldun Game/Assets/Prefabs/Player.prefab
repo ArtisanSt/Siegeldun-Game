@@ -214,29 +214,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rBody: {fileID: 6000648190659655787}
   sprite: {fileID: 6000648192144197179}
+  entityPrefab: {fileID: 6000648192351702392}
+  entityDrops: []
+  entityID: 0
   isAlive: 0
-  isBreakable: 0
-  drop: 0
-  entityWeapon: 0
-  entityDamage: 0
+  maxHealth: 100
+  entityHp: 0
   attackSpeed: 0
-  attackDelay: 0
-  attackRange: 0.3
-  EqWeaponStamCost: 0
+  hpRegenTimer: 0
+  entityWeapon: 0
   weaponDrag: 0
   weaponKbForce: 0
+  EqWeaponStamCost: 0
+  entityDamage: 0
+  attackDelay: 0
+  attackRange: 0.3
   kbHorDisplacement: 0
   kbVerDisplacement: 0
   attackPoint: {fileID: 6000648191120209368}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 640
-  maxHealth: 100
-  entityHp: 0
   hpRegenAllowed: 0
   healthRegen: 0
   regenDelay: 0
-  hpRegenTimer: 0
   maxStam: 0
   entityStam: 0
   stamRegenAllowed: 0
@@ -244,13 +245,13 @@ MonoBehaviour:
   mvSpeed: 0
   mvSpeedBoost: 0
   totalMvSpeed: 0
-  dirX: 0
   dirFacing: 0
-  dirY: 0
-  allowJump: 0
+  dirX: 0
   runVelocity: 0
+  allowJump: 0
   isGrounded: 0
   jumpForce: 15.7
+  dirY: 0
   jumpVelocity: 0
   groundLayers:
     serializedVersion: 2
@@ -260,6 +261,7 @@ MonoBehaviour:
   statHpText: {fileID: 0}
   StamBar: {fileID: 0}
   statStamText: {fileID: 0}
+  inventoryBg: {fileID: 0}
   inventorySlots:
   - {fileID: 0}
   - {fileID: 0}

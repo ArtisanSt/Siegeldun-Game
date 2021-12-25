@@ -9,6 +9,7 @@ public class Inventory : Beings
 
     // ========================================= INVENTORY PROPERTIES =========================================
     [Header("INVENTORY PROPERTIES", order = 1)]
+    public GameObject inventoryBg;
     public GameObject[] inventorySlots = new GameObject[6];
     public int[] itemProperties = new int[3]; // currentAmount, maxAmount, slotNumber
     public Dictionary<string, int[]> inventoryItems = new Dictionary<string, int[]>();
@@ -39,10 +40,11 @@ public class Inventory : Beings
     protected void InventoryInitialization()
     {
         playerEntity = rBody.gameObject;
+        inventoryBg = GameObject.Find("/GUI/PlayerSlots/InventoryBackground");
 
-        for(int i=0; i < inventorySlots.Length; i++)
+        for (int i=0; i < inventorySlots.Length; i++)
         {
-            inventorySlots[i] = GameObject.Find("InvSlot" + (char)(65+i));
+            inventorySlots[i] = GameObject.Find("/GUI/PlayerSlots/InventoryBackground/InvSlot" + (char)(65+i));
         };
 
         weaponSlot = GameObject.Find("EqpSlotWeapon");
@@ -70,7 +72,7 @@ public class Inventory : Beings
         {
             curProcess.Add(pickedItem.GetInstanceID());
 
-            isOn = GameObject.Find("UI_System").GetComponent<InventoryEvents>().invOn;
+            isOn = inventoryBg.activeSelf;
             itemInteracted = pickedItem.GetComponent<Item>();
             bool isPickedUp = false;
 
@@ -98,10 +100,6 @@ public class Inventory : Beings
 
                         GameObject icon = (GameObject)Instantiate(itemInteracted.itemPrefab, curSlot.transform, false);
                         icon.name = "Inv_" + itemInteracted.itemName;
-                        if (isOn)
-                            icon.GetComponent<Image>().enabled = true;
-                        else if (!isOn)
-                            icon.GetComponent<Image>().enabled = false;
                         isPickedUp = true;
                         break;
                     }

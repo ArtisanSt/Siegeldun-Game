@@ -12487,6 +12487,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4014195f503ded4dbea5879806ffc19, type: 3}
+--- !u!1 &1776923149 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3508440034233568624, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+  m_PrefabInstance: {fileID: 3508440033672701607}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1834943019
 GameObject:
   m_ObjectHideFlags: 0
@@ -13246,12 +13251,28 @@ PrefabInstance:
       value: InvSlotE
       objectReference: {fileID: 0}
     - target: {fileID: 3508440033738196344, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3508440033738196344, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11500000, guid: c56be8887d9518c4bace783241770d6b, type: 3}
     - target: {fileID: 3508440033738196344, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3508440033738196344, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: set_name
+      objectReference: {fileID: 0}
+    - target: {fileID: 3508440033738196344, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3508440033738196344, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: OffMainInventory()
       objectReference: {fileID: 0}
     - target: {fileID: 3508440033738196346, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
       propertyPath: m_Name
@@ -13262,8 +13283,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3508440033864117581, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3508440033864117581, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
+      objectReference: {fileID: 11500000, guid: c56be8887d9518c4bace783241770d6b, type: 3}
+    - target: {fileID: 3508440033864117581, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: set_name
+      objectReference: {fileID: 0}
+    - target: {fileID: 3508440033864117581, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3508440033864117581, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: OnMainInventory()
       objectReference: {fileID: 0}
     - target: {fileID: 3508440033864117583, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
       propertyPath: m_Name
@@ -13365,6 +13402,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 571379715956714367, guid: 2e799ae07f2b1b44fa7ee86b2e701537, type: 3}
+      propertyPath: mainInventory
+      value: 
+      objectReference: {fileID: 1776923149}
     - target: {fileID: 5044255776062317385, guid: 2e799ae07f2b1b44fa7ee86b2e701537, type: 3}
       propertyPath: m_Follow
       value: 
