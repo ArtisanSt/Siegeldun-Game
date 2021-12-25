@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8502316654925628269}
   - component: {fileID: 8502316654925628258}
   - component: {fileID: 912029420961870480}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Potion_Stamina
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -168,7 +168,3 @@ MonoBehaviour:
   itemType: 
   maxQuantity: 0
   itemPrefab: {fileID: 5336195007643097998, guid: 01012f5781d2da34c90c3653190cbfe3, type: 3}
-  amount: 0
-  itemTypes:
-  - Consumable
-  - Weapon

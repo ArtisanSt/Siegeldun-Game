@@ -59,9 +59,13 @@ public class EnemyAI : Beings
     protected static List<int> EnemyAIIDs = new List<int>();
 
 
-    // Enemy NPC Properties Initialization
-    protected void EnemyNPCInitialization()
+    // ========================================= UNITY MAIN METHODS =========================================
+    // Initializes when the Player Script is called
+    protected void EnemyNPCStart()
     {
+        seeker = GetComponent<Seeker>();
+        sleepParticle = GameObject.Find($"{rBody.name}/SleepingParticle").GetComponent<ParticleSystem>();
+        BeingsInitialization();
         if (hasLimitations)
         {
             Debug.Log(entityName + " " + entityID.ToString());
@@ -89,17 +93,6 @@ public class EnemyAI : Beings
         {
             EnemyAIIDs.Add(entityID);
         }
-    }
-
-
-    // ========================================= UNITY MAIN METHODS =========================================
-    // Initializes when the Player Script is called
-    protected void EnemyNPCStart()
-    {
-        seeker = GetComponent<Seeker>();
-        sleepParticle = GameObject.Find("SleepingParticle").GetComponent<ParticleSystem>();;
-        BeingsInitialization();
-        EnemyNPCInitialization();
 
         InvokeRepeating("UpdatePath", 0f, .02f);
 
@@ -327,67 +320,72 @@ public class EnemyAI : Beings
 
     protected void Controller()
     {
-        // Anti-glitching code when target is on unreacheable location
-        if (((Mathf.Abs(target.position.y - rBody.position.y) > 1) && (Mathf.Abs(target.position.x - rBody.position.x) < backOffDistance)) || !inLimitation)
+        if (isAlive)
         {
-            isTriggered = false;
-        }
-
-        // Vertical Parameter
-        if (allowJump)
-        {
-            allowJump = false;
-            edgeStuck = false;
-            edgeStuckTime = 0f;
-        }
-        else if (rBody.position.x <= lastXPosition + (edgeStuckAlphaError / 2) && rBody.position.x >= lastXPosition - (edgeStuckAlphaError / 2) && inProximity == 1 && boxColl.IsTouchingLayers(groundLayers) && isAwake)
-        {
-            if (edgeStuck)
+            // Anti-glitching code when target is on unreacheable location
+            if (((Mathf.Abs(target.position.y - rBody.position.y) > 1) && (Mathf.Abs(target.position.x - rBody.position.x) < backOffDistance)) || !inLimitation)
             {
-                if (edgeStuckTime >= allowJumpAfter)
+                isTriggered = false;
+            }
+
+            // Vertical Parameter
+            if (allowJump)
+            {
+                allowJump = false;
+                edgeStuck = false;
+                edgeStuckTime = 0f;
+            }
+            else if (rBody.position.x <= lastXPosition + (edgeStuckAlphaError / 2) && rBody.position.x >= lastXPosition - (edgeStuckAlphaError / 2) && inProximity == 1 && boxColl.IsTouchingLayers(groundLayers) && isAwake)
+            {
+                if (edgeStuck)
                 {
-                    allowJump = true;
+                    if (edgeStuckTime >= allowJumpAfter)
+                    {
+                        allowJump = true;
+                    }
+                    else
+                    {
+                        edgeStuckTime += Time.deltaTime;
+                    }
                 }
                 else
                 {
-                    edgeStuckTime += Time.deltaTime;
+                    edgeStuck = true;
+                    edgeStuckTime = 0f;
                 }
             }
+
+            // Horizontal Parameter
+            inProximity = (targetAlive) ? ((targetNodalDistance < backOffDistance) ? -1 : ((targetNodalDistance >= backOffDistance && targetNodalDistance <= stayDistance) ? 0 : 1)) : 1;
+            if (isTriggered)
+            {
+                if (target.GetComponent<Player>().isGrounded || (!target.GetComponent<Player>().isGrounded && Mathf.Abs(target.position.x - rBody.position.x) >= stayDistance))
+                {
+                    isChasing = true;
+                }
+                else
+                {
+                    isChasing = false;
+                }
+
+                dirFacing = ((isAlive) ? ((target.position.x > rBody.position.x) ? 1 : -1) : 0) * ((isChasing) ? 1 : 0) * inProximity;
+            }
             else
             {
-                edgeStuck = true;
-                edgeStuckTime = 0f;
+                NPCDecisionMakingExecution();
             }
-        }
+            lastXPosition = rBody.position.x; // Updates the last X position of the AI
 
-        // Horizontal Parameter
-        inProximity = (targetAlive) ? ((targetNodalDistance < backOffDistance) ? -1 : ((targetNodalDistance >= backOffDistance && targetNodalDistance <= stayDistance) ? 0 : 1)) : 1;
-        if (isTriggered)
-        {
-            if (target.GetComponent<Player>().isGrounded || (!target.GetComponent<Player>().isGrounded && Mathf.Abs(target.position.x - rBody.position.x) >= stayDistance))
-            {
-                isChasing = true;
-            }
-            else
-            {
-                isChasing = false;
-            }
-
-            dirFacing = ((isAlive) ? ((target.position.x > rBody.position.x) ? 1 : -1) : 0) * ((isChasing) ? 1 : 0) * inProximity;
-        }
-        else
-        {
-            NPCDecisionMakingExecution();
-        }
-        lastXPosition = rBody.position.x; // Updates the last X position of the AI
-
-        if (isAlive)
-        {
             // Attack Code
             if (inProximity == 0 && !attacking && !isHurting && Time.time - lastAttack > attackDelay)
             {
                 Attack();
             }
+        }
+        else
+        {
+            allowJump = false;
+            inProximity = 0;
         }
     }
 }

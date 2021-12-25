@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4275815481310653660}
   - component: {fileID: 4275815481310653659}
   - component: {fileID: 4275815481310653658}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Weapon_Sword Variant
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -168,7 +168,3 @@ MonoBehaviour:
   itemType: 
   maxQuantity: 0
   itemPrefab: {fileID: 6721948792633512886, guid: fb3780abdb252a64c9c68fdf8e0cc773, type: 3}
-  amount: 0
-  itemTypes:
-  - Consumable
-  - Weapon

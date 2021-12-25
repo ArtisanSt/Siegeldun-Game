@@ -159,14 +159,7 @@ public class Player : Inventory
     protected void DeathInitialization()
     {
         // Inventory Reset
-        foreach(GameObject slot in inventorySlots)
-        {
-            if (slot.transform.childCount > 0)
-            {
-                Destroy(slot.transform.GetChild(0).gameObject);
-            }
-        }
-        inventoryItems.Clear();
+        ClearItem();
     }
 
 
@@ -224,28 +217,19 @@ public class Player : Inventory
                 Attack();
             }
 
-            // Pseudo Attack Speed Changer
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                attackSpeed += 0.1f;
-            }
-
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                attackSpeed -= 0.1f;
-            }
-
             // Pseudo Damage Taken 
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 TakeDamage(50, Random.Range(-9999, 10000), (sprite.flipX) ? 1 : -1, kbHorDisplacement);
             }
-            
-            // Pseudo Heal
+
+            // Use Item in Inventory
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Consume();
+                Use();
             }
+
+            ConsumeControls();
         }
     }
     

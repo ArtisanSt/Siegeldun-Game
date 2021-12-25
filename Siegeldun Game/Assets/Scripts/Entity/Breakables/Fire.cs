@@ -11,6 +11,7 @@ public class Fire : Breakables
         maxHealth = 1;
         entityHp = maxHealth;
 
+        doDrop = false;
         dropChance = 0;
     }
 
@@ -25,7 +26,7 @@ public class Fire : Breakables
         if (!isAlive)
         {
             DeathInitialization();
-            ClearInstance(2);
+            ClearInstance(0);
         }
     }
 }

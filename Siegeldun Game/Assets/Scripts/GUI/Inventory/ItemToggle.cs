@@ -21,33 +21,16 @@ public class ItemToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             GameObject itemSelected = slotGameObject.transform.GetChild(0).gameObject;
             GameObject playerEntity = GameObject.Find("Player");
             string inInvOrEqp = itemSelected.name.Substring(0,3);
-            Debug.Log(itemSelected);
 
             Debug.Log(inInvOrEqp);
             if (inInvOrEqp == "Inv")
             {
-                GameObject EqpSlot;
-                if (itemSelected.GetComponent<Item>().itemType == "Weapon")
-                {
-                    EqpSlot = playerEntity.GetComponent<Player>().weaponSlot;
-                }
-                else
-                {
-                    EqpSlot = playerEntity.GetComponent<Player>().consumableSlot;
-                }
-
-                if (EqpSlot.transform.childCount > 0)
-                {
-                    GameObject itemUnequip = EqpSlot.transform.GetChild(0).gameObject;
-                    Destroy(itemUnequip);
-                }
-
-                GameObject newEqpItem = (GameObject)Instantiate(itemSelected, EqpSlot.transform, false);
-                newEqpItem.name = "Eqp_" + itemSelected.GetComponent<Item>().itemName;
+                playerEntity.GetComponent<Player>().itemChosen = (int)slotGameObject.name[7];
+                playerEntity.GetComponent<Player>().Use();
             }
             else if (inInvOrEqp == "Eqp")
             {
-                playerEntity.GetComponent<Player>().ClearItem(itemSelected);
+                playerEntity.GetComponent<Player>().ClearItem(itemSelected, -1);
             }
         }
     }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 116043195058129460}
   - component: {fileID: 116043195058129467}
   - component: {fileID: 116043195058129466}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Potion_Health
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -168,7 +168,3 @@ MonoBehaviour:
   itemType: 
   maxQuantity: 0
   itemPrefab: {fileID: 6433002720851475710, guid: ce48e3a79bd192c46ad6780cdd1fe882, type: 3}
-  amount: 0
-  itemTypes:
-  - Consumable
-  - Weapon

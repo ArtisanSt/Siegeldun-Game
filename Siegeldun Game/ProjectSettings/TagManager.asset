@@ -13,13 +13,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
   - Ground
-  - Enemy
-  - Player
-  - Breakable
+  - AddOn
   - Item
   - 
   - 
@@ -32,6 +30,10 @@ TagManager:
   - 
   - 
   - 
+  - BackParticle
+  - Enemy
+  - Player
+  - FrontParticle
   - 
   - 
   - 
@@ -39,9 +41,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - GUI
   m_SortingLayers:
   - name: Parallax
     uniqueID: 2917886347
