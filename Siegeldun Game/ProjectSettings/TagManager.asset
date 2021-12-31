@@ -9,18 +9,32 @@ TagManager:
   - Item
   - Region
   - Player Event Collider
+  - Kinematic
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
   - Ground
+  - AddOn
+  - Item
+  - Obstacle
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - BackParticle
   - Enemy
   - Player
-  - Breakable
-  - Item
+  - FrontParticle
   - 
   - 
   - 
@@ -28,20 +42,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - GUI
   m_SortingLayers:
   - name: Parallax
     uniqueID: 2917886347

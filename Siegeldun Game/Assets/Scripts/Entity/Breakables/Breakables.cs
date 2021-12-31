@@ -7,6 +7,7 @@ public class Breakables : Entity
     protected void BreakablesInitialization()
     {
         entityType = "Breakables";
+        deadBeings = true;
         ComponentInitialization();
     }
 

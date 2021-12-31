@@ -3,6 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class ItemProperties
+{
+    public bool isFull = false;
+    public GameObject inventoryBg = null;
+    public GameObject inventorySlot = null;
+    public GameObject itemObject = null;
+    public string itemName = null;
+    public int currentAmount = 0;
+    public int maxAmount = 0;
+
+    public ItemProperties(GameObject inventoryBg, GameObject inventorySlot)
+    {
+        this.inventoryBg = inventoryBg;
+        this.inventorySlot = inventorySlot;
+    }
+
+    public bool[] setValues(GameObject itemObject, string itemName, int currentAmount, int maxAmount)
+    {
+        this.itemObject = itemObject;
+        this.isFull = false;
+        this.itemName = itemName;
+        this.currentAmount = currentAmount;
+        this.maxAmount = maxAmount;
+
+        return new bool[2] { true, false };
+    }
+
+    public bool[] changeValues(int changeAmount)
+    {
+        bool processSuccessful = false;
+        bool removeInInv = false;
+        if (currentAmount + changeAmount >= 0 && currentAmount + changeAmount <= maxAmount)
+        {
+            currentAmount += changeAmount;
+            processSuccessful = true;
+
+            if (currentAmount == 0)
+            {
+                removeInInv = true;
+            }
+            else if (currentAmount == maxAmount)
+            {
+                isFull = true;
+            }
+            else
+            {
+                isFull = false;
+            }
+        }
+
+        return new bool[2] { processSuccessful, removeInInv };
+    }
+}
+
 public class Inventory : Beings
 {
     // Feature: Cannot bring same items unless stackable
@@ -10,47 +64,43 @@ public class Inventory : Beings
     // ========================================= INVENTORY PROPERTIES =========================================
     [Header("INVENTORY PROPERTIES", order = 1)]
     public GameObject inventoryBg;
-    public GameObject[] inventorySlots = new GameObject[6];
-    public int[] itemProperties = new int[3]; // currentAmount, maxAmount, slotNumber
-    public Dictionary<string, int[]> inventoryItems = new Dictionary<string, int[]>();
-    public Item itemInteracted;
-    private GameObject playerEntity;
+    protected GameObject itemColliding;
+    protected List<ItemProperties> inventorySlots = new List<ItemProperties>();
+    public int itemSelected;
+    public int[] itemEquipped = new int[2]; // Weapon, Consumable 
 
     public GameObject weaponSlot;
     public GameObject consumableSlot;
 
-    private bool pickUp;
-    private bool isOn;
+    [SerializeField] List<Text> itemAmountTexts;
+    [SerializeField] Text consumeSlotAmountText;
 
 
-    // ========================================= ITEM EFFECT =========================================
-    public Dictionary<string, Dictionary<string, float>> effectDict = new Dictionary<string, Dictionary<string, float>>()
-    {
-        ["HP"] = new Dictionary<string, float>(),
-        ["Stamina"] = new Dictionary<string, float>(),
-        ["Damage"] = new Dictionary<string, float>(), //0:false or 1:true, Effect Parameter, Effect Timer, number of uses
-        ["CritHit"] = new Dictionary<string, float>(), //0:false or 1:true, Effect Parameter, Effect Timer, number of uses
-        ["CritChance"] = new Dictionary<string, float>(), //0:false or 1:true, Effect Parameter, Effect Timer, number of uses
-        ["MVSpeed"] = new Dictionary<string, float>(), //0:false or 1:true, Effect Parameter, Effect Timer, distance
-        ["JumpHeight"] = new Dictionary<string, float>(), //0:false or 1:true, Effect Parameter, Effect Timer, number of uses
-        ["AttackSpeed"] = new Dictionary<string, float>() //0:false or 1:true, Effect Parameter, Effect Timer, number of uses
-    };
-
+    // ========================================= INITIALIZATION METHODS =========================================
     // Start is called before the first frame update
     protected void InventoryInitialization()
     {
-        playerEntity = rBody.gameObject;
         inventoryBg = GameObject.Find("/GUI/PlayerSlots/InventoryBackground");
 
-        for (int i=0; i < inventorySlots.Length; i++)
+        for (int i=0; i < 6; i++)
         {
-            inventorySlots[i] = GameObject.Find("/GUI/PlayerSlots/InventoryBackground/InvSlot" + (char)(65+i));
+            GameObject invSlot = GameObject.Find($"/GUI/PlayerSlots/InventoryBackground/InvSlots/InvSlot{i}");
+            itemAmountTexts.Add(GameObject.Find($"/GUI/PlayerSlots/InventoryBackground/InventoryAmountTexts/InvSlot{i}Amount").GetComponent<Text>());
+            UpdateText(itemAmountTexts[i], 0, i);
+            itemAmountTexts[i].text = "";
+            inventorySlots.Add(new ItemProperties(inventoryBg, invSlot));
         };
 
-        weaponSlot = GameObject.Find("EqpSlotWeapon");
-        consumableSlot = GameObject.Find("EqpSlotConsumable");
+        weaponSlot = GameObject.Find("/GUI/PlayerSlots/EqpSlotWeapon");
+        consumableSlot = GameObject.Find("/GUI/PlayerSlots/EqpSlotConsumable");
+        consumeSlotAmountText = GameObject.Find("/GUI/PlayerSlots/ConsumeSlotAmount").GetComponent<Text>();
+        UpdateText(consumeSlotAmountText, 0, 0);
+
+        itemSelected = -1;
+        itemEquipped = new int[2] { -1, -1 };
     }
 
+    // ========================================= MAIN METHODS =========================================
     // Update is called once per frame
     protected void InventoryUpdate()
     {
@@ -61,94 +111,273 @@ public class Inventory : Beings
     {
         if (col.CompareTag("Item"))
         {
-            AddItem(col.gameObject);
+            itemColliding = col.gameObject;
         }
     }
 
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        itemColliding = null;
+    }
 
+    // ========================================= CONTROL METHODS =========================================
+    protected void ConsumeControls()
+    {
+        // Pickup items or Interact
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            AddItem(itemColliding);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Equip(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Equip(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Equip(2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            Equip(3);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            Equip(4);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            Equip(5);
+        }
+
+        // Use Item in Inventory
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Consume(consumableSlot, true);
+        }
+
+        // Use Item in Inventory
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Throw();
+        }
+
+        // Pseudo Damage Taken 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            GameObject.Find("InvToggle").GetComponent<InvToggle>().ToggleButton();
+        }
+    }
+
+    // ========================================= INVENTORY METHODS =========================================
     protected void AddItem(GameObject pickedItem)
     {
-        if (!curProcess.Contains(pickedItem.GetInstanceID()))
+        // ID is to cancel repetitive processing of same GameObject
+        if (pickedItem != null && !curProcess.Contains(pickedItem.GetInstanceID()))
         {
             curProcess.Add(pickedItem.GetInstanceID());
 
-            isOn = inventoryBg.activeSelf;
-            itemInteracted = pickedItem.GetComponent<Item>();
-            bool isPickedUp = false;
+            Item itemInteracted = pickedItem.GetComponent<Item>();
+            bool[] isSuccess = new bool[2] { false, false }; // processSuccessful, removeInInv
+            int invFullCount = 0;
+            int slotSaved = 0;
 
-            // Has same Item in inventory
-            if (inventoryItems.ContainsKey(itemInteracted.itemName))
+            // Checks if item is in inventory
+            for (int i = 0; i < inventorySlots.Count; i++)
             {
-                itemProperties = inventoryItems[itemInteracted.itemName];
-                if (itemProperties[0] < itemProperties[1])
+                ItemProperties itemProp = inventorySlots[i];
+                invFullCount = (itemProp.isFull) ? invFullCount++ : invFullCount;
+
+                if (itemProp.itemName == itemInteracted.itemName && !itemProp.isFull)
                 {
-                    itemProperties[0]++;
-                    inventoryItems[itemInteracted.itemName] = itemProperties;
-                    isPickedUp = true;
+                    isSuccess = itemProp.changeValues(1);
+                    UpdateText(itemAmountTexts[i], itemProp.currentAmount, i);
+                    slotSaved = i;
+                    break;
                 }
             }
-            else
-            {
-                for (int i = 0; i < inventorySlots.Length; i++)
-                {
-                    GameObject curSlot = inventorySlots[i];
-                    if (curSlot.transform.childCount == 0)
-                    {
-                        Debug.Log(itemInteracted.itemType + itemInteracted.itemName + " picked up!");
-                        itemProperties = new int[3] { 1, itemInteracted.maxQuantity, i };
-                        inventoryItems.Add(itemInteracted.itemName, itemProperties);
 
-                        GameObject icon = (GameObject)Instantiate(itemInteracted.itemPrefab, curSlot.transform, false);
-                        icon.name = "Inv_" + itemInteracted.itemName;
-                        isPickedUp = true;
+            // Item not in inventory
+            if (!isSuccess[0] && invFullCount < 6)
+            {
+                for (int i = 0; i < inventorySlots.Count; i++)
+                {
+                    ItemProperties itemProp = inventorySlots[i];
+                    // Slot has no item in it
+                    if (itemProp.itemName == null)
+                    {
+                        GameObject newAddItem = (GameObject)Instantiate(itemInteracted.iconPrefab, itemProp.inventorySlot.transform, false);
+                        isSuccess = itemProp.setValues(newAddItem, itemInteracted.itemName, itemInteracted.curQuantity, itemInteracted.maxQuantity);
+                        newAddItem.name = "Inv_" + itemInteracted.itemName;
+                        newAddItem.GetComponent<Image>().enabled = GameObject.Find("InvToggle").GetComponent<InvToggle>().isOn;
+                        UpdateText(itemAmountTexts[i], itemProp.currentAmount, i);
+                        slotSaved = i;
                         break;
                     }
                 }
             }
 
-            if (isPickedUp)
+            if (isSuccess[0])
             {
                 Destroy(pickedItem);
                 StartCoroutine(ClearID(pickedItem.GetInstanceID(), 1));
+                Debug.Log(itemInteracted.itemName + " picked up!");
+                Debug.Log(weaponSlot.transform.childCount < 1 || consumableSlot.transform.childCount < 1);
+                if (weaponSlot.transform.childCount < 1 || consumableSlot.transform.childCount < 1)
+                {
+                    Equip(slotSaved);
+                }
+                if (slotSaved == itemEquipped[1])
+                {
+                    UpdateText(consumeSlotAmountText, inventorySlots[itemEquipped[1]].currentAmount, itemEquipped[1]);
+                }
             }
         }
     }
 
-
-    protected void RemoveItem(GameObject pickedItem, int amount = 1)
+    protected void RemoveItem(int slotNumber, int amount = 1)
     {
-        itemInteracted = pickedItem.GetComponent<Item>();
-        itemProperties = inventoryItems[itemInteracted.itemName];
+        ItemProperties itemProp = inventorySlots[slotNumber];
+        bool[] isSuccess = new bool[2] { false, false }; // processSuccessful, removeInInv
 
-        if (itemInteracted.itemType == "Consumable")
+        // Slot has no item in it
+        if (itemProp.itemName != null)
         {
-            itemProperties[0] -= amount;
-            if (itemProperties[0] == 0)
+            isSuccess = itemProp.changeValues(-1);
+        }
+
+        if (isSuccess[1])
+        {
+            ClearItem(slotNumber);
+        }
+
+        if (isSuccess[0])
+        {
+            UpdateText(itemAmountTexts[slotNumber], itemProp.currentAmount, slotNumber);
+        }
+    }
+
+    protected void UpdateText(Text textGameObject , int newAmount, int slotNumber)
+    {
+        textGameObject.text = (newAmount != 0) ? $"{inventorySlots[slotNumber].currentAmount}" : "";
+    }
+
+    // Delete all
+    public void ClearItem()
+    {
+        for (int i = 0; i < inventorySlots.Count; i++)
+        {
+            ItemProperties itemProp = inventorySlots[i];
+            if (itemProp.itemObject != null)
             {
-                ClearItem(pickedItem);
-                Destroy(GameObject.Find("Inv_" + itemInteracted.itemName));
+                ClearItem(i);
             }
-
-            Debug.Log(itemInteracted.itemName + " used");
+            UpdateText(itemAmountTexts[i], itemProp.currentAmount, i);
         }
     }
 
-
-    public void ClearItem(GameObject pickedItem)
+    // Delete one item
+    public void ClearItem(int slotNumber)
     {
-        inventoryItems.Remove(itemInteracted.itemName);
-        Destroy(pickedItem);
+        GameObject pickedItem = inventorySlots[slotNumber].inventorySlot.transform.GetChild(0).gameObject;
+        GameObject eqpSlot = (slotNumber == itemEquipped[0]) ? weaponSlot : ((slotNumber == itemEquipped[1]) ? consumableSlot : null);
+        if (eqpSlot != null)
+        {
+            Unequip(eqpSlot);
+        }
+        Destroy(pickedItem) ;
+        inventorySlots[slotNumber] = new ItemProperties(inventoryBg, inventorySlots[slotNumber].inventorySlot);
     }
 
-
-    protected void Consume()
+    // Checks if a slot has item attached or not
+    public bool SelectSlot(int slotSelected)
     {
-        if (consumableSlot.transform.childCount > 0)
+        ItemProperties itemProp = inventorySlots[slotSelected];
+        if (itemProp.itemName != null)
         {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    // ========================================= USE METHODS =========================================
+    public void Equip(int itemSelected)
+    {
+        if (SelectSlot(itemSelected))
+        {
+            this.itemSelected = itemSelected;
+            ItemProperties itemProp = inventorySlots[itemSelected];
+            GameObject pickedItem = itemProp.inventorySlot.transform.GetChild(0).gameObject;
+            Debug.Log(pickedItem.GetComponent<Item>().itemType);
+            if (pickedItem.GetComponent<Item>().itemType == "Consumable")
+            {
+                Debug.Log(true);
+                if (consumableSlot.transform.childCount > 0)
+                {
+                    Destroy(consumableSlot.transform.GetChild(0).gameObject);
+                }
+                GameObject newEqpItem = (GameObject)Instantiate(pickedItem, consumableSlot.transform, false);
+                newEqpItem.name = "Eqp_" + pickedItem.GetComponent<Item>().itemName;
+                newEqpItem.GetComponent<Image>().enabled = true;
+                itemEquipped[1] = itemSelected;
+                UpdateText(consumeSlotAmountText, inventorySlots[itemEquipped[1]].currentAmount, itemEquipped[1]);
+            }
+            else if (pickedItem.GetComponent<Item>().itemType == "Weapon")
+            {
+                if (weaponSlot.transform.childCount > 0)
+                {
+                    Destroy(weaponSlot.transform.GetChild(0).gameObject);
+                }
+                GameObject newEqpItem = (GameObject)Instantiate(pickedItem, weaponSlot.transform, false);
+                newEqpItem.name = "Eqp_" + pickedItem.GetComponent<Item>().itemName;
+                newEqpItem.GetComponent<Image>().enabled = true;
+                itemEquipped[0] = itemSelected;
+            }
+        }
+    }
+
+    public void Unequip(GameObject eqpSlot)
+    {
+        if (eqpSlot.transform.childCount > 0)
+        {
+            Destroy(eqpSlot.transform.GetChild(0).gameObject);
+            itemEquipped[(eqpSlot == weaponSlot) ? 0 : 1] = -1 ;
+        }
+        UpdateText(consumeSlotAmountText, 0, itemEquipped[1]);
+    }
+
+    protected void Consume(GameObject pickedItem, bool isSlot)
+    {
+        if (isSlot)
+        {
+            if (pickedItem.transform.childCount > 0)
+            {
+                pickedItem = pickedItem.transform.GetChild(0).gameObject;
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        if (pickedItem != null)
+        {
+            Dictionary<string, Dictionary<string, float>> effectDict = pickedItem.GetComponent<Consumable>().effectDict;
             bool didEffect = false;
-            GameObject equippedConsumable = consumableSlot.transform.GetChild(0).gameObject;
-            this.effectDict = equippedConsumable.GetComponent<Consumable>().effectDict;
-            foreach (KeyValuePair<string, Dictionary<string, float>> eachEffect in this.effectDict)
+
+            foreach (KeyValuePair<string, Dictionary<string, float>> eachEffect in effectDict)
             {
                 if (eachEffect.Value["hasEffect"] == 1f)
                 {
@@ -178,8 +407,19 @@ public class Inventory : Beings
 
             if (didEffect)
             {
-                RemoveItem(equippedConsumable, 1);
+                RemoveItem(itemEquipped[1], 1);
+                UpdateText(consumeSlotAmountText, inventorySlots[itemEquipped[1]].currentAmount, itemEquipped[1]);
             }
+        }
+    }
+
+    protected void Throw()
+    {
+        if (isGrounded && inventorySlots[itemSelected].itemObject != null)
+        {
+            GameObject newDrop = (GameObject)Instantiate(inventorySlots[itemSelected].itemObject, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+            newDrop.GetComponent<Item>().curQuantity = inventorySlots[itemSelected].itemObject.GetComponent<Item>().curQuantity;
+            ClearItem(itemSelected);
         }
     }
 }

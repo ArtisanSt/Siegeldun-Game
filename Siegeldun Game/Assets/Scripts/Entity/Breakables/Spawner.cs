@@ -15,7 +15,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] protected int spawnInterval = 1;
     [SerializeField] protected float targetStraightDistance;
 
-    void Start()
+    void Awake()
     {
         //activePoints = new List<Transform>() { GameObject.Find("LeftActivePoint"), GameObject.Find("RightActivePoint")}
     }
@@ -38,7 +38,7 @@ public class Spawner : MonoBehaviour
                     Vector2 rSpawnPnt = spawnPoints[1].position;
                     Vector2 mainSpawnPnt = new Vector2(lSpawnPnt.x + ((rSpawnPnt.x - lSpawnPnt.x) * Random.Range(0, 101) / 100), rSpawnPnt.y);
 
-                    GameObject newMob = Instantiate(mobPrefabs[Random.Range(0, mobPrefabs.Count)], mainSpawnPnt, Quaternion.identity);
+                    GameObject newMob = Instantiate(mobPrefabs[Random.Range(0, mobPrefabs.Count)], mainSpawnPnt, Quaternion.identity, GameObject.Find("Enemies").transform);
                     newMob.GetComponent<EnemyAI>().hasLimitations = true;
                     newMob.GetComponent<EnemyAI>().activePoints = this.activePoints;
                     canSpawn = false;

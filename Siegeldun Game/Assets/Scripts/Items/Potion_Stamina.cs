@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Potion_Stamina : Consumable
 {
+    void Awake()
+    {
+        ConsumableInitialization();
+        itemName = "Potion_Stamina";
+        consumableType = "Potion";
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        ConsumableInitialization();
         // ========================================= Potion Initialization =========================================
-        itemName = "Stamina_Potion";
         maxQuantity = 64;
+        curQuantity = 1;
 
-        consumableType = "Potion";
         effectDict["Stamina"] = new Dictionary<string, float>()
         {
             ["hasEffect"] = 0f, // 0: false, 1: true
@@ -20,5 +25,7 @@ public class Potion_Stamina : Consumable
             ["effectSpeed"] = 0f, // 0: instant, 1: overtime
             ["effectTimer"] = 0f, // Time of effect
         };
+
+        ItemFinalization();
     }
 }

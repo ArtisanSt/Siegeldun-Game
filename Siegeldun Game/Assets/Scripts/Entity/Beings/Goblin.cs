@@ -72,6 +72,8 @@ public class Goblin : EnemyAI
     {
         EnemyNPCStart();
         EntityInitilization();
+
+        EntityFinalization();
     }
 
     // Updates Every Physics Frame

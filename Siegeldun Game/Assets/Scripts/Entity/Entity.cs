@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Entity : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class Entity : MonoBehaviour
     protected CapsuleCollider2D capColl;
     protected Animator anim;
 
+    protected GameObject playerEntity;
+    public GameObject entityPrefab;
+
     protected enum MovementAnim { idle, run, jump, fall };
     protected MovementAnim state;
 
@@ -31,14 +35,15 @@ public class Entity : MonoBehaviour
             capColl = GetComponent<CapsuleCollider2D>();
         }
         anim = GetComponent<Animator>();
+        playerEntity = gameObject;
     }
 
 
     // ========================================= Entity Properties =========================================
     protected string entityName;
     protected string entityType; // "Beings" or "Breakables"
-    [SerializeField] protected GameObject entityPrefab;
     [SerializeField] protected List<GameObject> entityDrops;
+    protected bool doDrop;
     protected bool willBeDestroyed;
     public int entityID;
     protected int dropChance;
@@ -46,6 +51,7 @@ public class Entity : MonoBehaviour
 
     // Base HP Mechanics
     public bool isAlive = true;
+    protected bool deadBeings;
     [SerializeField] protected float maxHealth;
     [SerializeField] protected float entityHp;
 
@@ -58,6 +64,12 @@ public class Entity : MonoBehaviour
     protected float kTick;
 
     [SerializeField] protected float hpRegenTimer;
+
+
+    protected void EntityFinalization()
+    {
+        entityPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EntityPrefabs/{entityName}.prefab");
+    }
 
 
     // ========================================= ENTITY METHODS =========================================
@@ -109,7 +121,7 @@ public class Entity : MonoBehaviour
 
     protected void ClearInstance(int time = 1)
     {
-        if (boxColl.enabled && rBody.velocity == new Vector2(0, 0) && !willBeDestroyed)
+        if (boxColl.enabled && deadBeings && !willBeDestroyed)
         {
             if (entityType == "Beings")
             {
@@ -119,7 +131,7 @@ public class Entity : MonoBehaviour
             boxColl.enabled = false;
             willBeDestroyed = true;
 
-            Drop(true, dropChance, 0f);
+            Drop(dropChance, 0f);
             StartCoroutine(DestroyInstance(time));
         }
     }
@@ -138,9 +150,9 @@ public class Entity : MonoBehaviour
 
 
     // ========================================= GAMEPLAY METHODS INITIALIZATION =====================================
-    public void Drop(bool doDrop, int chance, float xPos)
+    public void Drop(int chance, float xPos)
     {
-        if (Random.Range(1, chance + 1) == 1)
+        if (Random.Range(1, chance + 1) == 1 && doDrop)
         {
             Debug.Log(entityDrops.Count);
             Instantiate(entityDrops[Random.Range(0,entityDrops.Count)], new Vector3(transform.position.x + xPos, transform.position.y, 0), Quaternion.identity);

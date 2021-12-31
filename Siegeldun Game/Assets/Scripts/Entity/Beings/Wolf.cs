@@ -68,7 +68,7 @@ public class Wolf : EnemyAI
 
     // ========================================= UNITY MAIN METHODS =========================================
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         EnemyNPCStart();
         EntityInitilization();

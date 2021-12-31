@@ -18,6 +18,8 @@ public class Crate : Breakables
     {
         BreakablesInitialization();
         EntityInitialization();
+
+        EntityFinalization();
     }
 
     void Update()
@@ -26,6 +28,14 @@ public class Crate : Breakables
         {
             DeathInitialization();
             ClearInstance(2);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Enemy" && col.gameObject.tag == "Player")
+        {
+            Physics2D.IgnoreCollision(col.otherCollider, col.collider);
         }
     }
 }

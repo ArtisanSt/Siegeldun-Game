@@ -54,6 +54,7 @@ public class Beings : Entity
     [SerializeField] protected float regenDelay;
     private float hpTick = 0f;
     private float hpHideTime = 4f;
+    protected GameObject EntityStatusBar;
 
     [Header("Stamina Mechanics", order = 1)]
     [SerializeField] protected float maxStam;
@@ -62,7 +63,7 @@ public class Beings : Entity
     [SerializeField] protected float stamRegen;
 
     [Header("Movement Mechanics", order = 1)]
-    protected const float slowDownConst = 0.95f;
+    protected const float slowDownConst = 0.90f;
     [SerializeField] protected float mvSpeed;
     [SerializeField] protected float mvSpeedBoost = 0f;
     [SerializeField] protected float totalMvSpeed;
@@ -85,6 +86,7 @@ public class Beings : Entity
         entityID = rBody.gameObject.GetInstanceID();
         isAlive = true;
         willBeDestroyed = false;
+        EntityStatusBar = GameObject.Find($"/Enemies/{rBody.name}/EntityStatusBar");
     }
 
 
@@ -114,10 +116,7 @@ public class Beings : Entity
         {
             if (entityName != "Player")
             {
-                HealthbarF.enabled = true;
-                HealthbarB.enabled = true;
-                statHpText.enabled = true;
-                hpHideTime = 0f;
+                EntityStatusBar.SetActive(true);
             }
             float netRegenF = hpFraction - fillF;
             float netRegenB = fillF - fillB;
@@ -137,7 +136,7 @@ public class Beings : Entity
 
             if (fillB > fillF) // When Back Health Bar is greater than Front Health Bar
             {
-                hpTick += 0.1f;
+                hpTick += 0.75f;
                 HealthbarB.color = Color.red;
                 percentChangeB = (-0.001f / netRegenB) * hpTick;
                 HealthbarB.fillAmount += Mathf.Lerp(0, netRegenB, percentChangeB);
@@ -155,11 +154,9 @@ public class Beings : Entity
             HealthbarF.color = Color.cyan;
             if (entityName != "Player")
             {
-                if (hpHideTime > 3f)
+                if (hpHideTime > 5f)
                 {
-                    HealthbarF.enabled = false;
-                    HealthbarB.enabled = false;
-                    statHpText.enabled = false;
+                    EntityStatusBar.SetActive(false);
                 }
                 else
                 {
@@ -342,6 +339,7 @@ public class Beings : Entity
         jumpVelocity = (isGrounded) ? dirY : rBody.velocity.y;
 
         rBody.velocity = new Vector2(runVelocity, jumpVelocity);
+        deadBeings = (new Vector2(runVelocity, jumpVelocity) == new Vector2(0, 0)) && isGrounded;
     }
 
 

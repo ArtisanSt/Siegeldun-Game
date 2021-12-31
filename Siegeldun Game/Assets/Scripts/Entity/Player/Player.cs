@@ -102,11 +102,13 @@ public class Player : Inventory
 
     // ========================================= UNITY MAIN METHODS =========================================
     // Initializes when the Player Script is called
-    void Start()
+    void Awake()
     {
         BeingsInitialization();
         EntityInitilization();
         InventoryInitialization();
+
+        EntityFinalization();
     }
 
     // Updates Every Frame
@@ -159,18 +161,11 @@ public class Player : Inventory
     protected void DeathInitialization()
     {
         // Inventory Reset
-        foreach(GameObject slot in inventorySlots)
-        {
-            if (slot.transform.childCount > 0)
-            {
-                Destroy(slot.transform.GetChild(0).gameObject);
-            }
-        }
-        inventoryItems.Clear();
+        ClearItem();
     }
 
 
-    // ========================================= CONTROLLER METHODS =========================================
+    // ========================================= TIMER METHODS =========================================
     private void Timer()
     {
         if (attackCombo != 1)
@@ -224,28 +219,7 @@ public class Player : Inventory
                 Attack();
             }
 
-            // Pseudo Attack Speed Changer
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                attackSpeed += 0.1f;
-            }
-
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                attackSpeed -= 0.1f;
-            }
-
-            // Pseudo Damage Taken 
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                TakeDamage(50, Random.Range(-9999, 10000), (sprite.flipX) ? 1 : -1, kbHorDisplacement);
-            }
-            
-            // Pseudo Heal
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Consume();
-            }
+            ConsumeControls();
         }
     }
     
@@ -256,7 +230,6 @@ public class Player : Inventory
         animationCurrentState = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
         EntityAnimationState();
     }
-
 
 
     void OnDrawGizmosSelected()
