@@ -136,7 +136,7 @@ public class Beings : Entity
 
             if (fillB > fillF) // When Back Health Bar is greater than Front Health Bar
             {
-                hpTick += 0.1f;
+                hpTick += 0.75f;
                 HealthbarB.color = Color.red;
                 percentChangeB = (-0.001f / netRegenB) * hpTick;
                 HealthbarB.fillAmount += Mathf.Lerp(0, netRegenB, percentChangeB);
@@ -154,7 +154,7 @@ public class Beings : Entity
             HealthbarF.color = Color.cyan;
             if (entityName != "Player")
             {
-                if (hpHideTime > 3f)
+                if (hpHideTime > 5f)
                 {
                     EntityStatusBar.SetActive(false);
                 }
@@ -339,7 +339,7 @@ public class Beings : Entity
         jumpVelocity = (isGrounded) ? dirY : rBody.velocity.y;
 
         rBody.velocity = new Vector2(runVelocity, jumpVelocity);
-        deadBeings = new Vector2(runVelocity, jumpVelocity) == new Vector2(0, 0);
+        deadBeings = (new Vector2(runVelocity, jumpVelocity) == new Vector2(0, 0)) && isGrounded;
     }
 
 

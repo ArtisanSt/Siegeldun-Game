@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Entity : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class Entity : MonoBehaviour
     protected CapsuleCollider2D capColl;
     protected Animator anim;
 
+    protected GameObject playerEntity;
+    public GameObject entityPrefab;
+
     protected enum MovementAnim { idle, run, jump, fall };
     protected MovementAnim state;
 
@@ -31,13 +35,13 @@ public class Entity : MonoBehaviour
             capColl = GetComponent<CapsuleCollider2D>();
         }
         anim = GetComponent<Animator>();
+        playerEntity = gameObject;
     }
 
 
     // ========================================= Entity Properties =========================================
     protected string entityName;
     protected string entityType; // "Beings" or "Breakables"
-    [SerializeField] protected GameObject entityPrefab;
     [SerializeField] protected List<GameObject> entityDrops;
     protected bool doDrop;
     protected bool willBeDestroyed;
@@ -60,6 +64,12 @@ public class Entity : MonoBehaviour
     protected float kTick;
 
     [SerializeField] protected float hpRegenTimer;
+
+
+    protected void EntityFinalization()
+    {
+        entityPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EntityPrefabs/{entityName}.prefab");
+    }
 
 
     // ========================================= ENTITY METHODS =========================================

@@ -6,32 +6,63 @@ using UnityEngine.EventSystems;
 
 public class ItemToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    private Inventory inventorySystem;
+    private GameObject playerEntity;
+    private Image img;
+    private GameObject weaponSlot;
+    private GameObject consumableSlot;
 
-    public void Awake()
+
+    void Awake()
     {
-        inventorySystem = GameObject.Find("Player").GetComponent<Inventory>();
+        playerEntity = GameObject.Find("Player");
+        weaponSlot = GameObject.Find("/GUI/PlayerSlots/EqpSlotWeapon");
+        consumableSlot = GameObject.Find("/GUI/PlayerSlots/EqpSlotConsumable");
+        img = GetComponent<Image>();
+    }
+
+    void Update()
+    {
+
+        if (playerEntity.GetComponent<Player>().isAlive)
+        {
+            string inInvOrEqp = gameObject.name.Substring(0, 3);
+
+            if (playerEntity.GetComponent<Player>().itemSelected == (int)(gameObject.name[7] - '0') && gameObject.transform.childCount > 0)
+            {
+                img.color = Color.magenta;
+            }
+            else
+            {
+                if (playerEntity.GetComponent<Player>().itemEquipped[0] == (int)(gameObject.name[7] - '0'))
+                {
+                    img.color = Color.yellow;
+                }
+                else if (playerEntity.GetComponent<Player>().itemEquipped[1] == (int)(gameObject.name[7] - '0'))
+                {
+                    img.color = Color.green;
+                }
+                else
+                {
+                    img.color = Color.white;
+                }
+
+            }
+        }
+        //playerEntity.GetComponent<Player>().itemSelected;
     }
 
     public void OnPointerUp(PointerEventData evt)
     {
         GameObject slotGameObject = evt.pointerPress;
-        if (slotGameObject.transform.childCount > 0)
+        string inInvOrEqp = slotGameObject.name.Substring(0, 3);
+        if (inInvOrEqp == "Inv")
         {
-            GameObject itemSelected = slotGameObject.transform.GetChild(0).gameObject;
-            GameObject playerEntity = GameObject.Find("Player");
-            string inInvOrEqp = itemSelected.name.Substring(0,3);
-
-            Debug.Log(inInvOrEqp);
-            if (inInvOrEqp == "Inv")
-            {
-                playerEntity.GetComponent<Player>().itemChosen = (int)slotGameObject.name[7];
-                playerEntity.GetComponent<Player>().Use();
-            }
-            else if (inInvOrEqp == "Eqp")
-            {
-                playerEntity.GetComponent<Player>().ClearItem(itemSelected, -1);
-            }
+            int slotSelected = (int)(slotGameObject.name[7] - '0');
+            playerEntity.GetComponent<Player>().Equip(slotSelected);
+        }
+        else if (inInvOrEqp == "Eqp")
+        {
+            playerEntity.GetComponent<Player>().Unequip(slotGameObject);
         }
     }
 

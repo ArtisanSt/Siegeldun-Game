@@ -102,11 +102,13 @@ public class Player : Inventory
 
     // ========================================= UNITY MAIN METHODS =========================================
     // Initializes when the Player Script is called
-    void Start()
+    void Awake()
     {
         BeingsInitialization();
         EntityInitilization();
         InventoryInitialization();
+
+        EntityFinalization();
     }
 
     // Updates Every Frame
@@ -163,7 +165,7 @@ public class Player : Inventory
     }
 
 
-    // ========================================= CONTROLLER METHODS =========================================
+    // ========================================= TIMER METHODS =========================================
     private void Timer()
     {
         if (attackCombo != 1)
@@ -217,18 +219,6 @@ public class Player : Inventory
                 Attack();
             }
 
-            // Pseudo Damage Taken 
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                TakeDamage(50, Random.Range(-9999, 10000), (sprite.flipX) ? 1 : -1, kbHorDisplacement);
-            }
-
-            // Use Item in Inventory
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Use();
-            }
-
             ConsumeControls();
         }
     }
@@ -240,7 +230,6 @@ public class Player : Inventory
         animationCurrentState = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
         EntityAnimationState();
     }
-
 
 
     void OnDrawGizmosSelected()

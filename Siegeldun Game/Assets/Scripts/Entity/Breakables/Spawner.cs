@@ -15,7 +15,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] protected int spawnInterval = 1;
     [SerializeField] protected float targetStraightDistance;
 
-    void Start()
+    void Awake()
     {
         //activePoints = new List<Transform>() { GameObject.Find("LeftActivePoint"), GameObject.Find("RightActivePoint")}
     }

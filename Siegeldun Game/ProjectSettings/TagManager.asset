@@ -9,6 +9,7 @@ TagManager:
   - Item
   - Region
   - Player Event Collider
+  - Kinematic
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Ground
   - AddOn
   - Item
-  - 
+  - Obstacle
   - 
   - 
   - 

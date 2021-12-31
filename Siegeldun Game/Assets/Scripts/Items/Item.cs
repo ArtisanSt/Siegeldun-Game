@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Item : MonoBehaviour
 {
@@ -8,7 +9,9 @@ public class Item : MonoBehaviour
     public string itemName;
     public string itemType;
     public int maxQuantity;
+    public int curQuantity;
     public GameObject itemPrefab;
+    public GameObject iconPrefab;
     public Dictionary<string, Dictionary<string, float>> effectDict = new Dictionary<string, Dictionary<string, float>>()
     {
         ["HP"] = new Dictionary<string, float>(),
@@ -69,5 +72,11 @@ public class Item : MonoBehaviour
         {
             ["hasEffect"] = 0f, // 0: false, 1: true
         };
+    }
+
+    public void ItemFinalization()
+    {
+        itemPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/ItemPrefabs/{itemName}.prefab");
+        iconPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/ItemPrefabs/{itemName}_icon.prefab");
     }
 }
