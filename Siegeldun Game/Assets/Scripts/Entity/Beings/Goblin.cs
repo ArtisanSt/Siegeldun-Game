@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Goblin : EnemyAI
 {
-    [SerializeField] protected static List<int> GoblinIDs = new List<int>();
-
     // Enemy NPC Properties Initialization
-    protected void EntityInitilization()
+    protected void UniquePropertyInit()
     {
         entityName = "Goblin";
         defaultFacing = -1;
@@ -23,7 +21,6 @@ public class Goblin : EnemyAI
         EqWeaponStamCost = 0f;
         weaponDrag = 0f; // Pseudo Weapon Drag
         weaponKbForce = .8f; // Pseudo Weapon Knockback Force
-        attacking = false;
         kbDir = 0;
         kTick = 0f;
         kbHorDisplacement = .8f;
@@ -58,11 +55,6 @@ public class Goblin : EnemyAI
 
         // Item Drop Parameters
         dropChance = 3;
-
-        if (!EnemyAIIDs.Contains(entityID))
-        {
-            EnemyAIIDs.Add(entityID);
-        }
     }
 
 
@@ -70,16 +62,26 @@ public class Goblin : EnemyAI
     // Start is called before the first frame update
     void Start()
     {
-        EnemyNPCStart();
-        EntityInitilization();
+        BeingsInit();
+        UniquePropertyInit();
+        NPCInit();
+        StatusBarInit();
 
-        EntityFinalization();
+        PrefabsInit();
     }
 
     // Updates Every Physics Frame
     void FixedUpdate()
     {
-        EnemyNPCFixedUpdate();
+        if (isAlive)
+        {
+            EnemyNPCFixedUpdate();
+        }
+        else
+        {
+            DeathFinalizer();
+            ClearInstance(5);
+        }
 
         Controller();
         isGrounded = capColl.IsTouchingLayers(groundLayers) || capColl.IsTouchingLayers(enemyLayers);

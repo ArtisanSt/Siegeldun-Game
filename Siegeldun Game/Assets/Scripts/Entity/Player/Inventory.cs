@@ -72,13 +72,15 @@ public class Inventory : Beings
     public GameObject weaponSlot;
     public GameObject consumableSlot;
 
+    private Interactor interactorComponent;
+
     [SerializeField] List<Text> itemAmountTexts;
     [SerializeField] Text consumeSlotAmountText;
 
 
     // ========================================= INITIALIZATION METHODS =========================================
     // Start is called before the first frame update
-    protected void InventoryInitialization()
+    protected void InventoryInit()
     {
         inventoryBg = GameObject.Find("/GUI/PlayerSlots/InventoryBackground");
 
@@ -98,6 +100,8 @@ public class Inventory : Beings
 
         itemSelected = -1;
         itemEquipped = new int[2] { -1, -1 };
+
+        interactorComponent = GetComponent<Interactor>();
     }
 
     // ========================================= MAIN METHODS =========================================
@@ -107,26 +111,13 @@ public class Inventory : Beings
 
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.CompareTag("Item"))
-        {
-            itemColliding = col.gameObject;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D col)
-    {
-        itemColliding = null;
-    }
-
     // ========================================= CONTROL METHODS =========================================
     protected void ConsumeControls()
     {
         // Pickup items or Interact
         if (Input.GetKeyDown(KeyCode.F))
         {
-            AddItem(itemColliding);
+            AddItem(interactorComponent.curSelected);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -182,7 +173,7 @@ public class Inventory : Beings
     protected void AddItem(GameObject pickedItem)
     {
         // ID is to cancel repetitive processing of same GameObject
-        if (pickedItem != null && !curProcess.Contains(pickedItem.GetInstanceID()))
+        if (pickedItem != null && pickedItem.GetComponent<Interactibles>().isItem && !curProcess.Contains(pickedItem.GetInstanceID()))
         {
             curProcess.Add(pickedItem.GetInstanceID());
 
@@ -323,7 +314,6 @@ public class Inventory : Beings
             Debug.Log(pickedItem.GetComponent<Item>().itemType);
             if (pickedItem.GetComponent<Item>().itemType == "Consumable")
             {
-                Debug.Log(true);
                 if (consumableSlot.transform.childCount > 0)
                 {
                     Destroy(consumableSlot.transform.GetChild(0).gameObject);
@@ -344,6 +334,8 @@ public class Inventory : Beings
                 newEqpItem.name = "Eqp_" + pickedItem.GetComponent<Item>().itemName;
                 newEqpItem.GetComponent<Image>().enabled = true;
                 itemEquipped[0] = itemSelected;
+
+                StatsUpdate();
             }
         }
     }
@@ -358,7 +350,7 @@ public class Inventory : Beings
         UpdateText(consumeSlotAmountText, 0, itemEquipped[1]);
     }
 
-    protected void Consume(GameObject pickedItem, bool isSlot)
+    public void Consume(GameObject pickedItem, bool isSlot)
     {
         if (isSlot)
         {
@@ -417,9 +409,36 @@ public class Inventory : Beings
     {
         if (isGrounded && inventorySlots[itemSelected].itemObject != null)
         {
-            GameObject newDrop = (GameObject)Instantiate(inventorySlots[itemSelected].itemObject, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-            newDrop.GetComponent<Item>().curQuantity = inventorySlots[itemSelected].itemObject.GetComponent<Item>().curQuantity;
+            Debug.Log(inventorySlots[itemSelected].itemObject);
+            GameObject newDrop = Drop(1, 0, 0, inventorySlots[itemSelected].itemObject.GetComponent<Item>().itemPrefab);
+            newDrop.GetComponent<Item>().curQuantity = inventorySlots[itemSelected].currentAmount;
             ClearItem(itemSelected);
+        }
+    }
+
+    protected void StatsUpdate()
+    {
+        weaponGameObject = (weaponSlot.transform.childCount > 0) ? weaponSlot.transform.GetChild(0).gameObject.GetComponent<Weapon>() : null;
+
+        if (weaponGameObject == null)
+        {
+            entityDamage = 5f;
+            attackSpeed = 2;
+            attackDelay = 0.3f;
+            critHit = .1f;
+            critChance = 1000;
+            attackRange = 0.3f;
+            EqWeaponStamCost = 0f;
+        }
+        else
+        {
+            entityDamage = weaponGameObject.damage;
+            attackSpeed = weaponGameObject.attackSpeed;
+            attackDelay = weaponGameObject.attackDelay;
+            critHit = weaponGameObject.critHit;
+            critChance = weaponGameObject.critChance;
+            attackRange = weaponGameObject.attackRange;
+            EqWeaponStamCost = weaponGameObject.staminaCost;
         }
     }
 }

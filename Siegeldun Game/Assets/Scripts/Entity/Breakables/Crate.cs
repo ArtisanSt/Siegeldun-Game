@@ -19,7 +19,7 @@ public class Crate : Breakables
         BreakablesInitialization();
         EntityInitialization();
 
-        EntityFinalization();
+        PrefabsInit();
     }
 
     void Update()

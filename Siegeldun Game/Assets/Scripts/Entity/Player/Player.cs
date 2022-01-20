@@ -7,6 +7,8 @@ public class Player : Inventory
     // ========================================= UNITY PROPERTIES =========================================
     private float[] animationTime = new float[9];
 
+    protected GameObject weaponSpriteObject;
+    protected Animator weaponAnim;
 
 
     // ========================================= ENTITY PROPERTIY SCALING =========================================
@@ -15,13 +17,14 @@ public class Player : Inventory
     protected float[] weaponAttackSpeed = new float[] { .5f, 1.17f, .95f }; // Pseudo Attack Speed
 
     // Entity Properties Initialization
-    private void EntityInitilization()
+    private void UniquePropertyInit()
     {
         entityName = "Player";
         defaultFacing = 1;
         EntityStatsInitialization(entityName);
 
         // Battle Initialization
+        weaponGameObject = (weaponSlot.transform.childCount > 0) ? weaponSlot.transform.GetChild(0).gameObject.GetComponent<Weapon>() : null;
         entityWeapon = 0; // Pseudo Weapon Index
         entityDamage = 30f; // Pseudo Damage
         attackSpeed = weaponAttackSpeed[idxDiff];
@@ -59,44 +62,8 @@ public class Player : Inventory
         mvSpeed = 7.4f;
         jumpForce = 19.5f;
         rBody.gravityScale = 6;
-    }
 
-    protected void AnimClipTime()
-    {
-        AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
-        foreach (AnimationClip clip in clips)
-        {
-            switch (clip.name.Substring(entityName.Length + 1))
-            {
-                case "Idle":
-                    animationTime[0] = clip.length;
-                    break;
-                case "Run":
-                    animationTime[1] = clip.length;
-                    break;
-                case "Jump":
-                    animationTime[2] = clip.length;
-                    break;
-                case "Fall":
-                    animationTime[3] = clip.length;
-                    break;
-                case "Hurt":
-                    animationTime[4] = clip.length;
-                    break;
-                case "Death":
-                    animationTime[5] = clip.length;
-                    break;
-                case "Attack_1":
-                    animationTime[6] = clip.length;
-                    break;
-                case "Attack_2":
-                    animationTime[7] = clip.length;
-                    break;
-                case "Attack_3":
-                    animationTime[8] = clip.length;
-                    break;
-            }
-        }
+        doDrop = true;
     }
 
 
@@ -104,11 +71,19 @@ public class Player : Inventory
     // Initializes when the Player Script is called
     void Awake()
     {
-        BeingsInitialization();
-        EntityInitilization();
-        InventoryInitialization();
+        BeingsInit();
+        UniquePropertyInit();
+        InventoryInit();
+        StatusBarInit();
+        weaponSpriteObject = entityGameObject.transform.GetChild(1).gameObject;
+        weaponAnim = weaponSpriteObject.GetComponent<Animator>();
 
-        EntityFinalization();
+        PrefabsInit();
+    }
+
+    void Start()
+    {
+        StatsUpdate();
     }
 
     // Updates Every Frame
@@ -116,12 +91,13 @@ public class Player : Inventory
     {
         if (isAlive)
         {
+            StatsUpdate();
             PassiveSkills(hpRegenAllowed, stamRegenAllowed, regenDelay);
             Timer();
         }
         else
         {
-            DeathInitialization();
+            DeathFinalizer();
             ClearInstance(5);
         }
 
@@ -141,7 +117,7 @@ public class Player : Inventory
     {
         int attackID = Random.Range(-9999, 10000);
         // Attack Animation
-        anim.SetTrigger("attack" + attackCombo.ToString());
+        anim.SetTrigger("sword" + attackCombo.ToString());
         comboTime = 0f;
         entityStam -= EqWeaponStamCost;
         lastAttack = Time.time;
@@ -158,7 +134,7 @@ public class Player : Inventory
         }
     }
 
-    protected void DeathInitialization()
+    protected void DeathFinalizer()
     {
         // Inventory Reset
         ClearItem();

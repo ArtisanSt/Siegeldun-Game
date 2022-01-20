@@ -23,7 +23,7 @@ public class ItemToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     void Update()
     {
 
-        if (playerEntity.GetComponent<Player>().isAlive)
+        if (playerEntity != null && playerEntity.GetComponent<Player>().isAlive)
         {
             string inInvOrEqp = gameObject.name.Substring(0, 3);
 
@@ -62,7 +62,7 @@ public class ItemToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
         else if (inInvOrEqp == "Eqp")
         {
-            playerEntity.GetComponent<Player>().Unequip(slotGameObject);
+            playerEntity.GetComponent<Player>().Consume(consumableSlot, true);
         }
     }
 

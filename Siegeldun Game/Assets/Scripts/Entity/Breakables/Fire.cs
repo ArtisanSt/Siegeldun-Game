@@ -19,6 +19,8 @@ public class Fire : Breakables
     {
         BreakablesInitialization();
         EntityInitialization();
+
+        PrefabsInit();
     }
 
     void Update()

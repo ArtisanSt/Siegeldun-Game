@@ -19,7 +19,7 @@ public class Entity : MonoBehaviour
     protected CapsuleCollider2D capColl;
     protected Animator anim;
 
-    protected GameObject playerEntity;
+    protected GameObject entityGameObject;
     public GameObject entityPrefab;
 
     protected enum MovementAnim { idle, run, jump, fall };
@@ -35,7 +35,7 @@ public class Entity : MonoBehaviour
             capColl = GetComponent<CapsuleCollider2D>();
         }
         anim = GetComponent<Animator>();
-        playerEntity = gameObject;
+        entityGameObject = gameObject;
     }
 
 
@@ -65,10 +65,27 @@ public class Entity : MonoBehaviour
 
     [SerializeField] protected float hpRegenTimer;
 
+    // Entity Static Properties
+    public static Dictionary<string, List<GameObject>> EntityInstances = new Dictionary<string, List<GameObject>>();
 
-    protected void EntityFinalization()
+
+    protected void PrefabsInit()
     {
         entityPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EntityPrefabs/{entityName}.prefab");
+
+        // Entity Instance
+        if (EntityInstances.ContainsKey(entityName))
+        {
+            EntityInstances[entityName].Add(gameObject);
+        }
+        else
+        {
+            EntityInstances.Add(entityName, new List<GameObject>() { gameObject });
+        }
+        if (entityName != "Player")
+        {
+            gameObject.name = $"{entityName} ({entityID})";
+        }
     }
 
 
@@ -117,6 +134,7 @@ public class Entity : MonoBehaviour
         isAlive = false;
         Debug.Log(entityName + " Dead!");
         anim.SetBool("death", true);
+        EntityInstances[entityName].Remove(gameObject);
     }
 
     protected void ClearInstance(int time = 1)
@@ -150,12 +168,27 @@ public class Entity : MonoBehaviour
 
 
     // ========================================= GAMEPLAY METHODS INITIALIZATION =====================================
-    public void Drop(int chance, float xPos)
+    public GameObject Drop(int chance, float xPos = 0, float yPos = 0, GameObject itemDrop = null, Transform parentTransform = null)
     {
         if (Random.Range(1, chance + 1) == 1 && doDrop)
         {
             Debug.Log(entityDrops.Count);
-            Instantiate(entityDrops[Random.Range(0,entityDrops.Count)], new Vector3(transform.position.x + xPos, transform.position.y, 0), Quaternion.identity);
+            if (itemDrop == null)
+            {
+                itemDrop = entityDrops[Random.Range(0, entityDrops.Count)];
+            }
+
+            if (parentTransform == null)
+            {
+                parentTransform = GameObject.Find("Drops").transform;
+            }
+
+            GameObject newDrop = (GameObject)Instantiate(itemDrop, new Vector3(transform.position.x + xPos, transform.position.y + yPos, 0), Quaternion.identity, parentTransform);
+            return newDrop;
+        }
+        else
+        {
+            return null;
         }
     }
 }

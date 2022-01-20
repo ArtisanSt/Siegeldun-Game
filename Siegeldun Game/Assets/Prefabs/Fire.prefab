@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1341461660868417411}
   - component: {fileID: 1341461660868417408}
   - component: {fileID: 6950630939478884835}
-  - component: {fileID: 6950630939478884836}
   m_Layer: 9
   m_Name: Fire
   m_TagString: Region
@@ -175,27 +174,3 @@ MonoBehaviour:
   entityHp: 0
   attackSpeed: 0
   hpRegenTimer: 0
---- !u!114 &6950630939478884836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1341461660868417418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 641ba02caad5e644dac55c67b56586ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mobPrefabs:
-  - {fileID: 2527850889189109515, guid: 7f5e2397ebeaf974bb2249b940b48a60, type: 3}
-  activePoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  spawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  spawnerObject: {fileID: 1341461660868417418}
-  target: {fileID: 0}
-  spawnInterval: 10
-  targetStraightDistance: 0

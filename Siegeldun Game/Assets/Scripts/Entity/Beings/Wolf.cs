@@ -23,7 +23,7 @@ public class Wolf : EnemyAI
         EqWeaponStamCost = 0f;
         weaponDrag = 0f; // Pseudo Weapon Drag
         weaponKbForce = .8f; // Pseudo Weapon Knockback Force
-        attacking = false;
+        isAttacking = false;
         kbDir = 0;
         kTick = 0f;
         kbHorDisplacement = .8f;
@@ -58,11 +58,6 @@ public class Wolf : EnemyAI
 
         // Item Drop Parameters
         dropChance = 3;
-
-        if (!EnemyAIIDs.Contains(entityID))
-        {
-            EnemyAIIDs.Add(entityID);
-        }
     }
 
 
@@ -70,7 +65,7 @@ public class Wolf : EnemyAI
     // Start is called before the first frame update
     void Awake()
     {
-        EnemyNPCStart();
+        NPCInit();
         EntityInitilization();
     }
 

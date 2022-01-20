@@ -184,6 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rBody: {fileID: 4865986373843987816}
   sprite: {fileID: 4865986372359361336}
+  entityPrefab: {fileID: 0}
   entityDrops: []
   entityID: 0
   isAlive: 0
@@ -235,6 +236,8 @@ MonoBehaviour:
   itemEquipped: 0000000000000000
   weaponSlot: {fileID: 0}
   consumableSlot: {fileID: 0}
+  itemAmountTexts: []
+  consumeSlotAmountText: {fileID: 0}
 --- !u!1 &4865986373347713242
 GameObject:
   m_ObjectHideFlags: 0

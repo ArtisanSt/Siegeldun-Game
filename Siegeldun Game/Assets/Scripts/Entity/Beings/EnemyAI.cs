@@ -51,21 +51,19 @@ public class EnemyAI : Beings
     [SerializeField] protected float allowJumpAfter = .05f;
 
     [Header("Limitations", order = 2)]
+    public GameObject spawnerObject = null;
     public bool hasLimitations;
     [SerializeField] public List<Transform> activePoints = new List<Transform>();
     protected bool inLimitation;
-
-    // Entity Static Properties
-    protected static List<int> EnemyAIIDs = new List<int>();
+    protected bool deathFinalized = false;
 
 
     // ========================================= UNITY MAIN METHODS =========================================
     // Initializes when the Player Script is called
-    protected void EnemyNPCStart()
+    protected void NPCInit()
     {
         seeker = GetComponent<Seeker>();
-        sleepParticle = GameObject.Find($"{rBody.name}/SleepingParticle").GetComponent<ParticleSystem>();
-        BeingsInitialization();
+        sleepParticle = gameObject.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>();
         if (hasLimitations)
         {
             Debug.Log(entityName + " " + entityID.ToString());
@@ -89,13 +87,7 @@ public class EnemyAI : Beings
         lastXPosition = rBody.position.x;
         nextWayPointDistance = backOffDistance;
 
-        if (!EnemyAIIDs.Contains(entityID))
-        {
-            EnemyAIIDs.Add(entityID);
-        }
-
         InvokeRepeating("UpdatePath", 0f, .02f);
-
     }
 
     // Updates Every Frame
@@ -111,23 +103,17 @@ public class EnemyAI : Beings
     // Updates Every Physics Frame
     protected void EnemyNPCFixedUpdate()
     {
-        if (isAlive)
-        {
-            NPCDecisionMakingSystem();
-            Timer();
-        }
-        else
-        {
-            ClearInstance(5);
-        }
+        NPCDecisionMakingSystem();
+        Timer();
     }
 
     // Updates Path Every Frame
     private void UpdatePath()
     {
-        targetAlive = target.GetComponent<Player>().isAlive;
+        targetAlive = target != null && target.GetComponent<Player>().isAlive;
         if (seeker.IsDone() && targetAlive)
         {
+
             try
             {
                 seeker.StartPath(rBody.position, target.position, OnPathComplete);
@@ -145,6 +131,11 @@ public class EnemyAI : Beings
         if (col.gameObject.tag == "Enemy")
         {
             Physics2D.IgnoreCollision(col.otherCollider, col.collider);
+        }
+
+        if (isAttacking)
+        {
+
         }
     }
 
@@ -229,7 +220,7 @@ public class EnemyAI : Beings
     // ========================================= NPC MOVEMENT METHODS =========================================
     private void NPCDecisionMakingSystem()
     {
-        inLimitation = (hasLimitations) ? target.position.x >= activePoints[0].position.x && target.position.x <= activePoints[1].position.x : true;
+        inLimitation = (hasLimitations && targetAlive) ? target.position.x >= activePoints[0].position.x && target.position.x <= activePoints[1].position.x : true;
         if (!isTriggered)
         {
             var sleepingParticleShape = sleepParticle.shape;
@@ -238,7 +229,7 @@ public class EnemyAI : Beings
             if (isAwake)
             {
                 // The AI chases the player when triggered and in reachable location
-                if (targetNodalDistance <= triggerDistance && targetAlive && inLimitation)
+                if (targetNodalDistance <= triggerDistance && inLimitation)
                 {
                     isTriggered = true;
                     targetSeen = true;
@@ -263,7 +254,7 @@ public class EnemyAI : Beings
                 }
             }
             // AI awakens when the player entered half of its trigger distance
-            else if (targetNodalDistance <= triggerDistance / 2 && targetAlive && inLimitation)
+            else if (targetNodalDistance <= triggerDistance * (2 / 3) && inLimitation)
             {
                 isAwake = true;
                 sleepParticle.Stop();
@@ -273,7 +264,7 @@ public class EnemyAI : Beings
         else
         {
             // The trigger timer resets when the player stays inside the trigger distance
-            if (targetNodalDistance <= triggerDistance && targetAlive && inLimitation)
+            if (targetNodalDistance <= triggerDistance && inLimitation)
             {
                 targetSeen = true;
             }
@@ -308,6 +299,18 @@ public class EnemyAI : Beings
 
                     dirFacing = (isAlive) ? ((awakeTask == 1) ? (new float[] { -1, 1 }[Random.Range(0, 2)]) : 0 ) : 0; // Negative value of the previous value of dirX
                 }
+                else if (hasLimitations && rBody.position.x <= activePoints[0].position.x)
+                {
+                    dirFacing = 1;
+                    isTriggered = false;
+                    unseenTime = 0;
+                }
+                else if (hasLimitations && rBody.position.x >= activePoints[1].position.x)
+                {
+                    dirFacing = -1;
+                    isTriggered = false;
+                    unseenTime = 0;
+                }
                 awakeTaskTime += Time.deltaTime;
             }
         }
@@ -323,9 +326,10 @@ public class EnemyAI : Beings
         if (isAlive)
         {
             // Anti-glitching code when target is on unreacheable location
-            if (((Mathf.Abs(target.position.y - rBody.position.y) > 1) && (Mathf.Abs(target.position.x - rBody.position.x) < backOffDistance)) || !inLimitation)
+            if ((targetAlive && ((Mathf.Abs(target.position.y - rBody.position.y) > 1) && (Mathf.Abs(target.position.x - rBody.position.x) < backOffDistance))) || !inLimitation)
             {
                 isTriggered = false;
+                unseenTime = 0;
             }
 
             // Vertical Parameter
@@ -377,7 +381,7 @@ public class EnemyAI : Beings
             lastXPosition = rBody.position.x; // Updates the last X position of the AI
 
             // Attack Code
-            if (inProximity == 0 && !attacking && !isHurting && Time.time - lastAttack > attackDelay)
+            if (inProximity == 0 && !isAttacking && !isHurting && Time.time - lastAttack > attackDelay)
             {
                 Attack();
             }
@@ -387,5 +391,16 @@ public class EnemyAI : Beings
             allowJump = false;
             inProximity = 0;
         }
+    }
+
+
+    // ========================================= NPC DEATH FINALIZER =========================================
+    protected void DeathFinalizer()
+    {
+        if (spawnerObject != null && !deathFinalized)
+        {
+            spawnerObject.transform.parent.gameObject.GetComponent<Spawner>().ClearInstance(entityName, gameObject);
+        }
+        EntityInstances[entityName].Remove(gameObject);
     }
 }

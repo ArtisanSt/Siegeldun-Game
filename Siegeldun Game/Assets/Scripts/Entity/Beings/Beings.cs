@@ -28,8 +28,8 @@ public class Beings : Entity
 
     [Header("ENTITY PROPERTIES", order = 0)]
     [Header("Battle Mechanics", order = 1)]
-    protected bool attacking;
     protected int attackFacing; // 1 is right and -1 is left
+    [SerializeField] protected Weapon weaponGameObject;
     [SerializeField] protected int entityWeapon;
     [SerializeField] protected float weaponDrag;
     [SerializeField] protected float weaponKbForce;
@@ -79,14 +79,21 @@ public class Beings : Entity
     [SerializeField] protected LayerMask groundLayers;
 
 
-    protected void BeingsInitialization()
+    protected void BeingsInit()
     {
         entityType = "Beings";
         ComponentInitialization();
         entityID = rBody.gameObject.GetInstanceID();
         isAlive = true;
         willBeDestroyed = false;
-        EntityStatusBar = GameObject.Find($"/Enemies/{rBody.name}/EntityStatusBar");
+    }
+
+    protected void StatusBarInit()
+    {
+        if (entityName != "Player")
+        {
+            EntityStatusBar = gameObject.transform.GetChild(1).gameObject;
+        }
     }
 
 

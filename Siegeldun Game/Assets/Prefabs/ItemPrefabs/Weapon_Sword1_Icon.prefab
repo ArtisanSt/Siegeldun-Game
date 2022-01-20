@@ -29,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 6721948792633512886}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6380238107682558618, guid: 9d591f34682cbf044875bd300dac2bf7, type: 3}
+  m_Sprite: {fileID: -2872409368766515237, guid: 9d591f34682cbf044875bd300dac2bf7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -101,9 +101,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f194a550a0fd14081503d01e0a0a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
-  itemType: 
-  maxQuantity: 0
+  isSelected: 0
   curQuantity: 0
-  itemPrefab: {fileID: 4275815481310653657, guid: d09dd901e2d4f2e4899a86a8b9e1fa44, type: 3}
-  iconPrefab: {fileID: 6721948792633512886}
