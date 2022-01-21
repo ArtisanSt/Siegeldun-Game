@@ -3,87 +3,111 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+public class SelfEffectProperties
+{
+    // ========================================= Consumable Properties =========================================
+    public string effectName { get; protected set; } // Food or Potion
+
+    public bool hasEffect { get; protected set; }
+    public float effectParam { get; protected set; }
+    public string effectSpeed { get; protected set; }
+    public float effectTimer { get; protected set; }
+
+    public SelfEffectProperties(string effectName, bool hasEffect = false, float effectParam = 0f, string effectSpeed = "instant", float effectTimer = 0f)
+    {
+        this.effectName = effectName;
+        SetValues(hasEffect, effectParam, effectSpeed, effectTimer);
+    }
+
+    public void SetValues(bool hasEffect, float effectParam, string effectSpeed, float effectTimer)
+    {
+        this.hasEffect = hasEffect;
+        this.effectParam = effectParam;
+        this.effectSpeed = effectSpeed;
+        this.effectTimer = effectTimer;
+    }
+}
+
 public class Item : Interactibles
 {
     // ========================================= Item Properties =========================================
+
+    public string objectName { get; protected set; }
     public string itemName { get; protected set; }
-    public string itemType { get; protected set; }
+    public string itemType { get; protected set; } // Weapon, Consumable
+
     public int maxQuantity { get; protected set; }
-    public int curQuantity;
+    public int curQuantity { get; protected set; }
+
+    public bool isFull { get; protected set; }
+    public bool isEmpty { get; protected set; }
+
     public GameObject itemPrefab { get; protected set; }
     public GameObject iconPrefab { get; protected set; }
-    public Dictionary<string, Dictionary<string, float>> effectDict = new Dictionary<string, Dictionary<string, float>>()
+
+    /* Self Additional Effect
+     * For timed and untimed effects
+     * 
+     * For Passive Effects of weapons and Consumables
+     * For Active Effects of Consumables
+     */
+
+    public Dictionary<string, SelfEffectProperties> effectDict = new Dictionary<string, SelfEffectProperties>()
     {
-        ["HP"] = new Dictionary<string, float>(),
-        ["Stamina"] = new Dictionary<string, float>(), 
-        ["Damage"] = new Dictionary<string, float>(), //0:false or 1:true, Effect Parameter, Effect Timer, number of uses
-        ["CritHit"] = new Dictionary<string, float>(), //0:false or 1:true, Effect Parameter, Effect Timer, number of uses
-        ["CritChance"] = new Dictionary<string, float>(), //0:false or 1:true, Effect Parameter, Effect Timer, number of uses
-        ["MVSpeed"] = new Dictionary<string, float>(), //0:false or 1:true, Effect Parameter, Effect Timer, distance
-        ["JumpHeight"] = new Dictionary<string, float>(), //0:false or 1:true, Effect Parameter, Effect Timer, number of uses
-        ["AttackSpeed"] = new Dictionary<string, float>() //0:false or 1:true, Effect Parameter, Effect Timer, number of uses
+        ["HP"] = new SelfEffectProperties("HP"),
+        ["Stamina"] = new SelfEffectProperties("Stamina"),
+        ["Damage"] = new SelfEffectProperties("Damage"),
+        ["CritHit"] = new SelfEffectProperties("CritHit"),
+        ["CritChance"] = new SelfEffectProperties("CritChance"),
+        ["MVSpeed"] = new SelfEffectProperties("MVSpeed"),
+        ["JumpHeight"] = new SelfEffectProperties("JumpHeight"),
+        ["AttackSpeed"] = new SelfEffectProperties("AttackSpeed"),
     };
-    //protected float[] EffectTimers = new float[8] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
 
 
-    protected void ItemInit()
+    protected void InteractInit()
     {
-        _isIcon = transform.parent.name != "Drops";
-        if (_isIcon)
-        {
-            ComponentInt();
-        }
         isItem = true;
-        effectDict["HP"] = new Dictionary<string, float>()
-        {
-            ["hasEffect"] = 0f, // 0: false, 1: true
-            ["effectParam"] = 0f, // How much it heals
-            ["effectSpeed"] = 0f, // 0: instant, 1: overtime
-            ["effectTimer"] = 0f, // Time of effect
-        };
+        isIcon = transform.parent.name != "Drops";
+        canInteract = !isIcon;
+        isSelected = false;
 
-        effectDict["Stamina"] = new Dictionary<string, float>()
-        {
-            ["hasEffect"] = 0f, // 0: false, 1: true
-            ["effectParam"] = 0f, // How much it heals
-            ["effectSpeed"] = 0f, // 0: instant, 1: overtime
-            ["effectTimer"] = 0f, // Time of effect
-        };
+        isFull = false;
+        isEmpty = false;
+    }
 
-        effectDict["Damage"] = new Dictionary<string, float>()
+    public bool ChangeAmount(int changeAmount)
+    {
+        bool processSuccessful = false;
+        if (curQuantity + changeAmount >= 0 && curQuantity + changeAmount <= maxQuantity)
         {
-            ["hasEffect"] = 0f, // 0: false, 1: true
-        };
+            curQuantity += changeAmount;
+            processSuccessful = true;
 
-        effectDict["CritHit"] = new Dictionary<string, float>()
-        {
-            ["hasEffect"] = 0f, // 0: false, 1: true
-        };
+            if (curQuantity == 0)
+            {
+                isEmpty = true;
+            }
+            else if (curQuantity == maxQuantity)
+            {
+                isFull = true;
+            }
+            else
+            {
+                isFull = false;
+            }
+        }
 
-        effectDict["CritChance"] = new Dictionary<string, float>()
-        {
-            ["hasEffect"] = 0f, // 0: false, 1: true
-        };
-
-        effectDict["MVSpeed"] = new Dictionary<string, float>()
-        {
-            ["hasEffect"] = 0f, // 0: false, 1: true
-        };
-
-        effectDict["JumpHeight"] = new Dictionary<string, float>()
-        {
-            ["hasEffect"] = 0f, // 0: false, 1: true
-        };
-
-        effectDict["AttackSpeed"] = new Dictionary<string, float>()
-        {
-            ["hasEffect"] = 0f, // 0: false, 1: true
-        };
+        return processSuccessful;
     }
 
     public void PrefabsInit()
     {
-        itemPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/ItemPrefabs/{itemName}.prefab");
-        iconPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/ItemPrefabs/{itemName}_icon.prefab");
+        // GameObject Name Change
+        gameObject.name = $"{itemName} ({gameObject.GetInstanceID()})";
+
+        // Prefab Setting
+        itemPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/ItemPrefabs/{objectName}.prefab");
+        iconPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/ItemPrefabs/{objectName}_icon.prefab");
     }
 }

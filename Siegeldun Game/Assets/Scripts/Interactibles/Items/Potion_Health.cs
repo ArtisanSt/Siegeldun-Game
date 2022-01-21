@@ -4,31 +4,34 @@ using UnityEngine;
 
 public class Potion_Health : Consumable
 {
+    // ========================================= Item Initialization =========================================
+    protected void ItemInit()
+    {
+        objectName = "Potion_Health";
+        itemName = "Health Potion";
+
+        uniqueProp = new ConsumableProperties("Potion");
+
+        maxQuantity = 64;
+        curQuantity = 1;
+    }
+
+    protected void UniqueStatsInit()
+    {
+        effectDict["HP"].SetValues(true, 30f, "instant", 0f);
+    }
+
+    // ========================================= UNITY MAIN METHODS =========================================
     void Awake()
     {
-        ConsumableInitialization();
-        itemName = "Potion_Health";
-        consumableType = "Potion";
+        InteractInit();
+        ConsumableInit();
+        ItemInit();
+        UniqueStatsInit();
     }
 
     void Start()
     {
-        // ========================================= Potion Initialization =========================================
-        maxQuantity = 64;
-        curQuantity = 1;
-        effectDict["HP"] = new Dictionary<string, float>()
-        {
-            ["hasEffect"] = 1f, // 0: false, 1: true
-            ["effectParam"] = 30f, // How much it heals
-            ["effectSpeed"] = 0f, // 0: instant, 1: overtime
-            ["effectTimer"] = 0f, // Time of effect
-        };
-
         PrefabsInit();
-    }
-
-    void Update()
-    {
-        InteractibleUpdate();
     }
 }

@@ -4,33 +4,21 @@ using UnityEngine;
 
 public class Interactibles : MonoBehaviour
 {
-    protected Animator anim;
-    protected SpriteRenderer sprite;
-
+    // Interacting Properties
+    public bool canInteract { get; protected set; }
     public bool isItem { get; protected set; }
-    protected bool _isIcon;
+    public bool isIcon { get; protected set; }
 
-    public bool isSelected = false;
+    public bool isSelected { get; protected set; }
     private bool _curSelect = false;
 
-    protected void ComponentInt()
+    public void ToggleInteract(bool isSelected)
     {
-        anim = GetComponent<Animator>();
-        sprite = GetComponent<SpriteRenderer>();
-    }
-
-    public void ToggleInteraction(bool isSelected)
-    {
-        this.isSelected = isSelected;
-        anim.SetBool("selected", isSelected);
-    }
-
-    protected void InteractibleUpdate()
-    {
-        if (!isItem || (isItem && !_isIcon))
+        if (canInteract)
         {
             if (_curSelect != isSelected)
             {
+                this.isSelected = isSelected;
                 _curSelect = isSelected;
                 if (isSelected)
                 {

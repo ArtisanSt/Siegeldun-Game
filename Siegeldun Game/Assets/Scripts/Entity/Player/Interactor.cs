@@ -28,8 +28,10 @@ public class Interactor : MonoBehaviour
 
         hitColliders = Physics2D.OverlapBoxAll(center, size, 0, m_layerMask);
         interactDistance = new float[hitColliders.Length];
+
         int[] idxNearest = new int[2] { -1, -1 }; // ,Front, Back
-        float selectAlpha = transform.localScale.x * -.2f;
+        float selectAlpha = transform.localScale.x * -.3f;
+
         for (int i=0; i < hitColliders.Length; i++)
         {
             Collider2D coll = hitColliders[i];
@@ -62,18 +64,15 @@ public class Interactor : MonoBehaviour
 
         if (!_selectCalled[0])
         {
-            prevSelected.GetComponent<Interactibles>().isSelected = false;
+            prevSelected.GetComponent<Interactibles>().ToggleInteract(false);
             _selectCalled[0] = true;
         }
 
         if (!_selectCalled[1])
         {
-            curSelected.GetComponent<Interactibles>().isSelected = true;
+            curSelected.GetComponent<Interactibles>().ToggleInteract(true);
             _selectCalled[1] = true;
         }
-
-        Debug.Log($"curSelected: {curSelected}");
-        Debug.Log($"prevSelected: {prevSelected}");
     }
 
     private void ChangeSelection(GameObject newSelected)

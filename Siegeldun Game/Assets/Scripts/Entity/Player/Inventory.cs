@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 public class ItemProperties
 {
-    public bool isFull = false;
-    public GameObject inventoryBg = null;
-    public GameObject inventorySlot = null;
-    public GameObject itemObject = null;
-    public string itemName = null;
-    public int currentAmount = 0;
-    public int maxAmount = 0;
+    public bool isFull { get; protected set; }
+    public bool isEmpty { get; protected set; }
+    public GameObject inventoryBg { get; protected set; }
+    public GameObject inventorySlot { get; protected set; }
+    public GameObject itemObject { get; protected set; }
+    public string itemName { get; protected set; }
+
+    public int curQuantity { get; protected set; }
+    public int maxQuantity { get; protected set; }
 
     public ItemProperties(GameObject inventoryBg, GameObject inventorySlot)
     {
@@ -19,41 +21,23 @@ public class ItemProperties
         this.inventorySlot = inventorySlot;
     }
 
-    public bool[] setValues(GameObject itemObject, string itemName, int currentAmount, int maxAmount)
+    public void SetValues(GameObject itemObject, string itemName, int curQuantity, int maxQuantity)
     {
         this.itemObject = itemObject;
         this.isFull = false;
+        this.isEmpty = false;
         this.itemName = itemName;
-        this.currentAmount = currentAmount;
-        this.maxAmount = maxAmount;
-
-        return new bool[2] { true, false };
+        this.curQuantity = curQuantity;
+        this.maxQuantity = maxQuantity;
     }
 
-    public bool[] changeValues(int changeAmount)
+    public bool ChangeValues(int changeAmount)
     {
-        bool processSuccessful = false;
-        bool removeInInv = false;
-        if (currentAmount + changeAmount >= 0 && currentAmount + changeAmount <= maxAmount)
-        {
-            currentAmount += changeAmount;
-            processSuccessful = true;
-
-            if (currentAmount == 0)
-            {
-                removeInInv = true;
-            }
-            else if (currentAmount == maxAmount)
-            {
-                isFull = true;
-            }
-            else
-            {
-                isFull = false;
-            }
-        }
-
-        return new bool[2] { processSuccessful, removeInInv };
+        bool isSuccess = itemObject.GetComponent<Item>().ChangeAmount(changeAmount);
+        this.curQuantity = itemObject.GetComponent<Item>().curQuantity;
+        this.isFull = itemObject.GetComponent<Item>().isFull;
+        this.isEmpty = itemObject.GetComponent<Item>().isEmpty;
+        return isSuccess;
     }
 }
 
@@ -178,7 +162,7 @@ public class Inventory : Beings
             curProcess.Add(pickedItem.GetInstanceID());
 
             Item itemInteracted = pickedItem.GetComponent<Item>();
-            bool[] isSuccess = new bool[2] { false, false }; // processSuccessful, removeInInv
+            bool isSuccess = false;
             int invFullCount = 0;
             int slotSaved = 0;
 
@@ -190,15 +174,15 @@ public class Inventory : Beings
 
                 if (itemProp.itemName == itemInteracted.itemName && !itemProp.isFull)
                 {
-                    isSuccess = itemProp.changeValues(1);
-                    UpdateText(itemAmountTexts[i], itemProp.currentAmount, i);
+                    isSuccess = itemProp.ChangeValues(1);
+                    UpdateText(itemAmountTexts[i], itemProp.curQuantity, i);
                     slotSaved = i;
                     break;
                 }
             }
 
             // Item not in inventory
-            if (!isSuccess[0] && invFullCount < 6)
+            if (!isSuccess && invFullCount < 6)
             {
                 for (int i = 0; i < inventorySlots.Count; i++)
                 {
@@ -207,17 +191,18 @@ public class Inventory : Beings
                     if (itemProp.itemName == null)
                     {
                         GameObject newAddItem = (GameObject)Instantiate(itemInteracted.iconPrefab, itemProp.inventorySlot.transform, false);
-                        isSuccess = itemProp.setValues(newAddItem, itemInteracted.itemName, itemInteracted.curQuantity, itemInteracted.maxQuantity);
+                        itemProp.SetValues(newAddItem, itemInteracted.itemName, itemInteracted.curQuantity, itemInteracted.maxQuantity);
                         newAddItem.name = "Inv_" + itemInteracted.itemName;
                         newAddItem.GetComponent<Image>().enabled = GameObject.Find("InvToggle").GetComponent<InvToggle>().isOn;
-                        UpdateText(itemAmountTexts[i], itemProp.currentAmount, i);
+                        UpdateText(itemAmountTexts[i], itemProp.curQuantity, i);
                         slotSaved = i;
+                        isSuccess = true;
                         break;
                     }
                 }
             }
 
-            if (isSuccess[0])
+            if (isSuccess)
             {
                 Destroy(pickedItem);
                 StartCoroutine(ClearID(pickedItem.GetInstanceID(), 1));
@@ -229,7 +214,7 @@ public class Inventory : Beings
                 }
                 if (slotSaved == itemEquipped[1])
                 {
-                    UpdateText(consumeSlotAmountText, inventorySlots[itemEquipped[1]].currentAmount, itemEquipped[1]);
+                    UpdateText(consumeSlotAmountText, inventorySlots[itemEquipped[1]].curQuantity, itemEquipped[1]);
                 }
             }
         }
@@ -238,28 +223,28 @@ public class Inventory : Beings
     protected void RemoveItem(int slotNumber, int amount = 1)
     {
         ItemProperties itemProp = inventorySlots[slotNumber];
-        bool[] isSuccess = new bool[2] { false, false }; // processSuccessful, removeInInv
+        bool isSuccess = false; // processSuccessful, removeInInv
 
         // Slot has no item in it
         if (itemProp.itemName != null)
         {
-            isSuccess = itemProp.changeValues(-1);
+            isSuccess = itemProp.ChangeValues(-1);
         }
 
-        if (isSuccess[1])
+        if (itemProp.isEmpty)
         {
             ClearItem(slotNumber);
         }
 
-        if (isSuccess[0])
+        if (isSuccess)
         {
-            UpdateText(itemAmountTexts[slotNumber], itemProp.currentAmount, slotNumber);
+            UpdateText(itemAmountTexts[slotNumber], itemProp.curQuantity, slotNumber);
         }
     }
 
     protected void UpdateText(Text textGameObject , int newAmount, int slotNumber)
     {
-        textGameObject.text = (newAmount != 0) ? $"{inventorySlots[slotNumber].currentAmount}" : "";
+        textGameObject.text = (newAmount != 0) ? $"{inventorySlots[slotNumber].curQuantity}" : "";
     }
 
     // Delete all
@@ -272,7 +257,6 @@ public class Inventory : Beings
             {
                 ClearItem(i);
             }
-            UpdateText(itemAmountTexts[i], itemProp.currentAmount, i);
         }
     }
 
@@ -285,8 +269,9 @@ public class Inventory : Beings
         {
             Unequip(eqpSlot);
         }
-        Destroy(pickedItem) ;
+        Destroy(pickedItem);
         inventorySlots[slotNumber] = new ItemProperties(inventoryBg, inventorySlots[slotNumber].inventorySlot);
+        UpdateText(itemAmountTexts[slotNumber], 0, slotNumber);
     }
 
     // Checks if a slot has item attached or not
@@ -322,7 +307,7 @@ public class Inventory : Beings
                 newEqpItem.name = "Eqp_" + pickedItem.GetComponent<Item>().itemName;
                 newEqpItem.GetComponent<Image>().enabled = true;
                 itemEquipped[1] = itemSelected;
-                UpdateText(consumeSlotAmountText, inventorySlots[itemEquipped[1]].currentAmount, itemEquipped[1]);
+                UpdateText(consumeSlotAmountText, inventorySlots[itemEquipped[1]].curQuantity, itemEquipped[1]);
             }
             else if (pickedItem.GetComponent<Item>().itemType == "Weapon")
             {
@@ -366,20 +351,20 @@ public class Inventory : Beings
 
         if (pickedItem != null)
         {
-            Dictionary<string, Dictionary<string, float>> effectDict = pickedItem.GetComponent<Consumable>().effectDict;
+            Dictionary<string, SelfEffectProperties> effectDict = pickedItem.GetComponent<Consumable>().effectDict;
             bool didEffect = false;
 
-            foreach (KeyValuePair<string, Dictionary<string, float>> eachEffect in effectDict)
+            foreach (KeyValuePair<string, SelfEffectProperties> eachEffect in effectDict)
             {
-                if (eachEffect.Value["hasEffect"] == 1f)
+                if (eachEffect.Value.hasEffect)
                 {
                     switch (eachEffect.Key)
                     {
                         case "HP":
-                            didEffect = HPRegen(eachEffect.Value["effectParam"], (eachEffect.Value["effectSpeed"] == 0f) ? "instant" : "overtime", eachEffect.Value["effectTimer"]);
+                            didEffect = HPRegen(eachEffect.Value.effectParam, eachEffect.Value.effectSpeed, eachEffect.Value.effectTimer);
                             break;
                         case "Stamina":
-                            didEffect = StamRegen(eachEffect.Value["effectParam"], (eachEffect.Value["effectSpeed"] == 0f) ? "instant" : "overtime", eachEffect.Value["effectTimer"]);
+                            didEffect = StamRegen(eachEffect.Value.effectParam, eachEffect.Value.effectSpeed, eachEffect.Value.effectTimer);
                             break;
                         case "Damage":
                             break;
@@ -400,7 +385,7 @@ public class Inventory : Beings
             if (didEffect)
             {
                 RemoveItem(itemEquipped[1], 1);
-                UpdateText(consumeSlotAmountText, inventorySlots[itemEquipped[1]].currentAmount, itemEquipped[1]);
+                UpdateText(consumeSlotAmountText, inventorySlots[itemEquipped[1]].curQuantity, itemEquipped[1]);
             }
         }
     }
@@ -409,9 +394,19 @@ public class Inventory : Beings
     {
         if (isGrounded && inventorySlots[itemSelected].itemObject != null)
         {
-            Debug.Log(inventorySlots[itemSelected].itemObject);
-            GameObject newDrop = Drop(1, 0, 0, inventorySlots[itemSelected].itemObject.GetComponent<Item>().itemPrefab);
-            newDrop.GetComponent<Item>().curQuantity = inventorySlots[itemSelected].currentAmount;
+            Item itemObject = inventorySlots[itemSelected].itemObject.GetComponent<Item>();
+            GameObject newDrop = Drop(1, 0, 0, itemObject.itemPrefab);
+
+            switch (itemObject.itemType)
+            {
+                case "Weapon":
+                    newDrop.GetComponent<Weapon>().OverwriteStats(itemObject.curQuantity, itemObject.effectDict, inventorySlots[itemSelected].itemObject.GetComponent<Weapon>().uniqueProp);
+                    break;
+                case "Consumable":
+                    newDrop.GetComponent<Consumable>().OverwriteStats(itemObject.curQuantity, itemObject.effectDict, inventorySlots[itemSelected].itemObject.GetComponent<Consumable>().uniqueProp);
+                    break;
+            }
+
             ClearItem(itemSelected);
         }
     }
@@ -432,13 +427,15 @@ public class Inventory : Beings
         }
         else
         {
-            entityDamage = weaponGameObject.damage;
-            attackSpeed = weaponGameObject.attackSpeed;
-            attackDelay = weaponGameObject.attackDelay;
-            critHit = weaponGameObject.critHit;
-            critChance = weaponGameObject.critChance;
-            attackRange = weaponGameObject.attackRange;
-            EqWeaponStamCost = weaponGameObject.staminaCost;
+            WeaponProperties uniqueProp = weaponGameObject.uniqueProp;
+
+            entityDamage = uniqueProp.damage;
+            attackSpeed = uniqueProp.attackSpeed;
+            attackDelay = uniqueProp.attackDelay;
+            critHit = uniqueProp.critHit;
+            critChance = uniqueProp.critChance;
+            attackRange = uniqueProp.attackRange;
+            EqWeaponStamCost = uniqueProp.staminaCost;
         }
     }
 }

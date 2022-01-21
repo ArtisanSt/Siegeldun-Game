@@ -172,7 +172,6 @@ public class Entity : MonoBehaviour
     {
         if (Random.Range(1, chance + 1) == 1 && doDrop)
         {
-            Debug.Log(entityDrops.Count);
             if (itemDrop == null)
             {
                 itemDrop = entityDrops[Random.Range(0, entityDrops.Count)];
