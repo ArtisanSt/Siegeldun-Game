@@ -34,7 +34,7 @@ RectTransform:
   - {fileID: 6685909666246838376}
   - {fileID: 6685909667086018520}
   m_Father: {fileID: 6685909666436209221}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -207,7 +207,7 @@ Transform:
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.07927321}
   m_Children: []
   m_Father: {fileID: 6685909666436209221}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 2.998, y: 3.003, z: 0.105}
 --- !u!198 &6685909666324982378
 ParticleSystem:
@@ -5015,9 +5015,9 @@ Transform:
   m_LocalPosition: {x: 62.457085, y: -14.446008, z: 48.80723}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6685909667161128466}
   - {fileID: 5317110435835946766}
   - {fileID: 6685909666324982356}
+  - {fileID: 6685909667161128466}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5103,10 +5103,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 20
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 6
+  m_GravityScale: 7
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -5194,88 +5194,95 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9a66f7ff9b0f04dba96338e35c4778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  doDrop: 1
+  dropChance: 1000
+  itemDrops:
+  - {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
   rBody: {fileID: 6685909666436209246}
   sprite: {fileID: 6685909666436209242}
+  boxColl: {fileID: 6685909666436209241}
+  capColl: {fileID: 6685909666436209240}
+  anim: {fileID: 6685909666436209244}
+  spriteDefaultFacing: -1
   entityPrefab: {fileID: 6685909666436209234}
-  entityDrops:
-  - {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
-  - {fileID: 8502316654925628256, guid: c1cb39b5ef1805447bb7db25385b4140, type: 3}
-  entityID: 0
+  hasSpawner: 0
+  spawner: {fileID: 0}
+  activePoints:
+  - {fileID: 0}
+  - {fileID: 0}
   isAlive: 1
-  maxHealth: 0
-  entityHp: 0
-  attackSpeed: 0
-  hpRegenTimer: 0
-  entityWeapon: 0
-  weaponDrag: 0
-  weaponKbForce: 0
-  EqWeaponStamCost: 0
-  entityDamage: 0
-  attackDelay: 0
-  attackRange: 0
-  kbHorDisplacement: 0
-  kbVerDisplacement: 0
-  attackPoint: {fileID: 6685909667161128466}
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 4194560
-  hpRegenAllowed: 0
-  healthRegen: 0
-  regenDelay: 0
+  entityStatusBar: {fileID: 5317110435835946761}
+  hasHp: 1
+  isInvulnerable: 0
+  maxHpScaling:
+  - 100
+  - 200
+  - 400
+  curHp: 100
+  maxHp: 100
+  hpBarB: {fileID: 6685909667214708572}
+  hpBarF: {fileID: 6685909666246838378}
+  hpText: {fileID: 6685909667086018526}
+  doHpRegen: 1
+  hpRegenScaling:
+  - 0.01
+  - 0.005
+  - 0.001
+  hpRegen: 0.01
+  hpRegenDelay: 3
+  hasStam: 0
+  isInfStamina: 0
+  maxStamScaling:
+  - 0
+  - 0
+  - 0
+  curStam: 0
   maxStam: 0
-  entityStam: 0
-  stamRegenAllowed: 0
+  stamBar: {fileID: 0}
+  stamText: {fileID: 0}
+  doStamRegen: 0
+  stamRegenScaling:
+  - 0
+  - 0
+  - 0
   stamRegen: 0
-  mvSpeed: 0
-  mvSpeedBoost: 0
-  totalMvSpeed: 0
-  dirFacing: 0
-  dirX: 0
-  runVelocity: 0
-  allowJump: 0
-  isGrounded: 0
-  jumpForce: 0
-  dirY: 0
-  jumpVelocity: 0
-  groundLayers:
+  stamRegenDelay: 3
+  doAttack: 1
+  hasWeapon: 0
+  weaponGameobject: {fileID: 0}
+  wpnEquipped: {fileID: 0}
+  doAtkCombo: 0
+  stateToPlayer: 0
+  enemyLayer:
     serializedVersion: 2
-    m_Bits: 64
-  HealthbarF: {fileID: 6685909666246838378}
-  HealthbarB: {fileID: 6685909667214708572}
-  statHpText: {fileID: 6685909667086018526}
-  StamBar: {fileID: 0}
-  statStamText: {fileID: 0}
-  target: {fileID: 0}
-  pathUpdateSec: 0.25
-  currentWaypoint: 0
-  nextWayPointDistance: 0
-  isChasing: 0
-  doSleep: 0
+    m_Bits: 4194304
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 2097152
+  attackPoint: {fileID: 6685909667161128466}
+  hasInventory: 0
+  inventory: {fileID: 0}
+  doMoveX: 1
+  mvSpeed: 9
+  isGrounded: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 2097216
+  doMoveY: 1
+  allowJump: 0
+  jumpForce: 22
+  detectionSize: {x: 10, y: 3}
+  allowPathfinding: 1
+  doSleep: 1
   isAwake: 1
-  sleepStartTime: 0
-  sleepTime: 10
-  awakeTask: 0
-  wanderMvSpeed: 3
-  awakeTaskTime: 0
-  awakeTaskLimit: 1
+  sleepDelay: 10
   sleepParticle: {fileID: 6685909666324982378}
   isTriggered: 0
-  targetSeen: 0
-  unseenTime: 0
   forgivenessTime: 2
   triggerDistance: 3
-  targetNodalDistance: 0
-  targetStraightDistance: 0
-  backOffDistance: 0.5
-  stayDistance: 0.8
-  inProximity: 0
   jumpEnabled: 1
-  edgeStuck: 0
-  edgeStuckAlphaError: 0.02
-  edgeStuckTime: 0
-  allowJumpAfter: 0.05
-  hasLimitations: 0
-  activePoints: []
 --- !u!1 &6685909667086018527
 GameObject:
   m_ObjectHideFlags: 0
@@ -5383,7 +5390,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6685909666436209221}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6685909667214708563
 GameObject:
