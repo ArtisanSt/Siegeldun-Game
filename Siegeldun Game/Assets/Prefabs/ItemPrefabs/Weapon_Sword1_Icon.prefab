@@ -101,5 +101,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f194a550a0fd14081503d01e0a0a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
-  curQuantity: 0
+  systemGameObject: {fileID: 0}
+  gameMechanics: {fileID: 0}
+  doDrop: 1
+  dropChance: 1
+  itemDrops:
+  - {fileID: 4275815481310653657, guid: d09dd901e2d4f2e4899a86a8b9e1fa44, type: 3}
+  _maxQuantity: 1
+  _curQuantity: 1
+  _itemPrefab: {fileID: 4275815481310653657, guid: d09dd901e2d4f2e4899a86a8b9e1fa44, type: 3}
+  _iconPrefab: {fileID: 6721948792633512886}

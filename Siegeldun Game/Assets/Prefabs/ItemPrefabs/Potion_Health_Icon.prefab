@@ -29,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 6433002720851475710}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 2.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -101,5 +101,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a3cbe9c0b5de741b69afbd7c8f4915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
-  curQuantity: 0
+  systemGameObject: {fileID: 0}
+  gameMechanics: {fileID: 0}
+  doDrop: 1
+  dropChance: 1
+  itemDrops:
+  - {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
+  _maxQuantity: 64
+  _curQuantity: 1
+  _itemPrefab: {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
+  _iconPrefab: {fileID: 6433002720851475710}
