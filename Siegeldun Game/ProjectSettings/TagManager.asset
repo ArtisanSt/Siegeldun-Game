@@ -5,16 +5,36 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Enemy
+  - Item
+  - Region
+  - Player Event Collider
+  - Kinematic
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
   - Ground
+  - AddOn
+  - Item
+  - Obstacle
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - BackParticle
   - Enemy
   - Player
+  - FrontParticle
   - 
   - 
   - 
@@ -22,23 +42,11 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - GUI
   m_SortingLayers:
+  - name: Parallax
+    uniqueID: 2917886347
+    locked: 0
   - name: Background
     uniqueID: 2454533199
     locked: 0
