@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class ItemToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private GameObject playerEntity;
+    private Inventory playerInventory;
     private Image img;
     private GameObject weaponSlot;
     private GameObject consumableSlot;
@@ -14,41 +15,38 @@ public class ItemToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     void Awake()
     {
-        playerEntity = GameObject.Find("Player");
-        weaponSlot = GameObject.Find("/GUI/PlayerSlots/EqpSlotWeapon");
-        consumableSlot = GameObject.Find("/GUI/PlayerSlots/EqpSlotConsumable");
+        weaponSlot = GameObject.Find("/GUI/Inventory/EqpSlotWeapon");
+        consumableSlot = GameObject.Find("/GUI/Inventory/EqpConsumableBg/EqpSlotConsumable");
         img = GetComponent<Image>();
     }
 
     void Update()
     {
-
-        if (playerEntity != null && playerEntity.GetComponent<Player>().isAlive)
+        if (playerEntity == null)
         {
-            string inInvOrEqp = gameObject.name.Substring(0, 3);
-
-            if (playerEntity.GetComponent<Player>().itemSelected == (int)(gameObject.name[7] - '0') && gameObject.transform.childCount > 0)
-            {
-                img.color = Color.magenta;
-            }
-            else
-            {
-                if (playerEntity.GetComponent<Player>().itemEquipped[0] == (int)(gameObject.name[7] - '0'))
-                {
-                    img.color = Color.yellow;
-                }
-                else if (playerEntity.GetComponent<Player>().itemEquipped[1] == (int)(gameObject.name[7] - '0'))
-                {
-                    img.color = Color.green;
-                }
-                else
-                {
-                    img.color = Color.white;
-                }
-
-            }
+            playerEntity = GameObject.Find("Player");
+            if (playerEntity != null) { playerInventory = playerEntity.GetComponent<Inventory>(); }
         }
-        //playerEntity.GetComponent<Player>().itemSelected;
+
+        if((int)(gameObject.name[7] - '0') == playerInventory.selectedSlot)
+        {
+            img.color = Color.green;
+        }
+        else
+        {
+            img.color = Color.white;
+        }
+
+        if (gameObject == playerInventory.eqpSlotsCol["Weapon"].curSlot || gameObject == playerInventory.eqpSlotsCol["Consumable"].curSlot)
+        {
+            Image childImage = transform.GetChild(0).GetComponent<Image>();
+            childImage.color = new Color(childImage.color.r, childImage.color.g, childImage.color.b, .5f);
+        }
+        else if (transform.childCount > 0)
+        {
+            Image childImage = transform.GetChild(0).GetComponent<Image>();
+            childImage.color = new Color(childImage.color.r, childImage.color.g, childImage.color.b, 1f);
+        }
     }
 
     public void OnPointerUp(PointerEventData evt)
@@ -57,12 +55,11 @@ public class ItemToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         string inInvOrEqp = slotGameObject.name.Substring(0, 3);
         if (inInvOrEqp == "Inv")
         {
-            int slotSelected = (int)(slotGameObject.name[7] - '0');
-            playerEntity.GetComponent<Player>().Equip(slotSelected);
+            playerInventory.ProcessInventorySelection((int)(slotGameObject.name[7] - '0'), true);
         }
-        else if (inInvOrEqp == "Eqp")
+        else if (inInvOrEqp == "Eqp" && gameObject == consumableSlot)
         {
-            playerEntity.GetComponent<Player>().Consume(consumableSlot, true);
+            playerInventory.Consume();
         }
     }
 

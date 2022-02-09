@@ -164,5 +164,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2777d091f075f744fb4279d8ee3cd987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
-  curQuantity: 0
+  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  doDrop: 1
+  dropChance: 1
+  itemDrops:
+  - {fileID: 8502316654925628256}
+  _maxQuantity: 64
+  _curQuantity: 1
+  _itemPrefab: {fileID: 8502316654925628256}
+  _iconPrefab: {fileID: 5336195007643097998, guid: 01012f5781d2da34c90c3653190cbfe3, type: 3}
