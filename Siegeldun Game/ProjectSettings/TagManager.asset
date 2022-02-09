@@ -5,6 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+<<<<<<< Updated upstream
+=======
+  - Enemy
+  - Item
+  - Region
+  - Player Event Collider
+  - Kinematic
+  - Interactible
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
@@ -13,6 +22,7 @@ TagManager:
   - Water
   - UI
   - Ground
+<<<<<<< Updated upstream
   - Enemy
   - 
   - 
@@ -22,6 +32,12 @@ TagManager:
   - 
   - 
   - 
+=======
+  - AddOn
+  - Item
+  - Obstacle
+  - Interactible
+>>>>>>> Stashed changes
   - 
   - 
   - 
@@ -34,7 +50,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Foreground
   - 
   - 
   - 
