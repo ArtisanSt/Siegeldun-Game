@@ -377,7 +377,8 @@ public abstract class Entity : Root, IDamageable, IRegeneration
     protected float totalDmgReduction = 0, totalCritReduction = 0, totalKbReduction = 0; // In percentage
 
     [SerializeField] protected bool doAtkCombo = false;
-    protected int curAtkCombo = 0;
+
+    protected int curAtkCombo = 1;
 
     protected float _lastAttack; // Updates
     protected float rcvKbDisplacement = 0f; // Updates
