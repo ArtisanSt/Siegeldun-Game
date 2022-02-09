@@ -5122,7 +5122,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7681746430192905552}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.515766, y: 5.5013237, z: 48.80723}
+  m_LocalPosition: {x: 10.515766, y: 5.5013237, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7681746429445466254}
@@ -5305,29 +5305,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rBody: {fileID: 7681746430192905562}
   sprite: {fileID: 7681746430192905560}
+  entityPrefab: {fileID: 0}
+  entityDrops: []
+  entityID: 0
   isAlive: 1
-  isBreakable: 0
-  drop: 0
-  entityWeapon: 0
-  entityDamage: 0
+  maxHealth: 0
+  entityHp: 0
   attackSpeed: 0
-  attackDelay: 0
-  attackRange: 0
-  EqWeaponStamCost: 0
+  hpRegenTimer: 0
+  weaponGameObject: {fileID: 0}
+  entityWeapon: 0
   weaponDrag: 0
   weaponKbForce: 0
+  EqWeaponStamCost: 0
+  entityDamage: 0
+  attackDelay: 0
+  attackRange: 0
   kbHorDisplacement: 0
   kbVerDisplacement: 0
   attackPoint: {fileID: 7681746429445466254}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
-  maxHealth: 0
-  entityHp: 0
   hpRegenAllowed: 0
   healthRegen: 0
   regenDelay: 0
-  hpRegenTimer: 0
   maxStam: 0
   entityStam: 0
   stamRegenAllowed: 0
@@ -5335,13 +5337,13 @@ MonoBehaviour:
   mvSpeed: 0
   mvSpeedBoost: 0
   totalMvSpeed: 0
-  dirX: 0
   dirFacing: 0
-  dirY: 0
-  allowJump: 0
+  dirX: 0
   runVelocity: 0
+  allowJump: 0
   isGrounded: 0
   jumpForce: 0
+  dirY: 0
   jumpVelocity: 0
   groundLayers:
     serializedVersion: 2
@@ -5380,8 +5382,9 @@ MonoBehaviour:
   edgeStuckAlphaError: 0.02
   edgeStuckTime: 0
   allowJumpAfter: 0.05
-  itemPrefab: {fileID: 4275815481310653657, guid: d09dd901e2d4f2e4899a86a8b9e1fa44, type: 3}
-  dropChance: 0
+  spawnerObject: {fileID: 0}
+  hasLimitations: 0
+  activePoints: []
 --- !u!1 &7681746430225943820
 GameObject:
   m_ObjectHideFlags: 0

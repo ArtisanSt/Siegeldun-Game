@@ -5,23 +5,39 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+<<<<<<< Updated upstream
+=======
   - Enemy
   - Item
   - Region
   - Player Event Collider
   - Kinematic
+  - Interactible
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Background
+  - 
   - Water
   - UI
   - Ground
+<<<<<<< Updated upstream
+  - Enemy
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+=======
   - AddOn
   - Item
   - Obstacle
-  - Breakables
+  - Interactible
+>>>>>>> Stashed changes
   - 
   - 
   - 
@@ -30,28 +46,17 @@ TagManager:
   - 
   - 
   - 
-  - BackParticle
-  - Neutral
-  - Enemy
-  - Ally
-  - FrontParticle
   - 
   - 
   - 
   - 
+  - Foreground
   - 
   - 
   - 
-  - GUI
   m_SortingLayers:
-  - name: Parallax
-    uniqueID: 2917886347
-    locked: 0
   - name: Background
     uniqueID: 2454533199
-    locked: 0
-  - name: AddOns
-    uniqueID: 3575831505
     locked: 0
   - name: Default
     uniqueID: 0
