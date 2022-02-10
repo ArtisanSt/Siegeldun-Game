@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Goblin : NPC
+public class Orb : Breakables
 {
-    // ========================================= Entity Properties =========================================
-    private bool _isInstanceLimited = true;
+    // ========================================= Entity Initialization =========================================
+    private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
-    private int _maxEachEntityInField = 100;
+    private int _maxEachEntityInField = 0;
     public override int maxEachEntityInField { get { return _maxEachEntityInField; } }
 
-    private string _entityName = "Goblin";
+    private string _entityName = "Orb";
     public override string entityName { get { return _entityName; } }
     public override string objectName { get { return _entityName; } }
 
@@ -21,26 +21,13 @@ public class Goblin : NPC
     // ========================================= ITEM DROPS INITIALIZATION =========================================
     protected override void itemDropsInit()
     {
-        switch (difficulty)
-        {
-            case 1:
-                // itemDrops.Add();
-                break;
-            case 2:
-                // itemDrops.Add();
-                break;
-            case 3:
-                // itemDrops.Add();
-                break;
-        }
+
     }
 
     // ========================================= UNITY MAIN METHODS =========================================
     protected override void Awake()
     {
         base.Awake();
-        defaultPower.SetValues(15f, .3f, 1f, 1f, 1, 0, 0, 0);
-        NPCInit();
     }
 
     // Update is called once per frame
@@ -54,9 +41,17 @@ public class Goblin : NPC
         base.OnEntityDestroy();
     }
 
-    // Updates Every Physics Frame
-    protected override void FixedUpdate()
+    void OnCollisionEnter2D(Collision2D col)
     {
-        base.FixedUpdate(); // Updates the Animation of the Entity
+        if (col.gameObject.tag == "Enemy" && col.gameObject.tag == "Player")
+        {
+            Physics2D.IgnoreCollision(col.otherCollider, col.collider);
+        }
+    }
+
+    // ========================================= ANIMATION METHODS =========================================
+    protected override void AnimationState()
+    {
+
     }
 }

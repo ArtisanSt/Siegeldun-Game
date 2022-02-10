@@ -355,6 +355,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a049e41a7c75b46996e3681b4be932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEntity: {fileID: 0}
+  playerInventory: {fileID: 0}
+  img: {fileID: 2159721882774015920}
+  weaponSlot: {fileID: 8775669129140385772}
+  consumableSlot: {fileID: 8775669127939935882}
 --- !u!1 &2159721883055501882
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,6 +606,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a049e41a7c75b46996e3681b4be932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEntity: {fileID: 0}
+  playerInventory: {fileID: 0}
+  img: {fileID: 2159721883688319097}
+  weaponSlot: {fileID: 8775669129140385772}
+  consumableSlot: {fileID: 8775669127939935882}
 --- !u!1 &2159721883811554158
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,6 +857,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a049e41a7c75b46996e3681b4be932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEntity: {fileID: 0}
+  playerInventory: {fileID: 0}
+  img: {fileID: 2159721884035704783}
+  weaponSlot: {fileID: 8775669129140385772}
+  consumableSlot: {fileID: 8775669127939935882}
 --- !u!1 &2159721884203655975
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,6 +1029,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a049e41a7c75b46996e3681b4be932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEntity: {fileID: 0}
+  playerInventory: {fileID: 0}
+  img: {fileID: 2159721884271997405}
+  weaponSlot: {fileID: 8775669129140385772}
+  consumableSlot: {fileID: 8775669127939935882}
 --- !u!1 &2159721884517828658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1102,6 +1122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a049e41a7c75b46996e3681b4be932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEntity: {fileID: 0}
+  playerInventory: {fileID: 0}
+  img: {fileID: 2159721884517828656}
+  weaponSlot: {fileID: 8775669129140385772}
+  consumableSlot: {fileID: 8775669127939935882}
 --- !u!1 &2159721884543349954
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,6 +1215,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a049e41a7c75b46996e3681b4be932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEntity: {fileID: 0}
+  playerInventory: {fileID: 0}
+  img: {fileID: 2159721884543349952}
+  weaponSlot: {fileID: 8775669129140385772}
+  consumableSlot: {fileID: 8775669127939935882}
 --- !u!1 &2159721884561254728
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,6 +1425,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a049e41a7c75b46996e3681b4be932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEntity: {fileID: 0}
+  playerInventory: {fileID: 0}
+  img: {fileID: 8775669127939935880}
+  weaponSlot: {fileID: 8775669129140385772}
+  consumableSlot: {fileID: 8775669127939935882}
 --- !u!1 &8775669128555438648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1560,6 +1595,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a049e41a7c75b46996e3681b4be932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEntity: {fileID: 0}
+  playerInventory: {fileID: 0}
+  img: {fileID: 8775669129140385770}
+  weaponSlot: {fileID: 8775669129140385772}
+  consumableSlot: {fileID: 8775669127939935882}
 --- !u!1 &8775669129435257066
 GameObject:
   m_ObjectHideFlags: 0

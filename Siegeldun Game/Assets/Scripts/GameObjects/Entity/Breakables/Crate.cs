@@ -43,9 +43,14 @@ public class Crate : Breakables
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected override void Update()
     {
+        base.Update();
+    }
 
+    protected override void OnEntityDestroy()
+    {
+        base.OnEntityDestroy();
     }
 
     void OnCollisionEnter2D(Collision2D col)

@@ -161,17 +161,76 @@ MonoBehaviour:
   m_GameObject: {fileID: 2587360221867062410}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9142b9384ea9761479bf2a866a477098, type: 3}
+  m_Script: {fileID: 11500000, guid: fc70ef9ee4074cd46aa639ad18c948a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  doDrop: 1
+  dropChance: 1
+  itemDrops:
+  - {fileID: 1030391241932288014, guid: b65a0347cd38ab74f9123a6b98d7db79, type: 3}
   rBody: {fileID: 2587360221867062408}
   sprite: {fileID: 2587360221867062422}
-  entityPrefab: {fileID: 0}
-  entityDrops:
-  - {fileID: 4349500378521641027, guid: daa04679c9159d44d8de7cd8d24da66e, type: 3}
-  entityID: 0
+  boxColl: {fileID: 2587360221867062421}
+  capColl: {fileID: 0}
+  anim: {fileID: 2587360221867062420}
+  spriteDefaultFacing: 1
+  entityPrefab: {fileID: 2587360221867062410}
+  hasSpawner: 0
+  spawner: {fileID: 0}
+  activePoints:
+  - {fileID: 0}
+  - {fileID: 0}
   isAlive: 1
-  maxHealth: 0
-  entityHp: 0
-  attackSpeed: 0
-  hpRegenTimer: 0
+  entityStatusBar: {fileID: 0}
+  hasHp: 1
+  isInvulnerable: 0
+  maxHpScaling:
+  - 0
+  - 0
+  - 0
+  curHp: 1
+  maxHp: 1
+  hpBarB: {fileID: 0}
+  hpBarF: {fileID: 0}
+  hpText: {fileID: 0}
+  doHpRegen: 0
+  hpRegenScaling:
+  - 0
+  - 0
+  - 0
+  hpRegen: 0
+  hpRegenDelay: 3
+  hasStam: 0
+  isInfStamina: 0
+  maxStamScaling:
+  - 0
+  - 0
+  - 0
+  curStam: 0
+  maxStam: 0
+  stamBar: {fileID: 0}
+  stamText: {fileID: 0}
+  doStamRegen: 0
+  stamRegenScaling:
+  - 0
+  - 0
+  - 0
+  stamRegen: 0
+  stamRegenDelay: 3
+  doAttack: 0
+  hasWeapon: 0
+  weaponGameobject: {fileID: 0}
+  wpnEquipped: {fileID: 0}
+  doAtkCombo: 0
+  stateToPlayer: 3
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  attackPoint: {fileID: 0}
+  hasInventory: 0
+  inventory: {fileID: 0}

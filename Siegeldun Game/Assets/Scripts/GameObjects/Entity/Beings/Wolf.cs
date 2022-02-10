@@ -56,6 +56,11 @@ public class Wolf: NPC
         base.FixedUpdate(); // Updates the Animation of the Entity
     }
 
+    protected override void OnEntityDestroy()
+    {
+        base.OnEntityDestroy();
+    }
+
 
     // ========================================= ANIMATION METHODS =========================================
     protected override void AnimationState()
