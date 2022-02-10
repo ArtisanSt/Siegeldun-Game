@@ -34,9 +34,9 @@ Transform:
   m_LocalPosition: {x: 46.14292, y: -0.31386518, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
-  - {fileID: 781637664042070790}
   - {fileID: 781637663737743004}
   - {fileID: 781637662561195179}
+  - {fileID: 781637664042070790}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 991996671
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 619129380620677017, guid: 1d3faa0b2b19cf84798d3ccb5c517475, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -213,89 +213,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e90df55d027d3244b185c1f3555bb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  doDrop: 1
+  dropChance: 1
+  itemDrops: []
   rBody: {fileID: 781637662457676083}
   sprite: {fileID: 781637662457676081}
-  entityPrefab: {fileID: 0}
-  entityDrops:
-  - {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
-  entityID: 0
+  boxColl: {fileID: 781637662457676085}
+  capColl: {fileID: 781637662457676084}
+  anim: {fileID: 781637662457676082}
+  spriteDefaultFacing: 1
+  entityPrefab: {fileID: 781637662457676089}
+  hasSpawner: 0
+  spawner: {fileID: 0}
+  activePoints: []
   isAlive: 1
-  maxHealth: 0
-  entityHp: 0
-  attackSpeed: 0
-  hpRegenTimer: 0
-  weaponGameObject: {fileID: 0}
-  entityWeapon: 0
-  weaponDrag: 0
-  weaponKbForce: 0
-  EqWeaponStamCost: 0
-  entityDamage: 0
-  attackDelay: 0
-  attackRange: 0
-  kbHorDisplacement: 0
-  kbVerDisplacement: 0
-  attackPoint: {fileID: 781637664042070790}
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 4194304
-  hpRegenAllowed: 0
-  healthRegen: 0
-  regenDelay: 0
+  entityStatusBar: {fileID: 0}
+  hasHp: 1
+  isInvulnerable: 0
+  maxHpScaling:
+  - 100
+  - 2
+  - 0
+  curHp: 0
+  maxHp: 0
+  hpBarB: {fileID: 0}
+  hpBarF: {fileID: 0}
+  hpText: {fileID: 0}
+  doHpRegen: 0
+  hpRegenScaling:
+  - 0
+  - 0
+  - 0
+  hpRegen: 0
+  hpRegenDelay: 3
+  hasStam: 0
+  isInfStamina: 0
+  maxStamScaling:
+  - 0
+  - 0
+  - 0
+  curStam: 0
   maxStam: 0
-  entityStam: 0
-  stamRegenAllowed: 0
+  stamBar: {fileID: 0}
+  stamText: {fileID: 0}
+  doStamRegen: 0
+  stamRegenScaling:
+  - 0
+  - 0
+  - 0
   stamRegen: 0
-  mvSpeed: 0
-  mvSpeedBoost: 0
-  totalMvSpeed: 0
-  dirFacing: 0
-  dirX: 0
-  runVelocity: 0
-  allowJump: 0
-  isGrounded: 0
-  jumpForce: 0
-  dirY: 0
-  jumpVelocity: 0
-  groundLayers:
+  stamRegenDelay: 3
+  doAttack: 0
+  hasWeapon: 0
+  weaponGameobject: {fileID: 0}
+  wpnEquipped: {fileID: 0}
+  doAtkCombo: 0
+  stateToPlayer: 3
+  enemyLayer:
     serializedVersion: 2
-    m_Bits: 64
-  HealthbarF: {fileID: 781637662843967667}
-  HealthbarB: {fileID: 781637663729924371}
-  statHpText: {fileID: 781637662664055558}
-  StamBar: {fileID: 0}
-  statStamText: {fileID: 0}
-  target: {fileID: 0}
-  pathUpdateSec: 0.25
-  currentWaypoint: 0
-  nextWayPointDistance: 0
-  isChasing: 0
+    m_Bits: 0
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  attackPoint: {fileID: 781637664042070790}
+  hasInventory: 0
+  inventory: {fileID: 0}
+  doMoveX: 0
+  mvSpeed: 0
+  isGrounded: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  doMoveY: 0
+  allowJump: 0
+  jumpForce: 0
+  detectionSize: {x: 3, y: 1}
+  allowPathfinding: 0
   doSleep: 0
   isAwake: 1
-  sleepStartTime: 0
-  sleepTime: 10
-  awakeTask: 0
-  wanderMvSpeed: 3
-  awakeTaskTime: 0
-  awakeTaskLimit: 1
+  sleepDelay: 10
   sleepParticle: {fileID: 0}
   isTriggered: 0
-  targetSeen: 0
-  unseenTime: 0
   forgivenessTime: 2
   triggerDistance: 3
-  targetNodalDistance: 0
-  targetStraightDistance: 0
-  backOffDistance: 0
-  stayDistance: 0
-  inProximity: 0
   jumpEnabled: 1
-  edgeStuck: 0
-  edgeStuckAlphaError: 0.02
-  edgeStuckTime: 0
-  allowJumpAfter: 0.05
-  spawnerObject: {fileID: 0}
-  hasLimitations: 0
-  activePoints: []
 --- !u!1 &781637662561195180
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,7 +329,7 @@ Transform:
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.07927321}
   m_Children: []
   m_Father: {fileID: 781637662457676088}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 2.998, y: 3.003, z: 0.105}
 --- !u!198 &781637662561195177
 ParticleSystem:
@@ -5363,7 +5366,7 @@ RectTransform:
   - {fileID: 781637662843967668}
   - {fileID: 781637662664055559}
   m_Father: {fileID: 781637662457676088}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5459,5 +5462,5 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 781637662457676088}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

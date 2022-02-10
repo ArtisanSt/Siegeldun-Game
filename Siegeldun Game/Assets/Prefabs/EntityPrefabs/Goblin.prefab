@@ -5058,8 +5058,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 991996671
-  m_SortingLayer: 1
+  m_SortingLayerID: -1305073549
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 5846514463185051865, guid: 05c9cb51d3b2d5b4e8b289d4734825b3, type: 3}
   m_Color: {r: 1, g: 0.7216981, b: 0.7216981, a: 1}
@@ -5198,8 +5198,7 @@ MonoBehaviour:
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   doDrop: 1
   dropChance: 1000
-  itemDrops:
-  - {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
+  itemDrops: []
   rBody: {fileID: 6685909666436209246}
   sprite: {fileID: 6685909666436209242}
   boxColl: {fileID: 6685909666436209241}
