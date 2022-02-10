@@ -5059,7 +5059,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1305073549
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 5846514463185051865, guid: 05c9cb51d3b2d5b4e8b289d4734825b3, type: 3}
   m_Color: {r: 1, g: 0.7216981, b: 0.7216981, a: 1}
@@ -5248,6 +5248,15 @@ MonoBehaviour:
   - 0
   stamRegen: 0
   stamRegenDelay: 3
+  doMoveX: 1
+  mvSpeed: 9
+  isGrounded: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  doMoveY: 1
+  allowJump: 0
+  jumpForce: 22
   doAttack: 1
   hasWeapon: 0
   weaponGameobject: {fileID: 0}
@@ -5263,15 +5272,6 @@ MonoBehaviour:
   attackPoint: {fileID: 6685909667161128466}
   hasInventory: 0
   inventory: {fileID: 0}
-  doMoveX: 1
-  mvSpeed: 9
-  isGrounded: 0
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 2097216
-  doMoveY: 1
-  allowJump: 0
-  jumpForce: 22
   detectionSize: {x: 10, y: 3}
   allowPathfinding: 1
   doSleep: 1

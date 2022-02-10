@@ -215,7 +215,7 @@ public abstract class Item : Interactibles
             if ((effectName == "HP" || effectName == "Stamina") && entityHolder.GetComponent<IRegeneration>() != null) entityHolder.GetComponent<IRegeneration>().Regenerate(effectName, effectDict[effectName].effectParam, effectDict[effectName].effectSpeed, effectDict[effectName].effectTimer, effectDict[effectName].effectTimerIncrements);
             else
             {
-                entityHolder.GetComponent<Entity>().AddBoost(effectName, gameObject.name, effectDict[effectName]);
+                entityHolder.GetComponent<IBoostable>().AddBoost(effectName, gameObject.name, effectDict[effectName]);
             }
         }
     }

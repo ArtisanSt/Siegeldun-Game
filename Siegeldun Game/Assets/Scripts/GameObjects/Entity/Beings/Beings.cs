@@ -20,7 +20,7 @@ public class SpeedBoost
     }
 }
 
-public abstract class Beings : Entity
+public abstract class Beings : Entity, IBoostable, IWeaponizable
 {
     // ========================================= BEINGS PROPERTIY SCALING =========================================
     private string _entityType = "Beings";
@@ -28,6 +28,11 @@ public abstract class Beings : Entity
 
 
 
+
+    protected virtual void Start()
+    {
+        InventoryPropInit();
+    }
 
     // ========================================= MOVEMENT PROPERTIES =========================================
     [Header("MOVEMENT SETTINGS", order = 1)]
@@ -97,6 +102,125 @@ public abstract class Beings : Entity
 
 
 
+    // ========================================= BATTLING PROPERTIES =========================================
+    [Header("BATTLING SETTINGS", order = 3)]
+    [SerializeField] protected bool doAttack = false;
+
+    [SerializeField] protected bool hasWeapon = false;
+    [SerializeField] protected GameObject weaponGameobject = null;
+    [SerializeField] protected Weapon wpnEquipped = null;
+    [SerializeField]
+    protected WeaponProperties weaponProp = null, defaultPower = new WeaponProperties(), atkStatsProp = null;
+
+    protected float totalAtkDamage = 0, totalAtkRange = 0, totalAtkSpeed = 0, totalAtkDelay = 0, totalAtkCrit = 0, totalStamCost = 0, totalKbForce = 0;
+
+    protected int totalAtkCritChance = 0;
+
+    [SerializeField] protected bool doAtkCombo = false;
+
+    protected int curAtkCombo = 1;
+
+    protected int atkFacing; // Updates
+
+    protected enum EntityStateToPlayer { Enemy, Ally, NeutralEvil, NeutralGood }
+    [SerializeField] protected EntityStateToPlayer stateToPlayer = EntityStateToPlayer.NeutralGood; // "Enemy", "Ally", "Neutral"
+
+    [SerializeField]
+    protected LayerMask enemyLayer, allyLayer;
+    [SerializeField] protected Transform attackPoint;
+
+    protected Dictionary<string, Dictionary<string, float>> statsBoost = new Dictionary<string, Dictionary<string, float>>() // statsName: {sourceName: effectParam}
+    {
+        ["Damage"] = new Dictionary<string, float>(),
+        ["AttackRange"] = new Dictionary<string, float>(),
+        ["AttackSpeed"] = new Dictionary<string, float>(),
+        ["AttackDelay"] = new Dictionary<string, float>(),
+
+        ["CritHit"] = new Dictionary<string, float>(),
+        ["CritChance"] = new Dictionary<string, float>(),
+
+        ["WpnStamCost"] = new Dictionary<string, float>(),
+
+        ["KbForce"] = new Dictionary<string, float>(),
+
+        ["MVSpeed"] = new Dictionary<string, float>(),
+        ["JumpHeight"] = new Dictionary<string, float>(),
+
+        ["KbReduction"] = new Dictionary<string, float>(),
+        ["DmgReduction"] = new Dictionary<string, float>(),
+        ["CritReduction"] = new Dictionary<string, float>(),
+    };
+
+    protected float TotalBoost(string statsName)
+    {
+        float totalBoost = 0;
+        foreach (KeyValuePair<string, float> eachBoost in statsBoost[statsName])
+        {
+            totalBoost += eachBoost.Value;
+            if (statsName == "DamageReduction" && totalBoost >= 1)
+            {
+                totalBoost = 1f;
+                break;
+            }
+        }
+        return totalBoost;
+    }
+
+    public void AddBoost(string statsName, string sourceName, SelfEffectProperties effectProp)
+    {
+        StartCoroutine(AddStatsBoost(statsName, sourceName, effectProp));
+    }
+
+    protected IEnumerator AddStatsBoost(string statsName, string sourceName, SelfEffectProperties effectProp)
+    {
+        if (statsBoost[statsName].ContainsKey(sourceName)) statsBoost[statsName][sourceName] = effectProp.effectParam; // Overwrites the old same Effect
+        else statsBoost[statsName].Add(sourceName, effectProp.effectParam);
+
+        if (effectProp.effectSpeed == "Overtime")
+        {
+            yield return new WaitForSeconds(effectProp.effectTimer);
+            statsBoost[statsName].Remove(sourceName);
+        }
+    }
+
+    public void SetWeapon(Weapon wpnEquipped = null)
+    {
+        this.wpnEquipped = wpnEquipped;
+        hasWeapon = wpnEquipped != null;
+        if (hasWeapon) { this.weaponProp = wpnEquipped.uniqueProp; }
+    }
+
+    protected void UpdateStats()
+    {
+        weaponProp = (wpnEquipped == null) ? defaultPower : wpnEquipped.uniqueProp;
+
+        totalAtkDamage = weaponProp.wpnDamage + TotalBoost("Damage");
+        totalAtkRange = weaponProp.wpnAtkRange + TotalBoost("AttackRange");
+        totalAtkSpeed = weaponProp.wpnAtkSpeed + TotalBoost("AttackSpeed");
+        totalAtkDelay = weaponProp.wpnAtkDelay + TotalBoost("AttackDelay");
+
+        totalAtkCritChance = weaponProp.wpnCritChance + (int)TotalBoost("CritChance");
+        totalAtkCrit = weaponProp.wpnAtkCrit + TotalBoost("CritHit");
+
+        totalStamCost = weaponProp.wpnStamCost + TotalBoost("WpnStamCost");
+
+        totalKbForce = weaponProp.wpnKbForce + TotalBoost("KbForce");
+
+        totalKbReduction = TotalBoost("KbReduction");
+        totalDmgReduction = TotalBoost("DmgReduction");
+        totalCritReduction = TotalBoost("CritReduction");
+
+        int totalWpnDurability = weaponProp.durability;
+
+        atkStatsProp = new WeaponProperties(weaponProp.weaponType, weaponProp.tier, weaponProp.doBreak);
+        atkStatsProp.SetValues(totalAtkDamage, totalAtkRange, totalAtkSpeed, totalAtkDelay, totalAtkCritChance, totalAtkCrit, totalStamCost, totalKbForce, totalWpnDurability);
+    }
+
+    protected abstract void Attack();
+
+
+
+
     // ========================================= ANIMATION METHODS =========================================
     protected override void AnimationState()
     {
@@ -152,6 +276,28 @@ public abstract class Beings : Entity
                 }
             }
             anim.SetInteger("state", (int)state);
+        }
+    }
+
+
+
+
+    // ========================================= INVENTORY PROPERTIES =========================================
+    [Header("INVENTORY SETTINGS", order = 4)]
+    [SerializeField] protected bool hasInventory = false;
+    [SerializeField] protected Inventory inventory = null;
+
+    protected GameObject[] eqpSlots = new GameObject[] { null, null }; // Weapon, Consumable
+
+
+    // Initialize at Start (Not Awake)
+    protected void InventoryPropInit()
+    {
+        if (hasInventory)
+        {
+            inventory = GetComponent<Inventory>();
+            eqpSlots[0] = inventory.eqpSlotsCol["Weapon"].eqpSlot;
+            eqpSlots[1] = inventory.eqpSlotsCol["Consumable"].eqpSlot;
         }
     }
 }

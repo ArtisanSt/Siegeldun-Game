@@ -407,7 +407,7 @@ public class Inventory: Root
 
             newEqpItem.GetComponent<Item>().ItemReferencedTo(curItem);
             curItem.GetComponent<Item>().OnEquip(gameObject);
-            if (eqpSlot == eqpSlotsCol["Weapon"].eqpSlot) gameObject.GetComponent<Entity>().SetWeapon(newEqpItem.GetComponent<Weapon>()); // Should be changed to Events //////////////////////
+            if (eqpSlot == eqpSlotsCol["Weapon"].eqpSlot) gameObject.GetComponent<IWeaponizable>().SetWeapon(newEqpItem.GetComponent<Weapon>()); // Should be changed to Events //////////////////////
 
             return true;
         }
@@ -437,7 +437,7 @@ public class Inventory: Root
             eqpSlotsCol[eqpItemProp.itemType].curItem = null;
             Destroy(eqpItem);
 
-            gameObject.GetComponent<Entity>().SetWeapon(null); // Should be changed to Events //////////////////////
+            gameObject.GetComponent<IWeaponizable>().SetWeapon(null); // Should be changed to Events //////////////////////
 
             isSuccess = true;
         }

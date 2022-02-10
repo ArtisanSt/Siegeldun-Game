@@ -12,7 +12,13 @@ public abstract class Breakables: Entity
 
 
     // ========================================= BATTLING METHODS =========================================
-    protected override void Attack()
+    protected virtual void Start()
+    {
+        deadOnGround = true;
+    }
+
+    // Update is called once per frame
+    protected virtual void Update()
     {
 
     }

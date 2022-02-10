@@ -6,19 +6,11 @@ using UnityEngine.EventSystems;
 
 public class ItemToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    private GameObject playerEntity;
-    private Inventory playerInventory;
-    private Image img;
-    private GameObject weaponSlot;
-    private GameObject consumableSlot;
-
-
-    void Awake()
-    {
-        weaponSlot = GameObject.Find("/GUI/Inventory/EqpSlotWeapon");
-        consumableSlot = GameObject.Find("/GUI/Inventory/EqpConsumableBg/EqpSlotConsumable");
-        img = GetComponent<Image>();
-    }
+    [SerializeField] private GameObject playerEntity;
+    [SerializeField] private Inventory playerInventory;
+    [SerializeField] private Image img;
+    [SerializeField] private GameObject weaponSlot;
+    [SerializeField] private GameObject consumableSlot;
 
     void Update()
     {

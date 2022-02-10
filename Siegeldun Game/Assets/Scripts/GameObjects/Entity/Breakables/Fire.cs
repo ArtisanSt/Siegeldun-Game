@@ -29,14 +29,17 @@ public class Fire : Breakables
     {
         base.Awake();
         itemDropsInit();
-
-        PrefabsInit();
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected override void Update()
     {
+        base.Update();
+    }
 
+    protected override void OnEntityDestroy()
+    {
+        base.OnEntityDestroy();
     }
 
     // ========================================= ANIMATION METHODS =========================================
