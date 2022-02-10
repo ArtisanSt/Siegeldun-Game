@@ -9,7 +9,8 @@ public abstract class Interactibles : Root
 
     public string objectClassification { get; protected set; } // "ICON", "ITEM", "STRUCTURE"
 
-    public bool isSelected { get; protected set; }
+    private bool _isSelected = false; 
+    public bool isSelected { get { return _isSelected; } protected set { _isSelected = value; } }
     private bool _curSelect = false;
 
     public void ToggleInteract(bool isSelected)

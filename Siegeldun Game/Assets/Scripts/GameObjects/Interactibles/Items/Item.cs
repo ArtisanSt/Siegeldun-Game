@@ -33,7 +33,7 @@ public abstract class Item : Interactibles
 {
     // ========================================= Item Properties =========================================
     public abstract string itemName { get; }
-    public abstract string itemType { get; } // Weapon, Consumable
+    public abstract string itemType { get; } // Weapon, Consumable, Key
 
     [Header("ITEM SETTINGS", order = 1)]
     [SerializeField] private int _maxQuantity = 1;
@@ -74,7 +74,7 @@ public abstract class Item : Interactibles
     protected virtual void Awake()
     {
         GameMechanicsPropInit();
-        InteractInit();
+        ItemInit();
         UniqueStatsInit();
     }
 
@@ -178,11 +178,10 @@ public abstract class Item : Interactibles
     }
 
 
-    protected void InteractInit()
+    protected void ItemInit()
     {
         bool isIcon = transform.parent.name != "Drops";
         isInteractible = !isIcon;
-        isSelected = false;
 
         objectClassification = (isIcon) ? "ICON" : "ITEM";
 

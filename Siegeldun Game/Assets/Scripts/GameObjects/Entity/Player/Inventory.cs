@@ -187,7 +187,7 @@ public class Inventory: Root
                 break;
 
             case "STRUCTURE":
-                outcome = false;
+                selectedObject.GetComponent<IInteractible>().Interact();
                 break;
         }
 
@@ -218,6 +218,28 @@ public class Inventory: Root
     public void SelectSlot(int selectedSlot)
     {
         this.selectedSlot = selectedSlot;
+    }
+
+
+
+    // ========================================= FIND ITEM METHODS =========================================
+    public int FindItem(string itemName) // -1 = not found, !-1 = found
+    {
+        int itemIdx = -1;
+        for (int i=0; i < inventorySlots.Count; i++)
+        {
+            if (inventorySlots[i][1] != null && inventorySlots[i][1].GetComponent<Item>().itemName == itemName)
+            {
+                itemIdx = i;
+                break;
+            }
+        }
+        return itemIdx;
+    }
+
+    protected int FindItem(GameObject curItem)
+    {
+        return FindItem(curItem.GetComponent<Item>().itemName);
     }
 
 

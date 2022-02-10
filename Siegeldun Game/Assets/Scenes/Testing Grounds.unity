@@ -368,6 +368,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6685909666436209242, guid: 0d7458e69d7219f46b652df2adcda141, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6685909666436209245, guid: 0d7458e69d7219f46b652df2adcda141, type: 3}
       propertyPath: target
       value: 
@@ -592,7 +596,7 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 991996671
+  m_SortingLayerID: 1712531303
   m_SortingLayer: 1
   m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
@@ -11313,43 +11317,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8775669128555438648, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
   m_PrefabInstance: {fileID: 2159721883132849166}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &660241886 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7935937556338373357, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
-  m_PrefabInstance: {fileID: 7935937556327306889}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &660241887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 660241886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
 --- !u!4 &696630422 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 116043195058129463, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
@@ -11372,7 +11339,7 @@ GameObject:
   - component: {fileID: 791774965}
   m_Layer: 7
   m_Name: Crate (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11428,8 +11395,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -400916063
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 542ed0414a9df2749a2521d21e2a97e5, type: 3}
   m_Color: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
@@ -11669,7 +11636,7 @@ GameObject:
   - component: {fileID: 1032178112}
   m_Layer: 7
   m_Name: Tiled Add-Ons
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11725,8 +11692,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -719135791
-  m_SortingLayer: -1
+  m_SortingLayerID: -400916063
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -11984,7 +11951,7 @@ GameObject:
   - component: {fileID: 1135287991}
   m_Layer: 7
   m_Name: Tent1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12026,8 +11993,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -400916063
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7ba5ebc029b4a1b48a9aef9c828619be, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -12108,8 +12075,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -400916063
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e34816feb42b1454c9003e8d41502377, type: 3}
   m_Color: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
@@ -12226,6 +12193,10 @@ PrefabInstance:
       propertyPath: m_AutoTiling
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7448746658641424012, guid: b565fb75a876fa84c9d57fac905f59d5, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7448746658641424015, guid: b565fb75a876fa84c9d57fac905f59d5, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -12274,14 +12245,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CrateBreakable (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 8224004677609868985, guid: b565fb75a876fa84c9d57fac905f59d5, type: 3}
-      propertyPath: gameMechanics
-      value: 
-      objectReference: {fileID: 105145623}
-    - target: {fileID: 8224004677609868985, guid: b565fb75a876fa84c9d57fac905f59d5, type: 3}
-      propertyPath: systemGameObject
-      value: 
-      objectReference: {fileID: 105145621}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b565fb75a876fa84c9d57fac905f59d5, type: 3}
 --- !u!1 &1344367742
@@ -12297,7 +12260,7 @@ GameObject:
   - component: {fileID: 1344367745}
   m_Layer: 7
   m_Name: Campfire
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12339,8 +12302,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 991996671
-  m_SortingLayer: 1
+  m_SortingLayerID: -400916063
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: aed1ea6f6cf765849b58b308e3d8c9b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -12386,6 +12349,8 @@ MonoBehaviour:
   doDrop: 0
   dropChance: 1
   itemDrops: []
+  spawnMobs: []
+  instancePerMob: 
   activePoints:
   - {fileID: 368287229}
   - {fileID: 1978995445}
@@ -12511,7 +12476,7 @@ GameObject:
   - component: {fileID: 1527836795}
   m_Layer: 7
   m_Name: Log
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12553,8 +12518,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -400916063
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3c600dfc90267104791020feff628cbd, type: 3}
   m_Color: {r: 0.9764151, g: 0.9771562, b: 1, a: 0.972549}
@@ -12626,7 +12591,7 @@ GameObject:
   - component: {fileID: 1614628403}
   m_Layer: 7
   m_Name: Camp
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12657,7 +12622,7 @@ GameObject:
   - component: {fileID: 1638521014}
   m_Layer: 7
   m_Name: AddOns
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12765,7 +12730,7 @@ GameObject:
   - component: {fileID: 1834943020}
   m_Layer: 7
   m_Name: GrassyCrate (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12807,8 +12772,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -400916063
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e34816feb42b1454c9003e8d41502377, type: 3}
   m_Color: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
@@ -12960,13 +12925,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1638521014}
     m_Modifications:
+    - target: {fileID: 9216084911019709532, guid: b4014195f503ded4dbea5879806ffc19, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9216084911019709533, guid: b4014195f503ded4dbea5879806ffc19, type: 3}
       propertyPath: m_Name
       value: Bush (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 9216084911019709533, guid: b4014195f503ded4dbea5879806ffc19, type: 3}
-      propertyPath: m_Layer
-      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9216084911019709535, guid: b4014195f503ded4dbea5879806ffc19, type: 3}
       propertyPath: m_RootOrder
@@ -13204,6 +13169,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4865986372359361336, guid: d013b059544ef9d45a2fb624ca903190, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4865986373441986948, guid: d013b059544ef9d45a2fb624ca903190, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -13287,7 +13256,7 @@ PrefabInstance:
       objectReference: {fileID: 362347132}
     - target: {fileID: 5044255777343465798, guid: 2e799ae07f2b1b44fa7ee86b2e701537, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5044255777343465798, guid: 2e799ae07f2b1b44fa7ee86b2e701537, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13345,7 +13314,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6944229709921447117, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6944229709921447117, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13400,6 +13369,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1344367744}
     m_Modifications:
+    - target: {fileID: 1341461660868417412, guid: 680fa13cefee36949a5e1ae3a18b50c8, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1341461660868417413, guid: 680fa13cefee36949a5e1ae3a18b50c8, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -13448,18 +13421,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fire
       objectReference: {fileID: 0}
-    - target: {fileID: 1341461660868417418, guid: 680fa13cefee36949a5e1ae3a18b50c8, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6950630939478884835, guid: 680fa13cefee36949a5e1ae3a18b50c8, type: 3}
-      propertyPath: gameMechanics
-      value: 
-      objectReference: {fileID: 105145623}
-    - target: {fileID: 6950630939478884835, guid: 680fa13cefee36949a5e1ae3a18b50c8, type: 3}
-      propertyPath: systemGameObject
-      value: 
-      objectReference: {fileID: 105145621}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 680fa13cefee36949a5e1ae3a18b50c8, type: 3}
 --- !u!1001 &7935937556327306889
@@ -13469,9 +13430,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 901637782008884940, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
+      propertyPath: m_SortingLayer
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295544811747257374, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
+      propertyPath: m_SortingLayer
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431795177422231376, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799563456845051990, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
+      propertyPath: m_SortingLayer
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956856958171848032, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
+      propertyPath: m_SortingLayer
+      value: -3
+      objectReference: {fileID: 0}
     - target: {fileID: 7935937556338373344, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7935937556338373344, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13520,6 +13501,10 @@ PrefabInstance:
     - target: {fileID: 7935937556338373357, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
       propertyPath: m_Name
       value: Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 8865249818449684900, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
+      propertyPath: m_SortingLayer
+      value: -3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
