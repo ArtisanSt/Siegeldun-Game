@@ -3,46 +3,93 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class Dialogue
+{
+    public string npcName;
+    public bool hasButtons = false;
+    public bool canGoBack = false;
+
+    private bool _isDone = false;
+    public bool isDone { get { return _isDone; } set { _isDone = value; } }
+    private bool _started = false;
+    public bool started { get { return _started; } set { _started = value; } }
+
+    [TextArea(3, 10)]
+    public List<string> dialogueMessages = new List<string>();
+}
+
 public class DialogueSystem : MonoBehaviour
 {
-    public Text nameText;
-    public Text dialogueText;
-    public GameObject messageBox;
-    private Queue<string> dialogue_messages;
+    [SerializeField] public Text nameText;
+    [SerializeField] public Text dialogueText;
+    [SerializeField] public GameObject messageBox;
+    [SerializeField] public GameObject btnNext;
+    [SerializeField] public GameObject btnBack;
+    [SerializeField] public GameObject btnOK;
+    private Dialogue dialogue;
+    private int curIdx = 0;
+    private int _dialoguesCount = -1;
+    public int dialoguesCount { get { return _dialoguesCount; } private set { _dialoguesCount = value; } }
 
-    void Start()
+    public void ToggleButton(int phase) // -1: back, 1:next, 0:ok
     {
-        dialogue_messages = new Queue<string>();
+        if (phase != 0) DisplaySentence(curIdx + phase);
+        else EndDialogue();
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
+        if (dialogue.dialogueMessages.Count == 0) return;
+
         messageBox.SetActive(true);
-        nameText.text = dialogue.npc_name;
-        dialogue_messages.Clear();
+        this.dialogue = dialogue;
+        nameText.text = dialogue.npcName;
+        curIdx = 0;
+        this.dialogue.started = true;
+        dialoguesCount++;
 
-        foreach (string dialogue_message in dialogue.dialogue_messages)
-        {
-            dialogue_messages.Enqueue(dialogue_message);
-        }
-
-        DisplayNextSentence();
+        DisplaySentence(curIdx);
     }
 
-    public void DisplayNextSentence()
+    private void DisplaySentence(int curIdx)
     {
-        if(dialogue_messages.Count == 0)
+        if(dialogue.dialogueMessages.Count == curIdx)
         {
             EndDialogue();
             return;
         }
 
-        string dialogue_message = dialogue_messages.Dequeue();
-        dialogueText.text = dialogue_message;
+        this.curIdx = curIdx;
+        SetDialogueButtons(curIdx);
+        dialogueText.text = dialogue.dialogueMessages[curIdx];
     }
 
-    void EndDialogue()
+    private void SetDialogueButtons(int curIdx)
     {
+        btnNext.SetActive(false);
+        btnBack.SetActive(false);
+        btnOK.SetActive(false);
+        if (!dialogue.hasButtons) return;
+
+        if (dialogue.dialogueMessages.Count == curIdx + 1)
+        {
+            btnOK.SetActive(true);
+        }
+        else
+        {
+            btnNext.SetActive(true);
+        }
+
+        if (curIdx != 0 && dialogue.canGoBack)
+        {
+            btnBack.SetActive(true);
+        }
+    }
+
+    public void EndDialogue()
+    {
+        dialogue.isDone = true;
         messageBox.SetActive(false);
     }
 }

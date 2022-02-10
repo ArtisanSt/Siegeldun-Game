@@ -32,6 +32,6 @@ public class LoreCrystal : Structures, IInteractible
     {
         if (!isSelected) return;
 
-        gameObject.GetComponent<DialogueTrigger>().TiggerDialogue();
+        gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();
     }
 }
