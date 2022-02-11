@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoreCrystal : Structures, IInteractible
+public class LoreCrystal : Structures
 {
     // ========================================= Structure Initialization =========================================
     private bool _isInstanceLimited = false;
@@ -24,14 +24,14 @@ public class LoreCrystal : Structures, IInteractible
 
     protected void Update()
     {
-
+        if (!GetComponent<LoreDialogue>().loreDialogue.repeatable && !GetComponent<LoreDialogue>().loreDialogue.isDone) { isInteractible = false; }
     }
 
     // Interaction Event
-    public void Interact()
+    public override void Interact()
     {
         if (!isSelected) return;
 
-        gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();
+        GetComponent<LoreDialogue>().StartDialogue();
     }
 }

@@ -11,7 +11,14 @@ public abstract class Structures : Interactibles
     protected virtual void Awake()
     {
         GameMechanicsPropInit();
+        StructureInit();
+    }
 
+
+    protected void StructureInit()
+    {
         objectClassification = "STRUCTURE";
+        isInteractible = true;
+
     }
 }

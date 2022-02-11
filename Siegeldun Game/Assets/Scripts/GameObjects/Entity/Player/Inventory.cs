@@ -16,7 +16,7 @@ public class EquippedSlotProperties
     }
 }
 
-public class Inventory: Root
+public class Inventory: BaseObject
 {
     private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }

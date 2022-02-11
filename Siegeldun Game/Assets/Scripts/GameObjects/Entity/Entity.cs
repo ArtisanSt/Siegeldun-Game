@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEditor;
 
 
-public abstract class Entity : Root, IDamageable, IRegeneration
+public abstract class Entity : BaseObject, IDamageable, IRegeneration
 {
     // ========================================= UNITY PROPERTIES =========================================
     // Component Declaration

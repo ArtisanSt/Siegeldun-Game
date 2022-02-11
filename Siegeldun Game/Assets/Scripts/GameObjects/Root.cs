@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class Root : MonoBehaviour
+public abstract class Root : Process
 {
     // ========================================= Game Properties =========================================
     [SerializeField] protected GameObject systemGameObject;
@@ -12,12 +12,6 @@ public abstract class Root : MonoBehaviour
 
     protected static int difficulty = GlobalVariableStorage.gameDifficulty; // Pseudo Difficulty
     protected static int idxDiff = difficulty - 1;
-
-    protected System.Func<int, bool> ChanceRandomizer = dropChance => Random.Range(0, dropChance) == 0;
-    protected System.Func<float, float, bool> TimerIncrement = (timeStart, timeDuration) => Time.time - timeStart >= timeDuration;
-
-    protected List<float> curProcess = new List<float>();
-
 
     public abstract string objectName { get; }
     public abstract bool isInstanceLimited { get; } // Pseudo
@@ -29,33 +23,9 @@ public abstract class Root : MonoBehaviour
     protected virtual void PrefabsInit() { }
 
 
-    // =========================================  PROCESS EVALUATOR =========================================
-    protected bool ProcessEvaluator(float instanceID, float time = 1)
-    {
-        if (!curProcess.Contains(instanceID))
-        {
-            curProcess.Add(instanceID);
-
-            StartCoroutine(ClearID(instanceID, time));
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    protected IEnumerator ClearID(float instanceID, float time = 1)
-    {
-        yield return new WaitForSeconds(time);
-        curProcess.Remove(instanceID);
-    }
-
-
 
 
     // =========================================  INSTANTIATION =========================================
-
     protected void GameMechanicsPropInit()
     {
         systemGameObject = GameObject.Find("System");
@@ -105,61 +75,4 @@ public abstract class Root : MonoBehaviour
         entityInstances["All"].Remove(entityObject);
         entityInstances[objectName].Remove(entityObject);
     }
-
-
-
-
-    // ========================================= LAYER METHODS =========================================
-    protected static void LayersJoin(ref int numOfLayers, ref List<int> layerInInt, ref LayerMask mainLayer)
-    {
-        string[] layerNames = new string[numOfLayers];
-        for (int i = 0; i < numOfLayers; i++)
-        {
-            layerNames[i] = LayerMask.LayerToName(layerInInt[i]);
-        }
-
-        mainLayer = LayerMask.GetMask(layerNames);
-    }
-
-    protected static LayerMask LayersJoin(int numOfLayers, List<int> layerInInt)
-    {
-        if (numOfLayers != layerInInt.Count) { numOfLayers = layerInInt.Count; }
-
-        string[] layerNames = new string[numOfLayers];
-        for (int i = 0; i < numOfLayers; i++)
-        {
-            layerNames[i] = LayerMask.LayerToName(layerInInt[i]);
-        }
-
-        return LayerMask.GetMask(layerNames);
-    }
-
-
-
-
-    // =========================================  ITEM DROPS PROPERTIES =========================================
-    [Header("ITEM DROP SETTINGS", order = 0)]
-    [SerializeField] protected bool doDrop = false;
-    [SerializeField] protected int dropChance = 1;
-    [SerializeField] protected List<GameObject> itemDrops = new List<GameObject>();
-
-
-    protected GameObject Drop(int dropChance, Vector2 dropPosition, GameObject itemG = null, Transform parentT = null)
-    {
-        if (doDrop && ChanceRandomizer(dropChance))
-        {
-            if (itemG == null && itemDrops.Count != 0) itemG = itemDrops[Random.Range(0, itemDrops.Count)];
-            if (parentT == null) parentT = GameObject.Find("Drops").transform;
-
-            if (itemG != null)
-            {
-                GameObject newDrop = (GameObject)Instantiate(itemG, new Vector3(transform.position.x + dropPosition.x, transform.position.y + dropPosition.y, 0), Quaternion.identity, parentT);
-                return newDrop;
-            }
-        }
-
-        return null;
-    }
-
-    protected virtual void itemDropsInit() { }
 }

@@ -34,6 +34,8 @@ public class Interactor : MonoBehaviour
 
         for (int i=0; i < hitColliders.Length; i++)
         {
+            if (hitColliders[i].GetComponent<IInteractible>() == null || !hitColliders[i].GetComponent<IInteractible>().isInteractible) continue;
+
             Collider2D coll = hitColliders[i];
             float curDistance = (coll.transform.position.x - (transform.position.x + selectAlpha)) * dirFacing;
             interactDistance[i] = curDistance;

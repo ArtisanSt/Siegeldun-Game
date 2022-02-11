@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Interactibles : Root
+public abstract class Interactibles : BaseObject, IInteractible
 {
     // Interacting Properties
     public bool isInteractible { get; protected set; }
@@ -32,4 +32,6 @@ public abstract class Interactibles : Root
             }
         }
     }
+
+    public virtual void Interact() { }
 }

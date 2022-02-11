@@ -1,41 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraScript : MonoBehaviour
 {
-    [SerializeField] Transform player;
-    [SerializeField] Vector3 cameraOffset;
-    [SerializeField] bool yFreeze;
+    [SerializeField] public Transform player;
 
-    [Range(1,10)]
-    [SerializeField] float smoothFactor = 2.5f;
-
-    public void Start()
+    void Awake()
     {
-        cameraOffset.z = -10;
+        player = GameObject.Find("Player").transform;
+        GetComponent<CinemachineVirtualCamera>().Follow = player;
     }
 
-    public void FixedUpdate()
+    public void SetCamera(Transform player)
     {
-        Follow();
-    }
-    
-    private void Follow()
-    {
-        Vector3 playerPosition;
+        if (this.player != null || player == null) return;
 
-        if(yFreeze)
-        {
-            cameraOffset.y = -1;
-            playerPosition = new Vector3 (player.position.x + cameraOffset.x, cameraOffset.y, cameraOffset.z);
-        }
-        else
-        {
-            cameraOffset.y = 2;
-            playerPosition = player.position + cameraOffset;
-        }
-
-        transform.position = Vector3.Lerp(transform.position, playerPosition, smoothFactor*Time.fixedDeltaTime); // Linear Interpolation, Moves in an axis in a linear motion
+        this.player = player;
+        GetComponent<CinemachineVirtualCamera>().Follow = player;
     }
 }

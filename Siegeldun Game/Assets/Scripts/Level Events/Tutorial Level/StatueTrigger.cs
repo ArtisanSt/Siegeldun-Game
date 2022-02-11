@@ -9,10 +9,12 @@ public class StatueTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
+        /*
         if(!statueTutorial)
         {
             FindObjectOfType<DialogueSystem>().StartDialogue(dialogue);
             statueTutorial = true;
         }
+        */
     }
 }

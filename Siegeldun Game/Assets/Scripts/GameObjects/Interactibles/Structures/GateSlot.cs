@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class GateSlot : Structures, IInteractible
+public class GateSlot : Structures
 {
     // ========================================= Structure Initialization =========================================
     private bool _isInstanceLimited = false;
@@ -34,7 +34,7 @@ public class GateSlot : Structures, IInteractible
     }
 
     // Interaction Event
-    public void Interact()
+    public override void Interact()
     {
         if (!isSelected && playerInventory == null) return;
 

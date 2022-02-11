@@ -10,6 +10,7 @@ TagManager:
   - Region
   - Player Event Collider
   - Kinematic
+  - Interactible
   layers:
   - Default
   - TransparentFX
@@ -19,10 +20,10 @@ TagManager:
   - UI
   - Ground
   - AddOn
-  - Item
-  - Obstacles
+  - Items
+  - Structures
   - Breakables
-  - 
+  - Obstacles
   - 
   - 
   - 
