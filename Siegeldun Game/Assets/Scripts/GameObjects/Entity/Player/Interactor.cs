@@ -6,9 +6,9 @@ public class Interactor : MonoBehaviour
 {
     public Collider2D[] hitColliders { get; private set; }
     public float[] interactDistance { get; private set; }
-    public LayerMask m_layerMask;
-    private Vector2 center;
-    private Vector2 size;
+    [SerializeField] public LayerMask m_layerMask;
+    public Vector2 center { get; private set; }
+    public Vector2 size { get; private set; }
 
     public GameObject curSelected { get; private set; }
     private GameObject prevSelected = null;
@@ -34,6 +34,8 @@ public class Interactor : MonoBehaviour
 
         for (int i=0; i < hitColliders.Length; i++)
         {
+            if (hitColliders[i].GetComponent<IInteractible>() == null || !hitColliders[i].GetComponent<IInteractible>().isInteractible) continue;
+
             Collider2D coll = hitColliders[i];
             float curDistance = (coll.transform.position.x - (transform.position.x + selectAlpha)) * dirFacing;
             interactDistance[i] = curDistance;
@@ -84,9 +86,11 @@ public class Interactor : MonoBehaviour
         curSelected = newSelected;
     }
 
+    /*
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(center, size);
     }
+    */
 }

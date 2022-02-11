@@ -111,3 +111,4 @@ MonoBehaviour:
   _curQuantity: 1
   _itemPrefab: {fileID: 0}
   _iconPrefab: {fileID: 0}
+  equippable: 1

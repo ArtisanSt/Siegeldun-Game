@@ -16,7 +16,7 @@ public class EquippedSlotProperties
     }
 }
 
-public class Inventory: Root
+public class Inventory: BaseObject
 {
     private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
@@ -262,7 +262,7 @@ public class Inventory: Root
         if (isSuccess[0] >= 0)
         {
             Destroy(selectedItem);
-            if (eqpSlotsCol[selItemProp.itemType].curItem == null) Equip(isSuccess[1]);
+            if (selItemProp.equippable && eqpSlotsCol[selItemProp.itemType].curItem == null) Equip(isSuccess[1]);
 
             return true;
         }
@@ -350,7 +350,7 @@ public class Inventory: Root
         if (!newProcess || selectedItem == null) return false;
 
         // Unequips the item
-        if (eqpSlotsCol[selectedItem.GetComponent<Item>().itemType].curItem == selectedItem) { bool x = Unequip(eqpSlotsCol[selectedItem.GetComponent<Item>().itemType].eqpSlot); }
+        if (IsItemEquipped(selectedItem)) { bool x = Unequip(eqpSlotsCol[selectedItem.GetComponent<Item>().itemType].eqpSlot); }
 
         for (int i = 0; i < inventorySlots.Count; i++)
         {
@@ -377,6 +377,14 @@ public class Inventory: Root
 
 
     // ========================================= EQUIP ITEM METHODS =========================================
+    protected bool IsItemEquipped(GameObject curItem)
+    {
+        bool output = curItem.GetComponent<Item>().equippable;
+
+        if (!output) return false;
+        else return eqpSlotsCol[curItem.GetComponent<Item>().itemType].curItem == curItem;
+    }
+
     public bool Equip(int selectedSlot)
     {
         bool isSuccess = false;
@@ -390,28 +398,26 @@ public class Inventory: Root
 
     public bool Equip(GameObject curItem)
     {
-        if (curItem != eqpSlotsCol[curItem.GetComponent<Item>().itemType].curItem)
-        {
-            Item curItemProp = curItem.GetComponent<Item>();
-            GameObject eqpSlot = eqpSlotsCol[curItemProp.itemType].eqpSlot;
+        if (IsItemEquipped(curItem)) return false;
 
-            // Clears current equipped item
-            Unequip(eqpSlot);
+        Item curItemProp = curItem.GetComponent<Item>();
+        GameObject eqpSlot = eqpSlotsCol[curItemProp.itemType].eqpSlot;
 
-            eqpSlotsCol[curItemProp.itemType].curSlot = curItem.transform.parent.gameObject;
-            eqpSlotsCol[curItemProp.itemType].curItem = curItem;
+        // Clears current equipped item
+        Unequip(eqpSlot);
 
-            GameObject newEqpItem = (GameObject)Instantiate(curItemProp.iconPrefab, eqpSlot.transform, false);
-            newEqpItem.name = "Eqp_" + curItemProp.itemName;
-            newEqpItem.GetComponent<Image>().enabled = true;
+        eqpSlotsCol[curItemProp.itemType].curSlot = curItem.transform.parent.gameObject;
+        eqpSlotsCol[curItemProp.itemType].curItem = curItem;
 
-            newEqpItem.GetComponent<Item>().ItemReferencedTo(curItem);
-            curItem.GetComponent<Item>().OnEquip(gameObject);
-            if (eqpSlot == eqpSlotsCol["Weapon"].eqpSlot) gameObject.GetComponent<IWeaponizable>().SetWeapon(newEqpItem.GetComponent<Weapon>()); // Should be changed to Events //////////////////////
+        GameObject newEqpItem = (GameObject)Instantiate(curItemProp.iconPrefab, eqpSlot.transform, false);
+        newEqpItem.name = "Eqp_" + curItemProp.itemName;
+        newEqpItem.GetComponent<Image>().enabled = true;
 
-            return true;
-        }
-        else return false;
+        newEqpItem.GetComponent<Item>().ItemReferencedTo(curItem);
+        curItem.GetComponent<Item>().OnEquip(gameObject);
+        if (eqpSlot == eqpSlotsCol["Weapon"].eqpSlot) gameObject.GetComponent<IWeaponizable>().SetWeapon(newEqpItem.GetComponent<Weapon>()); // Should be changed to Events //////////////////////
+
+        return true;
     }
 
 
@@ -460,6 +466,19 @@ public class Inventory: Root
 
         // Unequips the item 
         if (curItemProp.isEmpty) { bool x = RemoveFromInventory(curItem); }
+
+        return isSuccess;
+    }
+
+    public bool Consume(int selectedSlot)
+    {
+        GameObject curItem = inventorySlots[selectedSlot][1];
+        Item curItemProp = curItem.GetComponent<Item>();
+        bool isSuccess = curItemProp.OnUse(false);
+
+        // Unequips the item 
+        if (curItemProp.isEmpty) { bool x = RemoveFromInventory(curItem); }
+        Debug.Log(curItemProp.curQuantity);
 
         return isSuccess;
     }

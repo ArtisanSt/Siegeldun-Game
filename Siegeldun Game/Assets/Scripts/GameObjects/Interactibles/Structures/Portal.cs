@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class LoreCrystal : Structures
+public class Portal : Structures
 {
     // ========================================= Structure Initialization =========================================
     private bool _isInstanceLimited = false;
@@ -11,10 +12,10 @@ public class LoreCrystal : Structures
     private int _maxEachEntityInField = 0;
     public override int maxEachEntityInField { get { return _maxEachEntityInField; } }
 
-    private string _objectName = "LoreCrystal";
+    private string _objectName = "Portal";
     public override string objectName { get { return _objectName; } }
 
-    private string _structureName = "Lore Crystal";
+    private string _structureName = "Portal";
     public override string structureName { get { return _structureName; } }
 
     protected override void Awake()
@@ -24,11 +25,6 @@ public class LoreCrystal : Structures
 
     protected void Update()
     {
-        if (!GetComponent<LoreDialogue>().loreDialogue.repeatable && GetComponent<LoreDialogue>().loreDialogue.isDone)
-        {
-            GetComponent<SpriteRenderer>().material.DisableKeyword("OUTLINE_ON");
-            isInteractible = false;
-        }
     }
 
     // Interaction Event
@@ -36,6 +32,7 @@ public class LoreCrystal : Structures
     {
         if (!isSelected) return;
 
-        GetComponent<LoreDialogue>().StartDialogue();
+        Debug.Log("ENTERING NEXT STAGE");
+        //SceneManager.LoadScene("Testing Grounds");
     }
 }

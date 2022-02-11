@@ -10,6 +10,7 @@ TagManager:
   - Region
   - Player Event Collider
   - Kinematic
+  - Interactible
   layers:
   - Default
   - TransparentFX
@@ -19,10 +20,10 @@ TagManager:
   - UI
   - Ground
   - AddOn
-  - Item
-  - Obstacles
+  - Items
+  - Structures
   - Breakables
-  - 
+  - Obstacles
   - 
   - 
   - 
@@ -56,8 +57,14 @@ TagManager:
   - name: Ground
     uniqueID: 1712531303
     locked: 0
+  - name: Structure
+    uniqueID: 342429607
+    locked: 0
   - name: AddOns
     uniqueID: 3894051233
+    locked: 0
+  - name: Items
+    uniqueID: 4284969911
     locked: 0
   - name: Entity
     uniqueID: 2989893747

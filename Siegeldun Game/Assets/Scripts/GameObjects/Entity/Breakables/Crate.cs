@@ -53,14 +53,6 @@ public class Crate : Breakables
         base.OnEntityDestroy();
     }
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Enemy" && col.gameObject.tag == "Player")
-        {
-            Physics2D.IgnoreCollision(col.otherCollider, col.collider);
-        }
-    }
-
     // ========================================= ANIMATION METHODS =========================================
     protected override void AnimationState()
     {
