@@ -12250,11 +12250,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7448746658641424015, guid: b565fb75a876fa84c9d57fac905f59d5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -32.350567
+      value: -32.22
       objectReference: {fileID: 0}
     - target: {fileID: 7448746658641424015, guid: b565fb75a876fa84c9d57fac905f59d5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7982681
+      value: 2.44
       objectReference: {fileID: 0}
     - target: {fileID: 7448746658641424015, guid: b565fb75a876fa84c9d57fac905f59d5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12393,9 +12393,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   systemGameObject: {fileID: 105145621}
   gameMechanics: {fileID: 105145623}
-  doDrop: 0
-  dropChance: 1
-  itemDrops: []
   spawnMobs: []
   instancePerMob: 
   activePoints:
@@ -12858,11 +12855,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7448746658641424015, guid: b565fb75a876fa84c9d57fac905f59d5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -33.128567
+      value: -33.01
       objectReference: {fileID: 0}
     - target: {fileID: 7448746658641424015, guid: b565fb75a876fa84c9d57fac905f59d5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7982681
+      value: 2.44
       objectReference: {fileID: 0}
     - target: {fileID: 7448746658641424015, guid: b565fb75a876fa84c9d57fac905f59d5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13461,6 +13458,10 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: -3
       objectReference: {fileID: 0}
+    - target: {fileID: 5789058088786974868, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 362347132}
     - target: {fileID: 6431795177422231376, guid: 0c727b7fde54263449e30f89333d82be, type: 3}
       propertyPath: m_IsActive
       value: 1

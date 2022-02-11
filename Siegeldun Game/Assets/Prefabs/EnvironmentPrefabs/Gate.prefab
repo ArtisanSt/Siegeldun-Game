@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8178796713398332660}
   - component: {fileID: 8178796713398332666}
   - component: {fileID: 8178796713398332667}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,9 +132,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8178796713591007555}
   - component: {fileID: 8178796713591007580}
-  - component: {fileID: 8178796713591007553}
   - component: {fileID: 8178796713591007554}
-  m_Layer: 10
+  - component: {fileID: 8178796713591007553}
+  m_Layer: 9
   m_Name: SlotA
   m_TagString: Interactible
   m_Icon: {fileID: 0}
@@ -206,21 +206,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8178796713591007553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8178796713591007581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c03a134e10ac94eb34b8aad4972def, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canInteract: 0
-  crystalPrefab: {fileID: 4326833768866728011, guid: 349ad089f664aff4b9a02776321a2e0c, type: 3}
-  slotted: 0
 --- !u!61 &8178796713591007554
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -247,6 +232,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8178796713591007553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8178796713591007581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c03a134e10ac94eb34b8aad4972def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  doDrop: 0
+  dropChance: 1
+  itemDrops: []
+  crystalPrefab: {fileID: 3012785729809906210, guid: 349ad089f664aff4b9a02776321a2e0c, type: 3}
+  playerInventory: {fileID: 0}
 --- !u!1 &8178796714540991790
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,9 +261,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8178796714540991789}
   - component: {fileID: 8178796714540991762}
-  - component: {fileID: 8178796714540991763}
   - component: {fileID: 8178796714540991788}
-  m_Layer: 10
+  - component: {fileID: 8178796714540991763}
+  m_Layer: 9
   m_Name: SlotB
   m_TagString: Interactible
   m_Icon: {fileID: 0}
@@ -331,21 +335,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8178796714540991763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8178796714540991790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c03a134e10ac94eb34b8aad4972def, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canInteract: 0
-  crystalPrefab: {fileID: 4326833768866728011, guid: 349ad089f664aff4b9a02776321a2e0c, type: 3}
-  slotted: 0
 --- !u!61 &8178796714540991788
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -372,6 +361,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8178796714540991763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8178796714540991790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c03a134e10ac94eb34b8aad4972def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  doDrop: 0
+  dropChance: 1
+  itemDrops: []
+  crystalPrefab: {fileID: 3012785729809906210, guid: 349ad089f664aff4b9a02776321a2e0c, type: 3}
+  playerInventory: {fileID: 0}
 --- !u!1 &8178796714921254569
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,7 +391,7 @@ GameObject:
   - component: {fileID: 8178796714921254575}
   - component: {fileID: 8178796714921254568}
   - component: {fileID: 8178796714921254574}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Gate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,4 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc53e94f93c3eb044a523a57f702a27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gateSlots:
+  - {fileID: 8178796713591007555}
+  - {fileID: 8178796714540991789}
   portal: {fileID: 8178796713398332662}

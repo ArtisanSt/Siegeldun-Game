@@ -50,6 +50,7 @@ public abstract class Item : Interactibles
     [SerializeField] private GameObject _iconPrefab = null;
     public GameObject iconPrefab { get { return _iconPrefab; } protected set { _iconPrefab = value; } }
 
+    [SerializeField] public bool equippable = false;
     private bool _inInventory = false;
     public bool inInventory { get { return _inInventory; } protected set { _inInventory = value; } }
     private bool _isEquipped = false;
@@ -184,6 +185,7 @@ public abstract class Item : Interactibles
         isInteractible = !isIcon;
 
         objectClassification = (isIcon) ? "ICON" : "ITEM";
+        if (itemType == "Weapon" || itemType == "Consumable") { equippable = true; }
 
         isFull = false;
         isEmpty = false;

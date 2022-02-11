@@ -218,18 +218,7 @@ MonoBehaviour:
   - 0
   stamRegen: 0
   stamRegenDelay: 3
-  doAttack: 0
-  hasWeapon: 0
-  weaponGameobject: {fileID: 0}
-  wpnEquipped: {fileID: 0}
-  doAtkCombo: 0
-  stateToPlayer: 3
-  enemyLayer:
+  freezeOn: 1
+  groundLayer:
     serializedVersion: 2
-    m_Bits: 0
-  allyLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  attackPoint: {fileID: 0}
-  hasInventory: 0
-  inventory: {fileID: 0}
+    m_Bits: 64

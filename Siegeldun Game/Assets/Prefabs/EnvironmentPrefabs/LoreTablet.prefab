@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -400916063
+  m_SortingLayerID: 342429607
   m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 258d45efa7c47174993875fd67964c14, type: 3}
@@ -98,7 +98,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.046873093, y: -0.45533693}
+  m_Offset: {x: 0.06614399, y: -0.6326277}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -109,7 +109,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9553375, y: 1.4106739}
+  m_Size: {x: 1.1095028, y: 1.4723401}
   m_EdgeRadius: 0
 --- !u!114 &2339610098775991797
 MonoBehaviour:
@@ -147,16 +147,15 @@ MonoBehaviour:
   btnNext: {fileID: 0}
   btnBack: {fileID: 0}
   loreDialogue:
-    npcName: Tutorial
-    hasButtons: 1
-    repeatable: 1
-    canGoBack: 1
-    isTimed: 1
+    npcName: Lorem Ipsum
+    hasButtons: 0
+    repeatable: 0
+    canGoBack: 0
+    isTimed: 0
     timer: 3
+    messageTitle: 
     dialogueMessages:
-    - Once Upon a Time!
-    - There was me!
-    - And only Me!
+    - Lorem Ipsum
 --- !u!1 &2339610099616006135
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2339610099616006133}
   - component: {fileID: 2339610099616006132}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LoreTablet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +225,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -400916063
+  m_SortingLayerID: 342429607
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 75b7b914ab4ed8a4390beac347f2dcdc, type: 3}

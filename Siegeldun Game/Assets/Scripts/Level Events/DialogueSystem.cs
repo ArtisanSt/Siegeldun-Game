@@ -18,6 +18,7 @@ public class Dialogue
     private bool _started = false;
     public bool started { get { return _started; } set { _started = value; } }
 
+    public string messageTitle;
     [TextArea(3, 10)]
     public List<string> dialogueMessages = new List<string>();
 }
@@ -34,6 +35,7 @@ public abstract class DialogueSystem : Process
     private static int curIdx = -1;
     private static bool isPlaying = false;
     private static float msgStart = 0f;
+    protected static string curMsg = "";
 
     void Awake()
     {
@@ -53,7 +55,10 @@ public abstract class DialogueSystem : Process
 
     protected virtual void Update()
     {
-        if (dialogue != null && isPlaying && dialogue.isTimed && TimerIncrement(msgStart, dialogue.timer))
+        bool timerDone = dialogue != null && isPlaying && dialogue.isTimed && TimerIncrement(msgStart, dialogue.timer);
+        bool noBtnAutoTimed = dialogue != null && isPlaying && !dialogue.isTimed && !dialogue.hasButtons && TimerIncrement(msgStart, 3);
+        bool msgStayedTooLong = dialogue != null && isPlaying && TimerIncrement(msgStart, 10);
+        if (timerDone || noBtnAutoTimed || msgStayedTooLong)
         {
             DisplayChangeDialogue(1);
         }
@@ -68,6 +73,7 @@ public abstract class DialogueSystem : Process
         nameText.text = dialogue.npcName;
         curIdx = -1;
         isPlaying = true;
+        curMsg = dialogue.messageTitle;
 
         DisplayChangeDialogue(1);
     }
@@ -116,6 +122,7 @@ public abstract class DialogueSystem : Process
         if (dialogue.repeatable) { dialogue.started = false; }
         else { dialogue.isDone = true; }
         isPlaying = false;
+        curMsg = "";
         dialogue = null;
         messageBox.SetActive(false);
     }

@@ -101,4 +101,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9569db20ba620e49b16dc0f8f5eb961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canInteract: 0
+  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  doDrop: 1
+  dropChance: 1
+  itemDrops: []
+  _maxQuantity: 1
+  _curQuantity: 1
+  _itemPrefab: {fileID: 1030391241932288014, guid: b65a0347cd38ab74f9123a6b98d7db79, type: 3}
+  _iconPrefab: {fileID: 3916258459067645568}

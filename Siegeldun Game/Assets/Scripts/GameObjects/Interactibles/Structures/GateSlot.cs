@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class GateSlot : Structures
+public class GateSlot : Structures, IGateSlot
 {
     // ========================================= Structure Initialization =========================================
     private bool _isInstanceLimited = false;
@@ -18,19 +18,21 @@ public class GateSlot : Structures
     private string _structureName = "Gate Slot";
     public override string structureName { get { return _structureName; } }
 
+    [Header("GATE SLOT SETTINGS", order = 0)]
     [SerializeField] GameObject crystalPrefab;
     [SerializeField] Inventory playerInventory;
-    public bool slotted = false;
+    private bool _slotted = false;
+    public bool slotted { get { return _slotted; } protected set { _slotted = value; } }
 
     protected override void Awake()
     {
         base.Awake();
         playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
+        crystalPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EnvironmentPrefabs/Crystal.prefab");
     }
 
     protected void Update()
     {
-
     }
 
     // Interaction Event
@@ -41,13 +43,14 @@ public class GateSlot : Structures
         int inventorySlot = playerInventory.FindItem("Crystal");
         if (inventorySlot != -1)
         {
-            Transform crystal = Drop(1, new Vector2(0, 0.1f), crystalPrefab).transform;
+            //Transform crystal = Instantiate(1, new Vector2(0, 0.1f), crystalPrefab, transform).transform;
+            Transform crystal = Instantiate(crystalPrefab, new Vector3(transform.position.x, transform.position.y + 0.1f, 0), Quaternion.identity, transform).transform;
             crystal.parent = transform;
             GetComponent<SpriteRenderer>().material.DisableKeyword("OUTLINE_ON");
             isInteractible = false;
             slotted = true;
 
-            playerInventory.RemoveFromInventory(inventorySlot);
+            playerInventory.Consume(inventorySlot);
         }
     }
 }

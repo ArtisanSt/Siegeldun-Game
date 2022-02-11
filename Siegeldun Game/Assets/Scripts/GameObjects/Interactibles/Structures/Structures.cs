@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Structures : Interactibles
+public abstract class Structures : Interactibles, IStructure
 {
     // ========================================= Structure Properties =========================================
     public abstract string structureName { get; }

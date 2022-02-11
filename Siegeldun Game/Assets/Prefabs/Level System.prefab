@@ -130,7 +130,11 @@ MonoBehaviour:
   dialogue:
     npcName: 
     hasButtons: 0
+    repeatable: 0
     canGoBack: 0
+    isTimed: 0
+    timer: 0
+    messageTitle: 
     dialogueMessages: []
 --- !u!1 &3687731595274378591
 GameObject:
@@ -236,30 +240,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f81796072ce144a90f57d394efde4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  messageBox: {fileID: 0}
+  dialogueBG: {fileID: 0}
   nameText: {fileID: 0}
   dialogueText: {fileID: 0}
-  messageBox: {fileID: 0}
   btnNext: {fileID: 0}
   btnBack: {fileID: 0}
-  btnOK: {fileID: 0}
+  player: {fileID: 0}
   startingDialogue:
     npcName: Tutorial
     hasButtons: 1
+    repeatable: 0
     canGoBack: 1
+    isTimed: 0
+    timer: 0
+    messageTitle: Introduction
     dialogueMessages:
     - Hi! Welcome to Siegeldun!
   movementDialogue:
     npcName: Tutorial
     hasButtons: 0
+    repeatable: 0
     canGoBack: 0
+    isTimed: 0
+    timer: 0
+    messageTitle: Movement Tutorial
     dialogueMessages:
     - Press A or D to move.
   attackDialogue:
     npcName: Tutorial
     hasButtons: 0
+    repeatable: 0
     canGoBack: 0
+    isTimed: 0
+    timer: 0
+    messageTitle: Attack Tutorial
     dialogueMessages:
     - Right Click to attack.
+  statueDialogue:
+    npcName: Tutorial
+    hasButtons: 1
+    repeatable: 0
+    canGoBack: 1
+    isTimed: 0
+    timer: 0
+    messageTitle: Statue Tutorial
+    dialogueMessages:
+    - 'This Statue is for blah blah
+
+'
 --- !u!61 &3687731594575478347
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -41,7 +41,7 @@ public class Key_Crystal : Key
 
     public override bool ActiveEffectsCondition()
     {
-        return true;
+        return base.ActiveEffectsCondition();
     }
 
 }

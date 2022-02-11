@@ -432,8 +432,8 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration
 
     private IEnumerator DestroyInstance(int time = 1)
     {
+        Drop(dropChance, new Vector2(0, 0));
         yield return new WaitForSeconds(time);
-        Drop(dropChance, transform.position);
         OnEntityDestroy();
         Destroy(gameObject);
     }

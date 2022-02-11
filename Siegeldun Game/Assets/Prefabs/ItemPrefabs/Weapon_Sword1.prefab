@@ -174,3 +174,4 @@ MonoBehaviour:
   _curQuantity: 1
   _itemPrefab: {fileID: 4275815481310653657}
   _iconPrefab: {fileID: 6721948792633512886, guid: fb3780abdb252a64c9c68fdf8e0cc773, type: 3}
+  equippable: 1
