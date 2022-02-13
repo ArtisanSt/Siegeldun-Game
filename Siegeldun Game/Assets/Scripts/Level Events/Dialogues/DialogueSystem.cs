@@ -37,8 +37,18 @@ public abstract class DialogueSystem : Process
     private static float msgStart = 0f;
     protected static string curMsg = "";
 
-    void Awake()
+    protected virtual void Awake()
     {
+        messageBox = (messageBox == null) ? GameObject.Find("/GUI/MessageBox") : messageBox;
+        dialogueBG = (dialogueBG == null) ? messageBox.transform.GetChild(0).GetComponent<Image>() : dialogueBG;
+        nameText = (nameText == null) ? messageBox.transform.GetChild(1).GetComponent<Text>() : nameText;
+        dialogueText = (dialogueText == null) ? messageBox.transform.GetChild(2).GetComponent<Text>() : dialogueText;
+        btnNext = (btnNext == null) ? messageBox.transform.GetChild(3).gameObject : btnNext;
+        btnBack = (btnBack == null) ? messageBox.transform.GetChild(4).gameObject : btnBack;
+
+        if (btnNext != null) btnNext.GetComponent<Button>().onClick.AddListener(() => DisplayChangeDialogue(1));
+        if (btnBack != null) btnBack.GetComponent<Button>().onClick.AddListener(() => DisplayChangeDialogue(-1));
+
         // Component Initializer to avoid future errors
         if (messageBox != null)
         {
@@ -51,6 +61,11 @@ public abstract class DialogueSystem : Process
 
         btnNext.GetComponent<Button>().onClick.AddListener(() => DisplayChangeDialogue(1));
         btnBack.GetComponent<Button>().onClick.AddListener(() => DisplayChangeDialogue(-1));
+    }
+
+    protected virtual void Start()
+    {
+        if (messageBox.activeSelf) messageBox.SetActive(false);
     }
 
     protected virtual void Update()

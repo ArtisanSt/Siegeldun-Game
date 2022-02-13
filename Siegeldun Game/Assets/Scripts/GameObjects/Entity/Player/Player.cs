@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Beings
+public class Player : Beings, IInteractor
 {
     // ========================================= Entity Properties =========================================
     private bool _isInstanceLimited = true;
@@ -22,7 +22,6 @@ public class Player : Beings
     protected override void Awake()
     {
         base.Awake();
-        defaultPower.SetValues(15f, .3f, .5f, .3f, 1, 0, 0, 0);
     }
 
     // Update is called once per frame
@@ -43,7 +42,7 @@ public class Player : Beings
     // Damage Give
     protected override void Attack()
     {
-        int attackID = Random.Range(-9999, 10000);
+        float attackID = (float)gameObject.GetInstanceID() + Random.Range(-9999, 10000) / 10000;
         anim.SetTrigger("sword" + curAtkCombo.ToString());
         curStam -= totalStamCost;
         _lastAttack = Time.time;
@@ -68,6 +67,11 @@ public class Player : Beings
     {
         yield return new WaitForSeconds(totalAtkSpeed * 2);
         if (TimerIncrement(_lastAttack, totalAtkSpeed * 2)) curAtkCombo = 1;
+    }
+
+    public bool InteractorColliderConditions(Collider2D coll)
+    {
+        return true;
     }
 
 

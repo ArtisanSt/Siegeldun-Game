@@ -67,7 +67,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3687731595199023681}
   - component: {fileID: 3687731595199023711}
-  - component: {fileID: 3687731595199023680}
+  - component: {fileID: 1016483806669892269}
   m_Layer: 0
   m_Name: Statue Trigger
   m_TagString: Untagged
@@ -115,7 +115,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.347084, y: 11.830899}
   m_EdgeRadius: 0
---- !u!114 &3687731595199023680
+--- !u!114 &1016483806669892269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,18 +124,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 3687731595199023682}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3456731e62fe662439f93b3aab40418a, type: 3}
+  m_Script: {fileID: 11500000, guid: f84eed66d7d11474fac1241d7d49875d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    npcName: 
-    hasButtons: 0
+  messageBox: {fileID: 0}
+  dialogueBG: {fileID: 0}
+  nameText: {fileID: 0}
+  dialogueText: {fileID: 0}
+  btnNext: {fileID: 0}
+  btnBack: {fileID: 0}
+  player: {fileID: 4865986372180236411, guid: d013b059544ef9d45a2fb624ca903190, type: 3}
+  statueDialogue:
+    npcName: Tutorial
+    hasButtons: 1
     repeatable: 0
-    canGoBack: 0
+    canGoBack: 1
     isTimed: 0
     timer: 0
-    messageTitle: 
-    dialogueMessages: []
+    messageTitle: Statue Tutorial
+    dialogueMessages:
+    - 'This Statue is for blah blah blah
+
+'
 --- !u!1 &3687731595274378591
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +256,6 @@ MonoBehaviour:
   dialogueText: {fileID: 0}
   btnNext: {fileID: 0}
   btnBack: {fileID: 0}
-  player: {fileID: 0}
   startingDialogue:
     npcName: Tutorial
     hasButtons: 1

@@ -5192,7 +5192,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1305073549
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: -7336370125145216465, guid: 58868811b9b8d3b4b8d664a276fbc060, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5303,6 +5303,7 @@ MonoBehaviour:
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   doDrop: 1
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops: []
   rBody: {fileID: 4865986373843987816}
   sprite: {fileID: 4865986372359361336}
@@ -5355,6 +5356,7 @@ MonoBehaviour:
   stamRegenDelay: 3
   doMoveX: 1
   mvSpeed: 10
+  slowDownConst: 0.9
   isGrounded: 0
   groundLayer:
     serializedVersion: 2
@@ -5366,6 +5368,20 @@ MonoBehaviour:
   hasWeapon: 0
   weaponGameobject: {fileID: 7019336444901767183}
   wpnEquipped: {fileID: 0}
+  defaultPower:
+    weaponType: Melee
+    tier: 0
+    isBroken: 0
+    doBreak: 0
+    durability: 0
+    wpnDamage: 15
+    wpnAtkRange: 0.3
+    wpnAtkSpeed: 0.5
+    wpnAtkDelay: 0.3
+    wpnCritChance: 0
+    wpnAtkCrit: 0
+    wpnStamCost: 0
+    wpnKbForce: 0
   doAtkCombo: 1
   stateToPlayer: 1
   enemyLayer:
@@ -5392,6 +5408,9 @@ MonoBehaviour:
   m_layerMask:
     serializedVersion: 2
     m_Bits: 768
+  center: {x: 0.3, y: -0.3}
+  size: {x: 3, y: 1}
+  outlined: 1
 --- !u!114 &1545940619873157281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5408,6 +5427,7 @@ MonoBehaviour:
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   doDrop: 1
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops: []
   inventoryBg: {fileID: 8775669129435257066, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
   interactorComponent: {fileID: 1376583885049657951}

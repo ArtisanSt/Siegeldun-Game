@@ -39,7 +39,6 @@ public class Goblin : NPC
     protected override void Awake()
     {
         base.Awake();
-        defaultPower.SetValues(15f, .3f, 1f, 1f, 1, 0, 0, 0);
         NPCInit();
     }
 

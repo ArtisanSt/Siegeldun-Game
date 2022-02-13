@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -9997385
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 8165566742373251319, guid: 10545d5fd8bf09148a0f470ed7b3f540, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -113,7 +113,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116043195058129465}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -139,7 +139,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.23295021, y: -0.17130077}
+  m_Offset: {x: -0.015945435, y: 0.05008495}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -150,7 +150,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.27248764, y: 0.40799165}
+  m_Size: {x: 0.30316925, y: 0.43867898}
   m_EdgeRadius: 0
 --- !u!114 &116043195058129466
 MonoBehaviour:
@@ -168,6 +168,7 @@ MonoBehaviour:
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   doDrop: 1
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops:
   - {fileID: 116043195058129465}
   _maxQuantity: 64
@@ -175,3 +176,8 @@ MonoBehaviour:
   _itemPrefab: {fileID: 116043195058129465}
   _iconPrefab: {fileID: 6433002720851475710, guid: ce48e3a79bd192c46ad6780cdd1fe882, type: 3}
   equippable: 1
+  rBody: {fileID: 0}
+  itemHopSpeed: 0.0075
+  hopLimit: 0.05
+  interactor: {fileID: 0}
+  itemPullSpeed: 0.01

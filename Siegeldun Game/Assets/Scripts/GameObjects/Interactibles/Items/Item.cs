@@ -29,7 +29,7 @@ public class SelfEffectProperties
     }
 }
 
-public abstract class Item : Interactibles
+public abstract class Item : Interactibles, IInteractor
 {
     // ========================================= Item Properties =========================================
     public abstract string itemName { get; }
@@ -65,12 +65,51 @@ public abstract class Item : Interactibles
     public bool doMerge { get; protected set; } // A condition if the item is allowed to merge with other colliding same items
     public bool canMerge { get; protected set; } // Updates every frame
 
+    [Header("ITEM MOVEMENT SETTINGS", order = 2)]
+    [SerializeField] protected Rigidbody2D rBody;
+
+    [Header("ITEM BOUNCE SETTINGS", order = 3)]
+    [SerializeField] private float itemHopSpeed = 0.0075f;
+    [SerializeField] private float hopLimit = 0.05f;
+    private int hopDirection = 1;
+    private Vector2 itemOrigPosition;
+
+    [Header("ITEM MERGE SETTINGS", order = 4)]
+    [SerializeField] protected Interactor interactor;
+    [SerializeField] private float itemPullSpeed = 0.0075f;
+    private int pullDirection = 0;
+    protected GameObject nearestItem;
+    private bool isMerging = false;
+    public enum MergeState { Lead, Other}
+
     /* Self Additional Effect
      * For timed and untimed effects
      * 
      * For Passive Effects of weapons and Consumables
      * For Active Effects of Consumables
      */
+
+    protected void ItemInit()
+    {
+        bool isIcon = transform.parent.name != "Drops";
+        isInteractible = !isIcon;
+
+        objectClassification = (isIcon) ? "ICON" : "ITEM";
+        if (itemType == "Weapon" || itemType == "Consumable") { equippable = true; }
+
+        isFull = false;
+        isEmpty = false;
+
+        amountOverflow = 0;
+        
+        if (objectClassification == "ITEM")
+        {
+            rBody = GetComponent<Rigidbody2D>();
+            itemOrigPosition = rBody.position;
+
+            interactor = GetComponent<Interactor>();
+        }
+    }
 
     protected virtual void Awake()
     {
@@ -84,28 +123,78 @@ public abstract class Item : Interactibles
         isFull = curQuantity >= maxQuantity;
         isEmpty = curQuantity <= 0;
 
-        if (objectClassification == "ITEM")
-        {
-            // Check interactor component if colliding with other items
-            // If true then merge with that item and reposition in the midpoint of the merging
-        }
+        ItemUpdate();
+        IconUpdate();
 
-        else if (objectClassification == "ICON")
-        {
-            if (hasReference)
-            {
-                ReferencedItemUpdate();
-            }
-            else
-            {
-                if (inInventory)
-                {
-                    if (isEquipped) PassiveEffects("Equipped");
-                    else PassiveEffects("Inventory");
-                }
-            }
+    }
 
+    private void IconUpdate()
+    {
+        if (objectClassification != "ICON") return;
+
+        if (hasReference)
+        {
+            ReferencedItemUpdate();
         }
+        else if (inInventory)
+        {
+            if (isEquipped) PassiveEffects("Equipped");
+            else PassiveEffects("Inventory");
+        }
+    }
+
+    private void ItemUpdate()
+    {
+        if (objectClassification != "ITEM") return;
+
+        if (isEmpty) Destroy(gameObject);
+
+        if ((rBody.position.y - itemOrigPosition.y) * hopDirection >= hopLimit) { hopDirection *= -1; }
+    }
+
+    void FixedUpdate()
+    {
+        if (objectClassification != "ITEM") return;
+
+        rBody.MovePosition(new Vector2(ItemPull(), ItemBounce()));
+
+        if (interactor == null || isMerging || interactor.curSelected == null) return;
+        Merge(nearestItem);
+    }
+
+    private float ItemBounce()
+    {
+        return rBody.position.y + itemHopSpeed * hopDirection;
+    }
+
+    private float ItemPull()
+    {
+        if (interactor == null || isMerging || interactor.curSelected == null) return rBody.position.x;
+
+        nearestItem = interactor.curSelected;
+        pullDirection = (nearestItem.transform.position.x - transform.position.x > 0) ? 1 : -1 ;
+        return rBody.position.x + itemPullSpeed * pullDirection * (1 + Time.fixedDeltaTime);
+
+    }
+
+    public void Merge(GameObject otherObject)
+    {
+        if (Mathf.Abs(otherObject.transform.position.x - transform.position.x) > 0.1f) return;
+
+        Item otherItem = otherObject.GetComponent<Item>();
+        if (otherItem.itemName != itemName || otherItem.isFull) return;
+
+        MergeState state = (gameObject.GetInstanceID() < otherObject.GetInstanceID()) ? MergeState.Lead : MergeState.Other;
+        isMerging = true;
+        ChangeAmount(otherItem.curQuantity);
+        Destroy(otherObject);
+        isMerging = false;
+
+    }
+
+    public bool InteractorColliderConditions(Collider2D col)
+    {
+        return col.gameObject != gameObject && col.gameObject.GetComponent<Item>().itemName == itemName;
     }
 
     protected abstract void UniqueStatsInit();
@@ -137,6 +226,8 @@ public abstract class Item : Interactibles
 
     public int ChangeAmount(int changeAmount) // -1: Fail, 0: Success, 1: Overflow
     {
+        Debug.Log(gameObject);
+
         if (changeAmount == 0) return -1;
 
         int output = -1;
@@ -164,7 +255,7 @@ public abstract class Item : Interactibles
                 amountOverflow = curQuantity - maxQuantity;
                 curQuantity = maxQuantity;
 
-                GameObject newDrop = Drop(1, new Vector2(entityHolder.transform.position.x + ((Random.Range(0, 2) == 0) ? -5 : 5 ), entityHolder.transform.position.y), itemPrefab);
+                GameObject newDrop = Drop(1, new Vector2(((Random.Range(0, 2) == 0) ? -5 : 5 ), 0), itemPrefab);
 
                 newDrop.GetComponent<Item>().OverwriteStats(curQuantity, amountOverflow);
             }
@@ -176,21 +267,6 @@ public abstract class Item : Interactibles
         }
 
         return output;
-    }
-
-
-    protected void ItemInit()
-    {
-        bool isIcon = transform.parent.name != "Drops";
-        isInteractible = !isIcon;
-
-        objectClassification = (isIcon) ? "ICON" : "ITEM";
-        if (itemType == "Weapon" || itemType == "Consumable") { equippable = true; }
-
-        isFull = false;
-        isEmpty = false;
-
-        amountOverflow = 0;
     }
 
     protected abstract void PassiveEffects(string state);

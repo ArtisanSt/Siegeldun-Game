@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6465754079772349390}
   - component: {fileID: 2195904967457683203}
+  - component: {fileID: 1649803850542465457}
   - component: {fileID: 8622286020942675244}
   m_Layer: 0
   m_Name: Woodspikes
@@ -83,6 +84,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1649803850542465457
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001016674190568887}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 0.5}
+    newSize: {x: 1, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.5}
+  m_EdgeRadius: 0
 --- !u!114 &8622286020942675244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +119,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3001016674190568887}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99b18bd070287074aaf0fcd3371a38f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a82b4a16bf80e14dbaa74bfea40df11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  doDrop: 0
+  dropChance: 1
+  itemDrops: []

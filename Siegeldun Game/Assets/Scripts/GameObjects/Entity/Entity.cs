@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEditor;
 
 
-public abstract class Entity : BaseObject, IDamageable, IRegeneration
+public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScaling
 {
     // ========================================= UNITY PROPERTIES =========================================
     // Component Declaration
@@ -39,9 +39,11 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration
 
     // =========================================  ANIMATION PROPERTIES =========================================
     [Header("ANIMATION SETTINGS", order = 1)]
-    protected float animationSpeed = 1f;
+    [SerializeField] protected float animationSpeed = 1f;
     protected float runAnimationSpeed = 1f;
     [SerializeField] protected int spriteDefaultFacing = 1;
+    private int _spriteFacing = 1;
+    public int spriteFacing { get { return _spriteFacing; } protected set { _spriteFacing = value; } } // Updates
     protected string curAnimStateName; // Updates
     protected string curSpriteName; // Updates
 
@@ -50,7 +52,14 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration
     protected bool isDying = false;
 
 
-    protected abstract void AnimationState();
+    protected virtual void AnimationState()
+    {
+        curSpriteName = sprite.sprite.name;
+        curAnimStateName = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
+        curAnimStateName = (curAnimStateName.Length >= 6 && curAnimStateName.Substring(0, 6) == "Attack") ? "Attack" : curAnimStateName;
+        isHurting = curAnimStateName == "Hurt";
+        isAttacking = curAnimStateName == "Attack";
+    }
 
 
 
@@ -364,7 +373,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration
         rcvStatsProp.ChangeValues(wpnDamage: newDmg, wpnKbForce: newKb, wpnAtkCrit: newCrit);
     }
 
-    public void TakeDamage(int attackID, int rcvKbDir, WeaponProperties rcvStatsProp)
+    public void TakeDamage(float attackID, int rcvKbDir, WeaponProperties rcvStatsProp)
     {
         DamageEvaluator(ref rcvStatsProp);
         bool doesDamage = isAlive && !isInvulnerable && rcvStatsProp.wpnDamage > 0 && ProcessEvaluator((float)attackID, rcvStatsProp.wpnAtkSpeed);
@@ -432,10 +441,16 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration
 
     private IEnumerator DestroyInstance(int time = 1)
     {
-        Drop(dropChance, new Vector2(0, 0));
+        StartCoroutine(OnDestroyDrop());
         yield return new WaitForSeconds(time);
         OnEntityDestroy();
         Destroy(gameObject);
+    }
+
+    private IEnumerator OnDestroyDrop()
+    {
+        yield return new WaitForSeconds(onDestroyDropDelay);
+        GameObject curItem = Drop(dropChance, new Vector2(0, 0));
     }
 
     protected virtual void OnEntityDestroy() { }

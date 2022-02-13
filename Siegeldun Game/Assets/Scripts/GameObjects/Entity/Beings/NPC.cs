@@ -108,8 +108,8 @@ public abstract class NPC : Beings
     // ========================================= ENEMY METHODS =========================================
     protected override void Attack()
     {
-        int attackID = Random.Range(-9999, 10000);
-        if(hasStam) { curStam -= totalStamCost; }
+        float attackID = (float)gameObject.GetInstanceID() + Random.Range(-9999, 10000) / 10000;
+        if (hasStam) { curStam -= totalStamCost; }
         _lastAttack = Time.time;
         anim.SetTrigger("attack");
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, totalAtkRange, enemyLayer);
