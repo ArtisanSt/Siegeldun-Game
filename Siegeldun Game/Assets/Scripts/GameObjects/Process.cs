@@ -5,11 +5,10 @@ using UnityEngine;
 public abstract class Process : MonoBehaviour
 {
     // =========================================  PROCESS EVALUATOR =========================================
-    protected System.Func<int, bool> ChanceRandomizer = dropChance => Random.Range(0, dropChance) == 0;
+    protected System.Func<int, bool> ChanceRandomizer = dropChance => (dropChance >= 1) ? Random.Range(0, dropChance) == 0 : false;
     protected System.Func<float, float, bool> TimerIncrement = (timeStart, timeDuration) => Time.time - timeStart >= timeDuration;
 
     protected List<float> curProcess = new List<float>();
-
 
     protected bool ProcessEvaluator(float instanceID, float time = 1)
     {

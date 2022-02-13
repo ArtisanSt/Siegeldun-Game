@@ -57,17 +57,23 @@ TagManager:
   - name: Ground
     uniqueID: 1712531303
     locked: 0
-  - name: Structure
+  - name: Structure (BG)
     uniqueID: 342429607
+    locked: 0
+  - name: Items (HIDDEN)
+    uniqueID: 3090840173
     locked: 0
   - name: AddOns
     uniqueID: 3894051233
     locked: 0
-  - name: Items
+  - name: Items (SHOWN)
     uniqueID: 4284969911
     locked: 0
   - name: Entity
     uniqueID: 2989893747
+    locked: 0
+  - name: Structure (FG)
+    uniqueID: 3399338337
     locked: 0
   - name: Foreground
     uniqueID: 2475118191

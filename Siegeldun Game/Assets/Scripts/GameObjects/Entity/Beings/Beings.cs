@@ -40,7 +40,7 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
     [SerializeField] protected float mvSpeed = 0;
     protected float dirXFacing = 0, dirXFinal = 0, runVelocity = 0;
 
-    private const float _slowDownConst = 0.9f;
+    [SerializeField] protected float slowDownConst = 0.9f;
     public bool isGrounded;// Updates
 
     [SerializeField] protected LayerMask groundLayer;
@@ -64,8 +64,8 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
         totalSpeed.Set(mvSpeed + TotalBoost("MVSpeed"), jumpForce + TotalBoost("JumpHeight"));
 
         // Horizontal Movement
-        float slowDown = dirXFinal * _slowDownConst;
-        dirXFinal = (!isAttacking) ? dirXFacing : slowDown; // Front movement with a slowdown effect when attacking
+        float slowDown = dirXFinal * slowDownConst;
+        dirXFinal = (!isAttacking && !isHurting) ? dirXFacing : slowDown; // Front movement with a slowdown effect when attacking
         runVelocity = (isAlive) ? dirXFinal * totalSpeed.x + rcvKbDisplacement : slowDown;
         runVelocity = (doMoveX) ? runVelocity : 0;
 
@@ -109,8 +109,8 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
     [SerializeField] protected bool hasWeapon = false;
     [SerializeField] protected GameObject weaponGameobject = null;
     [SerializeField] protected Weapon wpnEquipped = null;
-    [SerializeField]
-    protected WeaponProperties weaponProp = null, defaultPower = new WeaponProperties(), atkStatsProp = null;
+    protected WeaponProperties weaponProp = null, atkStatsProp = null;
+    [SerializeField] protected WeaponProperties defaultPower = new WeaponProperties();
 
     protected float totalAtkDamage = 0, totalAtkRange = 0, totalAtkSpeed = 0, totalAtkDelay = 0, totalAtkCrit = 0, totalStamCost = 0, totalKbForce = 0;
 
@@ -224,59 +224,39 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
     // ========================================= ANIMATION METHODS =========================================
     protected override void AnimationState()
     {
-        curSpriteName = sprite.sprite.name;
-        curAnimStateName = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
-        if (curAnimStateName == "Hurt")
-        {
-            isHurting = true;
-        }
-        else
-        {
-            isHurting = false;
-        }
+        base.AnimationState();
 
-        if (curAnimStateName == "Attack")
-        {
-            isAttacking = true;
-            anim.speed = totalAtkSpeed;
-        }
-        else
-        {
-            isAttacking = false;
-        }
+        if (!isAlive) return;
 
-        if (isAlive)
+        if (!isHurting && !isAttacking && !isDying)
         {
-            if (!isHurting && !isAttacking && !isDying)
+            // Vertical Movement Animation
+            //if (jumpVelocity > .99f)
+            if (jumpVelocity >= 1f)
             {
-                // Vertical Movement Animation
-                if (jumpVelocity > .99f)
-                {
-                    state = MovementAnim.jump;
-                }
-                else if (jumpVelocity < -1f)
-                {
-                    state = MovementAnim.fall;
-                }
-                else
-                {
-                    // Horizontal Movement Animation
-                    runAnimationSpeed = totalSpeed.x / mvSpeed;
-                    if (dirXFinal == 0)
-                    {
-                        state = MovementAnim.idle;
-                        anim.speed = animationSpeed;
-                    }
-                    else
-                    {
-                        state = MovementAnim.run;
-                        anim.speed = runAnimationSpeed;
-                        transform.localScale = new Vector3(((dirXFinal > 0f) ? 1 : -1) * spriteDefaultFacing, 1, 1);
-                    }
-                }
+                state = MovementAnim.jump;
             }
-            anim.SetInteger("state", (int)state);
+            //else if (jumpVelocity < -1f)
+            else if (jumpVelocity <= -1f)
+            {
+                state = MovementAnim.fall;
+            }
+            else if (dirXFacing == 0)
+            {
+                state = MovementAnim.idle;
+            }
+            else
+            {
+                state = MovementAnim.run;
+            }
         }
+
+        //spriteFacing = ((dirXFacing > 0f) ? 1 : -1) * spriteDefaultFacing;
+        spriteFacing = (dirXFacing == 0f) ? spriteFacing : (int)(dirXFacing / Mathf.Abs(dirXFacing)) * spriteDefaultFacing;
+        transform.localScale = new Vector3(spriteFacing, 1, 1);
+        runAnimationSpeed = (totalSpeed.x / mvSpeed) * animationSpeed;
+        anim.speed = (isAttacking) ? totalAtkSpeed : ((state == MovementAnim.idle) ? runAnimationSpeed : animationSpeed);
+        anim.SetInteger("state", (int)state);
     }
 
 

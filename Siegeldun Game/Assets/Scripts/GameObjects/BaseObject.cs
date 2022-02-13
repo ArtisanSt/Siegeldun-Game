@@ -8,6 +8,7 @@ public abstract class BaseObject : Root
     [Header("ITEM DROP SETTINGS", order = 0)]
     [SerializeField] protected bool doDrop = false;
     [SerializeField] protected int dropChance = 1;
+    [SerializeField] protected float onDestroyDropDelay = 0;
     [SerializeField] protected List<GameObject> itemDrops = new List<GameObject>();
 
 

@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
-    public Collider2D[] hitColliders { get; private set; }
-    public float[] interactDistance { get; private set; }
-    [SerializeField] public LayerMask m_layerMask;
-    public Vector2 center { get; private set; }
-    public Vector2 size { get; private set; }
+    private Collider2D[] hitColliders;
+    private float[] interactDistance;
+    [SerializeField] private LayerMask m_layerMask;
+    [SerializeField] private Vector2 center;
+    [SerializeField] private Vector2 size; //3,1
 
     public GameObject curSelected { get; private set; }
     private GameObject prevSelected = null;
+    [SerializeField] private bool outlined = false; 
     private bool[] _selectCalled = new bool[2] { true, true}; // prev, cur, true means done, false means select animation not called yet
 
     // Start is called before the first frame update
@@ -23,8 +24,7 @@ public class Interactor : MonoBehaviour
     void FixedUpdate()
     {
         float dirFacing = transform.localScale.x/Mathf.Abs(transform.localScale.x);
-        center = new Vector2(transform.position.x + .3f * dirFacing, transform.position.y - .3f);
-        size = new Vector2(3, 1);
+        Vector2 center = new Vector2(transform.position.x + this.center.x * dirFacing, transform.position.y + this.center.y); // +.3f, -.3f
 
         hitColliders = Physics2D.OverlapBoxAll(center, size, 0, m_layerMask);
         interactDistance = new float[hitColliders.Length];
@@ -34,7 +34,7 @@ public class Interactor : MonoBehaviour
 
         for (int i=0; i < hitColliders.Length; i++)
         {
-            if (hitColliders[i].GetComponent<IInteractible>() == null || !hitColliders[i].GetComponent<IInteractible>().isInteractible) continue;
+            if (hitColliders[i].GetComponent<IInteractible>() == null || !hitColliders[i].GetComponent<IInteractible>().isInteractible || !gameObject.GetComponent<IInteractor>().InteractorColliderConditions(hitColliders[i])) continue;
 
             Collider2D coll = hitColliders[i];
             float curDistance = (coll.transform.position.x - (transform.position.x + selectAlpha)) * dirFacing;
@@ -72,7 +72,7 @@ public class Interactor : MonoBehaviour
 
         if (!_selectCalled[1])
         {
-            curSelected.GetComponent<Interactibles>().ToggleInteract(true);
+            curSelected.GetComponent<Interactibles>().ToggleInteract(true && outlined);
             _selectCalled[1] = true;
         }
     }
@@ -85,12 +85,4 @@ public class Interactor : MonoBehaviour
         _selectCalled[1] = newSelected == null;
         curSelected = newSelected;
     }
-
-    /*
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(center, size);
-    }
-    */
 }

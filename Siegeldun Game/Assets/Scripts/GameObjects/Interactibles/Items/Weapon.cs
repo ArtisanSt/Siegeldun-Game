@@ -2,29 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class WeaponProperties
 {
     // ========================================= Weapon Properties =========================================
-    public string weaponType { get; protected set; } // Melee or Range
+    public string weaponType; // Melee or Range
 
-    public int tier { get; protected set; }
+    public int tier;
 
-    public bool isBroken { get; protected set; }
-    public bool doBreak { get; protected set; }
-    public int durability { get; protected set; }
+    public bool isBroken;
+    public bool doBreak;
+    public int durability;
     private int _maxDur;
 
-    public float wpnDamage { get; protected set; }
-    public float wpnAtkRange { get; protected set; }
-    public float wpnAtkSpeed { get; protected set; }
-    public float wpnAtkDelay { get; protected set; }
+    public float wpnDamage;
+    public float wpnAtkRange;
+    public float wpnAtkSpeed;
+    public float wpnAtkDelay;
 
-    public int wpnCritChance { get; protected set; }
-    public float wpnAtkCrit { get; protected set; }
+    public int wpnCritChance;
+    public float wpnAtkCrit;
 
-    public float wpnStamCost { get; protected set; }
+    public float wpnStamCost;
 
-    public float wpnKbForce { get; protected set; }
+    public float wpnKbForce;
 
     // Default values for Hand
     public WeaponProperties(string weaponType = "Melee", int tier = 0, bool doBreak = false)

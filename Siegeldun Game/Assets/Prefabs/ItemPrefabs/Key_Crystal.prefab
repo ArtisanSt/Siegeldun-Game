@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -9997385
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 9b40892ae0b605941b9f0f97af5d572c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -148,8 +148,13 @@ MonoBehaviour:
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   doDrop: 1
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops: []
   _maxQuantity: 1
   _curQuantity: 1
   _itemPrefab: {fileID: 1030391241932288014}
   _iconPrefab: {fileID: 3916258459067645568, guid: 2c67b052879b62c4f800855752769255, type: 3}
+  equippable: 0
+  rBody: {fileID: 0}
+  itemHopSpeed: 0.0075
+  hopLimit: 0.05

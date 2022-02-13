@@ -5059,7 +5059,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1305073549
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 5846514463185051865, guid: 05c9cb51d3b2d5b4e8b289d4734825b3, type: 3}
   m_Color: {r: 1, g: 0.7216981, b: 0.7216981, a: 1}
@@ -5250,6 +5250,7 @@ MonoBehaviour:
   stamRegenDelay: 3
   doMoveX: 1
   mvSpeed: 9
+  slowDownConst: 0.9
   isGrounded: 0
   groundLayer:
     serializedVersion: 2
@@ -5261,6 +5262,20 @@ MonoBehaviour:
   hasWeapon: 0
   weaponGameobject: {fileID: 0}
   wpnEquipped: {fileID: 0}
+  defaultPower:
+    weaponType: Melee
+    tier: 0
+    isBroken: 0
+    doBreak: 0
+    durability: 0
+    wpnDamage: 15
+    wpnAtkRange: 0.3
+    wpnAtkSpeed: 1
+    wpnAtkDelay: 1
+    wpnCritChance: 0
+    wpnAtkCrit: 0
+    wpnStamCost: 0
+    wpnKbForce: 0
   doAtkCombo: 0
   stateToPlayer: 0
   enemyLayer:

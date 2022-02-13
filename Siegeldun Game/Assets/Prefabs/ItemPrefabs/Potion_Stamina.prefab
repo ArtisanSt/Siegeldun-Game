@@ -168,6 +168,7 @@ MonoBehaviour:
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   doDrop: 1
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops:
   - {fileID: 8502316654925628256}
   _maxQuantity: 64
@@ -175,3 +176,6 @@ MonoBehaviour:
   _itemPrefab: {fileID: 8502316654925628256}
   _iconPrefab: {fileID: 5336195007643097998, guid: 01012f5781d2da34c90c3653190cbfe3, type: 3}
   equippable: 1
+  rBody: {fileID: 0}
+  itemHopSpeed: 0.0075
+  hopLimit: 0.05

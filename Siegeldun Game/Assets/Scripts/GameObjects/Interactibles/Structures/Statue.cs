@@ -27,9 +27,4 @@ public class Statue : Structures
     {
     }
 
-    // Interaction Event
-    public override void Interact()
-    {
-
-    }
 }

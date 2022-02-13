@@ -4,32 +4,28 @@ using UnityEngine;
 
 public class LevelTutorial : DialogueSystem
 {
-    [SerializeField] public GameObject player;
-
     [SerializeField] public Dialogue startingDialogue;
     [SerializeField] public Dialogue movementDialogue;
     [SerializeField] public Dialogue attackDialogue;
-    [SerializeField] public Dialogue statueDialogue;
-    private Vector2 center;
-    private Vector2 size;
-
-    protected void Awake()
-    {
-        player = GameObject.Find("Player");
-    }
 
     protected override void Update()
     {
         base.Update();
 
-        PlayDialogue(ref startingDialogue, true);
+        PlayDialogue(ref startingDialogue, StartingDialogueSetter());
         PlayDialogue(ref movementDialogue, MovementDialogueSetter());
         PlayDialogue(ref attackDialogue, AttackDialogueSetter());
-        PlayDialogue(ref statueDialogue, StatueDialogueSetter());
 
         DialogueConditions();
     }
 
+
+    private bool StartingDialogueSetter()
+    {
+        if (movementDialogue.started) return false;
+
+        return true;
+    }
 
     private bool MovementDialogueSetter()
     {
@@ -43,28 +39,6 @@ public class LevelTutorial : DialogueSystem
         if (attackDialogue.started) return false;
 
         return startingDialogue.isDone && movementDialogue.isDone;
-    }
-
-    private bool StatueDialogueSetter()
-    {
-        if (statueDialogue.started) return false;
-
-        Interactor playerInteractor = player.GetComponent<Interactor>();
-        Collider2D[] hitColliders = Physics2D.OverlapBoxAll(playerInteractor.center, playerInteractor.size, 0, LayerMask.GetMask("Structures"));
-        if (hitColliders.Length == 0) return false;
-
-        bool found = false;
-        for (int i = 0; i < hitColliders.Length; i++)
-        {
-            GameObject curObject = hitColliders[i].gameObject;
-            if (curObject.GetComponent<IStructure>().structureName == "Statue")
-            {
-                found = true;
-                break;
-            }
-        }
-
-        return found && startingDialogue.isDone && movementDialogue.isDone && attackDialogue.isDone;
     }
 
 
