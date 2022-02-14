@@ -46,8 +46,7 @@ public class GateSlot : Structures, IGateSlot
             //Transform crystal = Instantiate(1, new Vector2(0, 0.1f), crystalPrefab, transform).transform;
             Transform crystal = Instantiate(crystalPrefab, new Vector3(transform.position.x, transform.position.y + 0.1f, 0), Quaternion.identity, transform).transform;
             crystal.parent = transform;
-            GetComponent<SpriteRenderer>().material.DisableKeyword("OUTLINE_ON");
-            isInteractible = false;
+            ToggleInteractible();
             slotted = true;
 
             playerInventory.Consume(inventorySlot);

@@ -39,6 +39,7 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
     [SerializeField] protected bool doMoveX = false;
     [SerializeField] protected float mvSpeed = 0;
     protected float dirXFacing = 0, dirXFinal = 0, runVelocity = 0;
+    protected int inProximity = 1;
 
     [SerializeField] protected float slowDownConst = 0.9f;
     public bool isGrounded;// Updates
@@ -64,14 +65,14 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
         totalSpeed.Set(mvSpeed + TotalBoost("MVSpeed"), jumpForce + TotalBoost("JumpHeight"));
 
         // Horizontal Movement
-        float slowDown = dirXFinal * slowDownConst;
+        float slowDown = (Mathf.Abs(dirXFinal * slowDownConst) > 0.001f) ? dirXFinal * slowDownConst : 0 ;
         dirXFinal = (!isAttacking && !isHurting) ? dirXFacing : slowDown; // Front movement with a slowdown effect when attacking
-        runVelocity = (isAlive) ? dirXFinal * totalSpeed.x + rcvKbDisplacement : slowDown;
+        runVelocity = (isAlive) ? inProximity * dirXFinal * totalSpeed.x + rcvKbDisplacement : slowDown;
         runVelocity = (doMoveX) ? runVelocity : 0;
 
         // Vertical Movement
-        if (capColl.IsTouchingLayers(groundLayer) || capColl.IsTouchingLayers(enemyLayer) && !isGrounded) StartCoroutine(GroundCheckAlpha());
-        float freeFalling = (0f < rBody.velocity.y && rBody.velocity.y < 0.001f) ? 0f : rBody.velocity.y;
+        if ((capColl.IsTouchingLayers(groundLayer) || capColl.IsTouchingLayers(enemyLayer)) && rBody.velocity.y == 0 && !isGrounded) StartCoroutine(GroundCheckAlpha());
+        float freeFalling = (Mathf.Abs(rBody.velocity.y) < 0.001f) ? 0f : rBody.velocity.y;
         dirYFinal = (allowJump && isGrounded) ? jumpForce : freeFalling;
         jumpVelocity = (isAlive) ? dirYFinal : freeFalling;
         jumpVelocity = (doMoveY) ? jumpVelocity : 0;
@@ -83,14 +84,11 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
     // Grounded Alpha
     private IEnumerator GroundCheckAlpha()
     {
-        if (!isGrounded)
-        {
-            isGrounded = true;
-            StartCoroutine(GroundCheckDecay());
-            yield return new WaitUntil(() => allowJump);
-            yield return null; // Skip 1 frame before turning back to false
-            isGrounded = false;
-        }
+        isGrounded = true;
+        StartCoroutine(GroundCheckDecay());
+        yield return new WaitUntil(() => allowJump);
+        yield return null; // Skip 1 frame before turning back to false
+        isGrounded = false;
     }
 
     private IEnumerator GroundCheckDecay()
@@ -166,20 +164,20 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
         return totalBoost;
     }
 
-    public void AddBoost(string statsName, string sourceName, SelfEffectProperties effectProp)
+    public void AddBoost(string sourceName, SelfEffectProperties effectProp)
     {
-        StartCoroutine(AddStatsBoost(statsName, sourceName, effectProp));
+        StartCoroutine(AddStatsBoost(sourceName, effectProp));
     }
 
-    protected IEnumerator AddStatsBoost(string statsName, string sourceName, SelfEffectProperties effectProp)
+    protected IEnumerator AddStatsBoost(string sourceName, SelfEffectProperties effectProp)
     {
-        if (statsBoost[statsName].ContainsKey(sourceName)) statsBoost[statsName][sourceName] = effectProp.effectParam; // Overwrites the old same Effect
-        else statsBoost[statsName].Add(sourceName, effectProp.effectParam);
+        if (statsBoost[effectProp.effectName.ToString()].ContainsKey(sourceName)) statsBoost[effectProp.effectName.ToString()][sourceName] = effectProp.effectParam; // Overwrites the old same Effect
+        else statsBoost[effectProp.effectName.ToString()].Add(sourceName, effectProp.effectParam);
 
-        if (effectProp.effectSpeed == "Overtime")
+        if (effectProp.effectSpeed.ToString() == "Overtime")
         {
             yield return new WaitForSeconds(effectProp.effectTimer);
-            statsBoost[statsName].Remove(sourceName);
+            statsBoost[effectProp.effectName.ToString()].Remove(sourceName);
         }
     }
 
@@ -228,6 +226,9 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
 
         if (!isAlive) return;
 
+        runAnimationSpeed = (totalSpeed.x / mvSpeed) * animationSpeed;
+        anim.speed = (isAttacking) ? totalAtkSpeed : ((state == MovementAnim.idle) ? runAnimationSpeed : animationSpeed);
+
         if (!isHurting && !isAttacking && !isDying)
         {
             // Vertical Movement Animation
@@ -249,14 +250,13 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
             {
                 state = MovementAnim.run;
             }
-        }
 
-        //spriteFacing = ((dirXFacing > 0f) ? 1 : -1) * spriteDefaultFacing;
+            anim.SetInteger("state", (int)state);
+        }
+        else { state = MovementAnim.idle; }
+
         spriteFacing = (dirXFacing == 0f) ? spriteFacing : (int)(dirXFacing / Mathf.Abs(dirXFacing)) * spriteDefaultFacing;
         transform.localScale = new Vector3(spriteFacing, 1, 1);
-        runAnimationSpeed = (totalSpeed.x / mvSpeed) * animationSpeed;
-        anim.speed = (isAttacking) ? totalAtkSpeed : ((state == MovementAnim.idle) ? runAnimationSpeed : animationSpeed);
-        anim.SetInteger("state", (int)state);
     }
 
 

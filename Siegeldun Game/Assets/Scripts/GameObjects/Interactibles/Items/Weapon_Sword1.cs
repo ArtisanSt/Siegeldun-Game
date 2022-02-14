@@ -19,11 +19,7 @@ public class Weapon_Sword1 : Weapon
 
     protected override void UniqueStatsInit()
     {
-        maxQuantity = 1;
-        curQuantity = 1;
 
-        uniqueProp = new WeaponProperties("Melee", 0, true);
-        uniqueProp.SetValues(30f, .3f, .5f, .3f, 100, 10f, 10f, .3f, 100);
     }
 
     // ========================================= UNITY MAIN METHODS =========================================

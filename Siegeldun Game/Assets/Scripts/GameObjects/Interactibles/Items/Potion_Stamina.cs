@@ -19,11 +19,7 @@ public class Potion_Stamina : Consumable
 
     protected override void UniqueStatsInit()
     {
-        maxQuantity = 64;
-        curQuantity = 1;
 
-        uniqueProp = new ConsumableProperties("Potion");
-        effectDict["Stamina"].SetValues(true, 30f, "Instant", 0f, .1f);
     }
 
     // ========================================= UNITY MAIN METHODS =========================================
@@ -54,7 +50,7 @@ public class Potion_Stamina : Consumable
 
     protected override void ActiveEffects()
     {
-        UseEffects("Stamina");
+        UseEffects();
     }
 
     public override bool ActiveEffectsCondition()

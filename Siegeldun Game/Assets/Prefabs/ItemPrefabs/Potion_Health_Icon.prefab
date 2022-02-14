@@ -105,6 +105,7 @@ MonoBehaviour:
   gameMechanics: {fileID: 0}
   doDrop: 1
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops:
   - {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
   _maxQuantity: 64
@@ -112,3 +113,17 @@ MonoBehaviour:
   _itemPrefab: {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
   _iconPrefab: {fileID: 6433002720851475710}
   equippable: 1
+  rBody: {fileID: 0}
+  itemHopSpeed: 0.0075
+  hopLimit: 0.05
+  interactor: {fileID: 0}
+  itemPullSpeed: 0.0075
+  effects:
+  - effectName: 0
+    hasEffect: 1
+    effectParam: 30
+    effectSpeed: 0
+    effectTimer: 0
+    effectTimerIncrements: 0.1
+  uniqueProp:
+    consumableType: 0

@@ -30,4 +30,22 @@ public abstract class Process : MonoBehaviour
         yield return new WaitForSeconds(time);
         curProcess.Remove(instanceID);
     }
+
+    protected delegate void Del();
+
+    protected void IgnoreErrors(Del handler, Del backUp = null, Del ender = null)
+    {
+        try
+        {
+            handler();
+        }
+        catch
+        {
+            if (backUp != null) backUp();
+        }
+        finally
+        {
+            if (ender != null) ender();
+        }
+    }
 }

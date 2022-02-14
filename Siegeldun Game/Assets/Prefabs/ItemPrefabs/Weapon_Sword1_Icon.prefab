@@ -105,10 +105,31 @@ MonoBehaviour:
   gameMechanics: {fileID: 0}
   doDrop: 1
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops:
   - {fileID: 4275815481310653657, guid: d09dd901e2d4f2e4899a86a8b9e1fa44, type: 3}
+  _isInteractible: 0
   _maxQuantity: 1
   _curQuantity: 1
   _itemPrefab: {fileID: 4275815481310653657, guid: d09dd901e2d4f2e4899a86a8b9e1fa44, type: 3}
   _iconPrefab: {fileID: 6721948792633512886}
   equippable: 1
+  rBody: {fileID: 0}
+  itemHopSpeed: 0.0075
+  hopLimit: 0.05
+  interactor: {fileID: 0}
+  itemPullSpeed: 0.0075
+  effects: []
+  uniqueProp:
+    weaponType: 0
+    tier: 30
+    doBreak: 1
+    durability: 100
+    wpnDamage: 30
+    wpnAtkRange: 0.3
+    wpnAtkSpeed: 1
+    wpnAtkDelay: 0.3
+    wpnCritChance: 100
+    wpnAtkCrit: 10
+    wpnStamCost: 10
+    wpnKbForce: 0.3

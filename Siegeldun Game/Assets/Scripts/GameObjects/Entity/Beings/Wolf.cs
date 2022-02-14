@@ -40,8 +40,6 @@ public class Wolf: NPC
     {
         base.Awake();
         NPCInit();
-
-        PrefabsInit();
     }
 
     // Update is called once per frame
@@ -50,21 +48,14 @@ public class Wolf: NPC
         base.Update();
     }
 
-    // Updates Every Physics Frame
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate(); // Updates the Animation of the Entity
-    }
-
     protected override void OnEntityDestroy()
     {
         base.OnEntityDestroy();
     }
 
-
-    // ========================================= ANIMATION METHODS =========================================
-    protected override void AnimationState()
+    // Updates Every Physics Frame
+    protected override void FixedUpdate()
     {
-        base.AnimationState();
+        base.FixedUpdate(); // Updates the Animation of the Entity
     }
 }

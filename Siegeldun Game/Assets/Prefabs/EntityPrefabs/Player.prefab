@@ -5274,7 +5274,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.004405141, y: -0.40537798}
+  m_Offset: {x: 0.0040779114, y: -0.32376647}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5285,7 +5285,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.45108414, y: 0.91393137}
+  m_Size: {x: 0.4399948, y: 0.8855448}
   m_EdgeRadius: 0
 --- !u!114 &4865986372180236412
 MonoBehaviour:
@@ -5310,6 +5310,7 @@ MonoBehaviour:
   boxColl: {fileID: 4865986372180236413}
   capColl: {fileID: 4865986372180236414}
   anim: {fileID: 4865986372180236415}
+  animationSpeed: 1
   spriteDefaultFacing: 1
   entityPrefab: {fileID: 4865986372180236411}
   hasSpawner: 0
@@ -5369,14 +5370,13 @@ MonoBehaviour:
   weaponGameobject: {fileID: 7019336444901767183}
   wpnEquipped: {fileID: 0}
   defaultPower:
-    weaponType: Melee
+    weaponType: 0
     tier: 0
-    isBroken: 0
     doBreak: 0
     durability: 0
     wpnDamage: 15
     wpnAtkRange: 0.3
-    wpnAtkSpeed: 0.5
+    wpnAtkSpeed: 1.5
     wpnAtkDelay: 0.3
     wpnCritChance: 0
     wpnAtkCrit: 0

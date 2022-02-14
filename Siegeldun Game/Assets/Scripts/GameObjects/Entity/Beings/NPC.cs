@@ -47,18 +47,17 @@ public abstract class NPC : Beings
     protected float seenTime;
     [SerializeField] protected float forgivenessTime = 2f;
     [SerializeField] protected float triggerDistance = 3f; // Target's distance to trigger the enemy
-    protected float targetNodalDistance; // Nodal Distance of the target
-    protected float backOffDistance; // Prevents the enemy to collide entirely with the target
+    //protected float targetNodalDistance; // Nodal Distance of the target
+    protected float targetStraightDistance; // Nodal Distance of the target
+    [SerializeField] protected float backOffDistance; // Prevents the enemy to collide entirely with the target
     protected float stayDistance; // Prevents the enemy to collide entirely with the target
-    protected int inProximity;
-    protected bool isChasing = false;
 
     // Stuck Escape
     [SerializeField] protected bool jumpEnabled = true;
-    protected bool edgeStuck; // Toggles when stuck in the edge of obstacles
+    protected bool edgeStuck = false; // Toggles when stuck in the edge of obstacles
     protected float edgeStuckAlphaError = 0.02f; // Edge Stuck Position Margin of Error
     protected float lastXPosition;
-    protected float edgeStuckTime;
+    protected float edgeStuckTime = 0f;
     protected float allowJumpAfter = .05f;
 
 
@@ -71,8 +70,8 @@ public abstract class NPC : Beings
         sleepParticle = gameObject.transform.GetChild(1).gameObject.GetComponent<ParticleSystem>();
 
         lastXPosition = transform.position.x;
-
-        backOffDistance = Mathf.Abs(transform.position.x - attackPoint.position.x); // Prevents the enemy to collide entirely with the target
+        //backOffDistance = (boxColl.offset.x - boxColl.size.x * spriteDefaultFacing) / 2;
+        backOffDistance = Mathf.Abs(attackPoint.position.x - transform.position.x);
 
         _mvSpeed = mvSpeed;
 
@@ -82,15 +81,13 @@ public abstract class NPC : Beings
     // Updates Every Frame
     protected virtual void Update()
     {
-        UpdateStats();
         PassiveSkills();
-        HpBarUIUpdate();
+        UpdateStats();
     }
 
     // Updates Every Physics Frame
     protected virtual void FixedUpdate()
     {
-        NPCDecisionMakingSystem();
         Controller();
         Movement();
         AnimationState();
@@ -161,7 +158,7 @@ public abstract class NPC : Beings
         {
             path = p;
             currentWaypoint = 0;
-            targetNodalDistance = path.GetTotalLength();
+            //targetNodalDistance = path.GetTotalLength();
         }
     }
 
@@ -188,7 +185,7 @@ public abstract class NPC : Beings
         bool targetInLimitation = (hasSpawner) ? ((pseudoTarget != null) ? pseudoTarget.position.x >= activePoints[0].position.x && pseudoTarget.position.x <= activePoints[1].position.x : false) : true;
         bool outcome = pseudoTarget != null && targetInLimitation && !forcedAsleep;
         TargetDetected(outcome, pseudoTarget);
-
+        
         return outcome;
     }
 
@@ -208,9 +205,9 @@ public abstract class NPC : Beings
     {
         if (!isTriggered)
         {
+            isTriggered = true;
             this.target = target;
             targetAlive = target.GetComponent<Entity>().isAlive;
-            isTriggered = true;
             targetLastDetected = Time.time;
 
             if (wakeUp) WakeUp(forceWakeUp);
@@ -219,9 +216,10 @@ public abstract class NPC : Beings
 
     private void TriggerOff()
     {
-        target = null;
         isTriggered = false;
+        target = null;
         targetAlive = false;
+        inProximity = 1;
     }
 
     private IEnumerator ForgiveEnemy(float forgivenessTime)
@@ -247,13 +245,67 @@ public abstract class NPC : Beings
     // ========================================= NPC DECISION MAKING SYSTEM =========================================
     private void NPCDecisionMakingSystem()
     {
-        if (!isAlive) return;
-
         targetInDetection = NPCDetectionSystem();
-    
-        if (isTriggered)
+
+        targetStraightDistance = 0;
+        //stayDistance = Mathf.Abs(transform.position.x - attackPoint.position.x) + totalAtkRange; // Prevents the enemy to collide entirely with the target
+        stayDistance = backOffDistance + totalAtkRange; // Prevents the enemy to collide entirely with the target
+        if (isTriggered) NPCChasingSystem();
+        else NPCWanderingSystem();
+        lastXPosition = transform.position.x; // Updates the last X position of the AI
+    }
+
+    private void NPCChasingSystem()
+    {
+        PathFollow(); // Updates the nodal position of the target
+
+        targetStraightDistance = target.position.x - transform.position.x;
+
+        // Horizontal Parameter
+        mvSpeed = _mvSpeed;
+        inProximity = (Mathf.Abs(targetStraightDistance) < backOffDistance) ? -1 : ((Mathf.Abs(targetStraightDistance) <= stayDistance) ? 0 : 1);
+        int willMove = (target.GetComponent<Beings>().isGrounded || (!target.GetComponent<Beings>().isGrounded && inProximity == 1)) ? Mathf.Abs(inProximity) : 0 ;
+        dirXFacing = (isAttacking || isHurting) ? dirXFacing : (((target.position.x > transform.position.x) ? 1 : -1) * willMove);
+
+        // Anti-glitching code when target is on unreacheable location
+        if (target.gameObject.GetComponent<Beings>().isGrounded && Mathf.Abs(targetStraightDistance) <= stayDistance && Mathf.Abs(targetStraightDistance) >= backOffDistance)
         {
-            PathFollow(); // Updates the nodal position of the target
+            TriggerOff();
+        }
+    }
+
+    private void NPCWanderingSystem()
+    {
+        if (!isAwake)
+        {
+            dirXFacing = 0;
+            return;
+        }
+
+        // The AI might go for a walk or idle in a certain position for several seconds
+        // Current task time is done
+        inProximity = 1;
+        if (TimerIncrement(awakeTaskTime, awakeTaskLimit))
+        {
+            mvSpeed = _mvSpeed / 3;
+            awakeTaskTime = Time.time;
+
+            awakeTask = Random.Range(0, 2);  // 0 for standing for several seconds, 1 for walking until timer stops
+            awakeTaskLimit = Random.Range(3f, 6f); // Time doing task
+
+            dirXFacing = (isAlive) ? ((awakeTask == 1) ? (new float[] { -1, 1 }[Random.Range(0, 2)]) : 0) : 0; // Negative value of the previous value of dirX
+        }
+        // Current task time is playing
+        else
+        {
+            if (hasSpawner && transform.position.x <= activePoints[0].position.x)
+            {
+                dirXFacing = 1;
+            }
+            else if (hasSpawner && transform.position.x >= activePoints[1].position.x)
+            {
+                dirXFacing = -1;
+            }
         }
     }
 
@@ -286,28 +338,35 @@ public abstract class NPC : Beings
         if (!isAlive)
         {
             allowJump = false;
-            inProximity = 0;
+            dirXFacing = 0;
             return;
         }
 
-        // Anti-glitching code when target is on unreacheable location
-        if (targetAlive && target.gameObject.GetComponent<Beings>().isGrounded && Mathf.Abs(target.position.x - transform.position.x) < stayDistance && Mathf.Abs(target.position.y - transform.position.y) > backOffDistance)
+        // Horizontal Parameter
+        if (allowPathfinding)
         {
-            TriggerOff();
+            NPCDecisionMakingSystem();
+        }
+        else
+        {
+            NPCWanderingSystem();
         }
 
         // Vertical Parameter
         if (allowJump)
         {
             allowJump = false;
-            edgeStuck = false;
-            edgeStuckTime = Time.time;
         }
-        else if (transform.position.x <= lastXPosition + (edgeStuckAlphaError / 2) && transform.position.x >= lastXPosition - (edgeStuckAlphaError / 2) && inProximity == 1 && boxColl.IsTouchingLayers(groundLayer) && isAwake)
+        else if (transform.position.x <= lastXPosition + (edgeStuckAlphaError / 2) && transform.position.x >= lastXPosition - (edgeStuckAlphaError / 2) && inProximity != 0 && boxColl.IsTouchingLayers(groundLayer) && isAwake)
         {
             if (edgeStuck)
             {
-                if (TimerIncrement(edgeStuckTime, allowJumpAfter)) allowJump = true;
+                if (TimerIncrement(edgeStuckTime, allowJumpAfter))
+                {
+                    if (Random.Range(0,2) == 1 || isTriggered) allowJump = true;
+                    else dirXFacing *= -1;
+                    edgeStuck = false;
+                }
             }
             else
             {
@@ -316,59 +375,10 @@ public abstract class NPC : Beings
             }
         }
 
-        // Horizontal Parameter
-        stayDistance = backOffDistance + totalAtkRange; // Prevents the enemy to collide entirely with the target
-        inProximity = (target != null && targetAlive) ? ((targetNodalDistance < backOffDistance) ? -1 : ((targetNodalDistance >= backOffDistance && targetNodalDistance <= stayDistance) ? 0 : 1)) : 1;
-        if (isTriggered && target != null)
-        {
-            mvSpeed = _mvSpeed;
-            isChasing = target.GetComponent<Beings>().isGrounded || (!target.GetComponent<Beings>().isGrounded && Mathf.Abs(target.position.x - transform.position.x) >= stayDistance);
-            dirXFacing = ((isAlive) ? ((target.position.x > transform.position.x) ? 1 : -1) : 0) * ((isChasing) ? 1 : 0) * inProximity;
-        }
-        else
-        {
-            NPCWanderingSystem();
-        }
-        lastXPosition = transform.position.x; // Updates the last X position of the AI
-
         // Attack Code
-        if (inProximity == 0 && !isAttacking && !isHurting && TimerIncrement(_lastAttack, totalAtkDelay))
+        if (inProximity == 0 && targetInDetection && !isAttacking && !isHurting && TimerIncrement(_lastAttack, totalAtkDelay))
         {
             Attack();
-        }
-    }
-
-    private void NPCWanderingSystem()
-    {
-        if (!isAwake)
-        {
-            dirXFacing = 0;
-            return;
-        }
-
-        // The AI might go for a walk or idle in a certain position for several seconds
-        // Current task time is done
-        if (TimerIncrement(awakeTaskTime, awakeTaskLimit))
-        {
-            mvSpeed = _mvSpeed / 3;
-            awakeTaskTime = Time.time;
-
-            awakeTask = Random.Range(0, 2);  // 0 for standing for several seconds, 1 for walking until timer stops
-            awakeTaskLimit = Random.Range(3f, 6f); // Time doing task
-
-            dirXFacing = (isAlive) ? ((awakeTask == 1) ? (new float[] { -1, 1 }[Random.Range(0, 2)]) : 0) : 0; // Negative value of the previous value of dirX
-        }
-        // Current task time is playing
-        else
-        {
-            if (hasSpawner && transform.position.x <= activePoints[0].position.x)
-            {
-                dirXFacing = 1;
-            }
-            else if (hasSpawner && transform.position.x >= activePoints[1].position.x)
-            {
-                dirXFacing = -1;
-            }
         }
     }
 

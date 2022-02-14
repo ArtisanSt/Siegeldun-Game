@@ -6,11 +6,12 @@ using UnityEngine;
 public class WeaponProperties
 {
     // ========================================= Weapon Properties =========================================
-    public string weaponType; // Melee or Range
+    public enum WeaponType { Melee, Range }
+    public WeaponType weaponType; // Melee or Range
 
     public int tier;
 
-    public bool isBroken;
+    private bool isBroken = false;
     public bool doBreak;
     public int durability;
     private int _maxDur;
@@ -28,7 +29,7 @@ public class WeaponProperties
     public float wpnKbForce;
 
     // Default values for Hand
-    public WeaponProperties(string weaponType = "Melee", int tier = 0, bool doBreak = false)
+    public WeaponProperties(WeaponType weaponType = WeaponType.Melee, int tier = 0, bool doBreak = false)
     {
         this.weaponType = weaponType;
         this.tier = tier;
@@ -106,7 +107,7 @@ public abstract class Weapon : Item
     private string _itemType = "Weapon";
     public override string itemType { get { return _itemType; } }
 
-    public WeaponProperties uniqueProp { get; protected set; }
+    [SerializeField] public WeaponProperties uniqueProp;
 
     public override bool OnUse(bool isCrit)
     {
@@ -119,7 +120,7 @@ public abstract class Weapon : Item
     public void OverwriteStats(Weapon originalItem)
     {
         curQuantity = originalItem.curQuantity;
-        effectDict = originalItem.effectDict;
+        effects = originalItem.effects;
         uniqueProp = originalItem.uniqueProp;
     }
 }

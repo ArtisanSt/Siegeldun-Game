@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IBoostable
 {
-    void AddBoost(string statsName, string sourceName, SelfEffectProperties effectProp);
+    void AddBoost(string sourceName, SelfEffectProperties effectProp);
 
 
 }

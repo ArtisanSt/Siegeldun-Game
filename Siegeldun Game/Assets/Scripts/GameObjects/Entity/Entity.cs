@@ -34,6 +34,12 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         StatusBarPropInit();
     }
 
+    protected virtual void LateUpdate()
+    {
+        HpBarUIUpdate();
+        StamBarUIUpdate();
+    }
+
 
 
 
@@ -127,7 +133,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
     [SerializeField] protected float hpRegenDelay = 3;
     protected float _hpRegenStart = 0f;
     protected float _hpTick = 0f;
-    protected float _hpHideTime = 4f;
+    protected float _hpHideTime = 0f;
 
 
     [SerializeField] protected bool hasStam = false;
@@ -143,8 +149,6 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
     [SerializeField] protected float[] stamRegenScaling = new float[3] { 0, 0, 0 };
     [SerializeField] protected float stamRegen = 0;
     [SerializeField] protected float stamRegenDelay = 3;
-    protected float _stamTick = 0f;
-    protected float _stamHideTime = 4f;
 
     // Updates
     protected bool[] isPassiveHealing = new bool[2] { false, false };
@@ -183,6 +187,8 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
 
     protected void HpBarUIUpdate()
     {
+        if (!hasHp || !entityStatusBar) return;
+
         // HP UI Parameters
         float fillF = hpBarF.fillAmount;
         float fillB = hpBarB.fillAmount;
@@ -191,6 +197,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         // Health Bar UI Updater
         if (fillB != fillF || fillF != hpFraction || fillB != hpFraction)
         {
+            _hpHideTime = Time.time;
             if (!isPlayer) entityStatusBar.SetActive(true);
 
             float netRegenF = hpFraction - fillF;
@@ -227,16 +234,9 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         {
             _hpTick = 0f;
             hpBarF.color = Color.cyan;
-            if (!isPlayer)
+            if (!isPlayer && TimerIncrement(_hpHideTime, 5f))
             {
-                if (_hpHideTime > 5f)
-                {
-                    entityStatusBar.SetActive(false);
-                }
-                else
-                {
-                    _hpHideTime += Time.deltaTime;
-                }
+                entityStatusBar.SetActive(false);
             }
         }
 
@@ -246,6 +246,8 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
 
     protected void StamBarUIUpdate()
     {
+        if (!hasStam || !entityStatusBar) return;
+
         // Stamina UI Parameters
         float fillS = stamBar.fillAmount;
         float stamFraction = curStam / maxHp;

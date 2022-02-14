@@ -77,8 +77,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 991996671
-  m_SortingLayer: 0
+  m_SortingLayerID: -1305073549
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 619129380620677017, guid: 1d3faa0b2b19cf84798d3ccb5c517475, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -144,8 +144,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06955433, y: -0.051394463}
-  m_Size: {x: 0.39517593, y: 1.1885519}
+  m_Offset: {x: 0.022558212, y: -0.1658361}
+  m_Size: {x: 1.0514183, y: 1.1432819}
   m_Direction: 0
 --- !u!61 &781637662457676085
 BoxCollider2D:
@@ -160,7 +160,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06959176, y: -0.0695914}
+  m_Offset: {x: 0.022815704, y: -0.168823}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -171,7 +171,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.41350794, y: 0.8148539}
+  m_Size: {x: 1.0566788, y: 0.2075119}
   m_EdgeRadius: 0
 --- !u!114 &781637662457676086
 MonoBehaviour:
@@ -217,36 +217,38 @@ MonoBehaviour:
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   doDrop: 1
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops: []
   rBody: {fileID: 781637662457676083}
   sprite: {fileID: 781637662457676081}
   boxColl: {fileID: 781637662457676085}
   capColl: {fileID: 781637662457676084}
   anim: {fileID: 781637662457676082}
-  spriteDefaultFacing: 1
+  animationSpeed: 1
+  spriteDefaultFacing: -1
   entityPrefab: {fileID: 781637662457676089}
   hasSpawner: 0
   spawner: {fileID: 0}
   activePoints: []
   isAlive: 1
-  entityStatusBar: {fileID: 0}
+  entityStatusBar: {fileID: 781637663737743005}
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
   - 100
-  - 2
-  - 0
-  curHp: 0
-  maxHp: 0
-  hpBarB: {fileID: 0}
-  hpBarF: {fileID: 0}
-  hpText: {fileID: 0}
-  doHpRegen: 0
+  - 200
+  - 300
+  curHp: 100
+  maxHp: 100
+  hpBarB: {fileID: 781637663729924371}
+  hpBarF: {fileID: 781637662843967667}
+  hpText: {fileID: 781637662664055558}
+  doHpRegen: 1
   hpRegenScaling:
-  - 0
-  - 0
-  - 0
-  hpRegen: 0
+  - 0.01
+  - 0.005
+  - 0.001
+  hpRegen: 0.01
   hpRegenDelay: 3
   hasStam: 0
   isInfStamina: 0
@@ -265,36 +267,51 @@ MonoBehaviour:
   - 0
   stamRegen: 0
   stamRegenDelay: 3
-  doAttack: 0
-  hasWeapon: 0
-  weaponGameobject: {fileID: 0}
-  wpnEquipped: {fileID: 0}
-  doAtkCombo: 0
-  stateToPlayer: 3
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  allyLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  attackPoint: {fileID: 781637664042070790}
-  hasInventory: 0
-  inventory: {fileID: 0}
-  doMoveX: 0
-  mvSpeed: 0
+  doMoveX: 1
+  mvSpeed: 10
+  slowDownConst: 0.9
   isGrounded: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
-  doMoveY: 0
+    m_Bits: 64
+  doMoveY: 1
   allowJump: 0
-  jumpForce: 0
-  detectionSize: {x: 3, y: 1}
-  allowPathfinding: 0
-  doSleep: 0
+  jumpForce: 20
+  doAttack: 1
+  hasWeapon: 0
+  weaponGameobject: {fileID: 0}
+  wpnEquipped: {fileID: 0}
+  defaultPower:
+    weaponType: Melee
+    tier: 0
+    isBroken: 0
+    doBreak: 0
+    durability: 0
+    wpnDamage: 15
+    wpnAtkRange: 0.3
+    wpnAtkSpeed: 1
+    wpnAtkDelay: 1
+    wpnCritChance: 0
+    wpnAtkCrit: 0
+    wpnStamCost: 0
+    wpnKbForce: 0
+  doAtkCombo: 0
+  stateToPlayer: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 4194304
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 2097152
+  attackPoint: {fileID: 781637664042070790}
+  hasInventory: 0
+  inventory: {fileID: 0}
+  detectionSize: {x: 10, y: 3}
+  allowPathfinding: 1
+  doSleep: 1
   isAwake: 1
   sleepDelay: 10
-  sleepParticle: {fileID: 0}
+  sleepParticle: {fileID: 781637662561195177}
   isTriggered: 0
   forgivenessTime: 2
   triggerDistance: 3

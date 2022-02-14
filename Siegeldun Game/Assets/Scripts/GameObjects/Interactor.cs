@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactor : MonoBehaviour
+public class Interactor : Process
 {
     private Collider2D[] hitColliders;
     private float[] interactDistance;
     [SerializeField] private LayerMask m_layerMask;
     [SerializeField] private Vector2 center;
+    private Vector2 _center;
     [SerializeField] private Vector2 size; //3,1
 
     public GameObject curSelected { get; private set; }
@@ -15,24 +16,18 @@ public class Interactor : MonoBehaviour
     [SerializeField] private bool outlined = false; 
     private bool[] _selectCalled = new bool[2] { true, true}; // prev, cur, true means done, false means select animation not called yet
 
-    // Start is called before the first frame update
-    void Start()
+    private void InteractorFixedUpdate()
     {
-    }
+        float dirFacing = transform.localScale.x / Mathf.Abs(transform.localScale.x);
+        _center = new Vector2(transform.position.x + this.center.x * dirFacing, transform.position.y + this.center.y); // +.3f, -.3f
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        float dirFacing = transform.localScale.x/Mathf.Abs(transform.localScale.x);
-        Vector2 center = new Vector2(transform.position.x + this.center.x * dirFacing, transform.position.y + this.center.y); // +.3f, -.3f
-
-        hitColliders = Physics2D.OverlapBoxAll(center, size, 0, m_layerMask);
+        hitColliders = Physics2D.OverlapBoxAll(_center, size, 0, m_layerMask);
         interactDistance = new float[hitColliders.Length];
 
         int[] idxNearest = new int[2] { -1, -1 }; // ,Front, Back
         float selectAlpha = transform.localScale.x * -.3f;
 
-        for (int i=0; i < hitColliders.Length; i++)
+        for (int i = 0; i < hitColliders.Length; i++)
         {
             if (hitColliders[i].GetComponent<IInteractible>() == null || !hitColliders[i].GetComponent<IInteractible>().isInteractible || !gameObject.GetComponent<IInteractor>().InteractorColliderConditions(hitColliders[i])) continue;
 
@@ -77,6 +72,17 @@ public class Interactor : MonoBehaviour
         }
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        IgnoreErrors(InteractorFixedUpdate);
+    }
+
     private void ChangeSelection(GameObject newSelected)
     {
         _selectCalled[0] = curSelected == null;
@@ -85,4 +91,12 @@ public class Interactor : MonoBehaviour
         _selectCalled[1] = newSelected == null;
         curSelected = newSelected;
     }
+
+    /*
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(_center, size);
+    }
+    */
 }

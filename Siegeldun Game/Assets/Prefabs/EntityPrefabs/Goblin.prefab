@@ -5141,7 +5141,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06959176, y: -0.0695914}
+  m_Offset: {x: 0.06959152, y: -0.05479729}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5152,7 +5152,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.41350794, y: 0.8148539}
+  m_Size: {x: 0.39992523, y: 0.8247168}
   m_EdgeRadius: 0
 --- !u!114 &6685909666436209247
 MonoBehaviour:
@@ -5198,12 +5198,14 @@ MonoBehaviour:
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   doDrop: 1
   dropChance: 1000
+  onDestroyDropDelay: 0
   itemDrops: []
   rBody: {fileID: 6685909666436209246}
   sprite: {fileID: 6685909666436209242}
   boxColl: {fileID: 6685909666436209241}
   capColl: {fileID: 6685909666436209240}
   anim: {fileID: 6685909666436209244}
+  animationSpeed: 1
   spriteDefaultFacing: -1
   entityPrefab: {fileID: 6685909666436209234}
   hasSpawner: 0

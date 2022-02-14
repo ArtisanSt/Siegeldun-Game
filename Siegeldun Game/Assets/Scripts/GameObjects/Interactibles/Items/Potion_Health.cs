@@ -19,8 +19,7 @@ public class Potion_Health : Consumable
 
     protected override void UniqueStatsInit()
     {
-        uniqueProp = new ConsumableProperties("Potion");
-        effectDict["HP"].SetValues(true, 30f, "Instant", 0f, .1f);
+
     }
 
     // ========================================= UNITY MAIN METHODS =========================================
@@ -51,7 +50,7 @@ public class Potion_Health : Consumable
 
     protected override void ActiveEffects()
     {
-        UseEffects("HP");
+        UseEffects();
     }
 
     public override bool ActiveEffectsCondition()

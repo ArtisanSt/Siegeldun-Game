@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class ConsumableProperties
 {
     // ========================================= Consumable Properties =========================================
-    public string consumableType { get; protected set; } // Food or Potion
+    public enum ConsumableType { Potion, Food }
+    public ConsumableType consumableType; // Food or Potion
 
-    public ConsumableProperties(string consumableType)
+    public ConsumableProperties(ConsumableType consumableType)
     {
         this.consumableType = consumableType;
     }
@@ -23,7 +25,7 @@ public abstract class Consumable : Item
     private string _itemType = "Consumable";
     public override string itemType { get { return _itemType; } }
 
-    public ConsumableProperties uniqueProp { get; protected set; }
+    [SerializeField] public ConsumableProperties uniqueProp;
 
     public override bool OnUse(bool isCrit)
     {
@@ -35,7 +37,7 @@ public abstract class Consumable : Item
     public void OverwriteStats(Consumable originalItem)
     {
         curQuantity = originalItem.curQuantity;
-        effectDict = originalItem.effectDict;
+        effects = originalItem.effects;
         uniqueProp = originalItem.uniqueProp;
     }
 }

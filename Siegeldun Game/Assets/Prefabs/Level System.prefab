@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3687731594719031112}
   - component: {fileID: 3687731594719031111}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Barrier (R)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3687731595274378590}
   - component: {fileID: 3687731595274378589}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Barrier (L)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,18 +286,6 @@ MonoBehaviour:
     messageTitle: Attack Tutorial
     dialogueMessages:
     - Right Click to attack.
-  statueDialogue:
-    npcName: Tutorial
-    hasButtons: 1
-    repeatable: 0
-    canGoBack: 1
-    isTimed: 0
-    timer: 0
-    messageTitle: Statue Tutorial
-    dialogueMessages:
-    - 'This Statue is for blah blah
-
-'
 --- !u!61 &3687731594575478347
 BoxCollider2D:
   m_ObjectHideFlags: 0

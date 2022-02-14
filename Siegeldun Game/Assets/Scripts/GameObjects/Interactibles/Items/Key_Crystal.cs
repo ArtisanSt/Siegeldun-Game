@@ -19,8 +19,7 @@ public class Key_Crystal : Key
 
     protected override void UniqueStatsInit()
     {
-        maxQuantity = 2;
-        curQuantity = 1;
+
     }
 
     // ========================================= UNITY MAIN METHODS =========================================

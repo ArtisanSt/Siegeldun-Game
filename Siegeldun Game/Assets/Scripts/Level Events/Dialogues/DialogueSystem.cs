@@ -134,7 +134,11 @@ public abstract class DialogueSystem : Process
 
     public void EndDialogue()
     {
-        if (dialogue.repeatable) { dialogue.started = false; }
+        if (dialogue.repeatable)
+        {
+            dialogue.started = false;
+            ToggleInteractible();
+        }
         else { dialogue.isDone = true; }
         isPlaying = false;
         curMsg = "";
@@ -148,7 +152,13 @@ public abstract class DialogueSystem : Process
         if (conditionals && !curDialogue.started && !isPlaying)
         {
             curDialogue.started = true;
+            ToggleInteractible();
             StartDialogue(ref curDialogue);
         }
+    }
+
+    private void ToggleInteractible()
+    {
+        if (GetComponent<IInteractible>() != null) GetComponent<IInteractible>().ToggleInteractible();
     }
 }

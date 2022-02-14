@@ -27,10 +27,8 @@ public class Player : Beings, IInteractor
     // Update is called once per frame
     protected void Update()
     {
-        UpdateStats();
         PassiveSkills();
-        HpBarUIUpdate();
-        StamBarUIUpdate();
+        UpdateStats();
 
         Controller();
         Movement();
@@ -89,7 +87,7 @@ public class Player : Beings, IInteractor
         }
 
         // Horizontal Movement
-        dirXFacing = (isAlive) ? Input.GetAxisRaw("Horizontal") : 0;
+        dirXFacing = (isAlive) ? ((isAttacking || isHurting) ? dirXFacing : Input.GetAxisRaw("Horizontal")) : 0;
 
 
         if (isAlive)
