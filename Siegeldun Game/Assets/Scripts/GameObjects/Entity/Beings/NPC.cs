@@ -81,6 +81,7 @@ public abstract class NPC : Beings
     // Updates Every Frame
     protected virtual void Update()
     {
+        if (pauseMenu.isPaused) return;
         PassiveSkills();
         UpdateStats();
     }
@@ -88,6 +89,7 @@ public abstract class NPC : Beings
     // Updates Every Physics Frame
     protected virtual void FixedUpdate()
     {
+        if (pauseMenu.isPaused) return;
         Controller();
         Movement();
         AnimationState();

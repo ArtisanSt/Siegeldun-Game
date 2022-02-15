@@ -4,20 +4,6 @@ using UnityEngine;
 
 public class Player : Beings, IInteractor
 {
-    // ========================================= Entity Properties =========================================
-    /*private bool _isInstanceLimited = true;
-    public override bool isInstanceLimited { get { return _isInstanceLimited; } }
-
-    private int _maxEachEntityInField = 1;
-    public override int maxEachEntityInField { get { return _maxEachEntityInField; } }
-
-    private string _entityName = "Player";
-    public override string entityName { get { return _entityName; }}
-    public override string objectName { get { return _entityName; } }
-*/
-
-
-
     // ========================================= UNITY MAIN METHODS =========================================
     protected override void Awake()
     {
@@ -27,6 +13,7 @@ public class Player : Beings, IInteractor
     // Update is called once per frame
     protected void Update()
     {
+        if (pauseMenu.isPaused) return;
         PassiveSkills();
         UpdateStats();
 

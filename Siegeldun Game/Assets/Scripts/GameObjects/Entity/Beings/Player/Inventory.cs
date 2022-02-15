@@ -18,23 +18,6 @@ public class EquippedSlotProperties
 
 public class Inventory: BaseObject
 {
-    /*private bool _isInstanceLimited = false;
-    public override bool isInstanceLimited { get { return _isInstanceLimited; } }
-
-    private int _maxEachEntityInField = 0;
-    public override int maxEachEntityInField { get { return _maxEachEntityInField; } }
-
-    private string _objectName = "Inventory";
-    public override string objectName { get { return _objectName; } }*/
-
-    /* Entity can only Equip item from its inventory
-     * 
-     * Unless:
-     *      The Game forces the Entity to Equip an Item.
-     *      A hidden slot will emerged.
-     *      The forced equipped Item will only unequipped when it's broken.
-     */
-
     // ========================================= INVENTORY PROPERTIES =========================================
     [SerializeField] public GameObject inventoryBg;
     protected GameObject itemColliding;
@@ -82,6 +65,7 @@ public class Inventory: BaseObject
     // Update is called once per frame
     void Update()
     {
+        if (pauseMenu.isPaused) return;
         InventoryControls();
         UpdateText();
     }

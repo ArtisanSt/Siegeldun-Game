@@ -20,6 +20,10 @@ public abstract class Structures : Interactibles
     {
         objectClassification = "STRUCTURE";
         isInteractible = true;
+    }
 
+    protected virtual void Update()
+    {
+        if (pauseMenu.isPaused) return;
     }
 }

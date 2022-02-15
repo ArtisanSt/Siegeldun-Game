@@ -4,20 +4,6 @@ using UnityEngine;
 
 public class WoodSpikes : Structures
 {
-    // ========================================= Structure Initialization =========================================
-    /*private bool _isInstanceLimited = false;
-    public override bool isInstanceLimited { get { return _isInstanceLimited; } }
-
-    private int _maxEachEntityInField = 0;
-    public override int maxEachEntityInField { get { return _maxEachEntityInField; } }
-
-    private string _objectName = "WoodSpikes";
-    public override string objectName { get { return _objectName; } }
-
-    private string _structureName = "Wood Spikes";
-    public override string structureName { get { return _structureName; } }*/
-
-
     [Header("SPIKES SETTINGS", order = 3)]
     [SerializeField] protected WeaponProperties spikesPower = new WeaponProperties();
     [SerializeField] protected List<LayerMask> damageableLayers;
@@ -30,8 +16,9 @@ public class WoodSpikes : Structures
         isInteractible = false;
     }
 
-    protected void Update()
+    protected override void Update()
     {
+        base.Update();
         Dictionary<GameObject, bool> collidingEntities = new Dictionary<GameObject, bool>();
         foreach (KeyValuePair<GameObject, bool> entityInside in entitiesInside)
         {

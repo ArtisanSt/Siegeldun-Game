@@ -5,19 +5,6 @@ using UnityEditor;
 
 public class GateSlot : Structures, IGateSlot
 {
-    // ========================================= Structure Initialization =========================================
-    /*private bool _isInstanceLimited = false;
-    public override bool isInstanceLimited { get { return _isInstanceLimited; } }
-
-    private int _maxEachEntityInField = 0;
-    public override int maxEachEntityInField { get { return _maxEachEntityInField; } }
-
-    private string _objectName = "GateSlot";
-    public override string objectName { get { return _objectName; } }
-
-    private string _structureName = "Gate Slot";
-    public override string structureName { get { return _structureName; } }*/
-
     [Header("GATE SLOT SETTINGS", order = 0)]
     [SerializeField] GameObject crystalPrefab;
     [SerializeField] Inventory playerInventory;
@@ -31,8 +18,9 @@ public class GateSlot : Structures, IGateSlot
         crystalPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EnvironmentPrefabs/Crystal.prefab");
     }
 
-    protected void Update()
+    protected override void Update()
     {
+        base.Update();
     }
 
     // Interaction Event

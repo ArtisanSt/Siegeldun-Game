@@ -72,7 +72,7 @@ public class Spawner : Root
 
     void Update()
     {
-        if (GameObject.Find("Player") == null) return;
+        if (pauseMenu.isPaused || GameObject.Find("Player") == null) return;
         
         target = GameObject.Find("Player").transform;
 

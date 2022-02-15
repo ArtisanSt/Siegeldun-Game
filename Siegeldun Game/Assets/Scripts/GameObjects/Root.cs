@@ -6,8 +6,9 @@ using UnityEngine;
 public abstract class Root : Process
 {
     // ========================================= Game Properties =========================================
-    [SerializeField] protected GameObject systemGameObject;
+    [SerializeField] protected GameObject system;
     [SerializeField] protected GameMechanics gameMechanics;
+    [SerializeField] protected PauseMenu pauseMenu;
     protected LevelProperties lvlProp;
 
     protected static int difficulty = GlobalVariableStorage.gameDifficulty; // Pseudo Difficulty
@@ -29,8 +30,9 @@ public abstract class Root : Process
     // =========================================  INSTANTIATION =========================================
     protected void GameMechanicsPropInit()
     {
-        systemGameObject = GameObject.Find("System");
-        gameMechanics = systemGameObject.GetComponent<GameMechanics>();
+        system = GameObject.Find("System");
+        gameMechanics = system.GetComponent<GameMechanics>();
+        pauseMenu = system.GetComponent<PauseMenu>();
         lvlProp = gameMechanics.curLvlProp;
 
         PrefabsInit();

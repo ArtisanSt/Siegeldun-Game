@@ -38,6 +38,8 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
 
     protected virtual void LateUpdate()
     {
+        if (pauseMenu.isPaused) return;
+
         HpBarUIUpdate();
         StamBarUIUpdate();
     }

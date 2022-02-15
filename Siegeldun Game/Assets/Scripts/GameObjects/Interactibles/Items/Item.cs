@@ -113,6 +113,8 @@ public abstract class Item : Interactibles, IInteractor
 
     protected virtual void Update()
     {
+        if (pauseMenu.isPaused) return;
+
         isFull = curQuantity >= maxQuantity;
         isEmpty = curQuantity <= 0;
 
