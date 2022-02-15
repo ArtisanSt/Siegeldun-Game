@@ -127,6 +127,61 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
     protected LayerMask enemyLayer, allyLayer;
     [SerializeField] protected Transform attackPoint;
 
+    protected Collider2D[] hitColliders;
+    protected List<GameObject> damagedEntities = new List<GameObject>();
+    private float attackID;
+
+    protected IEnumerator ComboTimer()
+    {
+        yield return new WaitForSeconds(totalAtkSpeed * 2);
+        if (TimerIncrement(_lastAttack, totalAtkSpeed * 2)) curAtkCombo = 1;
+    }
+
+    protected virtual void Attack()
+    {
+        if (doAtkCombo)
+        {
+            curAtkCombo = (curAtkCombo == 3) ? 1 : curAtkCombo + 1;
+            StartCoroutine(ComboTimer());
+        }
+        if (hasStam) { curStam -= totalStamCost; }
+        attackID = (float)gameObject.GetInstanceID() + (float)Random.Range(-9999, 10000) / (10000);
+        hitColliders = Physics2D.OverlapCircleAll(attackPoint.position, totalAtkRange, enemyLayer);
+        StartCoroutine(OnAttackStart());
+    }
+
+    private IEnumerator OnAttackStart()
+    {
+        yield return new WaitUntil(() => isAttacking);
+
+        _lastAttack = Time.time;
+        InvokeRepeating("OnAttacking", 0, 0.01f);
+    }
+
+    protected void OnAttacking()
+    {
+        if (!isAttacking)
+        {
+            CancelInvoke("OnAttacking");
+            damagedEntities.Clear();
+        }
+        else
+        {
+            foreach (Collider2D col in hitColliders)
+            {
+                GameObject enemy = col.gameObject;
+                Debug.Log(spriteFacing);
+                if (enemy.GetComponent<IDamageable>() == null || damagedEntities.Contains(enemy) || (enemy.transform.position.x - transform.position.x) * spriteFacing < 0) continue;
+
+                int kbDir = (enemy.transform.position.x > transform.position.x) ? 1 : -1;
+                enemy.GetComponent<IDamageable>().TakeDamage(attackID, kbDir, atkStatsProp);
+
+                damagedEntities.Add(enemy);
+            }
+        }
+
+    }
+
     protected Dictionary<string, Dictionary<string, float>> statsBoost = new Dictionary<string, Dictionary<string, float>>() // statsName: {sourceName: effectParam}
     {
         ["Damage"] = new Dictionary<string, float>(),
@@ -214,8 +269,6 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
         atkStatsProp.SetValues(totalAtkDamage, totalAtkRange, totalAtkSpeed, totalAtkDelay, totalAtkCritChance, totalAtkCrit, totalStamCost, totalKbForce, totalWpnDurability);
     }
 
-    protected abstract void Attack();
-
 
 
 
@@ -255,8 +308,8 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
         }
         else { state = MovementAnim.idle; }
 
-        spriteFacing = (dirXFacing == 0f) ? spriteFacing : (int)(dirXFacing / Mathf.Abs(dirXFacing)) * spriteDefaultFacing;
-        transform.localScale = new Vector3(spriteFacing, 1, 1);
+        spriteFacing = (dirXFacing == 0f) ? spriteFacing : (int)(dirXFacing / Mathf.Abs(dirXFacing));
+        transform.localScale = new Vector3(spriteFacing * spriteDefaultFacing, 1, 1);
     }
 
 

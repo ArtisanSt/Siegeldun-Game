@@ -377,8 +377,10 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
 
     public void TakeDamage(float attackID, int rcvKbDir, WeaponProperties rcvStatsProp)
     {
+
         DamageEvaluator(ref rcvStatsProp);
         bool doesDamage = isAlive && !isInvulnerable && rcvStatsProp.wpnDamage > 0 && ProcessEvaluator((float)attackID, rcvStatsProp.wpnAtkSpeed);
+
         if (!doesDamage) return;
         bool isCrit = ChanceRandomizer(rcvStatsProp.wpnCritChance);
 

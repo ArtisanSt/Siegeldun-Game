@@ -189,7 +189,7 @@ MonoBehaviour:
     doBreak: 1
     durability: 100
     wpnDamage: 30
-    wpnAtkRange: 0.3
+    wpnAtkRange: 0.5
     wpnAtkSpeed: 1
     wpnAtkDelay: 0.3
     wpnCritChance: 100

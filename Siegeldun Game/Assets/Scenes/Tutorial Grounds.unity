@@ -1669,6 +1669,14 @@ PrefabInstance:
       propertyPath: dialogueText
       value: 
       objectReference: {fileID: 1945352179}
+    - target: {fileID: 6591726220133027849, guid: fb00a1e01394c34448a7dcffc78c818d, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6591726220133027850, guid: fb00a1e01394c34448a7dcffc78c818d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6738638013358145106, guid: fb00a1e01394c34448a7dcffc78c818d, type: 3}
       propertyPath: m_SortingLayer
       value: 1

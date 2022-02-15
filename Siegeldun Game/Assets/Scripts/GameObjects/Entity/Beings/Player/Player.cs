@@ -40,31 +40,9 @@ public class Player : Beings, IInteractor
     // Damage Give
     protected override void Attack()
     {
-        float attackID = (float)gameObject.GetInstanceID() + Random.Range(-9999, 10000) / 10000;
         anim.SetTrigger("sword" + curAtkCombo.ToString());
-        curStam -= totalStamCost;
-        _lastAttack = Time.time;
-        if (doAtkCombo)
-        {
-            curAtkCombo = (curAtkCombo == 3) ? 1 : curAtkCombo + 1;
-            StartCoroutine(ComboTimer());
-        }
 
-        // Collision Sensing
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, totalAtkRange, enemyLayer);
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            if (enemy.GetComponent<IDamageable>() == null) continue;
-
-            int kbDir = (enemy.transform.position.x > transform.position.x) ? 1 : -1;
-            enemy.GetComponent<IDamageable>().TakeDamage(attackID, kbDir, atkStatsProp);
-        }
-    }
-
-    protected IEnumerator ComboTimer()
-    {
-        yield return new WaitForSeconds(totalAtkSpeed * 2);
-        if (TimerIncrement(_lastAttack, totalAtkSpeed * 2)) curAtkCombo = 1;
+        base.Attack();
     }
 
     public bool InteractorColliderConditions(Collider2D coll)
