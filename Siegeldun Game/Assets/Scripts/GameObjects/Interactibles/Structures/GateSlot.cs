@@ -15,7 +15,6 @@ public class GateSlot : Structures, IGateSlot
     {
         base.Awake();
         playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
-        crystalPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EnvironmentPrefabs/Crystal.prefab");
     }
 
     protected override void Update()
@@ -28,12 +27,14 @@ public class GateSlot : Structures, IGateSlot
     {
         if (!isSelected && playerInventory == null) return;
 
-        int inventorySlot = playerInventory.FindItem("Crystal");
+        int inventorySlot = playerInventory.FindItem(crystalPrefab);
         if (inventorySlot != -1)
         {
             //Transform crystal = Instantiate(1, new Vector2(0, 0.1f), crystalPrefab, transform).transform;
             Transform crystal = Instantiate(crystalPrefab, new Vector3(transform.position.x, transform.position.y + 0.1f, 0), Quaternion.identity, transform).transform;
             crystal.parent = transform;
+            crystal.GetComponent<Item>().ChangeAmount(1);
+            crystal.GetComponent<Interactibles>().ToggleInteractible();
             ToggleInteractible();
             slotted = true;
 

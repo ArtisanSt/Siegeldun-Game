@@ -5299,8 +5299,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0768a4543bbb74d8f4f47bd4ba93bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  system: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMenu: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   objectName: Player
   isInstanceLimited: 1
   maxEachEntityInField: 1
@@ -5311,6 +5312,7 @@ MonoBehaviour:
   rBody: {fileID: 4865986373843987816}
   sprite: {fileID: 4865986372359361336}
   boxColl: {fileID: 4865986372180236413}
+  cirColl: {fileID: 0}
   capColl: {fileID: 4865986372180236414}
   anim: {fileID: 4865986372180236415}
   animationSpeed: 1
@@ -5428,8 +5430,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0dc7c67f4f538543a5f8cdd6d57f21e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  system: {fileID: 0}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMenu: {fileID: 0}
   objectName: 
   isInstanceLimited: 0
   maxEachEntityInField: 0

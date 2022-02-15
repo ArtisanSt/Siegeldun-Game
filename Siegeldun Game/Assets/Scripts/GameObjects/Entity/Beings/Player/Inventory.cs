@@ -214,6 +214,7 @@ public class Inventory: BaseObject
         {
             if (inventorySlots[i][1] != null && inventorySlots[i][1].GetComponent<Item>().itemName == itemName)
             {
+                Debug.Log(true); ;
                 itemIdx = i;
                 break;
             }
@@ -221,7 +222,7 @@ public class Inventory: BaseObject
         return itemIdx;
     }
 
-    protected int FindItem(GameObject curItem)
+    public int FindItem(GameObject curItem)
     {
         return FindItem(curItem.GetComponent<Item>().itemName);
     }
@@ -366,7 +367,7 @@ public class Inventory: BaseObject
         bool output = curItem.GetComponent<Item>().equippable;
 
         if (!output) return false;
-        else return eqpSlotsCol[curItem.GetComponent<Item>().itemType.ToString()].curItem == curItem;
+        else return eqpSlotsCol[curItem.GetComponent<Item>().itemType.ToString()].curItem != curItem;
     }
 
     public bool Equip(int selectedSlot)
@@ -382,7 +383,7 @@ public class Inventory: BaseObject
 
     public bool Equip(GameObject curItem)
     {
-        if (IsItemEquipped(curItem)) return false;
+        if (!IsItemEquipped(curItem)) return false;
 
         Item curItemProp = curItem.GetComponent<Item>();
         GameObject eqpSlot = eqpSlotsCol[curItemProp.itemType.ToString()].eqpSlot;

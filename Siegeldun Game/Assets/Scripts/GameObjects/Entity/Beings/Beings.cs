@@ -163,7 +163,6 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable
             foreach (Collider2D col in hitColliders)
             {
                 GameObject enemy = col.gameObject;
-                Debug.Log(spriteFacing);
                 if (enemy.GetComponent<IDamageable>() == null || damagedEntities.Contains(enemy) || (enemy.transform.position.x - transform.position.x) * spriteFacing < 0) continue;
 
                 int kbDir = (enemy.transform.position.x > transform.position.x) ? 1 : -1;

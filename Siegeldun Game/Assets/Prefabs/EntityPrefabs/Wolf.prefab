@@ -213,8 +213,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e90df55d027d3244b185c1f3555bb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  system: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMenu: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   objectName: Wolf
   isInstanceLimited: 1
   maxEachEntityInField: 100
@@ -225,6 +226,7 @@ MonoBehaviour:
   rBody: {fileID: 781637662457676083}
   sprite: {fileID: 781637662457676081}
   boxColl: {fileID: 781637662457676085}
+  cirColl: {fileID: 0}
   capColl: {fileID: 781637662457676084}
   anim: {fileID: 781637662457676082}
   animationSpeed: 1

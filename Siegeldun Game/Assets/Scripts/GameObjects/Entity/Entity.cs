@@ -441,9 +441,9 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
             {
                 GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
             }
-            boxColl.enabled = false;
             if (capColl != null) capColl.enabled = false;
             if (cirColl != null) cirColl.enabled = false;
+            if (boxColl != null) boxColl.enabled = false;
 
             StartCoroutine(DestroyInstance(time));
         }

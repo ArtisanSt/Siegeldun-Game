@@ -2660,7 +2660,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1819849105
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 102
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -3686,7 +3686,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1819849105
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 101
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -3719,9 +3719,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8178796713398332666, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: _isInteractible
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8178796713591007553, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: system
+      value: 
+      objectReference: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+    - target: {fileID: 8178796713591007553, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+    - target: {fileID: 8178796713591007553, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: _isInteractible
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8178796713591007580, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8178796713591007580, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
       propertyPath: m_SortingOrder
@@ -3729,11 +3745,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8178796713591007580, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
       propertyPath: m_SortingLayerID
-      value: 342429607
+      value: -895628959
       objectReference: {fileID: 0}
     - target: {fileID: 8178796714540991762, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8178796714540991762, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
       propertyPath: m_SortingOrder
@@ -3741,7 +3757,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8178796714540991762, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
       propertyPath: m_SortingLayerID
-      value: 342429607
+      value: -895628959
+      objectReference: {fileID: 0}
+    - target: {fileID: 8178796714540991763, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: system
+      value: 
+      objectReference: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+    - target: {fileID: 8178796714540991763, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+    - target: {fileID: 8178796714540991763, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: _isInteractible
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8178796714921254568, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
       propertyPath: m_SortingLayer
@@ -3758,6 +3786,34 @@ PrefabInstance:
     - target: {fileID: 8178796714921254569, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
       propertyPath: m_Name
       value: Gate
+      objectReference: {fileID: 0}
+    - target: {fileID: 8178796714921254574, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: system
+      value: 
+      objectReference: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+    - target: {fileID: 8178796714921254574, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+    - target: {fileID: 8178796714921254574, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: objectName
+      value: Gate
+      objectReference: {fileID: 0}
+    - target: {fileID: 8178796714921254574, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: gameMechanics
+      value: 
+      objectReference: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+    - target: {fileID: 8178796714921254574, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: structureName
+      value: Gate
+      objectReference: {fileID: 0}
+    - target: {fileID: 8178796714921254574, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: isInstanceLimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8178796714921254574, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
+      propertyPath: maxEachEntityInField
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8178796714921254575, guid: c4e625f7b3f62574b83aa9389557da17, type: 3}
       propertyPath: m_RootOrder
@@ -4241,6 +4297,26 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2339610098775991797, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
+      propertyPath: system
+      value: 
+      objectReference: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+    - target: {fileID: 2339610098775991797, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+    - target: {fileID: 2339610098775991797, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
+      propertyPath: objectName
+      value: LoreCrystal
+      objectReference: {fileID: 0}
+    - target: {fileID: 2339610098775991797, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
+      propertyPath: structureName
+      value: Lore Crystal
+      objectReference: {fileID: 0}
+    - target: {fileID: 2339610098775991797, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
+      propertyPath: _isInteractible
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2339610099616006132, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
       propertyPath: m_SortingLayer
       value: 2
@@ -4403,9 +4479,33 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 218027178743051750, guid: 8a7edbcf72341bf45a2b666d4db9f361, type: 3}
+      propertyPath: isInstanceLimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 218027178743051750, guid: 8a7edbcf72341bf45a2b666d4db9f361, type: 3}
+      propertyPath: maxEachEntityInField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 218027178743051751, guid: 8a7edbcf72341bf45a2b666d4db9f361, type: 3}
       propertyPath: m_SortingLayer
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3900592502282571272, guid: 8a7edbcf72341bf45a2b666d4db9f361, type: 3}
+      propertyPath: system
+      value: 
+      objectReference: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+    - target: {fileID: 3900592502282571272, guid: 8a7edbcf72341bf45a2b666d4db9f361, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+    - target: {fileID: 3900592502282571272, guid: 8a7edbcf72341bf45a2b666d4db9f361, type: 3}
+      propertyPath: isInstanceLimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3900592502282571272, guid: 8a7edbcf72341bf45a2b666d4db9f361, type: 3}
+      propertyPath: maxEachEntityInField
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a7edbcf72341bf45a2b666d4db9f361, type: 3}

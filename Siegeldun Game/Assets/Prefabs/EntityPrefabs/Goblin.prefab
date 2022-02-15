@@ -5194,8 +5194,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9a66f7ff9b0f04dba96338e35c4778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  system: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMenu: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   objectName: Goblin
   isInstanceLimited: 1
   maxEachEntityInField: 100
@@ -5206,6 +5207,7 @@ MonoBehaviour:
   rBody: {fileID: 6685909666436209246}
   sprite: {fileID: 6685909666436209242}
   boxColl: {fileID: 6685909666436209241}
+  cirColl: {fileID: 0}
   capColl: {fileID: 6685909666436209240}
   anim: {fileID: 6685909666436209244}
   animationSpeed: 1
