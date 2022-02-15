@@ -6,7 +6,7 @@ using UnityEditor;
 public class GateSlot : Structures, IGateSlot
 {
     // ========================================= Structure Initialization =========================================
-    private bool _isInstanceLimited = false;
+    /*private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 0;
@@ -16,7 +16,7 @@ public class GateSlot : Structures, IGateSlot
     public override string objectName { get { return _objectName; } }
 
     private string _structureName = "Gate Slot";
-    public override string structureName { get { return _structureName; } }
+    public override string structureName { get { return _structureName; } }*/
 
     [Header("GATE SLOT SETTINGS", order = 0)]
     [SerializeField] GameObject crystalPrefab;

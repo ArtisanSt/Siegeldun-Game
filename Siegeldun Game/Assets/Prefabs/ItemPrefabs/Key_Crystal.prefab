@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1030391241932288003}
   - component: {fileID: 1030391241932288000}
   - component: {fileID: 1030391241932288001}
+  - component: {fileID: 5850751345893634235}
   m_Layer: 8
   m_Name: Key_Crystal
   m_TagString: Item
@@ -146,17 +147,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Key_Crystal
+  isInstanceLimited: 1
+  maxEachEntityInField: 2
   doDrop: 1
   dropChance: 1
   onDestroyDropDelay: 0
   itemDrops: []
-  _maxQuantity: 1
+  _isInteractible: 1
+  itemName: Key Crystal
+  itemType: 2
+  _maxQuantity: 2
   _curQuantity: 1
   _itemPrefab: {fileID: 1030391241932288014}
   _iconPrefab: {fileID: 3916258459067645568, guid: 2c67b052879b62c4f800855752769255, type: 3}
   equippable: 0
-  rBody: {fileID: 0}
+  rBody: {fileID: 1030391241932288003}
   itemHopSpeed: 0.0075
   hopLimit: 0.05
-  interactor: {fileID: 0}
+  interactor: {fileID: 5850751345893634235}
   itemPullSpeed: 0.0075
+  effects: []
+--- !u!114 &5850751345893634235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030391241932288014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc4b7ea951ba5340bd0deee51a1ea28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  center: {x: 0, y: 0}
+  size: {x: 3, y: 1}
+  outlined: 0

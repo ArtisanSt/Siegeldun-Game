@@ -5,7 +5,7 @@ using UnityEngine;
 public class Wolf: NPC
 {
     // ========================================= Entity Properties =========================================
-    private bool _isInstanceLimited = true;
+    /*private bool _isInstanceLimited = true;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 100;
@@ -13,7 +13,7 @@ public class Wolf: NPC
 
     private string _entityName = "Wolf";
     public override string entityName { get { return _entityName; } }
-    public override string objectName { get { return _entityName; } }
+    public override string objectName { get { return _entityName; } }*/
 
 
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class WoodSpikes : Structures
 {
     // ========================================= Structure Initialization =========================================
-    private bool _isInstanceLimited = false;
+    /*private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 0;
@@ -15,7 +15,7 @@ public class WoodSpikes : Structures
     public override string objectName { get { return _objectName; } }
 
     private string _structureName = "Wood Spikes";
-    public override string structureName { get { return _structureName; } }
+    public override string structureName { get { return _structureName; } }*/
 
 
     [Header("SPIKES SETTINGS", order = 3)]

@@ -13,9 +13,10 @@ public abstract class Root : Process
     protected static int difficulty = GlobalVariableStorage.gameDifficulty; // Pseudo Difficulty
     protected static int idxDiff = difficulty - 1;
 
-    public abstract string objectName { get; }
-    public abstract bool isInstanceLimited { get; } // Pseudo
-    public abstract int maxEachEntityInField { get; } // Pseudo
+    [Header("ROOT SETTINGS", order = 1)]
+    [SerializeField] public string objectName;
+    [SerializeField] public bool isInstanceLimited;// Pseudo
+    [SerializeField] public int maxEachEntityInField; // Pseudo
 
     [SerializeField] protected static int maxtotalEntityInField = 500; // Pseudo
     protected static Dictionary<string, List<GameObject>> entityInstances = new Dictionary<string, List<GameObject>>();

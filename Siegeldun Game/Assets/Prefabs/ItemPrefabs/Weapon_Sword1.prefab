@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4275815481310653660}
   - component: {fileID: 4275815481310653659}
   - component: {fileID: 4275815481310653658}
+  - component: {fileID: -5219706318430074109}
   m_Layer: 8
   m_Name: Weapon_Sword1
   m_TagString: Item
@@ -166,21 +167,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Weapon_Sword1
+  isInstanceLimited: 0
+  maxEachEntityInField: 0
   doDrop: 1
   dropChance: 1
   onDestroyDropDelay: 0
   itemDrops:
   - {fileID: 4275815481310653657}
-  _isInteractible: 0
+  _isInteractible: 1
+  itemName: Sword 1
+  itemType: 0
   _maxQuantity: 1
   _curQuantity: 1
   _itemPrefab: {fileID: 4275815481310653657}
   _iconPrefab: {fileID: 6721948792633512886, guid: fb3780abdb252a64c9c68fdf8e0cc773, type: 3}
   equippable: 1
-  rBody: {fileID: 0}
+  rBody: {fileID: 4275815481310653660}
   itemHopSpeed: 0.0075
   hopLimit: 0.05
-  interactor: {fileID: 0}
+  interactor: {fileID: -5219706318430074109}
   itemPullSpeed: 0.0075
   effects: []
   uniqueProp:
@@ -196,3 +202,21 @@ MonoBehaviour:
     wpnAtkCrit: 10
     wpnStamCost: 10
     wpnKbForce: 0.3
+--- !u!114 &-5219706318430074109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275815481310653657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc4b7ea951ba5340bd0deee51a1ea28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  center: {x: 0, y: 0}
+  size: {x: 3, y: 1}
+  outlined: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Key_Crystal : Key
 {
     // ========================================= Item Initialization =========================================
-    private bool _isInstanceLimited = false;
+    /*private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 0;
@@ -15,7 +15,7 @@ public class Key_Crystal : Key
     public override string objectName { get { return _objectName; } }
 
     private string _itemName = "Crystal";
-    public override string itemName { get { return _itemName; } }
+    public override string itemName { get { return _itemName; } }*/
 
     protected override void UniqueStatsInit()
     {

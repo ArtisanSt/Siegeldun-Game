@@ -18,14 +18,14 @@ public class EquippedSlotProperties
 
 public class Inventory: BaseObject
 {
-    private bool _isInstanceLimited = false;
+    /*private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 0;
     public override int maxEachEntityInField { get { return _maxEachEntityInField; } }
 
     private string _objectName = "Inventory";
-    public override string objectName { get { return _objectName; } }
+    public override string objectName { get { return _objectName; } }*/
 
     /* Entity can only Equip item from its inventory
      * 
@@ -262,7 +262,7 @@ public class Inventory: BaseObject
         if (isSuccess[0] >= 0)
         {
             Destroy(selectedItem);
-            if (selItemProp.equippable && eqpSlotsCol[selItemProp.itemType].curItem == null) Equip(isSuccess[1]);
+            if (selItemProp.equippable && eqpSlotsCol[selItemProp.itemType.ToString()].curItem == null) Equip(isSuccess[1]);
 
             return true;
         }
@@ -320,8 +320,8 @@ public class Inventory: BaseObject
             inventorySlots[slotNumber][1] = curItem;
 
             // Overwrites the Stats of the Icon created by the stats of the Item picked
-            if (curItemProp.itemType == "Consumable") curItem.GetComponent<Consumable>().OverwriteStats(selItemProp.GetComponent<Consumable>());
-            else if (curItemProp.itemType == "Weapon") curItem.GetComponent<Weapon>().OverwriteStats(selItemProp.GetComponent<Weapon>());
+            if (curItemProp.itemType.ToString() == "Consumable") curItem.GetComponent<Consumable>().OverwriteStats(selItemProp.GetComponent<Consumable>());
+            else if (curItemProp.itemType.ToString() == "Weapon") curItem.GetComponent<Weapon>().OverwriteStats(selItemProp.GetComponent<Weapon>());
             curItemProp.OnInventory(gameObject, curSlot);
 
             isSuccess = 0;
@@ -350,7 +350,7 @@ public class Inventory: BaseObject
         if (!newProcess || selectedItem == null) return false;
 
         // Unequips the item
-        if (IsItemEquipped(selectedItem)) { bool x = Unequip(eqpSlotsCol[selectedItem.GetComponent<Item>().itemType].eqpSlot); }
+        if (IsItemEquipped(selectedItem)) { bool x = Unequip(eqpSlotsCol[selectedItem.GetComponent<Item>().itemType.ToString()].eqpSlot); }
 
         for (int i = 0; i < inventorySlots.Count; i++)
         {
@@ -382,7 +382,7 @@ public class Inventory: BaseObject
         bool output = curItem.GetComponent<Item>().equippable;
 
         if (!output) return false;
-        else return eqpSlotsCol[curItem.GetComponent<Item>().itemType].curItem == curItem;
+        else return eqpSlotsCol[curItem.GetComponent<Item>().itemType.ToString()].curItem == curItem;
     }
 
     public bool Equip(int selectedSlot)
@@ -401,13 +401,13 @@ public class Inventory: BaseObject
         if (IsItemEquipped(curItem)) return false;
 
         Item curItemProp = curItem.GetComponent<Item>();
-        GameObject eqpSlot = eqpSlotsCol[curItemProp.itemType].eqpSlot;
+        GameObject eqpSlot = eqpSlotsCol[curItemProp.itemType.ToString()].eqpSlot;
 
         // Clears current equipped item
         Unequip(eqpSlot);
 
-        eqpSlotsCol[curItemProp.itemType].curSlot = curItem.transform.parent.gameObject;
-        eqpSlotsCol[curItemProp.itemType].curItem = curItem;
+        eqpSlotsCol[curItemProp.itemType.ToString()].curSlot = curItem.transform.parent.gameObject;
+        eqpSlotsCol[curItemProp.itemType.ToString()].curItem = curItem;
 
         GameObject newEqpItem = (GameObject)Instantiate(curItemProp.iconPrefab, eqpSlot.transform, false);
         newEqpItem.name = "Eqp_" + curItemProp.itemName;
@@ -434,13 +434,13 @@ public class Inventory: BaseObject
             Item eqpItemProp = eqpItem.GetComponent<Item>();
 
             // Gameobject of item in the invslot
-            GameObject curItem = eqpSlotsCol[eqpItemProp.itemType].curItem;
+            GameObject curItem = eqpSlotsCol[eqpItemProp.itemType.ToString()].curItem;
             Item curItemProp = curItem.GetComponent<Item>();
 
             // Unequips the current equipped item
             curItemProp.OnUnequip();
-            eqpSlotsCol[eqpItemProp.itemType].curSlot = null;
-            eqpSlotsCol[eqpItemProp.itemType].curItem = null;
+            eqpSlotsCol[eqpItemProp.itemType.ToString()].curSlot = null;
+            eqpSlotsCol[eqpItemProp.itemType.ToString()].curItem = null;
             Destroy(eqpItem);
 
             gameObject.GetComponent<IWeaponizable>().SetWeapon(null); // Should be changed to Events //////////////////////
@@ -478,7 +478,6 @@ public class Inventory: BaseObject
 
         // Unequips the item 
         if (curItemProp.isEmpty) { bool x = RemoveFromInventory(curItem); }
-        Debug.Log(curItemProp.curQuantity);
 
         return isSuccess;
     }

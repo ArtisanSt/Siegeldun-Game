@@ -96,6 +96,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0acbc99e781c00c4fad9f45e76e8f8cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Portal
+  isInstanceLimited: 1
+  maxEachEntityInField: 1
+  doDrop: 0
+  dropChance: 1
+  onDestroyDropDelay: 0
+  itemDrops: []
+  _isInteractible: 0
+  structureName: Portal
 --- !u!61 &8178796713398332667
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -246,9 +257,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: SlotA
+  isInstanceLimited: 1
+  maxEachEntityInField: 1
   doDrop: 0
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops: []
+  _isInteractible: 0
+  structureName: Gate Slot A
   crystalPrefab: {fileID: 3012785729809906210, guid: 349ad089f664aff4b9a02776321a2e0c, type: 3}
   playerInventory: {fileID: 0}
 --- !u!1 &8178796714540991790
@@ -375,9 +392,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Slot B
+  isInstanceLimited: 1
+  maxEachEntityInField: 1
   doDrop: 0
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops: []
+  _isInteractible: 0
+  structureName: Gate Slot A
   crystalPrefab: {fileID: 3012785729809906210, guid: 349ad089f664aff4b9a02776321a2e0c, type: 3}
   playerInventory: {fileID: 0}
 --- !u!1 &8178796714921254569

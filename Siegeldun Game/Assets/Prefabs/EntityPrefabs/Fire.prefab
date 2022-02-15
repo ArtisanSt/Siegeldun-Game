@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 991996671
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: -2969337942446801578, guid: ba625336b3646c44e948f89559150258, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -164,13 +164,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5d9895536072f94ba636d891e897412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  systemGameObject: {fileID: 0}
+  gameMechanics: {fileID: 0}
+  objectName: Fire
+  isInstanceLimited: 0
+  maxEachEntityInField: 0
+  doDrop: 0
+  dropChance: 1
+  onDestroyDropDelay: 0
+  itemDrops: []
   rBody: {fileID: 1341461660868417408}
   sprite: {fileID: 1341461660868417412}
-  entityPrefab: {fileID: 0}
-  entityDrops: []
-  entityID: 0
+  boxColl: {fileID: 0}
+  cirColl: {fileID: 0}
+  capColl: {fileID: 0}
+  anim: {fileID: 0}
+  animationSpeed: 1
+  spriteDefaultFacing: 1
+  entityName: Fire
+  entityType: 1
+  entityPrefab: {fileID: 1341461660868417418}
+  hasSpawner: 0
+  spawner: {fileID: 0}
+  activePoints:
+  - {fileID: 0}
+  - {fileID: 0}
   isAlive: 1
-  maxHealth: 0
-  entityHp: 0
-  attackSpeed: 0
-  hpRegenTimer: 0
+  entityStatusBar: {fileID: 0}
+  hasHp: 0
+  isInvulnerable: 0
+  maxHpScaling:
+  - 0
+  - 0
+  - 0
+  curHp: 0
+  maxHp: 0
+  hpBarB: {fileID: 0}
+  hpBarF: {fileID: 0}
+  hpText: {fileID: 0}
+  doHpRegen: 0
+  hpRegenScaling:
+  - 0
+  - 0
+  - 0
+  hpRegen: 0
+  hpRegenDelay: 3
+  hasStam: 0
+  isInfStamina: 0
+  maxStamScaling:
+  - 0
+  - 0
+  - 0
+  curStam: 0
+  maxStam: 0
+  stamBar: {fileID: 0}
+  stamText: {fileID: 0}
+  doStamRegen: 0
+  stamRegenScaling:
+  - 0
+  - 0
+  - 0
+  stamRegen: 0
+  stamRegenDelay: 3
+  doFreeze: 1
+  freezeOn: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64

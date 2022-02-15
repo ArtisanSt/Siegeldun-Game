@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : Beings, IInteractor
 {
     // ========================================= Entity Properties =========================================
-    private bool _isInstanceLimited = true;
+    /*private bool _isInstanceLimited = true;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 1;
@@ -14,7 +14,7 @@ public class Player : Beings, IInteractor
     private string _entityName = "Player";
     public override string entityName { get { return _entityName; }}
     public override string objectName { get { return _entityName; } }
-
+*/
 
 
 

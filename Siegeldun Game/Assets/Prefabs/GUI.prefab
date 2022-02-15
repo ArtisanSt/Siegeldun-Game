@@ -1856,7 +1856,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 886095274031483531, guid: f7332d778453747479a56cf6106d62ee, type: 3}
       propertyPath: m_Name
-      value: Tutorial
+      value: MessageBox
       objectReference: {fileID: 0}
     - target: {fileID: 1386783532628117681, guid: f7332d778453747479a56cf6106d62ee, type: 3}
       propertyPath: m_Pivot.x

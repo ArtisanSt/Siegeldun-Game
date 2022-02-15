@@ -21,10 +21,11 @@ public class SelfEffectProperties
 public abstract class Item : Interactibles, IInteractor
 {
     // ========================================= Item Properties =========================================
-    public abstract string itemName { get; }
-    public abstract string itemType { get; } // Weapon, Consumable, Key
-
     [Header("ITEM SETTINGS", order = 1)]
+    [SerializeField] public string itemName;
+    public enum ItemType { Weapon, Consumable, Key}
+    [SerializeField] public ItemType itemType; // Weapon, Consumable, Key
+
     [SerializeField] private int _maxQuantity = 1;
     public int maxQuantity { get { return _maxQuantity; } protected set { _maxQuantity = value; } }
     [SerializeField] private int _curQuantity = 1;
@@ -87,10 +88,10 @@ public abstract class Item : Interactibles, IInteractor
         isInteractible = !isIcon;
 
         objectClassification = (isIcon) ? "ICON" : "ITEM";
-        if (itemType == "Weapon" || itemType == "Consumable") { equippable = true; }
+        if (itemType != ItemType.Key) { equippable = true; }
 
-        isFull = false;
-        isEmpty = false;
+        isFull = curQuantity == maxQuantity;
+        isEmpty = curQuantity == 0;
 
         amountOverflow = 0;
         
@@ -150,7 +151,6 @@ public abstract class Item : Interactibles, IInteractor
 
         rBody.MovePosition(new Vector2(ItemPull(), ItemBounce()));
 
-        if (interactor == null || isMerging || interactor.curSelected == null) return;
         Merge(nearestItem);
     }
 
@@ -161,7 +161,11 @@ public abstract class Item : Interactibles, IInteractor
 
     private float ItemPull()
     {
-        if (interactor == null || isMerging || interactor.curSelected == null) return rBody.position.x;
+        if (interactor == null || interactor.curSelected == null || isMerging || isFull || interactor.curSelected.GetComponent<Item>().isFull)
+        {
+            nearestItem = null;
+            return rBody.position.x;
+        }
 
         nearestItem = interactor.curSelected;
         pullDirection = (nearestItem.transform.position.x - transform.position.x > 0) ? 1 : -1 ;
@@ -171,7 +175,7 @@ public abstract class Item : Interactibles, IInteractor
 
     public void Merge(GameObject otherObject)
     {
-        if (Mathf.Abs(otherObject.transform.position.x - transform.position.x) > 0.1f) return;
+        if (otherObject == null || isMerging || Mathf.Abs(otherObject.transform.position.x - transform.position.x) > 0.1f) return;
 
         Item otherItem = otherObject.GetComponent<Item>();
         if (otherItem.itemName != itemName || otherItem.isFull) return;
@@ -179,6 +183,7 @@ public abstract class Item : Interactibles, IInteractor
         MergeState state = (gameObject.GetInstanceID() < otherObject.GetInstanceID()) ? MergeState.Lead : MergeState.Other;
         isMerging = true;
         ChangeAmount(otherItem.curQuantity);
+        transform.position += new Vector3(0, (otherObject.transform.position.y - transform.position.y) / 2, 0);
         Destroy(otherObject);
         isMerging = false;
 

@@ -13,6 +13,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
     [SerializeField] protected Rigidbody2D rBody = null;
     [SerializeField] protected SpriteRenderer sprite = null;
     [SerializeField] protected BoxCollider2D boxColl = null;
+    [SerializeField] protected CircleCollider2D cirColl = null;
     [SerializeField] protected CapsuleCollider2D capColl = null;
     [SerializeField] protected Animator anim = null;
 
@@ -22,6 +23,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         rBody = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         boxColl = GetComponent<BoxCollider2D>();
+        cirColl = GetComponent<CircleCollider2D>();
         capColl = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
     }
@@ -71,11 +73,12 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
 
 
     // ========================================= ENTITY PROPERTIES =========================================
-    public int entityID { get; private set; }
-    public abstract string entityName { get; }
-    public abstract string entityType { get; }
-
     [Header("ENTITY SETTINGS", order = 2)]
+    [SerializeField] public string entityName;
+    public enum EntityType { Beings, Breakables }
+    [SerializeField] public EntityType entityType;
+    public int entityID { get; private set; }
+
     [SerializeField] public GameObject entityPrefab = null;
 
     protected bool isPlayer ;
@@ -394,7 +397,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         }
         else
         {
-            if (entityType == "Beings")
+            if (entityType.ToString() == "Beings")
             {
                 if (isCrit)
                 {
@@ -432,12 +435,13 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         yield return new WaitUntil(() => deadOnGround);
         if (boxColl.enabled)
         {
-            if (entityType == "Beings")
+            if (entityType.ToString() == "Beings")
             {
-                capColl.enabled = false;
                 GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
             }
             boxColl.enabled = false;
+            if (capColl != null) capColl.enabled = false;
+            if (cirColl != null) cirColl.enabled = false;
 
             StartCoroutine(DestroyInstance(time));
         }

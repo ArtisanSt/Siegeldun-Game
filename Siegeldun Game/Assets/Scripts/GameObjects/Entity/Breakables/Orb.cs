@@ -5,7 +5,7 @@ using UnityEngine;
 public class Orb : Breakables
 {
     // ========================================= Entity Initialization =========================================
-    private bool _isInstanceLimited = false;
+    /*private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 0;
@@ -13,7 +13,7 @@ public class Orb : Breakables
 
     private string _entityName = "Orb";
     public override string entityName { get { return _entityName; } }
-    public override string objectName { get { return _entityName; } }
+    public override string objectName { get { return _entityName; } }*/
 
 
 

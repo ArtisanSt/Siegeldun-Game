@@ -5196,6 +5196,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Goblin
+  isInstanceLimited: 1
+  maxEachEntityInField: 100
   doDrop: 1
   dropChance: 1000
   onDestroyDropDelay: 0
@@ -5207,6 +5210,8 @@ MonoBehaviour:
   anim: {fileID: 6685909666436209244}
   animationSpeed: 1
   spriteDefaultFacing: -1
+  entityName: Goblin
+  entityType: 0
   entityPrefab: {fileID: 6685909666436209234}
   hasSpawner: 0
   spawner: {fileID: 0}
@@ -5265,9 +5270,8 @@ MonoBehaviour:
   weaponGameobject: {fileID: 0}
   wpnEquipped: {fileID: 0}
   defaultPower:
-    weaponType: Melee
+    weaponType: 0
     tier: 0
-    isBroken: 0
     doBreak: 0
     durability: 0
     wpnDamage: 15
@@ -5298,6 +5302,7 @@ MonoBehaviour:
   isTriggered: 0
   forgivenessTime: 2
   triggerDistance: 3
+  backOffDistance: 0
   jumpEnabled: 1
 --- !u!1 &6685909667086018527
 GameObject:

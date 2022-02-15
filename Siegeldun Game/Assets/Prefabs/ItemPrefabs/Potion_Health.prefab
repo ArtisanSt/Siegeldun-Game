@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 116043195058129460}
   - component: {fileID: 116043195058129467}
   - component: {fileID: 116043195058129466}
+  - component: {fileID: 8625872400465317144}
   m_Layer: 8
   m_Name: Potion_Health
   m_TagString: Item
@@ -113,7 +114,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116043195058129465}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -166,20 +167,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Potion_Health
+  isInstanceLimited: 0
+  maxEachEntityInField: 0
   doDrop: 1
   dropChance: 1
   onDestroyDropDelay: 0
   itemDrops:
   - {fileID: 116043195058129465}
+  _isInteractible: 1
+  itemName: Health Potion
+  itemType: 1
   _maxQuantity: 64
   _curQuantity: 1
   _itemPrefab: {fileID: 116043195058129465}
   _iconPrefab: {fileID: 6433002720851475710, guid: ce48e3a79bd192c46ad6780cdd1fe882, type: 3}
   equippable: 1
-  rBody: {fileID: 0}
+  rBody: {fileID: 116043195058129460}
   itemHopSpeed: 0.0075
   hopLimit: 0.05
-  interactor: {fileID: 0}
+  interactor: {fileID: 8625872400465317144}
   itemPullSpeed: 0.01
   effects:
   - effectName: 0
@@ -190,3 +197,21 @@ MonoBehaviour:
     effectTimerIncrements: 0.1
   uniqueProp:
     consumableType: 0
+--- !u!114 &8625872400465317144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116043195058129465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc4b7ea951ba5340bd0deee51a1ea28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  center: {x: 0, y: 0}
+  size: {x: 3, y: 1}
+  outlined: 0

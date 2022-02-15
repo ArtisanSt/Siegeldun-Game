@@ -5,7 +5,7 @@ using UnityEngine;
 public class Potion_Stamina : Consumable
 {
     // ========================================= Item Initialization =========================================
-    private bool _isInstanceLimited = false;
+    /*private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 0;
@@ -16,7 +16,7 @@ public class Potion_Stamina : Consumable
 
     private string _itemName = "Stamina Potion";
     public override string itemName { get { return _itemName; } }
-
+*/
     protected override void UniqueStatsInit()
     {
 

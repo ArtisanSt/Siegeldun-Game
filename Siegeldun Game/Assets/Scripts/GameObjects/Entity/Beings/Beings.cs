@@ -22,13 +22,6 @@ public class SpeedBoost
 
 public abstract class Beings : Entity, IBoostable, IWeaponizable
 {
-    // ========================================= BEINGS PROPERTIY SCALING =========================================
-    private string _entityType = "Beings";
-    public override string entityType { get { return _entityType; } }
-
-
-
-
     protected virtual void Start()
     {
         InventoryPropInit();

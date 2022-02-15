@@ -19,14 +19,14 @@ public class MobSpawner
 
 public class Spawner : Root
 {
-    private bool _isInstanceLimited = true;
+    /*private bool _isInstanceLimited = true;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 5;
     public override int maxEachEntityInField { get { return _maxEachEntityInField; } }
 
     private string _objectName = "Spawner";
-    public override string objectName { get { return _objectName; } }
+    public override string objectName { get { return _objectName; } }*/
 
 
     protected GameObject levelSystem;

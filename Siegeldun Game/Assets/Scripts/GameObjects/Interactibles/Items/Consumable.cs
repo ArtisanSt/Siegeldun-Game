@@ -22,8 +22,8 @@ public class ConsumableProperties
 public abstract class Consumable : Item
 {
     // ========================================= Weapon Properties =========================================
-    private string _itemType = "Consumable";
-    public override string itemType { get { return _itemType; } }
+    /*private string _itemType = "Consumable";
+    public override string itemType { get { return _itemType; } }*/
 
     [SerializeField] public ConsumableProperties uniqueProp;
 

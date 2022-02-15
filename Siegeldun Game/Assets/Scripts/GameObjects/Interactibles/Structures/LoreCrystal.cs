@@ -5,7 +5,7 @@ using UnityEngine;
 public class LoreCrystal : Structures
 {
     // ========================================= Structure Initialization =========================================
-    private bool _isInstanceLimited = false;
+    /*private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 0;
@@ -15,7 +15,7 @@ public class LoreCrystal : Structures
     public override string objectName { get { return _objectName; } }
 
     private string _structureName = "Lore Crystal";
-    public override string structureName { get { return _structureName; } }
+    public override string structureName { get { return _structureName; } }*/
 
     protected override void Awake()
     {

@@ -104,8 +104,8 @@ public class WeaponProperties
 public abstract class Weapon : Item
 {
     // ========================================= Weapon Properties =========================================
-    private string _itemType = "Weapon";
-    public override string itemType { get { return _itemType; } }
+    /*private string _itemType = "Weapon";
+    public override string itemType { get { return _itemType; } }*/
 
     [SerializeField] public WeaponProperties uniqueProp;
 

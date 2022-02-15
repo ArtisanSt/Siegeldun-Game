@@ -215,6 +215,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Wolf
+  isInstanceLimited: 1
+  maxEachEntityInField: 100
   doDrop: 1
   dropChance: 1
   onDestroyDropDelay: 0
@@ -226,6 +229,8 @@ MonoBehaviour:
   anim: {fileID: 781637662457676082}
   animationSpeed: 1
   spriteDefaultFacing: -1
+  entityName: Wolf
+  entityType: 0
   entityPrefab: {fileID: 781637662457676089}
   hasSpawner: 0
   spawner: {fileID: 0}
@@ -282,9 +287,8 @@ MonoBehaviour:
   weaponGameobject: {fileID: 0}
   wpnEquipped: {fileID: 0}
   defaultPower:
-    weaponType: Melee
+    weaponType: 0
     tier: 0
-    isBroken: 0
     doBreak: 0
     durability: 0
     wpnDamage: 15
@@ -315,6 +319,7 @@ MonoBehaviour:
   isTriggered: 0
   forgivenessTime: 2
   triggerDistance: 3
+  backOffDistance: 0
   jumpEnabled: 1
 --- !u!1 &781637662561195180
 GameObject:
