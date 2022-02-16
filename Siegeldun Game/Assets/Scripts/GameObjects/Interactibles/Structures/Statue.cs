@@ -7,7 +7,6 @@ public class Statue : Structures
     protected override void Awake()
     {
         base.Awake();
-        isInteractible = false;
     }
 
     protected override void Update()

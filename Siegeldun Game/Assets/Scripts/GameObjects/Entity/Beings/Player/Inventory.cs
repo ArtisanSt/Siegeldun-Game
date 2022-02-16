@@ -65,7 +65,7 @@ public class Inventory: BaseObject
     // Update is called once per frame
     void Update()
     {
-        if (pauseMenu.isPaused) return;
+        if (!PauseMechanics.isPlaying) return;
         InventoryControls();
         UpdateText();
     }
@@ -214,7 +214,6 @@ public class Inventory: BaseObject
         {
             if (inventorySlots[i][1] != null && inventorySlots[i][1].GetComponent<Item>().itemName == itemName)
             {
-                Debug.Log(true); ;
                 itemIdx = i;
                 break;
             }
@@ -364,10 +363,12 @@ public class Inventory: BaseObject
     // ========================================= EQUIP ITEM METHODS =========================================
     protected bool IsItemEquipped(GameObject curItem)
     {
-        bool output = curItem.GetComponent<Item>().equippable;
+        return (IsItemEquippable(curItem)) ? eqpSlotsCol[curItem.GetComponent<Item>().itemType.ToString()].curItem == curItem : false;
+    }
 
-        if (!output) return false;
-        else return eqpSlotsCol[curItem.GetComponent<Item>().itemType.ToString()].curItem != curItem;
+    protected bool IsItemEquippable(GameObject curItem)
+    {
+        return curItem.GetComponent<Item>().equippable;
     }
 
     public bool Equip(int selectedSlot)
@@ -383,7 +384,7 @@ public class Inventory: BaseObject
 
     public bool Equip(GameObject curItem)
     {
-        if (!IsItemEquipped(curItem)) return false;
+        if (!IsItemEquippable(curItem) || IsItemEquipped(curItem)) return false;
 
         Item curItemProp = curItem.GetComponent<Item>();
         GameObject eqpSlot = eqpSlotsCol[curItemProp.itemType.ToString()].eqpSlot;

@@ -34,18 +34,7 @@ public class Potion_Health : Consumable
 
     protected override void PassiveEffects(string state)
     {
-        if (state == "Select")
-        {
 
-        }
-        else if (state == "Inventory")
-        {
-
-        }
-        else if (state == "Equipped")
-        {
-
-        }
     }
 
     protected override void ActiveEffects()

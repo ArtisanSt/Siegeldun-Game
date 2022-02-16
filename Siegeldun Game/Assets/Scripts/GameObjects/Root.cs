@@ -6,13 +6,10 @@ using UnityEngine;
 public abstract class Root : Process
 {
     // ========================================= Game Properties =========================================
-    [SerializeField] protected GameObject system;
-    [SerializeField] protected GameMechanics gameMechanics;
-    [SerializeField] protected PauseMenu pauseMenu;
+    protected static GameMechanics gameMechanics;
     protected LevelProperties lvlProp;
 
-    protected static int difficulty = GlobalVariableStorage.gameDifficulty; // Pseudo Difficulty
-    protected static int idxDiff = difficulty - 1;
+    protected static int idxDiff = (int)GlobalVariableStorage.curDifficulty.difficulty;
 
     [Header("ROOT SETTINGS", order = 1)]
     [SerializeField] public string objectName;
@@ -30,10 +27,8 @@ public abstract class Root : Process
     // =========================================  INSTANTIATION =========================================
     protected void GameMechanicsPropInit()
     {
-        system = GameObject.Find("System");
-        gameMechanics = system.GetComponent<GameMechanics>();
-        pauseMenu = system.GetComponent<PauseMenu>();
-        lvlProp = gameMechanics.curLvlProp;
+        if (gameMechanics == null) gameMechanics = GameObject.Find("Game System/GameMechanics").GetComponent<GameMechanics>();
+        //lvlProp = gameMechanics.curLvlProp;
 
         PrefabsInit();
     }

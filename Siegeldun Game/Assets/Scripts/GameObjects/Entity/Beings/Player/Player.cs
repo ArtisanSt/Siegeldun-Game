@@ -8,12 +8,14 @@ public class Player : Beings, IInteractor
     protected override void Awake()
     {
         base.Awake();
+
+        transform.position = new Vector2(GameMechanics.levelProperties.resPlatform.position.x, transform.position.y);
     }
 
     // Update is called once per frame
     protected void Update()
     {
-        if (pauseMenu.isPaused) return;
+        if (!PauseMechanics.isPlaying) return;
         PassiveSkills();
         UpdateStats();
 
@@ -86,10 +88,19 @@ public class Player : Beings, IInteractor
 
 
     // ========================================= NPC DEATH =========================================
+    // Executes after death animation and instance clearing on memory
     protected override void Die()
     {
         base.Die();
         // Clear Inventory
+    }
+
+    // Executes right before entity to be destroyed
+    protected override void OnEntityDestroy()
+    {
+        base.OnEntityDestroy();
+
+        gameMechanics.PlayerDied();
     }
 
 

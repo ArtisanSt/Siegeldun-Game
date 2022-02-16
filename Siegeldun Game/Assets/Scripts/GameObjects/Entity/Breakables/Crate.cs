@@ -7,18 +7,7 @@ public class Crate : Breakables
     // ========================================= ITEM DROPS INITIALIZATION =========================================
     protected override void itemDropsInit()
     {
-        switch (difficulty)
-        {
-            case 1:
-                // itemDrops.Add();
-                break;
-            case 2:
-                // itemDrops.Add();
-                break;
-            case 3:
-                // itemDrops.Add();
-                break;
-        }
+
     }
 
     // ========================================= UNITY MAIN METHODS =========================================
@@ -34,6 +23,15 @@ public class Crate : Breakables
         base.Update();
     }
 
+    // ========================================= ENTITY DEATH =========================================
+    // Executes after death animation and instance clearing on memory
+    protected override void Die()
+    {
+        base.Die();
+        // Clear Inventory
+    }
+
+    // Executes right before entity to be destroyed
     protected override void OnEntityDestroy()
     {
         base.OnEntityDestroy();

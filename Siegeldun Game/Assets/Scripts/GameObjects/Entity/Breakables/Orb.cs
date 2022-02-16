@@ -36,17 +36,18 @@ public class Orb : Breakables
         base.Update();
     }
 
+    // ========================================= ENTITY DEATH =========================================
+    // Executes after death animation and instance clearing on memory
+    protected override void Die()
+    {
+        base.Die();
+        // Clear Inventory
+    }
+
+    // Executes right before entity to be destroyed
     protected override void OnEntityDestroy()
     {
         base.OnEntityDestroy();
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Enemy" && col.gameObject.tag == "Player")
-        {
-            Physics2D.IgnoreCollision(col.otherCollider, col.collider);
-        }
     }
 
     // ========================================= ANIMATION METHODS =========================================

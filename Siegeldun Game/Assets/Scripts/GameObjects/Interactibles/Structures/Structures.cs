@@ -24,6 +24,6 @@ public abstract class Structures : Interactibles
 
     protected virtual void Update()
     {
-        if (pauseMenu.isPaused) return;
+        if (!PauseMechanics.isPlaying) return;
     }
 }

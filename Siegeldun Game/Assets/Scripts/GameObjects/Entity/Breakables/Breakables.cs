@@ -32,7 +32,7 @@ public abstract class Breakables: Entity
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (pauseMenu.isPaused) return;
+        if (!PauseMechanics.isPlaying) return;
         FreezeObject();
     }
 }

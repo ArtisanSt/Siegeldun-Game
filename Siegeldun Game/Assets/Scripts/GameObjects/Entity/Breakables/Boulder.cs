@@ -12,18 +12,7 @@ public class Boulder : Breakables
     // ========================================= ITEM DROPS INITIALIZATION =========================================
     protected override void itemDropsInit()
     {
-        switch (difficulty)
-        {
-            case 1:
-                // itemDrops.Add();
-                break;
-            case 2:
-                // itemDrops.Add();
-                break;
-            case 3:
-                // itemDrops.Add();
-                break;
-        }
+
     }
 
     // ========================================= UNITY MAIN METHODS =========================================
@@ -49,11 +38,6 @@ public class Boulder : Breakables
         rBody.velocity = new Vector2(rBody.velocity.x * multiplier, rBody.velocity.y);
 
         rBody.rotation -= (rBody.velocity.x * ratioToWorldScale) / circumference;
-    }
-
-    protected override void OnEntityDestroy()
-    {
-        base.OnEntityDestroy();
     }
 
     // ========================================= ANIMATION METHODS =========================================

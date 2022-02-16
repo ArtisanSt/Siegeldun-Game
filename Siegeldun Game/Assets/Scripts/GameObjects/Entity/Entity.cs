@@ -38,7 +38,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
 
     protected virtual void LateUpdate()
     {
-        if (pauseMenu.isPaused) return;
+        if (!PauseMechanics.isPlaying) return;
 
         HpBarUIUpdate();
         StamBarUIUpdate();
@@ -193,6 +193,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
     protected void HpBarUIUpdate()
     {
         if (!hasHp || !entityStatusBar) return;
+
 
         // HP UI Parameters
         float fillF = hpBarF.fillAmount;

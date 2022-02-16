@@ -14,6 +14,8 @@ public class ItemToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     void Update()
     {
+        if (!PauseMechanics.isPlaying) return; 
+
         if (playerEntity == null)
         {
             playerEntity = GameObject.Find("Player");

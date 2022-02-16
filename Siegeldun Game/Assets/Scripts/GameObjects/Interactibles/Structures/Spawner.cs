@@ -19,16 +19,6 @@ public class MobSpawner
 
 public class Spawner : Root
 {
-    /*private bool _isInstanceLimited = true;
-    public override bool isInstanceLimited { get { return _isInstanceLimited; } }
-
-    private int _maxEachEntityInField = 5;
-    public override int maxEachEntityInField { get { return _maxEachEntityInField; } }
-
-    private string _objectName = "Spawner";
-    public override string objectName { get { return _objectName; } }*/
-
-
     protected GameObject levelSystem;
 
     [Header("Spawner Parameters", order = 0)]
@@ -59,10 +49,7 @@ public class Spawner : Root
 
     void Start()
     {
-        //activePoints = new List<Transform>() { GameObject.Find("LeftActivePoint"), GameObject.Find("RightActivePoint")}
-        // Pseudo level mob prefab
-
-        // Pseudo Mobs initializer
+        // Mobs initializer
         for (int i=0; i < spawnMobs.Count; i++)
         {
             MobSpawner mobInstance = new MobSpawner(spawnMobs[i], instancePerMob[i]);
@@ -72,7 +59,7 @@ public class Spawner : Root
 
     void Update()
     {
-        if (pauseMenu.isPaused || GameObject.Find("Player") == null) return;
+        if (!PauseMechanics.isPlaying || GameObject.Find("Player") == null) return;
         
         target = GameObject.Find("Player").transform;
 

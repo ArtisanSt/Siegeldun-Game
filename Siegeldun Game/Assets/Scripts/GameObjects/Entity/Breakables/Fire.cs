@@ -37,6 +37,15 @@ public class Fire : Breakables
         base.Update();
     }
 
+    // ========================================= ENTITY DEATH =========================================
+    // Executes after death animation and instance clearing on memory
+    protected override void Die()
+    {
+        base.Die();
+        // Clear Inventory
+    }
+
+    // Executes right before entity to be destroyed
     protected override void OnEntityDestroy()
     {
         base.OnEntityDestroy();
