@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Structures : Interactibles, IStructure
+public abstract class Structures : Interactibles
 {
     // ========================================= Structure Properties =========================================
-    public abstract string structureName { get; }
+    [Header("STRUCTURE SETTINGS", order = 1)]
+    [SerializeField] public string structureName;
 
 
     protected virtual void Awake()
@@ -19,6 +20,10 @@ public abstract class Structures : Interactibles, IStructure
     {
         objectClassification = "STRUCTURE";
         isInteractible = true;
+    }
 
+    protected virtual void Update()
+    {
+        if (!PauseMechanics.isPlaying) return;
     }
 }

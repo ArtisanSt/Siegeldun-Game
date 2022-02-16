@@ -6,16 +6,15 @@ using UnityEngine;
 public abstract class Root : Process
 {
     // ========================================= Game Properties =========================================
-    [SerializeField] protected GameObject systemGameObject;
-    [SerializeField] protected GameMechanics gameMechanics;
+    protected static GameMechanics gameMechanics;
     protected LevelProperties lvlProp;
 
-    protected static int difficulty = GlobalVariableStorage.gameDifficulty; // Pseudo Difficulty
-    protected static int idxDiff = difficulty - 1;
+    protected static int idxDiff = (int)GlobalVariableStorage.curDifficulty.difficulty;
 
-    public abstract string objectName { get; }
-    public abstract bool isInstanceLimited { get; } // Pseudo
-    public abstract int maxEachEntityInField { get; } // Pseudo
+    [Header("ROOT SETTINGS", order = 1)]
+    [SerializeField] public string objectName;
+    [SerializeField] public bool isInstanceLimited;// Pseudo
+    [SerializeField] public int maxEachEntityInField; // Pseudo
 
     [SerializeField] protected static int maxtotalEntityInField = 500; // Pseudo
     protected static Dictionary<string, List<GameObject>> entityInstances = new Dictionary<string, List<GameObject>>();
@@ -28,9 +27,8 @@ public abstract class Root : Process
     // =========================================  INSTANTIATION =========================================
     protected void GameMechanicsPropInit()
     {
-        systemGameObject = GameObject.Find("System");
-        gameMechanics = systemGameObject.GetComponent<GameMechanics>();
-        lvlProp = gameMechanics.curLvlProp;
+        if (gameMechanics == null) gameMechanics = GameObject.Find("Game System/GameMechanics").GetComponent<GameMechanics>();
+        //lvlProp = gameMechanics.curLvlProp;
 
         PrefabsInit();
     }

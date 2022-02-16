@@ -3,39 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[System.Serializable]
 public class SelfEffectProperties
 {
     // ========================================= Consumable Properties =========================================
-    public string effectName { get; protected set; } // Food or Potion
+    public enum EffectName { HP, Stamina, Damage, AttackRange, AttackSpeed, AttackDelay, CritHit, CritChance, WpnStamCost, KbForce, MVSpeed, JumpHeight, KbReduction, DmgReduction, CritReduction }
+    public EffectName effectName;
 
-    public bool hasEffect { get; protected set; }
-    public float effectParam { get; protected set; }
-    public string effectSpeed { get; protected set; } // "Instant": (HP and Stamina: Affects insantly, Others: Until weapon is unequipped), "Overtime"
-    public float effectTimer { get; protected set; }
-    public float effectTimerIncrements { get; protected set; }
-
-    public SelfEffectProperties(string effectName, bool hasEffect = false, float effectParam = 0f, string effectSpeed = "instant", float effectTimer = 0f, float effectTimerIncrements = .1f)
-    {
-        this.effectName = effectName;
-        SetValues(hasEffect, effectParam, effectSpeed, effectTimer, effectTimerIncrements);
-    }
-
-    public void SetValues(bool hasEffect, float effectParam, string effectSpeed, float effectTimer, float effectTimerIncrements)
-    {
-        this.hasEffect = hasEffect;
-        this.effectParam = effectParam;
-        this.effectSpeed = effectSpeed;
-        this.effectTimerIncrements = effectTimerIncrements;
-    }
+    public bool hasEffect;
+    public float effectParam;
+    public enum EffectSpeed { Instant, Overtime}
+    public EffectSpeed effectSpeed; // "Instant": (HP and Stamina: Affects insantly, Others: Until weapon is unequipped), "Overtime"
+    public float effectTimer;
+    public float effectTimerIncrements;
 }
 
 public abstract class Item : Interactibles, IInteractor
 {
     // ========================================= Item Properties =========================================
-    public abstract string itemName { get; }
-    public abstract string itemType { get; } // Weapon, Consumable, Key
-
     [Header("ITEM SETTINGS", order = 1)]
+    [SerializeField] public string itemName;
+    public enum ItemType { Weapon, Consumable, Key}
+    [SerializeField] public ItemType itemType; // Weapon, Consumable, Key
+
     [SerializeField] private int _maxQuantity = 1;
     public int maxQuantity { get { return _maxQuantity; } protected set { _maxQuantity = value; } }
     [SerializeField] private int _curQuantity = 1;
@@ -80,7 +70,10 @@ public abstract class Item : Interactibles, IInteractor
     private int pullDirection = 0;
     protected GameObject nearestItem;
     private bool isMerging = false;
-    public enum MergeState { Lead, Other}
+    public enum MergeState { Lead, Other }
+
+    [SerializeField] public List<SelfEffectProperties> effects;
+
 
     /* Self Additional Effect
      * For timed and untimed effects
@@ -95,10 +88,10 @@ public abstract class Item : Interactibles, IInteractor
         isInteractible = !isIcon;
 
         objectClassification = (isIcon) ? "ICON" : "ITEM";
-        if (itemType == "Weapon" || itemType == "Consumable") { equippable = true; }
+        if (itemType != ItemType.Key) { equippable = true; }
 
-        isFull = false;
-        isEmpty = false;
+        isFull = curQuantity == maxQuantity;
+        isEmpty = curQuantity == 0;
 
         amountOverflow = 0;
         
@@ -120,6 +113,8 @@ public abstract class Item : Interactibles, IInteractor
 
     protected virtual void Update()
     {
+        if (!PauseMechanics.isPlaying) return;
+
         isFull = curQuantity >= maxQuantity;
         isEmpty = curQuantity <= 0;
 
@@ -158,7 +153,6 @@ public abstract class Item : Interactibles, IInteractor
 
         rBody.MovePosition(new Vector2(ItemPull(), ItemBounce()));
 
-        if (interactor == null || isMerging || interactor.curSelected == null) return;
         Merge(nearestItem);
     }
 
@@ -169,7 +163,11 @@ public abstract class Item : Interactibles, IInteractor
 
     private float ItemPull()
     {
-        if (interactor == null || isMerging || interactor.curSelected == null) return rBody.position.x;
+        if (interactor == null || interactor.curSelected == null || isMerging || isFull || interactor.curSelected.GetComponent<Item>().isFull)
+        {
+            nearestItem = null;
+            return rBody.position.x;
+        }
 
         nearestItem = interactor.curSelected;
         pullDirection = (nearestItem.transform.position.x - transform.position.x > 0) ? 1 : -1 ;
@@ -179,7 +177,7 @@ public abstract class Item : Interactibles, IInteractor
 
     public void Merge(GameObject otherObject)
     {
-        if (Mathf.Abs(otherObject.transform.position.x - transform.position.x) > 0.1f) return;
+        if (otherObject == null || isMerging || Mathf.Abs(otherObject.transform.position.x - transform.position.x) > 0.1f) return;
 
         Item otherItem = otherObject.GetComponent<Item>();
         if (otherItem.itemName != itemName || otherItem.isFull) return;
@@ -187,6 +185,7 @@ public abstract class Item : Interactibles, IInteractor
         MergeState state = (gameObject.GetInstanceID() < otherObject.GetInstanceID()) ? MergeState.Lead : MergeState.Other;
         isMerging = true;
         ChangeAmount(otherItem.curQuantity);
+        transform.position += new Vector3(0, (otherObject.transform.position.y - transform.position.y) / 2, 0);
         Destroy(otherObject);
         isMerging = false;
 
@@ -199,35 +198,8 @@ public abstract class Item : Interactibles, IInteractor
 
     protected abstract void UniqueStatsInit();
 
-    public Dictionary<string, SelfEffectProperties> effectDict = new Dictionary<string, SelfEffectProperties>()
-    {
-        ["HP"] = new SelfEffectProperties("HP"),
-        ["Stamina"] = new SelfEffectProperties("Stamina"),
-
-        ["Damage"] = new SelfEffectProperties("Damage"),
-        ["AttackRange"] = new SelfEffectProperties("AttackRange"),
-        ["AttackSpeed"] = new SelfEffectProperties("AttackSpeed"),
-        ["AttackDelay"] = new SelfEffectProperties("AttackDelay"),
-
-        ["CritHit"] = new SelfEffectProperties("CritHit"),
-        ["CritChance"] = new SelfEffectProperties("CritChance"),
-
-        ["WpnStamCost"] = new SelfEffectProperties("WpnStamCost"),
-
-        ["KbForce"] = new SelfEffectProperties("KbForce"),
-
-        ["MVSpeed"] = new SelfEffectProperties("MVSpeed"),
-        ["JumpHeight"] = new SelfEffectProperties("JumpHeight"),
-
-        ["KbReduction"] = new SelfEffectProperties("KbReduction"),
-        ["DmgReduction"] = new SelfEffectProperties("DmgReduction"),
-        ["CritReduction"] = new SelfEffectProperties("CritReduction"),
-    };
-
     public int ChangeAmount(int changeAmount) // -1: Fail, 0: Success, 1: Overflow
     {
-        Debug.Log(gameObject);
-
         if (changeAmount == 0) return -1;
 
         int output = -1;
@@ -280,20 +252,20 @@ public abstract class Item : Interactibles, IInteractor
 
     protected void UseEffects()
     {
-        foreach (KeyValuePair<string, SelfEffectProperties> eachEffect in effectDict)
+        foreach (SelfEffectProperties eachEffect in effects)
         {
-            UseEffects(eachEffect.Key);
+            UseEffects(eachEffect);
         }
     }
 
-    protected void UseEffects(string effectName)
+    protected void UseEffects(SelfEffectProperties eachEffect)
     {
-        if (effectDict[effectName].hasEffect)
+        if (eachEffect.hasEffect)
         {
-            if ((effectName == "HP" || effectName == "Stamina") && entityHolder.GetComponent<IRegeneration>() != null) entityHolder.GetComponent<IRegeneration>().Regenerate(effectName, effectDict[effectName].effectParam, effectDict[effectName].effectSpeed, effectDict[effectName].effectTimer, effectDict[effectName].effectTimerIncrements);
+            if ((eachEffect.effectName.ToString() == "HP" || eachEffect.effectName.ToString() == "Stamina") && entityHolder.GetComponent<IRegeneration>() != null) entityHolder.GetComponent<IRegeneration>().Regenerate(eachEffect.effectName.ToString(), eachEffect.effectParam, eachEffect.effectSpeed.ToString(), eachEffect.effectTimer, eachEffect.effectTimerIncrements);
             else
             {
-                entityHolder.GetComponent<IBoostable>().AddBoost(effectName, gameObject.name, effectDict[effectName]);
+                entityHolder.GetComponent<IBoostable>().AddBoost(gameObject.name, eachEffect);
             }
         }
     }

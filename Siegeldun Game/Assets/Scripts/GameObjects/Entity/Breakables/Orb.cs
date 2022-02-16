@@ -5,7 +5,7 @@ using UnityEngine;
 public class Orb : Breakables
 {
     // ========================================= Entity Initialization =========================================
-    private bool _isInstanceLimited = false;
+    /*private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 0;
@@ -13,7 +13,7 @@ public class Orb : Breakables
 
     private string _entityName = "Orb";
     public override string entityName { get { return _entityName; } }
-    public override string objectName { get { return _entityName; } }
+    public override string objectName { get { return _entityName; } }*/
 
 
 
@@ -36,17 +36,18 @@ public class Orb : Breakables
         base.Update();
     }
 
+    // ========================================= ENTITY DEATH =========================================
+    // Executes after death animation and instance clearing on memory
+    protected override void Die()
+    {
+        base.Die();
+        // Clear Inventory
+    }
+
+    // Executes right before entity to be destroyed
     protected override void OnEntityDestroy()
     {
         base.OnEntityDestroy();
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Enemy" && col.gameObject.tag == "Player")
-        {
-            Physics2D.IgnoreCollision(col.otherCollider, col.collider);
-        }
     }
 
     // ========================================= ANIMATION METHODS =========================================

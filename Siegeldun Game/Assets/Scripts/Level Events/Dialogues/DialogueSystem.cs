@@ -70,6 +70,8 @@ public abstract class DialogueSystem : Process
 
     protected virtual void Update()
     {
+        if (!PauseMechanics.isPlaying) return;
+
         bool timerDone = dialogue != null && isPlaying && dialogue.isTimed && TimerIncrement(msgStart, dialogue.timer);
         bool noBtnAutoTimed = dialogue != null && isPlaying && !dialogue.isTimed && !dialogue.hasButtons && TimerIncrement(msgStart, 3);
         bool msgStayedTooLong = dialogue != null && isPlaying && TimerIncrement(msgStart, 10);
@@ -134,7 +136,11 @@ public abstract class DialogueSystem : Process
 
     public void EndDialogue()
     {
-        if (dialogue.repeatable) { dialogue.started = false; }
+        if (dialogue.repeatable)
+        {
+            dialogue.started = false;
+            ToggleInteractible();
+        }
         else { dialogue.isDone = true; }
         isPlaying = false;
         curMsg = "";
@@ -148,7 +154,13 @@ public abstract class DialogueSystem : Process
         if (conditionals && !curDialogue.started && !isPlaying)
         {
             curDialogue.started = true;
+            ToggleInteractible();
             StartDialogue(ref curDialogue);
         }
+    }
+
+    private void ToggleInteractible()
+    {
+        if (GetComponent<IInteractible>() != null) GetComponent<IInteractible>().ToggleInteractible();
     }
 }

@@ -123,11 +123,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c6e058d9ace1a4d8fbd278cf5cd59d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  system: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMenu: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: LoreCrystal
+  isInstanceLimited: 0
+  maxEachEntityInField: 0
   doDrop: 0
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops: []
+  _isInteractible: 1
+  structureName: Lore Crystal
 --- !u!114 &8213394876679478558
 MonoBehaviour:
   m_ObjectHideFlags: 0

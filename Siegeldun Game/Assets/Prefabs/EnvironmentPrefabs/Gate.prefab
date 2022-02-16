@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8178796713398332661}
   - component: {fileID: 8178796713398332660}
-  - component: {fileID: 8178796713398332666}
   - component: {fileID: 8178796713398332667}
+  - component: {fileID: 8178796713398332666}
   m_Layer: 9
   m_Name: Portal
   m_TagString: Untagged
@@ -84,18 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8178796713398332666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8178796713398332662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0acbc99e781c00c4fad9f45e76e8f8cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &8178796713398332667
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -122,6 +110,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.2023182, y: 2.84375}
   m_EdgeRadius: 0
+--- !u!114 &8178796713398332666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8178796713398332662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0acbc99e781c00c4fad9f45e76e8f8cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  system: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMenu: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Portal
+  isInstanceLimited: 1
+  maxEachEntityInField: 1
+  doDrop: 0
+  dropChance: 1
+  onDestroyDropDelay: 0
+  itemDrops: []
+  _isInteractible: 0
+  structureName: Portal
 --- !u!1 &8178796713591007581
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,12 +256,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c03a134e10ac94eb34b8aad4972def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  system: {fileID: 0}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMenu: {fileID: 0}
+  objectName: SlotA
+  isInstanceLimited: 1
+  maxEachEntityInField: 1
   doDrop: 0
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops: []
-  crystalPrefab: {fileID: 3012785729809906210, guid: 349ad089f664aff4b9a02776321a2e0c, type: 3}
+  _isInteractible: 0
+  structureName: Gate Slot A
+  crystalPrefab: {fileID: 1030391241932288014, guid: b65a0347cd38ab74f9123a6b98d7db79, type: 3}
   playerInventory: {fileID: 0}
 --- !u!1 &8178796714540991790
 GameObject:
@@ -373,12 +392,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c03a134e10ac94eb34b8aad4972def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  system: {fileID: 0}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMenu: {fileID: 0}
+  objectName: Slot B
+  isInstanceLimited: 1
+  maxEachEntityInField: 1
   doDrop: 0
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops: []
-  crystalPrefab: {fileID: 3012785729809906210, guid: 349ad089f664aff4b9a02776321a2e0c, type: 3}
+  _isInteractible: 0
+  structureName: Gate Slot A
+  crystalPrefab: {fileID: 1030391241932288014, guid: b65a0347cd38ab74f9123a6b98d7db79, type: 3}
   playerInventory: {fileID: 0}
 --- !u!1 &8178796714921254569
 GameObject:
@@ -478,6 +504,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc53e94f93c3eb044a523a57f702a27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  system: {fileID: 0}
+  gameMechanics: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  objectName: 
+  isInstanceLimited: 0
+  maxEachEntityInField: 0
+  doDrop: 0
+  dropChance: 1
+  onDestroyDropDelay: 0
+  itemDrops: []
+  _isInteractible: 0
+  structureName: 
   gateSlots:
   - {fileID: 8178796713591007555}
   - {fileID: 8178796714540991789}

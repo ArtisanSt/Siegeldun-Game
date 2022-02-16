@@ -5,7 +5,9 @@ using UnityEngine;
 public abstract class Interactibles : BaseObject, IInteractible
 {
     // Interacting Properties
-    public bool isInteractible { get; protected set; }
+    [Header("INTERACTIBLE SETTINGS", order = 0)]
+    [SerializeField] private bool _isInteractible;
+    public bool isInteractible { get { return _isInteractible; } protected set { _isInteractible = value; } }
 
     public string objectClassification { get; protected set; } // "ICON", "ITEM", "STRUCTURE"
 
@@ -30,6 +32,15 @@ public abstract class Interactibles : BaseObject, IInteractible
                     GetComponent<SpriteRenderer>().material.DisableKeyword("OUTLINE_ON");
                 }
             }
+        }
+    }
+
+    public void ToggleInteractible()
+    {
+        isInteractible = !isInteractible;
+        if (!isInteractible)
+        {
+            GetComponent<SpriteRenderer>().material.DisableKeyword("OUTLINE_ON");
         }
     }
 

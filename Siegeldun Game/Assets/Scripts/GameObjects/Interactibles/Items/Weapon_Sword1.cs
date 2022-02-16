@@ -5,7 +5,7 @@ using UnityEngine;
 public class Weapon_Sword1 : Weapon
 {
     // ========================================= Item Initialization =========================================
-    private bool _isInstanceLimited = false;
+    /*private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 0;
@@ -15,15 +15,11 @@ public class Weapon_Sword1 : Weapon
     public override string objectName { get { return _objectName; } }
 
     private string _itemName = "Sword1";
-    public override string itemName { get { return _itemName; } }
+    public override string itemName { get { return _itemName; } }*/
 
     protected override void UniqueStatsInit()
     {
-        maxQuantity = 1;
-        curQuantity = 1;
 
-        uniqueProp = new WeaponProperties("Melee", 0, true);
-        uniqueProp.SetValues(30f, .3f, .5f, .3f, 100, 10f, 10f, .3f, 100);
     }
 
     // ========================================= UNITY MAIN METHODS =========================================
@@ -38,18 +34,6 @@ public class Weapon_Sword1 : Weapon
 
     protected override void PassiveEffects(string state)
     {
-        if (state == "Select")
-        {
-
-        }
-        else if (state == "Inventory")
-        {
-
-        }
-        else if (state == "Equipped")
-        {
-
-        }
     }
 
     protected override void ActiveEffects()

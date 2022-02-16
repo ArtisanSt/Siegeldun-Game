@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gate : MonoBehaviour
+public class Gate : Structures
 {
     [SerializeField] public List<Transform> gateSlots = new List<Transform>();
     [SerializeField] public GameObject portal;
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         OpenPortal();
     }
 

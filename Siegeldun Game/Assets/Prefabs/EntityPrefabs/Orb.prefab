@@ -164,18 +164,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc70ef9ee4074cd46aa639ad18c948a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  system: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMenu: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Orb
+  isInstanceLimited: 1
+  maxEachEntityInField: 2
   doDrop: 1
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops:
   - {fileID: 1030391241932288014, guid: b65a0347cd38ab74f9123a6b98d7db79, type: 3}
   rBody: {fileID: 2587360221867062408}
   sprite: {fileID: 2587360221867062422}
   boxColl: {fileID: 2587360221867062421}
+  cirColl: {fileID: 0}
   capColl: {fileID: 0}
   anim: {fileID: 2587360221867062420}
+  animationSpeed: 1
   spriteDefaultFacing: 1
+  entityName: Orb
+  entityType: 1
   entityPrefab: {fileID: 2587360221867062410}
   hasSpawner: 0
   spawner: {fileID: 0}
@@ -219,7 +228,8 @@ MonoBehaviour:
   - 0
   stamRegen: 0
   stamRegenDelay: 3
-  freezeOn: 0
+  doFreeze: 1
+  freezeOn: 1
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Fire : Breakables
 {
     // ========================================= Entity Properties =========================================
-    private bool _isInstanceLimited = false;
+    /*private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 0;
@@ -13,7 +13,7 @@ public class Fire : Breakables
 
     private string _entityName = "Fire";
     public override string entityName { get { return _entityName; } }
-    public override string objectName { get { return _entityName; } }
+    public override string objectName { get { return _entityName; } }*/
 
 
 
@@ -37,6 +37,15 @@ public class Fire : Breakables
         base.Update();
     }
 
+    // ========================================= ENTITY DEATH =========================================
+    // Executes after death animation and instance clearing on memory
+    protected override void Die()
+    {
+        base.Die();
+        // Clear Inventory
+    }
+
+    // Executes right before entity to be destroyed
     protected override void OnEntityDestroy()
     {
         base.OnEntityDestroy();

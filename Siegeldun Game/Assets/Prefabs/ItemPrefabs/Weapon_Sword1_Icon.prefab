@@ -101,14 +101,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f194a550a0fd14081503d01e0a0a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 0}
-  gameMechanics: {fileID: 0}
+  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Weapon_Sword1
+  isInstanceLimited: 0
+  maxEachEntityInField: 0
   doDrop: 1
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops:
   - {fileID: 4275815481310653657, guid: d09dd901e2d4f2e4899a86a8b9e1fa44, type: 3}
+  _isInteractible: 0
+  itemName: Sword 1
+  itemType: 0
   _maxQuantity: 1
   _curQuantity: 1
   _itemPrefab: {fileID: 4275815481310653657, guid: d09dd901e2d4f2e4899a86a8b9e1fa44, type: 3}
   _iconPrefab: {fileID: 6721948792633512886}
   equippable: 1
+  rBody: {fileID: 0}
+  itemHopSpeed: 0.0075
+  hopLimit: 0.05
+  interactor: {fileID: 0}
+  itemPullSpeed: 0.0075
+  effects: []
+  uniqueProp:
+    weaponType: 0
+    tier: 30
+    doBreak: 1
+    durability: 100
+    wpnDamage: 30
+    wpnAtkRange: 0.5
+    wpnAtkSpeed: 1
+    wpnAtkDelay: 0.3
+    wpnCritChance: 100
+    wpnAtkCrit: 10
+    wpnStamCost: 10
+    wpnKbForce: 0.3

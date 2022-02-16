@@ -5141,7 +5141,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06959176, y: -0.0695914}
+  m_Offset: {x: 0.06959152, y: -0.05479729}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5152,7 +5152,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.41350794, y: 0.8148539}
+  m_Size: {x: 0.39992523, y: 0.8247168}
   m_EdgeRadius: 0
 --- !u!114 &6685909666436209247
 MonoBehaviour:
@@ -5194,17 +5194,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9a66f7ff9b0f04dba96338e35c4778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  system: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMenu: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Goblin
+  isInstanceLimited: 1
+  maxEachEntityInField: 100
   doDrop: 1
   dropChance: 1000
+  onDestroyDropDelay: 0
   itemDrops: []
   rBody: {fileID: 6685909666436209246}
   sprite: {fileID: 6685909666436209242}
   boxColl: {fileID: 6685909666436209241}
+  cirColl: {fileID: 0}
   capColl: {fileID: 6685909666436209240}
   anim: {fileID: 6685909666436209244}
+  animationSpeed: 1
   spriteDefaultFacing: -1
+  entityName: Goblin
+  entityType: 0
   entityPrefab: {fileID: 6685909666436209234}
   hasSpawner: 0
   spawner: {fileID: 0}
@@ -5263,9 +5272,8 @@ MonoBehaviour:
   weaponGameobject: {fileID: 0}
   wpnEquipped: {fileID: 0}
   defaultPower:
-    weaponType: Melee
+    weaponType: 0
     tier: 0
-    isBroken: 0
     doBreak: 0
     durability: 0
     wpnDamage: 15
@@ -5296,6 +5304,7 @@ MonoBehaviour:
   isTriggered: 0
   forgivenessTime: 2
   triggerDistance: 3
+  backOffDistance: 0
   jumpEnabled: 1
 --- !u!1 &6685909667086018527
 GameObject:

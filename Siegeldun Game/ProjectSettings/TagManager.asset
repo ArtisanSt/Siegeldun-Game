@@ -72,6 +72,9 @@ TagManager:
   - name: Entity
     uniqueID: 2989893747
     locked: 0
+  - name: Obstacles
+    uniqueID: 2016846833
+    locked: 0
   - name: Structure (FG)
     uniqueID: 3399338337
     locked: 0

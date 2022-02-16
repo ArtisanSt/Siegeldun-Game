@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -400916063
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -4647598100228573617, guid: 88896bef563b03544bd48e829457ffb1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -118,7 +118,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.07197863, y: -0.12956148}
+  m_Offset: {x: -0.060650527, y: -0.1257087}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -129,7 +129,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0227482, y: 1.0105447}
+  m_Size: {x: 1.000092, y: 1.0028391}
   m_EdgeRadius: 0
 --- !u!50 &7448746658641424009
 Rigidbody2D:
@@ -164,20 +164,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb58dcb9803f486479e700690b7814db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  system: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMenu: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Crate
+  isInstanceLimited: 0
+  maxEachEntityInField: 0
   doDrop: 1
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops:
   - {fileID: 116043195058129465, guid: bd25551f6adc608468b1eb1741102af3, type: 3}
   - {fileID: 8502316654925628256, guid: c1cb39b5ef1805447bb7db25385b4140, type: 3}
   rBody: {fileID: 7448746658641424009}
   sprite: {fileID: 7448746658641424012}
   boxColl: {fileID: 7448746658641424008}
+  cirColl: {fileID: 0}
   capColl: {fileID: 0}
   anim: {fileID: 7448746658641424013}
+  animationSpeed: 1
   spriteDefaultFacing: 1
-  entityPrefab: {fileID: 0}
+  entityName: Crate
+  entityType: 1
+  entityPrefab: {fileID: 7448746658641424050}
   hasSpawner: 0
   spawner: {fileID: 0}
   activePoints:
@@ -220,7 +229,8 @@ MonoBehaviour:
   - 0
   stamRegen: 0
   stamRegenDelay: 3
-  isGrounded: 0
+  doFreeze: 1
+  freezeOn: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

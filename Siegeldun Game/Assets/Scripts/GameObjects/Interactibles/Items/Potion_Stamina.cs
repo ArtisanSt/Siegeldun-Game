@@ -5,7 +5,7 @@ using UnityEngine;
 public class Potion_Stamina : Consumable
 {
     // ========================================= Item Initialization =========================================
-    private bool _isInstanceLimited = false;
+    /*private bool _isInstanceLimited = false;
     public override bool isInstanceLimited { get { return _isInstanceLimited; } }
 
     private int _maxEachEntityInField = 0;
@@ -16,14 +16,10 @@ public class Potion_Stamina : Consumable
 
     private string _itemName = "Stamina Potion";
     public override string itemName { get { return _itemName; } }
-
+*/
     protected override void UniqueStatsInit()
     {
-        maxQuantity = 64;
-        curQuantity = 1;
 
-        uniqueProp = new ConsumableProperties("Potion");
-        effectDict["Stamina"].SetValues(true, 30f, "Instant", 0f, .1f);
     }
 
     // ========================================= UNITY MAIN METHODS =========================================
@@ -38,23 +34,11 @@ public class Potion_Stamina : Consumable
 
     protected override void PassiveEffects(string state)
     {
-        if (state == "Select")
-        {
-
-        }
-        else if (state == "Inventory")
-        {
-
-        }
-        else if (state == "Equipped")
-        {
-
-        }
     }
 
     protected override void ActiveEffects()
     {
-        UseEffects("Stamina");
+        UseEffects();
     }
 
     public override bool ActiveEffectsCondition()

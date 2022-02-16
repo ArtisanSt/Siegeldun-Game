@@ -5274,7 +5274,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.004405141, y: -0.40537798}
+  m_Offset: {x: 0.0040779114, y: -0.32376647}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5285,7 +5285,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.45108414, y: 0.91393137}
+  m_Size: {x: 0.4399948, y: 0.8855448}
   m_EdgeRadius: 0
 --- !u!114 &4865986372180236412
 MonoBehaviour:
@@ -5299,8 +5299,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0768a4543bbb74d8f4f47bd4ba93bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMechanics: {fileID: 0}
+  objectName: Player
+  isInstanceLimited: 1
+  maxEachEntityInField: 1
   doDrop: 1
   dropChance: 1
   onDestroyDropDelay: 0
@@ -5308,9 +5311,13 @@ MonoBehaviour:
   rBody: {fileID: 4865986373843987816}
   sprite: {fileID: 4865986372359361336}
   boxColl: {fileID: 4865986372180236413}
+  cirColl: {fileID: 0}
   capColl: {fileID: 4865986372180236414}
   anim: {fileID: 4865986372180236415}
+  animationSpeed: 1
   spriteDefaultFacing: 1
+  entityName: Player
+  entityType: 0
   entityPrefab: {fileID: 4865986372180236411}
   hasSpawner: 0
   spawner: {fileID: 0}
@@ -5369,14 +5376,13 @@ MonoBehaviour:
   weaponGameobject: {fileID: 7019336444901767183}
   wpnEquipped: {fileID: 0}
   defaultPower:
-    weaponType: Melee
+    weaponType: 0
     tier: 0
-    isBroken: 0
     doBreak: 0
     durability: 0
     wpnDamage: 15
     wpnAtkRange: 0.3
-    wpnAtkSpeed: 0.5
+    wpnAtkSpeed: 1.5
     wpnAtkDelay: 0.3
     wpnCritChance: 0
     wpnAtkCrit: 0
@@ -5423,8 +5429,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0dc7c67f4f538543a5f8cdd6d57f21e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  pauseMechanics: {fileID: 0}
+  objectName: 
+  isInstanceLimited: 0
+  maxEachEntityInField: 0
   doDrop: 1
   dropChance: 1
   onDestroyDropDelay: 0
@@ -5777,8 +5786,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -28523899
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!114 &2414476760691001834
 MonoBehaviour:

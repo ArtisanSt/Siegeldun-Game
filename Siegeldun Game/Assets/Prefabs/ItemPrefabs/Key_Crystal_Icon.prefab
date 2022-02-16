@@ -103,10 +103,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+  objectName: Key_Crystal
+  isInstanceLimited: 0
+  maxEachEntityInField: 0
   doDrop: 1
   dropChance: 1
+  onDestroyDropDelay: 0
   itemDrops: []
-  _maxQuantity: 1
+  _isInteractible: 0
+  itemName: Key Crystal
+  itemType: 2
+  _maxQuantity: 2
   _curQuantity: 1
   _itemPrefab: {fileID: 1030391241932288014, guid: b65a0347cd38ab74f9123a6b98d7db79, type: 3}
   _iconPrefab: {fileID: 3916258459067645568}
+  equippable: 0
+  rBody: {fileID: 0}
+  itemHopSpeed: 0.0075
+  hopLimit: 0.05
+  interactor: {fileID: 0}
+  itemPullSpeed: 0.0075
+  effects: []

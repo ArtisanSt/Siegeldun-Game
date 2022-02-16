@@ -13,6 +13,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
     [SerializeField] protected Rigidbody2D rBody = null;
     [SerializeField] protected SpriteRenderer sprite = null;
     [SerializeField] protected BoxCollider2D boxColl = null;
+    [SerializeField] protected CircleCollider2D cirColl = null;
     [SerializeField] protected CapsuleCollider2D capColl = null;
     [SerializeField] protected Animator anim = null;
 
@@ -22,6 +23,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         rBody = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         boxColl = GetComponent<BoxCollider2D>();
+        cirColl = GetComponent<CircleCollider2D>();
         capColl = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
     }
@@ -32,6 +34,14 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         GameMechanicsPropInit();
         EntityPropInit();
         StatusBarPropInit();
+    }
+
+    protected virtual void LateUpdate()
+    {
+        if (!PauseMechanics.isPlaying) return;
+
+        HpBarUIUpdate();
+        StamBarUIUpdate();
     }
 
 
@@ -65,11 +75,12 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
 
 
     // ========================================= ENTITY PROPERTIES =========================================
-    public int entityID { get; private set; }
-    public abstract string entityName { get; }
-    public abstract string entityType { get; }
-
     [Header("ENTITY SETTINGS", order = 2)]
+    [SerializeField] public string entityName;
+    public enum EntityType { Beings, Breakables }
+    [SerializeField] public EntityType entityType;
+    public int entityID { get; private set; }
+
     [SerializeField] public GameObject entityPrefab = null;
 
     protected bool isPlayer ;
@@ -127,7 +138,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
     [SerializeField] protected float hpRegenDelay = 3;
     protected float _hpRegenStart = 0f;
     protected float _hpTick = 0f;
-    protected float _hpHideTime = 4f;
+    protected float _hpHideTime = 0f;
 
 
     [SerializeField] protected bool hasStam = false;
@@ -143,8 +154,6 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
     [SerializeField] protected float[] stamRegenScaling = new float[3] { 0, 0, 0 };
     [SerializeField] protected float stamRegen = 0;
     [SerializeField] protected float stamRegenDelay = 3;
-    protected float _stamTick = 0f;
-    protected float _stamHideTime = 4f;
 
     // Updates
     protected bool[] isPassiveHealing = new bool[2] { false, false };
@@ -183,6 +192,9 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
 
     protected void HpBarUIUpdate()
     {
+        if (!hasHp || !entityStatusBar) return;
+
+
         // HP UI Parameters
         float fillF = hpBarF.fillAmount;
         float fillB = hpBarB.fillAmount;
@@ -191,6 +203,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         // Health Bar UI Updater
         if (fillB != fillF || fillF != hpFraction || fillB != hpFraction)
         {
+            _hpHideTime = Time.time;
             if (!isPlayer) entityStatusBar.SetActive(true);
 
             float netRegenF = hpFraction - fillF;
@@ -227,16 +240,9 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         {
             _hpTick = 0f;
             hpBarF.color = Color.cyan;
-            if (!isPlayer)
+            if (!isPlayer && TimerIncrement(_hpHideTime, 5f))
             {
-                if (_hpHideTime > 5f)
-                {
-                    entityStatusBar.SetActive(false);
-                }
-                else
-                {
-                    _hpHideTime += Time.deltaTime;
-                }
+                entityStatusBar.SetActive(false);
             }
         }
 
@@ -246,6 +252,8 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
 
     protected void StamBarUIUpdate()
     {
+        if (!hasStam || !entityStatusBar) return;
+
         // Stamina UI Parameters
         float fillS = stamBar.fillAmount;
         float stamFraction = curStam / maxHp;
@@ -375,8 +383,10 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
 
     public void TakeDamage(float attackID, int rcvKbDir, WeaponProperties rcvStatsProp)
     {
+
         DamageEvaluator(ref rcvStatsProp);
         bool doesDamage = isAlive && !isInvulnerable && rcvStatsProp.wpnDamage > 0 && ProcessEvaluator((float)attackID, rcvStatsProp.wpnAtkSpeed);
+
         if (!doesDamage) return;
         bool isCrit = ChanceRandomizer(rcvStatsProp.wpnCritChance);
 
@@ -390,7 +400,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         }
         else
         {
-            if (entityType == "Beings")
+            if (entityType.ToString() == "Beings")
             {
                 if (isCrit)
                 {
@@ -428,12 +438,13 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         yield return new WaitUntil(() => deadOnGround);
         if (boxColl.enabled)
         {
-            if (entityType == "Beings")
+            if (entityType.ToString() == "Beings")
             {
-                capColl.enabled = false;
                 GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
             }
-            boxColl.enabled = false;
+            if (capColl != null) capColl.enabled = false;
+            if (cirColl != null) cirColl.enabled = false;
+            if (boxColl != null) boxColl.enabled = false;
 
             StartCoroutine(DestroyInstance(time));
         }
