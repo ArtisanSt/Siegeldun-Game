@@ -9,7 +9,7 @@ public abstract class Root : Process
     protected static GameMechanics gameMechanics;
     protected LevelProperties lvlProp;
 
-    protected static int idxDiff = (int)GlobalVariableStorage.curDifficulty.difficulty;
+    protected int idxDiff;
 
     [Header("ROOT SETTINGS", order = 1)]
     [SerializeField] public string objectName;
@@ -28,6 +28,7 @@ public abstract class Root : Process
     protected void GameMechanicsPropInit()
     {
         if (gameMechanics == null) gameMechanics = GameObject.Find("Game System/GameMechanics").GetComponent<GameMechanics>();
+        idxDiff = (int)GlobalVariableStorage.difficulty;
         //lvlProp = gameMechanics.curLvlProp;
 
         PrefabsInit();
