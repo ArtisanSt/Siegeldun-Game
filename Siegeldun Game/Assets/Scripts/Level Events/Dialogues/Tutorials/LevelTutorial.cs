@@ -2,72 +2,91 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelTutorial : DialogueSystem
+public class LevelTutorial : BaseDialogue
 {
     [SerializeField] public Dialogue startingDialogue;
     [SerializeField] public Dialogue movementDialogue;
     [SerializeField] public Dialogue attackDialogue;
 
-    protected override void Update()
+
+    // ================================================= DIALOGUE UPDATER =================================================
+    protected void Update()
     {
-        base.Update();
+        StartingDialogueSetter();
+        MovementDialogueSetter();
+        AttackDialogueSetter();
 
-        PlayDialogue(ref startingDialogue, StartingDialogueSetter());
-        PlayDialogue(ref movementDialogue, MovementDialogueSetter());
-        PlayDialogue(ref attackDialogue, AttackDialogueSetter());
-
-        DialogueConditions();
+        MovementDialogueEnder();
+        AttackDialogueEnder();
     }
 
 
-    private bool StartingDialogueSetter()
+    // ================================================= DIALOGUE STARTER =================================================
+    private void StartingDialogueSetter()
     {
-        if (movementDialogue.started) return false;
-
-        return true;
+        dialogueSystem.PlayDialogue(startingDialogue);
     }
 
-    private bool MovementDialogueSetter()
+    private void MovementDialogueSetter()
     {
-        if (movementDialogue.started) return false;
+        if (startingDialogue.state != Dialogue.DialogueState.Done) return;
 
-        return startingDialogue.isDone;
+        dialogueSystem.PlayDialogue(movementDialogue);
     }
 
-    private bool AttackDialogueSetter()
+    private void AttackDialogueSetter()
     {
-        if (attackDialogue.started) return false;
+        if (startingDialogue.state != Dialogue.DialogueState.Done && movementDialogue.state != Dialogue.DialogueState.Done) return;
 
-        return startingDialogue.isDone && movementDialogue.isDone;
+        dialogueSystem.PlayDialogue(attackDialogue);
     }
 
 
-
-    private void DialogueConditions()
+    // ================================================= DIALOGUE ENDER =================================================
+    private void MovementDialogueEnder()
     {
-        if (curMsg == movementDialogue.messageTitle) MovementDialogueConditions();
-        else if (curMsg == attackDialogue.messageTitle) AttackDialogueConditions();
-    }
-
-    private void MovementDialogueConditions()
-    {
-        if (movementDialogue.isDone || (!movementDialogue.isDone && !movementDialogue.started)) return;
+        if (movementDialogue.state != Dialogue.DialogueState.Playing) return;
 
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
-            EndDialogue();
-            movementDialogue.isDone = true;
+            dialogueSystem.EndDialogue();
         }
     }
 
-    private void AttackDialogueConditions()
+    private void AttackDialogueEnder()
     {
-        if (attackDialogue.isDone || (!attackDialogue.isDone && !attackDialogue.started)) return;
+        if (attackDialogue.state != Dialogue.DialogueState.Playing) return;
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            EndDialogue();
-            attackDialogue.isDone = true;
+            dialogueSystem.EndDialogue();
         }
+    }
+
+
+    // ================================================= IDIALOGUE METHODS =================================================
+    public override void OnEndMessage(Dialogue curDialogue)
+    {
+        OverwriteDialogue(curDialogue);
+        base.OnEndMessage(curDialogue);
+    }
+
+    public override void OnStartMessage(Dialogue curDialogue)
+    {
+        OverwriteDialogue(curDialogue);
+        base.OnStartMessage(curDialogue);
+    }
+
+    public override void OnDisplayMessage(Dialogue curDialogue)
+    {
+        OverwriteDialogue(curDialogue);
+        base.OnDisplayMessage(curDialogue);
+    }
+
+    protected virtual void OverwriteDialogue(Dialogue curDialogue)
+    {
+        OverwriteDialogue(curDialogue, ref startingDialogue);
+        OverwriteDialogue(curDialogue, ref movementDialogue);
+        OverwriteDialogue(curDialogue, ref attackDialogue);
     }
 }

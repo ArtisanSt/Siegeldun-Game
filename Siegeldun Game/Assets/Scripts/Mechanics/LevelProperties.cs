@@ -13,7 +13,6 @@ public class LevelProperties: MonoBehaviour
     void Awake()
     {
         LevelInitialize();
-        Debug.Log($"GlobalVariableStorage.difficulty {GlobalVariableStorage.curDifficulty.difficulty}");
     }
 
     public void LevelInitialize()
