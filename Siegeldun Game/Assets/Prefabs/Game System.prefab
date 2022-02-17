@@ -1440,11 +1440,11 @@ MonoBehaviour:
     statsMultiplier: 1
     maxBulwarkRes: -1
     maxEShrineRes: -1
-  - difficulty: 0
+  - difficulty: 1
     statsMultiplier: 2
     maxBulwarkRes: -1
     maxEShrineRes: -1
-  - difficulty: 0
+  - difficulty: 2
     statsMultiplier: 4
     maxBulwarkRes: 1
     maxEShrineRes: 3

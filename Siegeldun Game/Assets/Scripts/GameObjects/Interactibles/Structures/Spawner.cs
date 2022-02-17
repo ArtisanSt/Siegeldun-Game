@@ -107,7 +107,8 @@ public class Spawner : Root
 
             if (CanCreateInstance(mobInstance.mobPrefab) && mobInstance.instancesInField.Count < mobInstance.maxInstances)
             {
-                GameObject newMob = (GameObject)Instantiate(mobInstance.mobPrefab, mainSpawnPnt, Quaternion.identity, GameObject.Find("Enemies").transform);
+                Debug.Log(mobInstance.mobPrefab);
+                GameObject newMob = (GameObject)Instantiate(mobInstance.mobPrefab, mainSpawnPnt, Quaternion.identity, GameObject.Find("Entities").transform);
 
                 newMob.GetComponent<Entity>().CreatedBySpawner(true, spawner, activePoints);
 

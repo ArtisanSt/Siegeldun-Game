@@ -8,8 +8,12 @@ public class Player : Beings, IInteractor
     protected override void Awake()
     {
         base.Awake();
+    }
 
-        transform.position = new Vector2(GameMechanics.levelProperties.resPlatform.position.x, transform.position.y);
+    protected override void Start()
+    {
+        base.Start();
+        transform.position = new Vector2(LevelProperties.resPlatform.position.x, transform.position.y);
     }
 
     // Update is called once per frame

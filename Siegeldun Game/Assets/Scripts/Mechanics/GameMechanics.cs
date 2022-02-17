@@ -35,10 +35,8 @@ public class GameMechanics : MonoBehaviour
 
     void Awake()
     {
-        bool x = LevelInitialize();
         foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
         {
-            Debug.Log(GetSceneName(scene.path));
             scenes.Add(GetSceneName(scene.path), scene.path);
         }
     }
@@ -50,6 +48,7 @@ public class GameMechanics : MonoBehaviour
             if (difficultyProperties[i].difficulty.ToString() == difficulty)
             {
                 GlobalVariableStorage.curDifficulty = difficultyProperties[i];
+                DefaultsLoader();
                 LoadScene(GetSceneName(SpecialScene.TutorialGrounds));
                 break;
             }
@@ -59,6 +58,14 @@ public class GameMechanics : MonoBehaviour
     public void ContinueGame()
     {
         //LoadScene(GetSceneName(GlobalVariableStorage.curAct, GlobalVariableStorage.curLvl));
+    }
+
+    private void DefaultsLoader()
+    {
+        GlobalVariableStorage.difficulty = GlobalVariableStorage.curDifficulty.difficulty;
+        GlobalVariableStorage.statsMultiplier = GlobalVariableStorage.curDifficulty.statsMultiplier;
+        GlobalVariableStorage.maxBulwarkLives = GlobalVariableStorage.curDifficulty.maxBulwarkRes;
+        GlobalVariableStorage.maxEShrineLives = GlobalVariableStorage.curDifficulty.maxEShrineRes;
     }
 
     public string GetSceneName(string scenePath)
@@ -89,13 +96,13 @@ public class GameMechanics : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         GlobalVariableStorage.numberOfLevelsPerAct = numberOfLevelsPerAct;
-        Debug.Log(sceneName);
         StartCoroutine(LoadSceneAsynchronously(scenes[sceneName]));
     }
 
-    private IEnumerator LoadSceneAsynchronously(string scenePath )
+    private IEnumerator LoadSceneAsynchronously(string scenePath)
     {
         PauseMechanics.isPlaying = false;
+
         gameState = GameState.Loading;
 
         AsyncOperation asyncLoading = SceneManager.LoadSceneAsync(scenePath);
@@ -113,34 +120,14 @@ public class GameMechanics : MonoBehaviour
             yield return null;
         }
 
-        gameState = (LevelInitialize()) ? GameState.InGame : GameState.MainMenu;
-        PauseMechanics.isPlaying = true;
-    }
-
-    public bool LevelInitialize()
-    {
-        bool outcome = false;
-        if (GameObject.Find("Level System") != null)
-        {
-            levelProperties = GameObject.Find("Level System").GetComponent<LevelProperties>();
-            GlobalVariableStorage.curAct = levelProperties.actNumber;
-            GlobalVariableStorage.curLvl = levelProperties.lvlNumber;
-            GlobalVariableStorage.curBulwarkLives = (GlobalVariableStorage.maxBulwarkLives < 0) ? 0 : GlobalVariableStorage.maxBulwarkLives;
-            outcome = true;
-        }
+        gameState = (GetSceneName(scenePath) != GetSceneName(SpecialScene.MainMenu)) ? GameState.InGame : GameState.MainMenu;
         loadingScreen.SetActive(false);
-        return outcome;
+        PauseMechanics.isPlaying = true;
     }
 
     // Evaluates if the player can be resurrected or the game is over
     public void PlayerDied()
-    {
-        GlobalVariableStorage.maxEShrineLives = 1;
-        GlobalVariableStorage.maxBulwarkLives = 1;
-        GlobalVariableStorage.curEShrineLives = 1;
-        GlobalVariableStorage.curBulwarkLives = 0;
-        Debug.Log($"{GlobalVariableStorage.curAct} { GlobalVariableStorage.curLvl}");
-        
+    {   
         if (GlobalVariableStorage.maxBulwarkLives != -1 && GlobalVariableStorage.curBulwarkLives == 0)
         {
             if (GlobalVariableStorage.maxEShrineLives != -1)

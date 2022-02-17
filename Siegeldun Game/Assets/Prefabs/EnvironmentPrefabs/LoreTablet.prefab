@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2339610098775991794}
   - component: {fileID: 2339610098775991795}
   - component: {fileID: 2339610098775991797}
-  - component: {fileID: 8213394876679478558}
+  - component: {fileID: 7099408160421617576}
   m_Layer: 9
   m_Name: LoreCrystal
   m_TagString: Interactible
@@ -123,9 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c6e058d9ace1a4d8fbd278cf5cd59d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  system: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
-  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
-  pauseMenu: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   objectName: LoreCrystal
   isInstanceLimited: 0
   maxEachEntityInField: 0
@@ -135,7 +132,7 @@ MonoBehaviour:
   itemDrops: []
   _isInteractible: 1
   structureName: Lore Crystal
---- !u!114 &8213394876679478558
+--- !u!114 &7099408160421617576
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,22 +144,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b182bd54bd76b4d84f43458f0859ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messageBox: {fileID: 0}
-  dialogueBG: {fileID: 0}
-  nameText: {fileID: 0}
-  dialogueText: {fileID: 0}
-  btnNext: {fileID: 0}
-  btnBack: {fileID: 0}
   loreDialogue:
-    npcName: Lorem Ipsum
-    hasButtons: 0
-    repeatable: 0
-    canGoBack: 0
+    messageSource: {fileID: 2339610098775991799}
+    hasButtons: 1
+    repeatable: 1
+    canGoBack: 1
     isTimed: 0
     timer: 3
-    messageTitle: 
+    messageTitle: Lore
+    npcName: Lore
     dialogueMessages:
     - Lorem Ipsum
+    entityReference: {fileID: 0}
+    maxDistanceToReference: 0
 --- !u!1 &2339610099616006135
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +182,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2339610099616006135}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.336618, y: -3.90766, z: 0}
+  m_LocalPosition: {x: -62.06, y: -3.5249915, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2339610098775991796}

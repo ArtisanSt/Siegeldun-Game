@@ -1680,6 +1680,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8986335351997673187}
   - component: {fileID: 3639859303246015235}
+  - component: {fileID: 640290593228997955}
   m_Layer: 0
   m_Name: Level System
   m_TagString: Untagged
@@ -1721,7 +1722,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb54bba5b1c254342beec2220a60e6d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resPlatform: {fileID: 6839935597177500978}
-  playerPrefab: {fileID: 4865986372180236411, guid: d013b059544ef9d45a2fb624ca903190, type: 3}
   actNumber: 0
   lvlNumber: 1
+--- !u!114 &640290593228997955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8986335351997673188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a42feddb533f864989c2d74dae0dfe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
