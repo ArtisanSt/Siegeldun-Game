@@ -146,6 +146,7 @@ public class DialogueSystem : Process
     private void SetDialogueButtons()
     {
         btnNext.SetActive(dialogue.hasButtons);
+        btnBack.SetActive(false);
         if (!dialogue.hasButtons) return;
 
         btnNext.transform.GetChild(0).GetComponent<Text>().text = (dialogue.dialogueMessages.Count == curIdx + 1) ? "OK" : "Next";

@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5f129a4f95747ab449b7786dc3fa8a32, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -70,9 +70,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -400916063
+  m_SortingLayer: 4
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e876330f2d528ed4a905a22b516fc3c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -122,9 +122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0acbc99e781c00c4fad9f45e76e8f8cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  system: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
-  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
-  pauseMenu: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   objectName: Portal
   isInstanceLimited: 1
   maxEachEntityInField: 1
@@ -132,8 +129,9 @@ MonoBehaviour:
   dropChance: 1
   onDestroyDropDelay: 0
   itemDrops: []
-  _isInteractible: 0
+  _isInteractible: 1
   structureName: Portal
+  gameMechanics: {fileID: 0}
 --- !u!1 &8178796713591007581
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,9 +202,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: -9997385
+  m_SortingLayer: 5
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: e9c7539c9b9fa9748b84e04ef5a99171, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -256,9 +254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c03a134e10ac94eb34b8aad4972def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  system: {fileID: 0}
-  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
-  pauseMenu: {fileID: 0}
   objectName: SlotA
   isInstanceLimited: 1
   maxEachEntityInField: 1
@@ -266,7 +261,7 @@ MonoBehaviour:
   dropChance: 1
   onDestroyDropDelay: 0
   itemDrops: []
-  _isInteractible: 0
+  _isInteractible: 1
   structureName: Gate Slot A
   crystalPrefab: {fileID: 1030391241932288014, guid: b65a0347cd38ab74f9123a6b98d7db79, type: 3}
   playerInventory: {fileID: 0}
@@ -340,9 +335,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: -9997385
+  m_SortingLayer: 5
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: e9c7539c9b9fa9748b84e04ef5a99171, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -392,9 +387,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c03a134e10ac94eb34b8aad4972def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  system: {fileID: 0}
-  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
-  pauseMenu: {fileID: 0}
   objectName: Slot B
   isInstanceLimited: 1
   maxEachEntityInField: 1
@@ -402,7 +394,7 @@ MonoBehaviour:
   dropChance: 1
   onDestroyDropDelay: 0
   itemDrops: []
-  _isInteractible: 0
+  _isInteractible: 1
   structureName: Gate Slot A
   crystalPrefab: {fileID: 1030391241932288014, guid: b65a0347cd38ab74f9123a6b98d7db79, type: 3}
   playerInventory: {fileID: 0}
@@ -432,7 +424,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8178796714921254569}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 29.930428, y: -2.5166602, z: 0}
+  m_LocalPosition: {x: -12.526192, y: -1.909, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8178796713591007555}
@@ -478,9 +470,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 342429607
+  m_SortingLayer: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a7a9a0ffdce57c848894b63541e943b8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -504,18 +496,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc53e94f93c3eb044a523a57f702a27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  system: {fileID: 0}
-  gameMechanics: {fileID: 0}
-  pauseMenu: {fileID: 0}
-  objectName: 
-  isInstanceLimited: 0
-  maxEachEntityInField: 0
+  objectName: Gate
+  isInstanceLimited: 1
+  maxEachEntityInField: 1
   doDrop: 0
   dropChance: 1
   onDestroyDropDelay: 0
   itemDrops: []
   _isInteractible: 0
-  structureName: 
+  structureName: Gate
   gateSlots:
   - {fileID: 8178796713591007555}
   - {fileID: 8178796714540991789}

@@ -5,9 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Portal : Structures
 {
+    [SerializeField] public GameMechanics gameMechanics;
+
     protected override void Awake()
     {
         base.Awake();
+        gameMechanics = GameObject.Find("Game System/GameMechanics").GetComponent<GameMechanics>();
     }
 
     protected override void Update()
@@ -21,6 +24,6 @@ public class Portal : Structures
         if (!isSelected) return;
 
         Debug.Log("ENTERING NEXT STAGE");
-        //SceneManager.LoadScene("Testing Grounds");
+        gameMechanics.StartNextLevel();
     }
 }
