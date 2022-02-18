@@ -7090,6 +7090,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoreTablet2
       objectReference: {fileID: 0}
+    - target: {fileID: 7099408160421617576, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
+      propertyPath: loreDialogue.dialogueMessages.Array.data[0]
+      value: 'In the distance you are able to see a humanoid creature, it resembles
+        a human physique but does not appear to be any more human than that.
+
+        These
+        things are likely to have something to do with your friend''s disappearance.'
+      objectReference: {fileID: 0}
     - target: {fileID: 8213394876679478558, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
       propertyPath: btnBack
       value: 
@@ -7615,6 +7623,14 @@ PrefabInstance:
     - target: {fileID: 2339610099616006135, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
       propertyPath: m_Name
       value: LoreTablet
+      objectReference: {fileID: 0}
+    - target: {fileID: 7099408160421617576, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
+      propertyPath: loreDialogue.dialogueMessages.Array.data[0]
+      value: 'Aside from runes and statues, you have seen more things that mere dogs
+        obviously cannot use and create.
+
+        You and your friend are not the
+        only "people" here.'
       objectReference: {fileID: 0}
     - target: {fileID: 8213394876679478558, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
       propertyPath: btnBack
@@ -19414,8 +19430,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb54bba5b1c254342beec2220a60e6d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resPlatform: {fileID: 2475208807358468997}
-  playerPrefab: {fileID: 4865986372180236411, guid: d013b059544ef9d45a2fb624ca903190, type: 3}
   actNumber: 1
   lvlNumber: 1
 --- !u!1 &5735497113501252584
@@ -54300,6 +54314,7 @@ MonoBehaviour:
   itemDrops: []
   _isInteractible: 1
   structureName: Portal
+  gameMechanics: {fileID: 0}
 --- !u!61 &7126064841841900711
 BoxCollider2D:
   m_ObjectHideFlags: 0

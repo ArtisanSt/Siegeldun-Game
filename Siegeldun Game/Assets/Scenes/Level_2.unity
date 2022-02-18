@@ -30552,6 +30552,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7099408160421617576, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
+      propertyPath: loreDialogue.dialogueMessages.Array.data[0]
+      value: This cave is connected onto something above, does not appear to be an
+        open area, perhaps another place to explore, more monsters to kill.
+      objectReference: {fileID: 0}
     - target: {fileID: 8213394876679478558, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
       propertyPath: btnBack
       value: 
@@ -32408,6 +32413,10 @@ PrefabInstance:
     - target: {fileID: 2339610099616006135, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7099408160421617576, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
+      propertyPath: loreDialogue.dialogueMessages.Array.data[0]
+      value: A vast cave filled with monsters, one step close to finding the answers.
       objectReference: {fileID: 0}
     - target: {fileID: 8213394876679478558, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
       propertyPath: btnBack

@@ -414,9 +414,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 116043195104928608}
-  - {fileID: 116043193946023010}
+  - {fileID: 4275815482159977356}
   - {fileID: 116043195696054165}
   - {fileID: 1741656973457462910}
+  - {fileID: 116043193946023010}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -498,6 +499,12 @@ PrefabInstance:
       propertyPath: loreDialogue.repeatable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7099408160421617576, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
+      propertyPath: loreDialogue.dialogueMessages.Array.data[0]
+      value: 'You will need more than brute force on where you aspire to explore.
+
+'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
 --- !u!4 &1118009076 stripped
@@ -571,6 +578,10 @@ PrefabInstance:
     - target: {fileID: 7099408160421617576, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
       propertyPath: loreDialogue.repeatable
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7099408160421617576, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
+      propertyPath: loreDialogue.dialogueMessages.Array.data[0]
+      value: A forest filled with shadows; a place where humans are not welcome.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ad1e6074d2aa404d9461296991b5a4e, type: 3}
@@ -704,7 +715,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 953127626}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &116043193946023011
 SpriteRenderer:
