@@ -162,7 +162,7 @@ public class Inventory: BaseObject
     {
         if (selectedObject == null) return false;
 
-        SoundManager.Instance.PlayInteract();
+        SoundManager.instance.PlayInteract();
         bool outcome = false;
         string objectClassification = selectedObject.GetComponent<Interactibles>().objectClassification;
         switch (objectClassification)

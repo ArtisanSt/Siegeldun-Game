@@ -59,8 +59,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -28523899
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!114 &5317110435835946764
 MonoBehaviour:
@@ -5194,9 +5194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9a66f7ff9b0f04dba96338e35c4778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  system: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
-  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
-  pauseMenu: {fileID: 8647389573769228383, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   objectName: Goblin
   isInstanceLimited: 1
   maxEachEntityInField: 100

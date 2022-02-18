@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class LevelProperties: MonoBehaviour
+public class LevelProperties: Singleton<LevelProperties>
 {
     [SerializeField] public static Transform resPlatform;
     [SerializeField] protected static GameObject playerPrefab;
     [SerializeField] public int actNumber;
     [SerializeField] public int lvlNumber;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         LevelInitialize();
     }
 
