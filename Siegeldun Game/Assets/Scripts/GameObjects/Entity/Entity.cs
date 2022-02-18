@@ -304,7 +304,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
             {
                 if (curStam < maxStam && !isPassiveHealing[1])
                 {
-                    PassiveHealer("Stamina", hpRegen, "Instant");
+                    PassiveHealer("Stamina", stamRegen, "Instant");
                 }
             }
         }
