@@ -189,7 +189,7 @@ MonoBehaviour:
   uniqueProp:
     weaponType: 0
     tier: 1
-    doBreak: 1
+    doBreak: 0
     durability: 100
     wpnDamage: 20
     wpnAtkRange: 0.5

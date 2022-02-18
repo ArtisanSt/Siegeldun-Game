@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4724826021907005826}
   - component: {fileID: 5785649297426895363}
   - component: {fileID: 1036441688604471926}
+  - component: {fileID: 2937176994526891740}
   m_Layer: 5
   m_Name: Weapon_Stick_Icon
   m_TagString: Untagged
@@ -35,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -64.36004, y: -2.8101273}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 27.8869, y: 34.8701}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4724826021907005826
@@ -88,3 +89,49 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2937176994526891740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7357873169151482980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaf2984acf3e92742b0a5963196be828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Weapon_Stick
+  isInstanceLimited: 0
+  maxEachEntityInField: 0
+  doDrop: 0
+  dropChance: 1
+  onDestroyDropDelay: 0
+  itemDrops: []
+  _isInteractible: 1
+  itemName: Stick
+  itemType: 0
+  _maxQuantity: 1
+  _curQuantity: 1
+  _itemPrefab: {fileID: 8761768885611777174, guid: 7ee0cc6ee7c76384492734cfd749b5cc, type: 3}
+  _iconPrefab: {fileID: 7357873169151482980}
+  equippable: 1
+  rBody: {fileID: 0}
+  itemHopSpeed: 0.0075
+  hopLimit: 0.05
+  interactor: {fileID: 0}
+  itemPullSpeed: 0.0075
+  effects: []
+  uniqueProp:
+    weaponType: 0
+    tier: 1
+    doBreak: 0
+    durability: 100
+    wpnDamage: 20
+    wpnAtkRange: 0.5
+    wpnAtkSpeed: 1
+    wpnAtkDelay: 0.3
+    wpnCritChance: 100
+    wpnAtkCrit: 10
+    wpnStamCost: 20
+    wpnKbForce: 0.3

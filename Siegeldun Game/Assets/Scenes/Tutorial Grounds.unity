@@ -414,8 +414,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 116043195104928608}
-  - {fileID: 4275815482159977356}
   - {fileID: 116043195696054165}
+  - {fileID: 4275815482159977356}
   - {fileID: 1741656973457462910}
   - {fileID: 116043193946023010}
   m_Father: {fileID: 0}
@@ -1106,7 +1106,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 953127626}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &116043195696054166
 Rigidbody2D:
@@ -6986,7 +6986,7 @@ GameObject:
   - component: {fileID: 1741656973457462908}
   - component: {fileID: 1741656973457462909}
   - component: {fileID: 1741656973457462906}
-  - component: {fileID: 1741656973457462907}
+  - component: {fileID: 1741656973457462905}
   - component: {fileID: 1509484942461874594}
   m_Layer: 8
   m_Name: Weapon_Stick
@@ -6995,6 +6995,52 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1741656973457462905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741656973457462904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaf2984acf3e92742b0a5963196be828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Weapon_Stick
+  isInstanceLimited: 0
+  maxEachEntityInField: 0
+  doDrop: 0
+  dropChance: 1
+  onDestroyDropDelay: 0
+  itemDrops: []
+  _isInteractible: 1
+  itemName: Stick
+  itemType: 0
+  _maxQuantity: 1
+  _curQuantity: 1
+  _itemPrefab: {fileID: 8761768885611777174, guid: 7ee0cc6ee7c76384492734cfd749b5cc, type: 3}
+  _iconPrefab: {fileID: 7357873169151482980, guid: 9b709093d165b5b4e96ac149f2f60b26, type: 3}
+  equippable: 1
+  rBody: {fileID: 1741656973457462909}
+  itemHopSpeed: 0.0075
+  hopLimit: 0.05
+  interactor: {fileID: 1509484942461874594}
+  itemPullSpeed: 0.0075
+  effects: []
+  uniqueProp:
+    weaponType: 0
+    tier: 10
+    doBreak: 0
+    durability: 100
+    wpnDamage: 20
+    wpnAtkRange: 0.5
+    wpnAtkSpeed: 1
+    wpnAtkDelay: 1
+    wpnCritChance: 10
+    wpnAtkCrit: 100
+    wpnStamCost: 20
+    wpnKbForce: 1
 --- !u!61 &1741656973457462906
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7021,53 +7067,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5140533, y: 1.6073322}
   m_EdgeRadius: 0
---- !u!114 &1741656973457462907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741656973457462904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41f194a550a0fd14081503d01e0a0a67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectName: Weapon_Sword1
-  isInstanceLimited: 0
-  maxEachEntityInField: 0
-  doDrop: 1
-  dropChance: 1
-  onDestroyDropDelay: 0
-  itemDrops:
-  - {fileID: 1741656973457462904}
-  _isInteractible: 1
-  itemName: Stick
-  itemType: 0
-  _maxQuantity: 1
-  _curQuantity: 1
-  _itemPrefab: {fileID: 1741656973457462904}
-  _iconPrefab: {fileID: 7357873169151482980, guid: 9b709093d165b5b4e96ac149f2f60b26, type: 3}
-  equippable: 1
-  rBody: {fileID: 1741656973457462909}
-  itemHopSpeed: 0.0075
-  hopLimit: 0.05
-  interactor: {fileID: 0}
-  itemPullSpeed: 0.0075
-  effects: []
-  uniqueProp:
-    weaponType: 0
-    tier: 1
-    doBreak: 1
-    durability: 100
-    wpnDamage: 20
-    wpnAtkRange: 0.5
-    wpnAtkSpeed: 1
-    wpnAtkDelay: 0.3
-    wpnCritChance: 100
-    wpnAtkCrit: 10
-    wpnStamCost: 30
-    wpnKbForce: 0.3
 --- !u!95 &1741656973457462908
 Animator:
   serializedVersion: 3
@@ -7201,6 +7200,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 4.899994
       objectReference: {fileID: 0}
+    - target: {fileID: 1180472960738651490, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+      propertyPath: interactSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 2aea4724e4697a8439dd512ca65c0cd4, type: 3}
     - target: {fileID: 1753881990463547172, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
       propertyPath: m_MinValue
       value: 0
@@ -7359,7 +7362,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7556748452100729007, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8186498115010929238, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7513,7 +7516,7 @@ MonoBehaviour:
   uniqueProp:
     weaponType: 0
     tier: 30
-    doBreak: 1
+    doBreak: 0
     durability: 100
     wpnDamage: 30
     wpnAtkRange: 0.5
@@ -7557,7 +7560,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 953127626}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4275815482159977357
 SpriteRenderer:
