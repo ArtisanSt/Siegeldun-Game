@@ -17,6 +17,8 @@ public class DifficultyProperties
 public class GameMechanics : MonoBehaviour
 {
     // ========================================= GAME MECHANICS PROPERTIES =========================================
+    public static GameMechanics instance;
+
     public static LevelProperties levelProperties;
 
     [SerializeField] public GameObject loadingScreen;
@@ -35,6 +37,7 @@ public class GameMechanics : MonoBehaviour
 
     void Awake()
     {
+        instance = this;
         foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
         {
             scenes.Add(GetSceneName(scene.path), scene.path);
@@ -101,7 +104,7 @@ public class GameMechanics : MonoBehaviour
 
     private IEnumerator LoadSceneAsynchronously(string scenePath)
     {
-        PauseMechanics.isPlaying = false;
+        PauseMechanics.instance.SetPlayTime(false, false);
 
         gameState = GameState.Loading;
 
@@ -122,7 +125,7 @@ public class GameMechanics : MonoBehaviour
 
         gameState = (GetSceneName(scenePath) != GetSceneName(SpecialScene.MainMenu)) ? GameState.InGame : GameState.MainMenu;
         loadingScreen.SetActive(false);
-        PauseMechanics.isPlaying = true;
+        PauseMechanics.instance.SetPlayTime(true, false);
     }
 
     // Evaluates if the player can be resurrected or the game is over
@@ -150,7 +153,7 @@ public class GameMechanics : MonoBehaviour
             GlobalVariableStorage.curBulwarkLives--;
         }
 
-        levelProperties.Resurrect();
+        LevelProperties.instance.Resurrect();
         return;
     }
 
