@@ -12,11 +12,6 @@ public class LoreCrystal : Structures
     protected override void Update()
     {
         base.Update();
-        if (!GetComponent<LoreDialogue>().loreDialogue.repeatable && GetComponent<LoreDialogue>().loreDialogue.isDone)
-        {
-            GetComponent<SpriteRenderer>().material.DisableKeyword("OUTLINE_ON");
-            isInteractible = false;
-        }
     }
 
     // Interaction Event
@@ -24,6 +19,6 @@ public class LoreCrystal : Structures
     {
         if (!isSelected) return;
 
-        GetComponent<LoreDialogue>().StartDialogue();
+        GetComponent<LoreDialogue>().LoreDialogueSetter();
     }
 }

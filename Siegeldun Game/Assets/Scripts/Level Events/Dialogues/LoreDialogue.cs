@@ -2,25 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoreDialogue : DialogueSystem
+public class LoreDialogue : BaseDialogue
 {
     [SerializeField] public Dialogue loreDialogue;
 
-    protected override void Update()
-    {
-        base.Update();
 
-        LoreDialogueConditions();
+    // ================================================= DIALOGUE UPDATER =================================================
+    protected void Update()
+    {
+        LoreDialogueEnder();
     }
 
-    public void StartDialogue()
+
+    // ================================================= DIALOGUE STARTER =================================================
+    public void LoreDialogueSetter()
     {
-        PlayDialogue(ref loreDialogue, true);
+        dialogueSystem.PlayDialogue(loreDialogue);
     }
 
-    // Will only execute if the loreDialuge starts showing
-    private void LoreDialogueConditions()
+
+    // ================================================= DIALOGUE ENDER =================================================
+    private void LoreDialogueEnder()
     {
-        if (loreDialogue.isDone || (!loreDialogue.isDone && !loreDialogue.started)) return;
+
+    }
+
+
+    // ================================================= IDIALOGUE METHODS =================================================
+    public override void OnEndMessage(Dialogue curDialogue)
+    {
+        OverwriteDialogue(curDialogue, ref loreDialogue);
+        base.OnEndMessage(curDialogue);
+    }
+
+    public override void OnStartMessage(Dialogue curDialogue)
+    {
+        OverwriteDialogue(curDialogue, ref loreDialogue);
+        base.OnStartMessage(curDialogue);
+    }
+
+    public override void OnDisplayMessage(Dialogue curDialogue)
+    {
+        OverwriteDialogue(curDialogue, ref loreDialogue);
+        base.OnDisplayMessage(curDialogue);
     }
 }

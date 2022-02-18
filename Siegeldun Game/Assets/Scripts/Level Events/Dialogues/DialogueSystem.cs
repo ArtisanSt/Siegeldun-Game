@@ -6,38 +6,51 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Dialogue
 {
-    public string npcName;
+    public GameObject messageSource;
+
     public bool hasButtons = false;
     public bool repeatable = false;
     public bool canGoBack = false;
     public bool isTimed = false;
-    public int timer = 0;
+    public float timer = 0;
 
-    private bool _isDone = false;
-    public bool isDone { get { return _isDone; } set { _isDone = value; } }
-    private bool _started = false;
-    public bool started { get { return _started; } set { _started = value; } }
+    public enum DialogueState { StandBy, Playing, Done}
+    private DialogueState _state = DialogueState.StandBy;
+    public DialogueState state { get { return _state; } set { _state = value; } }
 
     public string messageTitle;
+    public string npcName;
     [TextArea(3, 10)]
     public List<string> dialogueMessages = new List<string>();
+
+    public Transform entityReference;
+    public float maxDistanceToReference;
 }
 
-public abstract class DialogueSystem : Process
+public class DialogueSystem : Process
 {
-    [SerializeField] public GameObject messageBox;
-    [SerializeField] public Image dialogueBG;
-    [SerializeField] public Text nameText;
-    [SerializeField] public Text dialogueText;
-    [SerializeField] public GameObject btnNext;
-    [SerializeField] public GameObject btnBack;
+    private static GameObject messageBox;
+    private static Image dialogueBG;
+    private static Text nameText;
+    private static Text dialogueText;
+    private static GameObject btnNext;
+    private static GameObject btnBack;
+
+    private static Transform player;
+
     private static Dialogue dialogue;
     private static int curIdx = -1;
     private static bool isPlaying = false;
-    private static float msgStart = 0f;
-    protected static string curMsg = "";
+    private static float msgStart = 0f; // Time.time when message started playing
 
-    protected virtual void Awake()
+    private static bool autoTimed;
+    private static float autoTimer = 5f; // Messages with no timer should only last for 10 seconds
+
+    private static bool hasReference;
+    private static Transform referencedEntity; // Messages that are referenced to an entity will have limitations
+    private static float distanceToReference; // Distance Limitation to a referenced entity
+
+    void Awake()
     {
         messageBox = (messageBox == null) ? GameObject.Find("/GUI/MessageBox") : messageBox;
         dialogueBG = (dialogueBG == null) ? messageBox.transform.GetChild(0).GetComponent<Image>() : dialogueBG;
@@ -49,55 +62,73 @@ public abstract class DialogueSystem : Process
         if (btnNext != null) btnNext.GetComponent<Button>().onClick.AddListener(() => DisplayChangeDialogue(1));
         if (btnBack != null) btnBack.GetComponent<Button>().onClick.AddListener(() => DisplayChangeDialogue(-1));
 
-        // Component Initializer to avoid future errors
-        if (messageBox != null)
-        {
-            dialogueBG = messageBox.transform.GetChild(0).GetComponent<Image>();
-            nameText = messageBox.transform.GetChild(1).GetComponent<Text>();
-            dialogueText = messageBox.transform.GetChild(2).GetComponent<Text>();
-            btnNext = messageBox.transform.GetChild(3).gameObject;
-            btnBack = messageBox.transform.GetChild(4).gameObject;
-        }
-
-        btnNext.GetComponent<Button>().onClick.AddListener(() => DisplayChangeDialogue(1));
-        btnBack.GetComponent<Button>().onClick.AddListener(() => DisplayChangeDialogue(-1));
+        player = (player == null) ? GameObject.Find("Player").transform : player;
     }
 
-    protected virtual void Start()
+    void Start()
     {
+        btnNext.SetActive(false);
+        btnBack.SetActive(false);
         if (messageBox.activeSelf) messageBox.SetActive(false);
     }
 
-    protected virtual void Update()
+    private void DialogueStopper()
     {
-        if (!PauseMechanics.isPlaying) return;
+        if (!PauseMechanics.isPlaying && !isPlaying && dialogue == null) return;
 
-        bool timerDone = dialogue != null && isPlaying && dialogue.isTimed && TimerIncrement(msgStart, dialogue.timer);
-        bool noBtnAutoTimed = dialogue != null && isPlaying && !dialogue.isTimed && !dialogue.hasButtons && TimerIncrement(msgStart, 3);
-        bool msgStayedTooLong = dialogue != null && isPlaying && TimerIncrement(msgStart, 10);
-        if (timerDone || noBtnAutoTimed || msgStayedTooLong)
+        // Check if dialogue system is being used
+        bool timerDone = dialogue.isTimed && TimerIncrement(msgStart, dialogue.timer);
+        bool noBtnAutoTimed = autoTimed && TimerIncrement(msgStart, autoTimer);
+        if (timerDone || noBtnAutoTimed)
         {
             DisplayChangeDialogue(1);
         }
+
+        if (hasReference)
+        {
+            distanceToReference = Mathf.Abs(player.position.x - referencedEntity.position.x);
+            if (dialogue.maxDistanceToReference < distanceToReference) EndDialogue();
+        }
     }
 
-    public void StartDialogue(ref Dialogue curDialogue)
+    private bool CanPlayMessage(Dialogue curDialogue)
     {
-        if (curDialogue == null || curDialogue.dialogueMessages.Count == 0 || isPlaying) return;
+        return curDialogue != null && curDialogue.dialogueMessages.Count > 0 && curDialogue.state == Dialogue.DialogueState.StandBy && !isPlaying;
+    }
 
-        messageBox.SetActive(true);
+    // Will only Trigger Once to start the message
+    public void PlayDialogue(Dialogue curDialogue)
+    {
+        if (!CanPlayMessage(curDialogue)) return;
+
+        if (curDialogue.messageSource.GetComponent<IDialogue>() != null) curDialogue.messageSource.GetComponent<IDialogue>().OnStartMessage(curDialogue);
+
         dialogue = curDialogue;
+
+        // Setting up Referenced Entity
+        referencedEntity = dialogue.entityReference;
+        hasReference = referencedEntity != null;
+
+        // Setting up Auto-timers
+        autoTimed = !dialogue.hasButtons && !dialogue.isTimed;
+
+        // Setting up Message Properties
         nameText.text = dialogue.npcName;
         curIdx = -1;
+
+        // Showing the messages
+        messageBox.SetActive(true);
         isPlaying = true;
-        curMsg = dialogue.messageTitle;
+        dialogue.state = Dialogue.DialogueState.Playing;
+
+        InvokeRepeating("DialogueStopper", 0, 0.1f);
 
         DisplayChangeDialogue(1);
     }
 
     public void DisplayChangeDialogue(int idxChange)
     {
-        if (dialogue == null || !isPlaying || dialogue.dialogueMessages.Count == 0) return;
+        if (!isPlaying) return;
 
         curIdx += idxChange;
         if (dialogue.dialogueMessages.Count == curIdx || curIdx < 0)
@@ -108,59 +139,28 @@ public abstract class DialogueSystem : Process
 
         msgStart = Time.time;
         SetDialogueButtons();
+        if (dialogue.messageSource.GetComponent<IDialogue>() != null) dialogue.messageSource.GetComponent<IDialogue>().OnDisplayMessage(dialogue);
         dialogueText.text = dialogue.dialogueMessages[curIdx];
     }
 
     private void SetDialogueButtons()
     {
-        btnNext.SetActive(false);
+        btnNext.SetActive(dialogue.hasButtons);
         btnBack.SetActive(false);
         if (!dialogue.hasButtons) return;
 
-        // Dialogue is the last one
-        btnNext.SetActive(true);
-        if (dialogue.dialogueMessages.Count == curIdx + 1)
-        {
-            btnNext.transform.GetChild(0).GetComponent<Text>().text = "OK";
-        }
-        else
-        {
-            btnNext.transform.GetChild(0).GetComponent<Text>().text = "Next";
-        }
-
-        if (curIdx != 0 && dialogue.canGoBack)
-        {
-            btnBack.SetActive(true);
-        }
+        btnNext.transform.GetChild(0).GetComponent<Text>().text = (dialogue.dialogueMessages.Count == curIdx + 1) ? "OK" : "Next";
+        btnBack.SetActive(curIdx != 0 && dialogue.canGoBack);
     }
 
     public void EndDialogue()
     {
-        if (dialogue.repeatable)
-        {
-            dialogue.started = false;
-            ToggleInteractible();
-        }
-        else { dialogue.isDone = true; }
-        isPlaying = false;
-        curMsg = "";
-        dialogue = null;
+        dialogue.state = (dialogue.repeatable) ? Dialogue.DialogueState.StandBy : Dialogue.DialogueState.Done;
+        if (dialogue.messageSource != null && dialogue.messageSource.GetComponent<IDialogue>() != null) dialogue.messageSource.GetComponent<IDialogue>().OnEndMessage(dialogue);
+
+        CancelInvoke("DialogueStopper");
         messageBox.SetActive(false);
-    }
-
-    // Will only Trigger Once to start the message
-    public void PlayDialogue(ref Dialogue curDialogue, bool conditionals)
-    {
-        if (conditionals && !curDialogue.started && !isPlaying)
-        {
-            curDialogue.started = true;
-            ToggleInteractible();
-            StartDialogue(ref curDialogue);
-        }
-    }
-
-    private void ToggleInteractible()
-    {
-        if (GetComponent<IInteractible>() != null) GetComponent<IInteractible>().ToggleInteractible();
+        isPlaying = false;
+        dialogue = null;
     }
 }
