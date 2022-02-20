@@ -12,6 +12,12 @@ public class ItemToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private GameObject weaponSlot;
     [SerializeField] private GameObject consumableSlot;
 
+    void Awake()
+    {
+        playerEntity = GameObject.Find("Player");
+        playerInventory = playerEntity.GetComponent<Inventory>();
+    }
+
     void Update()
     {
         if (!PauseMechanics.isPlaying) return; 

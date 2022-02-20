@@ -6,10 +6,13 @@ using UnityEngine.SceneManagement;
 public class MainMenu : Singleton<MainMenu>
 {
     private GameMechanics gameMechanics;
+    [SerializeField] private GameObject btnContinue;
 
     protected override void Awake()
     {
         base.Awake();
+        SaveAndLoadManager.LoadLevelData();
+        btnContinue.SetActive(GlobalVariableStorage.curAct != 0 || GlobalVariableStorage.curLvl != 0);
         for (int i=0; i < transform.childCount; i++)
         {
             GameObject child = transform.GetChild(i).gameObject;
@@ -17,7 +20,6 @@ public class MainMenu : Singleton<MainMenu>
         }
         gameMechanics = GameObject.Find("Game System/GameMechanics").GetComponent<GameMechanics>();
         GameMechanics.gameState = GameMechanics.GameState.MainMenu;
-        SaveAndLoadManager.LoadGameData();
     }
 
     /*void Update()
@@ -42,5 +44,10 @@ public class MainMenu : Singleton<MainMenu>
     public void StartNewGame(string difficulty)
     {
         gameMechanics.StartNewGame(difficulty);
+    }
+
+    public void ContinueGame()
+    {
+        gameMechanics.ContinueGame();
     }
 }

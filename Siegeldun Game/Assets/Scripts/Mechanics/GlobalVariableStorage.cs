@@ -19,7 +19,7 @@ public static class GlobalVariableStorage
     public static DifficultyProperties curDifficulty = new DifficultyProperties();
 
     public static int curAct = 0;
-    public static int curLvl = 1;
+    public static int curLvl = 0;
     // 0-0 Testing Grounds
     // 0-1 Tutorial Grounds
     // 1-1 Act 1 Level 1...

@@ -74,4 +74,18 @@ public abstract class Root : Process
         entityInstances["All"].Remove(entityObject);
         entityInstances[objectName].Remove(entityObject);
     }
+
+    public static void DestroyAllInstances()
+    {
+        List<string> pseudoInstance = new List<string>();
+        foreach(string key in entityInstances.Keys)
+        {
+            pseudoInstance.Add(key);
+        }
+
+        foreach(string eachInstance in pseudoInstance)
+        {
+            entityInstances.Remove(eachInstance);
+        }
+    }
 }

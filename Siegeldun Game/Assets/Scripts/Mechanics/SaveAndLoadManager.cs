@@ -9,7 +9,7 @@ public class LevelData
 {
     public DifficultyProperties curDifficulty = new DifficultyProperties();
     public int curAct = 0;
-    public int curLvl = 1;
+    public int curLvl = 0;
 
 
     public void SaveLevelDataToStorageData()
@@ -60,12 +60,39 @@ public static class SaveAndLoadManager
 {
     public static void SaveLevelData()
     {
+        BinaryFormatter formatter = new BinaryFormatter();
 
+        string path = Application.persistentDataPath + "/LevelData.ats";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        LevelData levelData = new LevelData();
+        levelData.SaveStorageDataToLevelData();
+
+        formatter.Serialize(stream, levelData);
+        //stream.Seek(0, SeekOrigin.Begin);
+        stream.Close();
     }
 
     public static void LoadLevelData()
     {
+        string path = Application.persistentDataPath + "/LevelData.ats";
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
 
+            //stream.Seek(0, SeekOrigin.Begin);
+            LevelData levelData = (LevelData)formatter.Deserialize(stream);
+
+            levelData.SaveLevelDataToStorageData();
+
+            stream.Close();
+        }
+        else
+        {
+            Debug.LogError($"Save File not found in {path}!");
+            SaveLevelData();
+        }
     }
 
     public static void SaveGameData()
@@ -86,6 +113,7 @@ public static class SaveAndLoadManager
     public static void LoadGameData()
     {
         string path = Application.persistentDataPath + "/GameData.ats";
+        //Debug.Log(path);
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
