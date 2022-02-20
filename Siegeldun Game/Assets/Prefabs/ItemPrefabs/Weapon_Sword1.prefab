@@ -165,8 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f194a550a0fd14081503d01e0a0a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
-  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   objectName: Weapon_Sword1
   isInstanceLimited: 0
   maxEachEntityInField: 0
@@ -192,7 +190,7 @@ MonoBehaviour:
   uniqueProp:
     weaponType: 0
     tier: 30
-    doBreak: 1
+    doBreak: 0
     durability: 100
     wpnDamage: 30
     wpnAtkRange: 0.5
@@ -200,7 +198,7 @@ MonoBehaviour:
     wpnAtkDelay: 0.3
     wpnCritChance: 100
     wpnAtkCrit: 10
-    wpnStamCost: 10
+    wpnStamCost: 30
     wpnKbForce: 0.3
 --- !u!114 &-5219706318430074109
 MonoBehaviour:

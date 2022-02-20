@@ -22,6 +22,7 @@ public class LevelProperties: Singleton<LevelProperties>
         GlobalVariableStorage.curLvl = lvlNumber;
         ActInitialize();
         GlobalVariableStorage.curBulwarkLives = (GlobalVariableStorage.maxBulwarkLives < 0) ? 0 : GlobalVariableStorage.maxBulwarkLives;
+        SaveAndLoadManager.SaveLevelData();
 
         if (resPlatform == null) resPlatform = GameObject.Find("ResurrectionPlatform").transform;
         playerPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EntityPrefabs/Player.prefab");

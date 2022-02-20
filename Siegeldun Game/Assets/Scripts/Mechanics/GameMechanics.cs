@@ -37,6 +37,9 @@ public class GameMechanics : MonoBehaviour
 
     void Awake()
     {
+        SaveAndLoadManager.LoadGameData();
+        Debug.Log(GlobalVariableStorage.curAct);
+        Debug.Log(GlobalVariableStorage.curLvl);
         instance = this;
         foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
         {
@@ -60,7 +63,7 @@ public class GameMechanics : MonoBehaviour
 
     public void ContinueGame()
     {
-        //LoadScene(GetSceneName(GlobalVariableStorage.curAct, GlobalVariableStorage.curLvl));
+        LoadScene(GetSceneName(GlobalVariableStorage.curAct, GlobalVariableStorage.curLvl));
     }
 
     private void DefaultsLoader()
@@ -104,6 +107,7 @@ public class GameMechanics : MonoBehaviour
 
     private IEnumerator LoadSceneAsynchronously(string scenePath)
     {
+        Root.DestroyAllInstances();
         PauseMechanics.instance.SetPlayTime(false, false);
 
         gameState = GameState.Loading;
@@ -123,7 +127,8 @@ public class GameMechanics : MonoBehaviour
             yield return null;
         }
 
-        gameState = (GetSceneName(scenePath) != GetSceneName(SpecialScene.MainMenu)) ? GameState.InGame : GameState.MainMenu;
+        bool inMainMenu = GetSceneName(scenePath) == GetSceneName(SpecialScene.MainMenu);
+        gameState = (inMainMenu) ? GameState.MainMenu : GameState.InGame;
         loadingScreen.SetActive(false);
         PauseMechanics.instance.SetPlayTime(true, false);
     }
@@ -160,6 +165,7 @@ public class GameMechanics : MonoBehaviour
     // Loads back to main menu
     public void BackToMainMenu()
     {
+        SaveAndLoadManager.SaveLevelData();
         LoadScene(GetSceneName(SpecialScene.MainMenu));
     }
 
