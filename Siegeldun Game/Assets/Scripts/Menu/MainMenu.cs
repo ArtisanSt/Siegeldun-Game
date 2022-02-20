@@ -17,7 +17,21 @@ public class MainMenu : Singleton<MainMenu>
         }
         gameMechanics = GameObject.Find("Game System/GameMechanics").GetComponent<GameMechanics>();
         GameMechanics.gameState = GameMechanics.GameState.MainMenu;
+        SaveAndLoadManager.LoadGameData();
     }
+
+    /*void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Debug.Log(true);
+            GlobalVariableStorage.achievements = new bool[4] { false, false, false, false };
+            GlobalVariableStorage.hostiles = new bool[4] { false, false, false, false };
+            GlobalVariableStorage.potions = new bool[2] { false, false };
+            GlobalVariableStorage.weapons = new bool[1] { false };
+            SaveAndLoadManager.SaveGameData();
+        }
+    }*/
 
     public void QuitGame()
     {

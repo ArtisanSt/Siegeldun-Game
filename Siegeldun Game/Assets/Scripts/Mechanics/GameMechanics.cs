@@ -123,7 +123,8 @@ public class GameMechanics : MonoBehaviour
             yield return null;
         }
 
-        gameState = (GetSceneName(scenePath) != GetSceneName(SpecialScene.MainMenu)) ? GameState.InGame : GameState.MainMenu;
+        bool inMainMenu = GetSceneName(scenePath) == GetSceneName(SpecialScene.MainMenu);
+        gameState = (inMainMenu) ? GameState.MainMenu : GameState.InGame;
         loadingScreen.SetActive(false);
         PauseMechanics.instance.SetPlayTime(true, false);
     }
