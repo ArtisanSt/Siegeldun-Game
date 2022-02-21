@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Player : Beings, IInteractor
 {
+    [Header("WEAPON ANIMATION SETTINGS", order = 1)]
+    [SerializeField] private Animator wpnAnim;
+    [SerializeField] private SpriteRenderer wpnSprite;
+    [SerializeField] private List<Sprite> attackSprites;
+
     // ========================================= UNITY MAIN METHODS =========================================
     protected override void Awake()
     {
@@ -34,6 +39,11 @@ public class Player : Beings, IInteractor
     protected override void Attack()
     {
         anim.SetTrigger("sword" + curAtkCombo.ToString());
+        if (hasWeapon)
+        {
+            wpnAnim.SetTrigger("sword" + curAtkCombo.ToString());
+            wpnAnim.speed = totalAtkSpeed / 5;
+        }
 
         base.Attack();
     }
