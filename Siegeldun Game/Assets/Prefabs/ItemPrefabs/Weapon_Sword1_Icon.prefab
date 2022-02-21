@@ -127,8 +127,8 @@ MonoBehaviour:
     weaponType: 0
     tier: 30
     doBreak: 0
-    durability: 100
-    wpnDamage: 30
+    durability: 10000
+    wpnDamage: 50
     wpnAtkRange: 0.5
     wpnAtkSpeed: 1
     wpnAtkDelay: 0.3
