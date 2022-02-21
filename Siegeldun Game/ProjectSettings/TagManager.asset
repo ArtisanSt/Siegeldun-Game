@@ -5,15 +5,37 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Enemy
+  - Item
+  - Region
+  - Player Event Collider
+  - Kinematic
+  - Interactible
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
   - Ground
+  - AddOn
+  - Items
+  - Structures
+  - Breakables
+  - Obstacles
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - BackParticle
+  - Neutral
   - Enemy
+  - Ally
+  - FrontParticle
   - 
   - 
   - 
@@ -21,36 +43,44 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - GUI
   m_SortingLayers:
+  - name: Parallax
+    uniqueID: 6604599
+    locked: 0
   - name: Background
-    uniqueID: 2454533199
+    uniqueID: 3356837661
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Ground
-    uniqueID: 991996671
+    uniqueID: 1712531303
+    locked: 0
+  - name: Structure (BG)
+    uniqueID: 342429607
+    locked: 0
+  - name: Items (HIDDEN)
+    uniqueID: 3090840173
+    locked: 0
+  - name: AddOns
+    uniqueID: 3894051233
+    locked: 0
+  - name: Items (SHOWN)
+    uniqueID: 4284969911
+    locked: 0
+  - name: Entity
+    uniqueID: 2989893747
+    locked: 0
+  - name: Obstacles
+    uniqueID: 2016846833
+    locked: 0
+  - name: Structure (FG)
+    uniqueID: 3399338337
     locked: 0
   - name: Foreground
-    uniqueID: 176426455
+    uniqueID: 2475118191
     locked: 0
   - name: UI
-    uniqueID: 1022406069
+    uniqueID: 4266443397
     locked: 0

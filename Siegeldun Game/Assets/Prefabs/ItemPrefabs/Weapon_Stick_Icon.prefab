@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7357873169151482980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7051089247497911259}
+  - component: {fileID: 4724826021907005826}
+  - component: {fileID: 5785649297426895363}
+  - component: {fileID: 1036441688604471926}
+  - component: {fileID: 2937176994526891740}
+  m_Layer: 5
+  m_Name: Weapon_Stick_Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7051089247497911259
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7357873169151482980}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 27.8869, y: 34.8701}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &4724826021907005826
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7357873169151482980}
+  m_CullTransparentMesh: 1
+--- !u!114 &5785649297426895363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7357873169151482980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 7fa077cbddb664c489704a3a05059bcf, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!225 &1036441688604471926
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7357873169151482980}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &2937176994526891740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7357873169151482980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaf2984acf3e92742b0a5963196be828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Weapon_Stick
+  isInstanceLimited: 0
+  maxEachEntityInField: 0
+  doDrop: 0
+  dropChance: 1
+  onDestroyDropDelay: 0
+  itemDrops: []
+  _isInteractible: 1
+  itemName: Stick
+  itemType: 0
+  _maxQuantity: 1
+  _curQuantity: 1
+  _itemPrefab: {fileID: 8761768885611777174, guid: 7ee0cc6ee7c76384492734cfd749b5cc, type: 3}
+  _iconPrefab: {fileID: 7357873169151482980}
+  equippable: 1
+  rBody: {fileID: 0}
+  itemHopSpeed: 0.0075
+  hopLimit: 0.05
+  interactor: {fileID: 0}
+  itemPullSpeed: 0.0075
+  effects: []
+  uniqueProp:
+    weaponType: 0
+    tier: 1
+    doBreak: 0
+    durability: 100
+    wpnDamage: 20
+    wpnAtkRange: 0.5
+    wpnAtkSpeed: 1
+    wpnAtkDelay: 0.3
+    wpnCritChance: 100
+    wpnAtkCrit: 10
+    wpnStamCost: 20
+    wpnKbForce: 0.3
