@@ -31211,6 +31211,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4628602045896817612, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4628602045896817612, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e6a6ffa45c90be149ace2aa556d3a6f3, type: 3}
     - target: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
       propertyPath: m_Name
       value: Game System
