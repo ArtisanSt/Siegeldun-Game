@@ -38,8 +38,6 @@ public class GameMechanics : MonoBehaviour
     void Awake()
     {
         SaveAndLoadManager.LoadGameData();
-        Debug.Log(GlobalVariableStorage.curAct);
-        Debug.Log(GlobalVariableStorage.curLvl);
         instance = this;
         foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
         {

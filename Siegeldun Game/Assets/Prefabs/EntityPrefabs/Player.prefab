@@ -5397,6 +5397,22 @@ MonoBehaviour:
   attackPoint: {fileID: 4865986373347713243}
   hasInventory: 1
   inventory: {fileID: 1545940619873157281}
+  wpnAnim: {fileID: 1766380275324498015}
+  wpnSprite: {fileID: 1689283017409269481}
+  attackSprites:
+  - {fileID: 7208571194340795188, guid: 293fdee3b4f9f9643b167175b3cd7450, type: 3}
+  - {fileID: 2898976758758885192, guid: 293fdee3b4f9f9643b167175b3cd7450, type: 3}
+  - {fileID: -8596736630491752432, guid: 293fdee3b4f9f9643b167175b3cd7450, type: 3}
+  - {fileID: -5666791973732000915, guid: 293fdee3b4f9f9643b167175b3cd7450, type: 3}
+  - {fileID: -3623193622116292312, guid: 293fdee3b4f9f9643b167175b3cd7450, type: 3}
+  - {fileID: 5470104738085392960, guid: 293fdee3b4f9f9643b167175b3cd7450, type: 3}
+  - {fileID: -5396691346902468916, guid: 293fdee3b4f9f9643b167175b3cd7450, type: 3}
+  - {fileID: -5191073468634982449, guid: 293fdee3b4f9f9643b167175b3cd7450, type: 3}
+  - {fileID: 3074030163690404849, guid: 293fdee3b4f9f9643b167175b3cd7450, type: 3}
+  - {fileID: -5945248252844430028, guid: 293fdee3b4f9f9643b167175b3cd7450, type: 3}
+  - {fileID: -496196173760559744, guid: 293fdee3b4f9f9643b167175b3cd7450, type: 3}
+  - {fileID: 1473611778756808765, guid: 293fdee3b4f9f9643b167175b3cd7450, type: 3}
+  - {fileID: 21300000, guid: e3add91db152cbd4c95f1adab5cb02a7, type: 3}
 --- !u!114 &1376583885049657951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5706,15 +5722,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1305073549
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
