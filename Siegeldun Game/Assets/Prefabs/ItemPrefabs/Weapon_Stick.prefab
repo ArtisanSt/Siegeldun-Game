@@ -190,7 +190,7 @@ MonoBehaviour:
     weaponType: 0
     tier: 1
     doBreak: 0
-    durability: 100
+    durability: 10000
     wpnDamage: 20
     wpnAtkRange: 0.5
     wpnAtkSpeed: 1
