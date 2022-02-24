@@ -312,8 +312,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -421, y: -207.7}
-  m_SizeDelta: {x: 92.8151, y: 90.7816}
+  m_AnchoredPosition: {x: -419.03, y: -205.5644}
+  m_SizeDelta: {x: 88.879, y: 86.5008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &279479520
 MonoBehaviour:
@@ -333,7 +333,7 @@ MonoBehaviour:
   contentText: {fileID: 177727869}
   contentType: 1
   nameToShow: KATANA
-  imgToShow: {fileID: 21300000, guid: 117bc49f7cd7ed64c8fe960ca1fef15d, type: 3}
+  imgToShow: {fileID: 21300000, guid: 3e0405e41a18f044e94c105ca7f86287, type: 3}
   infoToShow: A light blade that utilizes a speed similar to that of a knife and
     a devastating blow close to what a sword can do.
 --- !u!114 &279479521
@@ -400,7 +400,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 117bc49f7cd7ed64c8fe960ca1fef15d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0219b5d8d57b2864ba9c466cdda50532, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -613,7 +613,7 @@ MonoBehaviour:
   contentText: {fileID: 177727869}
   contentType: 1
   nameToShow: STICK
-  imgToShow: {fileID: 21300000, guid: 117bc49f7cd7ed64c8fe960ca1fef15d, type: 3}
+  imgToShow: {fileID: 21300000, guid: 7fa077cbddb664c489704a3a05059bcf, type: 3}
   infoToShow: Either this or fists.
 --- !u!114 &705910400
 MonoBehaviour:
@@ -679,7 +679,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 117bc49f7cd7ed64c8fe960ca1fef15d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7fa077cbddb664c489704a3a05059bcf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -713,8 +713,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -527.00006, y: -207.7}
-  m_SizeDelta: {x: 92.8151, y: 90.7816}
+  m_AnchoredPosition: {x: -527.7106, y: -207.69997}
+  m_SizeDelta: {x: 67.4859, y: 69.1273}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &748115915 stripped
 RectTransform:
@@ -1435,7 +1435,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5842893272331514936, guid: 197d0f2bcebec0844b459b86ebd33b88, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5842893272637285836, guid: 197d0f2bcebec0844b459b86ebd33b88, type: 3}
       propertyPath: m_IsActive
@@ -1580,6 +1580,10 @@ PrefabInstance:
     - target: {fileID: 8060757129548168542, guid: 197d0f2bcebec0844b459b86ebd33b88, type: 3}
       propertyPath: m_Name
       value: MainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 8060757129548168542, guid: 197d0f2bcebec0844b459b86ebd33b88, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8060757129835841178, guid: 197d0f2bcebec0844b459b86ebd33b88, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_Target
