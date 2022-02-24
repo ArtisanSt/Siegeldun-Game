@@ -1,34 +1,55 @@
 fileFormatVersion: 2
-guid: 88896bef563b03544bd48e829457ffb1
+guid: 92f4c803e644b484fad4abbb4ee95c26
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4647598100228573617
-    second: Crate_Hurt_0
+      213: -500816167839875588
+    second: goblin_rider_death_sheet_0
   - first:
-      213: 3474453299161016556
-    second: Crate_Hurt_1
+      213: -7999332448233552203
+    second: goblin_rider_death_sheet_1
   - first:
-      213: -8757611988634338877
-    second: Crate_Hurt_2
+      213: -3267370185919646327
+    second: goblin_rider_death_sheet_2
   - first:
-      213: 616682065339667780
-    second: Crate_Hurt_3
+      213: -3103738749325111599
+    second: goblin_rider_death_sheet_3
   - first:
-      213: -4130845779088375197
-    second: Crate_Hurt_4
+      213: -5423434767618816403
+    second: goblin_rider_death_sheet_4
   - first:
-      213: -2514423401894967921
-    second: Crate_Hurt_5
+      213: 7602555137920632542
+    second: goblin_rider_death_sheet_5
   - first:
-      213: 866821640041645801
-    second: Crate_Hurt_6
+      213: -4182737072360711555
+    second: goblin_rider_death_sheet_6
   - first:
-      213: 1881640704324216739
-    second: Crate_Hurt_7
+      213: -6071403914512777900
+    second: goblin_rider_death_sheet_7
   - first:
-      213: -2258970261335913136
-    second: Crate_Hurt_8
+      213: 6515261759541424208
+    second: goblin_rider_death_sheet_8
+  - first:
+      213: 1441972131943496168
+    second: goblin_rider_death_sheet_9
+  - first:
+      213: 1085033200223529185
+    second: GoblinRider_Death_0
+  - first:
+      213: -1409480875793634509
+    second: GoblinRider_Death_1
+  - first:
+      213: 2228552590749922969
+    second: GoblinRider_Death_2
+  - first:
+      213: 190354351741507131
+    second: GoblinRider_Death_3
+  - first:
+      213: 5934637438874691426
+    second: GoblinRider_Death_4
+  - first:
+      213: 3536755615177206567
+    second: GoblinRider_Death_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -118,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Crate_Hurt_0
+      name: GoblinRider_Death_0
       rect:
         serializedVersion: 2
-        x: 27
-        y: 4
-        width: 33
-        height: 42
+        x: 21
+        y: 0
+        width: 65
+        height: 59
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f467811e62a608fb0800000000000000
-      internalID: -4647598100228573617
+      spriteID: 1e824d462ffce0f00800000000000000
+      internalID: 1085033200223529185
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crate_Hurt_1
+      name: GoblinRider_Death_1
       rect:
         serializedVersion: 2
-        x: 118
-        y: 4
-        width: 36
-        height: 42
+        x: 191
+        y: 0
+        width: 74
+        height: 59
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,155 +174,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce82d2dfddcb73030800000000000000
-      internalID: 3474453299161016556
+      spriteID: 33b2d987c94807ce0800000000000000
+      internalID: -1409480875793634509
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crate_Hurt_2
+      name: GoblinRider_Death_2
       rect:
         serializedVersion: 2
-        x: 204
-        y: 5
-        width: 48
-        height: 42
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 367
+        y: 0
+        width: 107
+        height: 59
+      alignment: 9
+      pivot: {x: 0.35495025, y: 0.50000024}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3c97fb0db46b67680800000000000000
-      internalID: -8757611988634338877
+      spriteID: 996fcee16c86dee10800000000000000
+      internalID: 2228552590749922969
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crate_Hurt_3
+      name: GoblinRider_Death_3
       rect:
         serializedVersion: 2
-        x: 291
-        y: 6
-        width: 57
-        height: 42
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 546
+        y: 0
+        width: 121
+        height: 59
+      alignment: 9
+      pivot: {x: 0.33068645, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 445dce33215ee8800800000000000000
-      internalID: 616682065339667780
+      spriteID: b36900d364644a200800000000000000
+      internalID: 190354351741507131
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crate_Hurt_4
+      name: GoblinRider_Death_4
       rect:
         serializedVersion: 2
-        x: 378
-        y: 5
-        width: 71
-        height: 42
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 729
+        y: 0
+        width: 134
+        height: 59
+      alignment: 9
+      pivot: {x: 0.32394728, y: 0.5105222}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 362048b66a94ca6c0800000000000000
-      internalID: -4130845779088375197
+      spriteID: 2672cdebe411c5250800000000000000
+      internalID: 5934637438874691426
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crate_Hurt_5
+      name: GoblinRider_Death_5
       rect:
         serializedVersion: 2
-        x: 470
-        y: 5
-        width: 71
-        height: 42
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 900
+        y: 0
+        width: 144
+        height: 59
+      alignment: 9
+      pivot: {x: 0.29306242, y: 0.48947778}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f850f1bec39fa1dd0800000000000000
-      internalID: -2514423401894967921
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crate_Hurt_6
-      rect:
-        serializedVersion: 2
-        x: 553
-        y: 5
-        width: 81
-        height: 42
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9e6cd4260b1970c00800000000000000
-      internalID: 866821640041645801
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crate_Hurt_7
-      rect:
-        serializedVersion: 2
-        x: 644
-        y: 5
-        width: 82
-        height: 42
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3a72920504eec1a10800000000000000
-      internalID: 1881640704324216739
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crate_Hurt_8
-      rect:
-        serializedVersion: 2
-        x: 742
-        y: 4
-        width: 78
-        height: 42
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 05dc6ee048686a0e0800000000000000
-      internalID: -2258970261335913136
+      spriteID: 72b61045e74151130800000000000000
+      internalID: 3536755615177206567
       vertices: []
       indices: 
       edges: []
