@@ -12,9 +12,9 @@ public abstract class BaseObject : Root
     [SerializeField] protected List<GameObject> itemDrops = new List<GameObject>();
 
 
-    protected GameObject Drop(int dropChance, Vector2 dropPosition, GameObject itemG = null, Transform parentT = null)
+    protected GameObject Drop(int dropChance, Vector2 dropPosition, GameObject itemG = null, Transform parentT = null, bool doDropOverride = false)
     {
-        if (doDrop && ChanceRandomizer(dropChance))
+        if ((doDrop || doDropOverride) && ChanceRandomizer(dropChance))
         {
             if (itemG == null && itemDrops.Count != 0) itemG = itemDrops[Random.Range(0, itemDrops.Count)];
             if (parentT == null) parentT = GameObject.Find("Drops").transform;
