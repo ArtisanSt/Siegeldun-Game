@@ -121,12 +121,12 @@ TextureImporter:
       name: Crate_Hurt_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 92
-        height: 48
+        x: 27
+        y: 4
+        width: 33
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,12 +142,12 @@ TextureImporter:
       name: Crate_Hurt_1
       rect:
         serializedVersion: 2
-        x: 92
-        y: 0
-        width: 92
-        height: 48
+        x: 118
+        y: 4
+        width: 36
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -163,12 +163,12 @@ TextureImporter:
       name: Crate_Hurt_2
       rect:
         serializedVersion: 2
-        x: 184
-        y: 0
-        width: 92
-        height: 48
+        x: 204
+        y: 5
+        width: 48
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -184,12 +184,12 @@ TextureImporter:
       name: Crate_Hurt_3
       rect:
         serializedVersion: 2
-        x: 276
-        y: 0
-        width: 92
-        height: 48
+        x: 291
+        y: 6
+        width: 57
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -205,12 +205,12 @@ TextureImporter:
       name: Crate_Hurt_4
       rect:
         serializedVersion: 2
-        x: 368
-        y: 0
-        width: 92
-        height: 48
+        x: 378
+        y: 5
+        width: 71
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -226,12 +226,12 @@ TextureImporter:
       name: Crate_Hurt_5
       rect:
         serializedVersion: 2
-        x: 460
-        y: 0
-        width: 92
-        height: 48
+        x: 470
+        y: 5
+        width: 71
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -247,12 +247,12 @@ TextureImporter:
       name: Crate_Hurt_6
       rect:
         serializedVersion: 2
-        x: 552
-        y: 0
-        width: 92
-        height: 48
+        x: 553
+        y: 5
+        width: 81
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -269,11 +269,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 644
-        y: 0
-        width: 92
-        height: 48
+        y: 5
+        width: 82
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -289,12 +289,12 @@ TextureImporter:
       name: Crate_Hurt_8
       rect:
         serializedVersion: 2
-        x: 736
-        y: 0
-        width: 92
-        height: 48
+        x: 742
+        y: 4
+        width: 78
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

@@ -65,7 +65,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
     protected virtual void AnimationState()
     {
         curSpriteName = sprite.sprite.name;
-        curAnimStateName = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(entityName.Length + 1);
+        curAnimStateName = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Substring(objectName.Length + 1);
         curAnimStateName = (curAnimStateName.Length >= 6 && curAnimStateName.Substring(0, 6) == "Attack") ? "Attack" : curAnimStateName;
         isHurting = curAnimStateName == "Hurt";
         isAttacking = curAnimStateName == "Attack";
@@ -427,7 +427,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
     protected virtual void Die()
     {
         isAlive = false;
-        anim.SetBool("death", true);
+        anim.SetTrigger("death");
         InstanceDestroyed(objectName, gameObject);
 
         StartCoroutine(ClearInstance());

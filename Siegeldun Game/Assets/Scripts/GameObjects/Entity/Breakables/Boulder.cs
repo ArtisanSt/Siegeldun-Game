@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boulder : Breakables
+public class Boulder : Breakables, IActivator
 {
+    public enum Shape { Circle, Square }
     [Header("BOULDER SETTINGS", order = 1)]
+    [SerializeField] public Shape shape;
     private float circumference;
     [SerializeField] public float ratioToWorldScale = 1;
     [SerializeField] public float slowDownConst = .99f;
@@ -20,8 +22,11 @@ public class Boulder : Breakables
     {
         base.Awake();
         itemDropsInit();
-        rBody.rotation = 45f;
-        circumference = Mathf.PI * transform.localScale.x;
+        if (shape == Shape.Circle)
+        {
+            rBody.rotation = 45f;
+            circumference = Mathf.PI * transform.localScale.x;
+        }
     }
 
     // Update is called once per frame
@@ -33,6 +38,8 @@ public class Boulder : Breakables
 
     private void MovementRotation()
     {
+        if (shape != Shape.Circle) return;
+
         float multiplier = slowDownConst;
         if (cirColl.IsTouchingLayers(LayerMask.GetMask("Ally", "Enemy", "Neutral"))) multiplier = 1;
         rBody.velocity = new Vector2(rBody.velocity.x * multiplier, rBody.velocity.y);

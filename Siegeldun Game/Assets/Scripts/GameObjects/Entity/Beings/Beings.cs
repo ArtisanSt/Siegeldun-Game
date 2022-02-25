@@ -20,7 +20,7 @@ public class SpeedBoost
     }
 }
 
-public abstract class Beings : Entity, IBoostable, IWeaponizable
+public abstract class Beings : Entity, IBoostable, IWeaponizable, IActivator
 {
     protected virtual void Start()
     {

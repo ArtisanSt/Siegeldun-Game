@@ -5354,10 +5354,10 @@ MonoBehaviour:
   stamText: {fileID: 5453753030787085242}
   doStamRegen: 1
   stamRegenScaling:
-  - 0.1
-  - 0.05
-  - 0.01
-  stamRegen: 0.1
+  - 1
+  - 0.005
+  - 0.001
+  stamRegen: 1
   stamRegenDelay: 3
   doMoveX: 1
   mvSpeed: 10

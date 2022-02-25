@@ -258,6 +258,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8656741150414636525, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 494.0664
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656741150414636525, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 376.5899
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656741150414636525, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -660.6553
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656741150414636525, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 164.6552
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
 --- !u!1001 &261171242
@@ -55016,7 +55032,6 @@ MonoBehaviour:
   itemDrops: []
   _isInteractible: 1
   structureName: Portal
-  gameMechanics: {fileID: 0}
 --- !u!61 &7126064841841900711
 BoxCollider2D:
   m_ObjectHideFlags: 0

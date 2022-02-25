@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Portal : Structures
 {
-    [SerializeField] public GameMechanics gameMechanics;
-
     protected override void Awake()
     {
         base.Awake();
