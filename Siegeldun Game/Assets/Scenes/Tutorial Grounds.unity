@@ -13521,7 +13521,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.875, y: 1.5}
+    oldSize: {x: 1.03125, y: 1.3125}
     newSize: {x: 2.875, y: 1.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -13793,6 +13793,26 @@ PrefabInstance:
     - target: {fileID: 8656741149722778132, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656741150414636524, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a2b586dad7a0f5b4a8564861ff1e29b0, type: 3}
+    - target: {fileID: 8656741150414636525, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 494.0664
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656741150414636525, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 376.5899
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656741150414636525, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -660.6553
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656741150414636525, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 164.65515
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
