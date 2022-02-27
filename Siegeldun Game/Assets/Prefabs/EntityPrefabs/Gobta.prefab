@@ -5181,6 +5181,7 @@ GameObject:
   - component: {fileID: 7244559956178301277}
   - component: {fileID: 8139996859713401437}
   - component: {fileID: 1938670207451663440}
+  - component: {fileID: 2720484169129372190}
   m_Layer: 21
   m_Name: Gobta
   m_TagString: Enemy
@@ -5309,8 +5310,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.2124138, y: -0.783128}
-  m_Size: {x: 2.0355148, y: 2.9659219}
+  m_Offset: {x: 1.2487888, y: -0.9072249}
+  m_Size: {x: 1.729969, y: 2.6830478}
   m_Direction: 0
 --- !u!61 &7244559956178301277
 BoxCollider2D:
@@ -5325,7 +5326,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.2126694, y: -0.8487388}
+  m_Offset: {x: 1.248743, y: -0.91318184}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5336,7 +5337,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.9334106, y: 2.7840345}
+  m_Size: {x: 1.7343941, y: 1.1556195}
   m_EdgeRadius: 0
 --- !u!114 &8139996859713401437
 MonoBehaviour:
@@ -5385,40 +5386,43 @@ MonoBehaviour:
   dropChance: 1
   onDestroyDropDelay: 0
   itemDrops: []
-  rBody: {fileID: 0}
-  sprite: {fileID: 0}
-  boxColl: {fileID: 0}
+  rBody: {fileID: 3076965456099852513}
+  sprite: {fileID: 8250995261045508465}
+  boxColl: {fileID: 7244559956178301277}
   cirColl: {fileID: 0}
-  capColl: {fileID: 0}
-  anim: {fileID: 0}
+  capColl: {fileID: 5139777578425533659}
+  anim: {fileID: 7151718093002690431}
   animationSpeed: 1
-  spriteDefaultFacing: 1
+  spriteDefaultFacing: -1
   entityName: Gobta
   entityType: 0
-  entityPrefab: {fileID: 0}
+  entityPrefab: {fileID: 8389930670526582310}
   hasSpawner: 0
   spawner: {fileID: 0}
   activePoints:
   - {fileID: 0}
   - {fileID: 0}
   isAlive: 1
-  entityStatusBar: {fileID: 0}
-  hasHp: 0
+  entityStatusBar: {fileID: 8310663147638570484}
+  doBlock: 1
+  blockChance: 0
+  blockDuration: 0
+  hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
-  - 0
-  - 0
-  - 0
+  - 200
+  - 300
+  - 500
   curHp: 0
   maxHp: 0
-  hpBarB: {fileID: 0}
-  hpBarF: {fileID: 0}
-  hpText: {fileID: 0}
-  doHpRegen: 0
+  hpBarB: {fileID: 2040795503262265532}
+  hpBarF: {fileID: 6400354345134634692}
+  hpText: {fileID: 8516829566418011214}
+  doHpRegen: 1
   hpRegenScaling:
-  - 0
-  - 0
-  - 0
+  - 0.01
+  - 0.005
+  - 0.001
   hpRegen: 0
   hpRegenDelay: 3
   hasStam: 0
@@ -5438,17 +5442,17 @@ MonoBehaviour:
   - 0
   stamRegen: 0
   stamRegenDelay: 3
-  doMoveX: 0
-  mvSpeed: 0
+  doMoveX: 1
+  mvSpeed: 9
   slowDownConst: 0.9
   isGrounded: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
-  doMoveY: 0
-  allowJump: 0
-  jumpForce: 0
-  doAttack: 0
+    m_Bits: 64
+  doMoveY: 1
+  allowJump: 1
+  jumpForce: 25
+  doAttack: 1
   hasWeapon: 0
   weaponGameobject: {fileID: 0}
   wpnEquipped: {fileID: 0}
@@ -5457,33 +5461,54 @@ MonoBehaviour:
     tier: 0
     doBreak: 0
     durability: 0
-    wpnDamage: 0
-    wpnAtkRange: 0
-    wpnAtkSpeed: 0
-    wpnAtkDelay: 0
+    wpnDamage: 30
+    wpnAtkRange: 1
+    wpnAtkSpeed: 1
+    wpnAtkDelay: 3
     wpnCritChance: 0
     wpnAtkCrit: 0
     wpnStamCost: 0
     wpnKbForce: 0
   doAtkCombo: 0
-  stateToPlayer: 3
+  stateToPlayer: 0
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4194304
   allyLayer:
     serializedVersion: 2
-    m_Bits: 0
-  attackPoint: {fileID: 0}
+    m_Bits: 2097152
+  attackPoint: {fileID: 7231136562797078304}
   hasInventory: 0
   inventory: {fileID: 0}
-  detectionSize: {x: 3, y: 1}
-  allowPathfinding: 0
+  detectionSize: {x: 10, y: 3}
+  allowPathfinding: 1
   doSleep: 0
   isAwake: 1
   sleepDelay: 10
-  sleepParticle: {fileID: 0}
+  sleepParticle: {fileID: 2530611360873288887}
   isTriggered: 0
   forgivenessTime: 2
   triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
+  hasAbility: 1
+  abilityChance: 0
+  abilityCooldown: 5
+  dummiesPrefabs:
+  - {fileID: 6685909666436209234, guid: 0d7458e69d7219f46b652df2adcda141, type: 3}
+  - {fileID: 5839565291898570757, guid: 36a7033d27881304d9c35722f25e2493, type: 3}
+  - {fileID: 3562279173696304011, guid: 369fdbdfc62124346bf8ef6659c34de7, type: 3}
+--- !u!114 &2720484169129372190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8389930670526582310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Gobta
+  objectClassification: 1

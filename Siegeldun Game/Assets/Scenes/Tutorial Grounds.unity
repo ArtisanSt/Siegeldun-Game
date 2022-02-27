@@ -215,6 +215,7 @@ MonoBehaviour:
       the gate at the end of every level.
     entityReference: {fileID: 0}
     maxDistanceToReference: 0
+  statue: {fileID: 6839935598183995240}
 --- !u!61 &456238608
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1414,6 +1415,9 @@ MonoBehaviour:
   activePoints: []
   isAlive: 1
   entityStatusBar: {fileID: 781637664292506450}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
@@ -1498,6 +1502,9 @@ MonoBehaviour:
   triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
+  hasAbility: 0
+  abilityChance: 0
+  abilityCooldown: 0
 --- !u!114 &781637662976265465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8172,6 +8179,9 @@ MonoBehaviour:
   - {fileID: 0}
   isAlive: 1
   entityStatusBar: {fileID: 5317110436452767673}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
@@ -8256,6 +8266,9 @@ MonoBehaviour:
   triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
+  hasAbility: 0
+  abilityChance: 0
+  abilityCooldown: 0
 --- !u!50 &6685909667967396590
 Rigidbody2D:
   serializedVersion: 4
@@ -13208,6 +13221,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1257468735065153231, guid: 000a2fdfc170511439bd2bffedba352d, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2184595822806802359, guid: 000a2fdfc170511439bd2bffedba352d, type: 3}
       propertyPath: m_SortingLayer
       value: 5
@@ -13231,6 +13248,10 @@ PrefabInstance:
     - target: {fileID: 2582191217835905136, guid: 000a2fdfc170511439bd2bffedba352d, type: 3}
       propertyPath: m_LocalPosition.y
       value: -2.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2582191217835905142, guid: 000a2fdfc170511439bd2bffedba352d, type: 3}
+      propertyPath: m_Name
+      value: PortalGate
       objectReference: {fileID: 0}
     - target: {fileID: 8986335351997673187, guid: 000a2fdfc170511439bd2bffedba352d, type: 3}
       propertyPath: m_RootOrder
@@ -13342,6 +13363,11 @@ MonoBehaviour:
     - Press Right Click to Attack.
     entityReference: {fileID: 0}
     maxDistanceToReference: 0
+--- !u!1 &6839935598183995240 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8183586908093994472, guid: 000a2fdfc170511439bd2bffedba352d, type: 3}
+  m_PrefabInstance: {fileID: 6839935598183995237}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7378534520771890820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13521,7 +13547,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.875, y: 1.5}
+    oldSize: {x: 1.03125, y: 1.3125}
     newSize: {x: 2.875, y: 1.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -13659,6 +13685,9 @@ MonoBehaviour:
   - {fileID: 0}
   isAlive: 1
   entityStatusBar: {fileID: 0}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:

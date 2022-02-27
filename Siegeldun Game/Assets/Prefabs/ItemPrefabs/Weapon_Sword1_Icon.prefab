@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7719032356634484177}
   - component: {fileID: -5388719272014676572}
   - component: {fileID: -7607789678989425805}
+  - component: {fileID: 3509490377770957490}
   m_Layer: 5
   m_Name: Weapon_Sword1_Icon
   m_TagString: Untagged
@@ -136,3 +137,17 @@ MonoBehaviour:
     wpnAtkCrit: 10
     wpnStamCost: 30
     wpnKbForce: 0.3
+--- !u!114 &3509490377770957490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6721948792633512886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Sword
+  objectClassification: 3

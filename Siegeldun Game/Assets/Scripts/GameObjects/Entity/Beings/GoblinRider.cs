@@ -43,8 +43,9 @@ public class GoblinRider: NPC
     protected override void OnEntityDestroy()
     {
         base.OnEntityDestroy();
-        Debug.Log(true);
-        GameObject x = Drop(1, new Vector2(0,0), goblinPrefab, GameObject.Find("Entities").transform, true);
-        Debug.Log(x);
+        if (!forcedDeath)
+        {
+            GameObject x = Drop(1, new Vector2(0, 0), goblinPrefab, GameObject.Find("Entities").transform, true);
+        }
     }
 }

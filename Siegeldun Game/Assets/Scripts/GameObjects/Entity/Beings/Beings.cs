@@ -59,7 +59,7 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable, IActivator
 
         // Horizontal Movement
         float slowDown = (Mathf.Abs(dirXFinal * slowDownConst) > 0.001f) ? dirXFinal * slowDownConst : 0 ;
-        dirXFinal = (!isAttacking && !isHurting) ? dirXFacing : slowDown; // Front movement with a slowdown effect when attacking
+        dirXFinal = (!isAttacking && !isHurting && !isDoingAbility) ? dirXFacing : slowDown; // Front movement with a slowdown effect when attacking
         runVelocity = (isAlive) ? inProximity * dirXFinal * totalSpeed.x + rcvKbDisplacement : slowDown;
         runVelocity = (doMoveX) ? runVelocity : 0;
 
@@ -162,13 +162,20 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable, IActivator
         {
             foreach (Collider2D col in hitColliders)
             {
-                GameObject enemy = col.gameObject;
-                if (enemy.GetComponent<IDamageable>() == null || damagedEntities.Contains(enemy) || (enemy.transform.position.x - transform.position.x) * spriteFacing < 0) continue;
+                try
+                {
+                    GameObject enemy = col.gameObject;
+                    if (enemy.GetComponent<IDamageable>() == null || damagedEntities.Contains(enemy) || (enemy.transform.position.x - transform.position.x) * spriteFacing < 0) continue;
 
-                int kbDir = (enemy.transform.position.x > transform.position.x) ? 1 : -1;
-                enemy.GetComponent<IDamageable>().TakeDamage(attackID, kbDir, atkStatsProp);
+                    int kbDir = (enemy.transform.position.x > transform.position.x) ? 1 : -1;
+                    enemy.GetComponent<IDamageable>().TakeDamage(attackID, kbDir, atkStatsProp);
 
-                damagedEntities.Add(enemy);
+                    damagedEntities.Add(enemy);
+                }
+                catch (MissingReferenceException)
+                {
+                    continue;
+                }
             }
         }
 
@@ -274,7 +281,7 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable, IActivator
         runAnimationSpeed = (totalSpeed.x / mvSpeed) * animationSpeed;
         anim.speed = (isAttacking) ? totalAtkSpeed : ((state == MovementAnim.idle) ? runAnimationSpeed : animationSpeed);
 
-        if (!isHurting && !isAttacking && !isDying)
+        if (!isHurting && !isAttacking && !isDying && !isBlocking && !isDoingAbility)
         {
             // Vertical Movement Animation
             //if (jumpVelocity > .99f)

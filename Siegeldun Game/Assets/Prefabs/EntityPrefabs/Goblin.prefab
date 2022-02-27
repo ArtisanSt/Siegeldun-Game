@@ -4997,6 +4997,7 @@ GameObject:
   - component: {fileID: 6685909666436209241}
   - component: {fileID: 6685909666436209247}
   - component: {fileID: 6685909666436209245}
+  - component: {fileID: 4188832859130371735}
   m_Layer: 21
   m_Name: Goblin
   m_TagString: Enemy
@@ -5219,6 +5220,9 @@ MonoBehaviour:
   - {fileID: 0}
   isAlive: 1
   entityStatusBar: {fileID: 5317110435835946761}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
@@ -5303,6 +5307,23 @@ MonoBehaviour:
   triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
+  hasAbility: 0
+  abilityChance: 0
+  abilityCooldown: 0
+--- !u!114 &4188832859130371735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6685909666436209234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Goblin
+  objectClassification: 1
 --- !u!1 &6685909667086018527
 GameObject:
   m_ObjectHideFlags: 0

@@ -5027,6 +5027,7 @@ GameObject:
   - component: {fileID: 7086599328151572073}
   - component: {fileID: 2696510959486533461}
   - component: {fileID: 8511681264662107631}
+  - component: {fileID: 3940923676640305067}
   m_Layer: 21
   m_Name: Wolf
   m_TagString: Enemy
@@ -5249,6 +5250,9 @@ MonoBehaviour:
   activePoints: []
   isAlive: 1
   entityStatusBar: {fileID: 1723434648027452881}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
@@ -5333,6 +5337,23 @@ MonoBehaviour:
   triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
+  hasAbility: 0
+  abilityChance: 0
+  abilityCooldown: 0
+--- !u!114 &3940923676640305067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3562279173696304011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Wolf
+  objectClassification: 1
 --- !u!1 &4693396003116158446
 GameObject:
   m_ObjectHideFlags: 0
