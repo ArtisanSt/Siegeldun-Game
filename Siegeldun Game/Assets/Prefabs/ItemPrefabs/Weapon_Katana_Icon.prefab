@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1247220281527851084}
   - component: {fileID: 5721800668383279161}
   - component: {fileID: 4478785551244249942}
+  - component: {fileID: 7871451511054279677}
   m_Layer: 5
   m_Name: Weapon_Katana_Icon
   m_TagString: Untagged
@@ -104,12 +105,13 @@ MonoBehaviour:
   objectName: Weapon_Katana
   isInstanceLimited: 0
   maxEachEntityInField: 0
-  doDrop: 0
+  doDrop: 1
   dropChance: 1
   onDestroyDropDelay: 0
-  itemDrops: []
+  itemDrops:
+  - {fileID: 3061056848185965347, guid: 10f4022250773da42a2c6b5f1903f772, type: 3}
   _isInteractible: 1
-  itemName: Weapon_Katana
+  itemName: Katana
   itemType: 0
   _maxQuantity: 1
   _curQuantity: 1
@@ -135,3 +137,17 @@ MonoBehaviour:
     wpnAtkCrit: 10
     wpnStamCost: 30
     wpnKbForce: 0.4
+--- !u!114 &7871451511054279677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2817476508306232875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Katana
+  objectClassification: 3

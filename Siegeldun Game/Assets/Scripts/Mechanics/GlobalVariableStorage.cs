@@ -12,7 +12,7 @@ public static class GlobalVariableStorage
     // Unlocks
     public static bool[] hostiles = new bool[4] { false, false, false, false };
     public static bool[] potions = new bool[2] { false, false };
-    public static bool[] weapons = new bool[1] { false };
+    public static bool[] weapons = new bool[3] { false, false, false };
 
 
     public enum Difficulty { Normal, Hard, Insane }

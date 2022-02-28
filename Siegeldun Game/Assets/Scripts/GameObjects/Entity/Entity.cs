@@ -60,6 +60,8 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
     protected bool isHurting = false;
     protected bool isAttacking = false;
     protected bool isDying = false;
+    protected bool isBlocking = false;
+    protected bool isDoingAbility = false;
 
 
     protected virtual void AnimationState()
@@ -98,11 +100,15 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
 
     protected override void PrefabsInit()
     {
-        entityPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EntityPrefabs/{entityName}.prefab");
+        entityPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EntityPrefabs/{objectName}.prefab");
 
         if (entityName != "Player")
         {
             gameObject.name = $"{entityName} ({entityID})";
+        }
+        else
+        {
+            gameObject.name = $"Player";
         }
     }
 
@@ -121,6 +127,11 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
     protected bool deadOnGround = true; // Updates
 
     [SerializeField] protected GameObject entityStatusBar = null;
+
+    [SerializeField] protected bool doBlock = false;
+    [SerializeField] protected int blockChance;
+    [SerializeField] protected float blockDuration;
+    protected float blockStartTime;
 
     [SerializeField] protected bool hasHp = false;
     [SerializeField] protected bool isInvulnerable = false;
@@ -381,11 +392,25 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         rcvStatsProp.ChangeValues(wpnDamage: newDmg, wpnKbForce: newKb, wpnAtkCrit: newCrit);
     }
 
+    IEnumerator BlockingTimer()
+    {
+        yield return new WaitForSeconds(blockDuration);
+        isBlocking = false;
+    }
+
     public void TakeDamage(float attackID, int rcvKbDir, WeaponProperties rcvStatsProp)
     {
 
         DamageEvaluator(ref rcvStatsProp);
-        bool doesDamage = isAlive && !isInvulnerable && rcvStatsProp.wpnDamage > 0 && ProcessEvaluator((float)attackID, rcvStatsProp.wpnAtkSpeed);
+        bool blockProcess = doBlock && ChanceRandomizer(blockChance);
+        bool doesDamage = isAlive && !blockProcess && !isInvulnerable && rcvStatsProp.wpnDamage > 0 && ProcessEvaluator((float)attackID, rcvStatsProp.wpnAtkSpeed);
+
+        if (blockProcess)
+        {
+            isBlocking = true;
+            anim.SetTrigger("block");
+            StartCoroutine(BlockingTimer());
+        }
 
         if (!doesDamage) return;
         bool isCrit = ChanceRandomizer(rcvStatsProp.wpnCritChance);
@@ -429,6 +454,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         isAlive = false;
         anim.SetTrigger("death");
         InstanceDestroyed(objectName, gameObject);
+        if (GetComponent<AchievementUnlocks>() != null) GetComponent<AchievementUnlocks>().ChangeState();
 
         StartCoroutine(ClearInstance());
     }

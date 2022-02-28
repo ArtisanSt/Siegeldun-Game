@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5785649297426895363}
   - component: {fileID: 1036441688604471926}
   - component: {fileID: 2937176994526891740}
+  - component: {fileID: 7549179835501464347}
   m_Layer: 5
   m_Name: Weapon_Stick_Icon
   m_TagString: Untagged
@@ -104,10 +105,11 @@ MonoBehaviour:
   objectName: Weapon_Stick
   isInstanceLimited: 0
   maxEachEntityInField: 0
-  doDrop: 0
+  doDrop: 1
   dropChance: 1
   onDestroyDropDelay: 0
-  itemDrops: []
+  itemDrops:
+  - {fileID: 8761768885611777174, guid: 7ee0cc6ee7c76384492734cfd749b5cc, type: 3}
   _isInteractible: 1
   itemName: Stick
   itemType: 0
@@ -135,3 +137,17 @@ MonoBehaviour:
     wpnAtkCrit: 10
     wpnStamCost: 20
     wpnKbForce: 0.3
+--- !u!114 &7549179835501464347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7357873169151482980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Stick
+  objectClassification: 3

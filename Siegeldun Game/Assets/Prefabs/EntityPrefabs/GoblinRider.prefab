@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 5839565291898570766}
   - component: {fileID: 5839565291898570760}
   - component: {fileID: 5839565291898570756}
+  - component: {fileID: 7427116938647771752}
   m_Layer: 21
   m_Name: GoblinRider
   m_TagString: Enemy
@@ -340,6 +341,9 @@ MonoBehaviour:
   - {fileID: 0}
   isAlive: 1
   entityStatusBar: {fileID: 4902582846533760350}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
@@ -424,7 +428,24 @@ MonoBehaviour:
   triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
+  hasAbility: 0
+  abilityChance: 0
+  abilityCooldown: 0
   goblinPrefab: {fileID: 6685909666436209234, guid: 0d7458e69d7219f46b652df2adcda141, type: 3}
+--- !u!114 &7427116938647771752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5839565291898570757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: GoblinRider
+  objectClassification: 1
 --- !u!1 &5839565292055951420
 GameObject:
   m_ObjectHideFlags: 0

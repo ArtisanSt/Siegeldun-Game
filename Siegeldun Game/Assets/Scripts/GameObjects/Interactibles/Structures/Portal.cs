@@ -22,6 +22,7 @@ public class Portal : Structures
         if (!isSelected) return;
 
         Debug.Log("ENTERING NEXT STAGE");
+        if (GetComponent<AchievementUnlocks>() != null) GetComponent<AchievementUnlocks>().ChangeState();
         gameMechanics.StartNextLevel();
     }
 }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4275815481310653659}
   - component: {fileID: 4275815481310653658}
   - component: {fileID: -5219706318430074109}
+  - component: {fileID: 4509361205673384022}
   m_Layer: 8
   m_Name: Weapon_Sword1
   m_TagString: Item
@@ -218,3 +219,17 @@ MonoBehaviour:
   center: {x: 0, y: 0}
   size: {x: 3, y: 1}
   outlined: 0
+--- !u!114 &4509361205673384022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275815481310653657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Sword
+  objectClassification: 3

@@ -13,6 +13,7 @@ public class Player : Beings, IInteractor
     protected override void Awake()
     {
         base.Awake();
+        GetComponent<AchievementUnlocks>().ChangeState();
     }
 
     protected override void Start()
