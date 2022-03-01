@@ -120,7 +120,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 192
+        width: 304
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -139,9 +139,9 @@ TextureImporter:
       name: Gobta_Death_1
       rect:
         serializedVersion: 2
-        x: 192
+        x: 304
         y: 0
-        width: 192
+        width: 304
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -160,9 +160,9 @@ TextureImporter:
       name: Gobta_Death_2
       rect:
         serializedVersion: 2
-        x: 384
+        x: 608
         y: 0
-        width: 192
+        width: 304
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -181,9 +181,9 @@ TextureImporter:
       name: Gobta_Death_3
       rect:
         serializedVersion: 2
-        x: 576
+        x: 912
         y: 0
-        width: 192
+        width: 304
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -202,9 +202,9 @@ TextureImporter:
       name: Gobta_Death_4
       rect:
         serializedVersion: 2
-        x: 768
+        x: 1216
         y: 0
-        width: 192
+        width: 304
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -223,9 +223,9 @@ TextureImporter:
       name: Gobta_Death_5
       rect:
         serializedVersion: 2
-        x: 960
+        x: 1520
         y: 0
-        width: 192
+        width: 304
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -244,9 +244,9 @@ TextureImporter:
       name: Gobta_Death_6
       rect:
         serializedVersion: 2
-        x: 1152
+        x: 1824
         y: 0
-        width: 192
+        width: 304
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -265,9 +265,9 @@ TextureImporter:
       name: Gobta_Death_7
       rect:
         serializedVersion: 2
-        x: 1344
+        x: 2128
         y: 0
-        width: 192
+        width: 304
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}

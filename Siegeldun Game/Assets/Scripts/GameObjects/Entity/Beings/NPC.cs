@@ -46,7 +46,6 @@ public abstract class NPC : Beings
     protected bool targetSeen = false;
     protected float seenTime;
     [SerializeField] protected float forgivenessTime = 2f;
-    [SerializeField] protected float triggerDistance = 3f; // Target's distance to trigger the enemy
     //protected float targetNodalDistance; // Nodal Distance of the target
     protected float targetStraightDistance; // Nodal Distance of the target
     [SerializeField] protected float backOffDistance; // Prevents the enemy to collide entirely with the target
@@ -78,7 +77,7 @@ public abstract class NPC : Beings
 
         lastXPosition = transform.position.x;
         //backOffDistance = (boxColl.offset.x - boxColl.size.x * spriteDefaultFacing) / 2;
-        backOffDistance = Mathf.Abs(attackPoint.position.x - transform.position.x);
+        backOffDistance = Mathf.Abs(attackPoint.position.x - (transform.position.x));
 
         _mvSpeed = mvSpeed;
 
@@ -281,6 +280,12 @@ public abstract class NPC : Beings
 
     private void NPCChasingSystem()
     {
+        if (target == null)
+        {
+            TriggerOff();
+            return;
+        }
+
         PathFollow(); // Updates the nodal position of the target
 
         targetStraightDistance = target.position.x - transform.position.x;
@@ -400,7 +405,7 @@ public abstract class NPC : Beings
         }
 
         // Attack Code
-        if (inProximity == 0 && targetInDetection && !isAttacking && !isHurting && TimerIncrement(_lastAttack, totalAtkDelay))
+        if (inProximity == 0 && targetInDetection && !isAttacking && !isDoingAbility && !isBlocking && !isHurting && TimerIncrement(_lastAttack, totalAtkDelay))
         {
             Attack();
         }
