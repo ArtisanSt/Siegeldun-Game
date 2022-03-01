@@ -135,7 +135,7 @@ MonoBehaviour:
     wpnAtkDelay: 0.3
     wpnCritChance: 100
     wpnAtkCrit: 10
-    wpnStamCost: 30
+    wpnStamCost: 40
     wpnKbForce: 0.3
 --- !u!114 &3509490377770957490
 MonoBehaviour:

@@ -399,6 +399,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8656741150414636524, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a2b586dad7a0f5b4a8564861ff1e29b0, type: 3}
+    - target: {fileID: 8656741150414636524, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656741150414636524, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656741150414636524, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8656741150414636525, guid: eb72fa7619c67d448af0e79b1c80fd3a, type: 3}
       propertyPath: m_SizeDelta.x
       value: 494.0664
@@ -787,6 +803,9 @@ MonoBehaviour:
   activePoints: []
   isAlive: 1
   entityStatusBar: {fileID: 278914037}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
@@ -871,6 +890,9 @@ MonoBehaviour:
   triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
+  hasAbility: 0
+  abilityChance: 0
+  abilityCooldown: 0
 --- !u!114 &78777139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1272,6 +1294,9 @@ MonoBehaviour:
   activePoints: []
   isAlive: 1
   entityStatusBar: {fileID: 1797406124}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
@@ -1356,6 +1381,9 @@ MonoBehaviour:
   triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
+  hasAbility: 0
+  abilityChance: 0
+  abilityCooldown: 0
 --- !u!114 &126898811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7705,6 +7733,9 @@ MonoBehaviour:
   activePoints: []
   isAlive: 1
   entityStatusBar: {fileID: 1080524935}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
@@ -7789,6 +7820,9 @@ MonoBehaviour:
   triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
+  hasAbility: 0
+  abilityChance: 0
+  abilityCooldown: 0
 --- !u!114 &474585973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31296,6 +31330,9 @@ MonoBehaviour:
   activePoints: []
   isAlive: 1
   entityStatusBar: {fileID: 683568783}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
@@ -31380,6 +31417,9 @@ MonoBehaviour:
   triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
+  hasAbility: 0
+  abilityChance: 0
+  abilityCooldown: 0
 --- !u!114 &2005125510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31835,6 +31875,9 @@ MonoBehaviour:
   activePoints: []
   isAlive: 1
   entityStatusBar: {fileID: 639469930}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
@@ -31919,6 +31962,9 @@ MonoBehaviour:
   triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
+  hasAbility: 0
+  abilityChance: 0
+  abilityCooldown: 0
 --- !u!114 &2122065300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119834,6 +119880,9 @@ MonoBehaviour:
   - {fileID: 0}
   isAlive: 1
   entityStatusBar: {fileID: 0}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 0
   isInvulnerable: 0
   maxHpScaling:
