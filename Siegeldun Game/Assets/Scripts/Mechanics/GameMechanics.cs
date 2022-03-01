@@ -38,6 +38,8 @@ public class GameMechanics : MonoBehaviour
     void Awake()
     {
         SaveAndLoadManager.LoadGameData();
+        GlobalVariableStorage.numberOfLevelsPerAct = numberOfLevelsPerAct;
+
         instance = this;
         foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
         {
@@ -170,15 +172,17 @@ public class GameMechanics : MonoBehaviour
     public void StartNextLevel()
     {
         GlobalVariableStorage.curLvl++;
-        if (GlobalVariableStorage.curLvl == GlobalVariableStorage.numberOfLevelsPerAct[GlobalVariableStorage.curAct])
+        if (GlobalVariableStorage.curLvl > GlobalVariableStorage.numberOfLevelsPerAct[GlobalVariableStorage.curAct])
         {
+            GlobalVariableStorage.curLvl = 1;
             GlobalVariableStorage.curAct++;
-            if (GlobalVariableStorage.curAct == GlobalVariableStorage.numberOfLevelsPerAct.Count)
+            if (GlobalVariableStorage.curAct > GlobalVariableStorage.numberOfLevelsPerAct.Count)
             {
                 LoadScene(GetSceneName(SpecialScene.MainMenu));
                 return;
             }
         }
+        Debug.Log($"Act: {GlobalVariableStorage.curAct} \tLevel: {GlobalVariableStorage.curLvl}");
         LoadScene(GetSceneName(GlobalVariableStorage.curAct, GlobalVariableStorage.curLvl));
     }
 }

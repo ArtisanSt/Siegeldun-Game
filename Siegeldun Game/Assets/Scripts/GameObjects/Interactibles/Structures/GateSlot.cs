@@ -34,7 +34,7 @@ public class GateSlot : Structures, IGateSlot
             Transform crystal = Instantiate(crystalPrefab, new Vector3(transform.position.x, transform.position.y + 0.1f, 0), Quaternion.identity, transform).transform;
             crystal.parent = transform;
             crystal.GetComponent<Item>().ChangeAmount(1);
-            crystal.GetComponent<Interactibles>().ToggleInteractible();
+            crystal.GetComponent<IInteractible>().DisableInteract();
             ToggleInteractible();
             slotted = true;
 

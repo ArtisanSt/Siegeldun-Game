@@ -2954,7 +2954,7 @@ MonoBehaviour:
     statsMultiplier: 4
     maxBulwarkRes: 1
     maxEShrineRes: 3
-  numberOfLevelsPerAct: 01000000
+  numberOfLevelsPerAct: 0100000003000000
 --- !u!1 &7946806725713571033
 GameObject:
   m_ObjectHideFlags: 0

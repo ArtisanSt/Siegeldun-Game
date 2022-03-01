@@ -8,6 +8,7 @@ public abstract class Interactibles : BaseObject, IInteractible
     [Header("INTERACTIBLE SETTINGS", order = 0)]
     [SerializeField] private bool _isInteractible;
     public bool isInteractible { get { return _isInteractible; } protected set { _isInteractible = value; } }
+    protected bool disableInteract = false;
 
     public string objectClassification { get; protected set; } // "ICON", "ITEM", "STRUCTURE"
 
@@ -42,6 +43,11 @@ public abstract class Interactibles : BaseObject, IInteractible
         {
             GetComponent<SpriteRenderer>().material.DisableKeyword("OUTLINE_ON");
         }
+    }
+
+    public void DisableInteract()
+    {
+        disableInteract = true;
     }
 
     public virtual void Interact() { }
