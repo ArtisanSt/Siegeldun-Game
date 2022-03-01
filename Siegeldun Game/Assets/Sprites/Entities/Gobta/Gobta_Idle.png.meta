@@ -1,7 +1,28 @@
 fileFormatVersion: 2
-guid: 75ce894435b33414192e0bae3decf577
+guid: 8ee2f6d1257957344918513c60057e00
 TextureImporter:
   internalIDToNameTable:
+  - first:
+      213: -8314309074911512355
+    second: Gobta_Attack_0
+  - first:
+      213: -2201219514011797969
+    second: Gobta_Attack_1
+  - first:
+      213: 7826198988089433543
+    second: Gobta_Attack_2
+  - first:
+      213: -528105794375627318
+    second: Gobta_Attack_3
+  - first:
+      213: -8092252454265542052
+    second: Gobta_Attack_4
+  - first:
+      213: -6632174088451394745
+    second: Gobta_Attack_5
+  - first:
+      213: -8599302328469359562
+    second: Gobta_Attack_6
   - first:
       213: -7907183673654001057
     second: Gobta_Idle_0
@@ -20,9 +41,6 @@ TextureImporter:
   - first:
       213: -522040317479060065
     second: Gobta_Idle_5
-  - first:
-      213: 9105617764089364529
-    second: Gobta_Idle_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -86,7 +104,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -98,7 +116,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -117,7 +135,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 224
+        width: 144
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -136,9 +154,9 @@ TextureImporter:
       name: Gobta_Idle_1
       rect:
         serializedVersion: 2
-        x: 224
+        x: 144
         y: 0
-        width: 224
+        width: 144
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -157,9 +175,9 @@ TextureImporter:
       name: Gobta_Idle_2
       rect:
         serializedVersion: 2
-        x: 448
+        x: 288
         y: 0
-        width: 224
+        width: 144
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -178,9 +196,9 @@ TextureImporter:
       name: Gobta_Idle_3
       rect:
         serializedVersion: 2
-        x: 672
+        x: 432
         y: 0
-        width: 224
+        width: 144
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -199,9 +217,9 @@ TextureImporter:
       name: Gobta_Idle_4
       rect:
         serializedVersion: 2
-        x: 896
+        x: 576
         y: 0
-        width: 224
+        width: 144
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -220,9 +238,9 @@ TextureImporter:
       name: Gobta_Idle_5
       rect:
         serializedVersion: 2
-        x: 1120
+        x: 720
         y: 0
-        width: 224
+        width: 144
         height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -233,27 +251,6 @@ TextureImporter:
       bones: []
       spriteID: f9d7a3ed81751c8f0800000000000000
       internalID: -522040317479060065
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gobta_Idle_6
-      rect:
-        serializedVersion: 2
-        x: 1344
-        y: 0
-        width: 224
-        height: 144
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1308801ec17ad5e70800000000000000
-      internalID: 9105617764089364529
       vertices: []
       indices: 
       edges: []
