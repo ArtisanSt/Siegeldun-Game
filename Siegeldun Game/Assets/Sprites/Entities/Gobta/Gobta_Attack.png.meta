@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8ee2f6d1257957344918513c60057e00
+guid: ed63542e04dd0c142b568f20a830c973
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -20,6 +20,9 @@ TextureImporter:
   - first:
       213: -6632174088451394745
     second: Gobta_Attack_5
+  - first:
+      213: -8599302328469359562
+    second: Gobta_Attack_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -83,7 +86,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -95,7 +98,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -112,12 +115,12 @@ TextureImporter:
       name: Gobta_Attack_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 86
         y: 0
-        width: 224
+        width: 103
         height: 144
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -133,12 +136,12 @@ TextureImporter:
       name: Gobta_Attack_1
       rect:
         serializedVersion: 2
-        x: 224
+        x: 405
         y: 0
-        width: 224
+        width: 88
         height: 144
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.411516, y: 0.50000006}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -154,12 +157,12 @@ TextureImporter:
       name: Gobta_Attack_2
       rect:
         serializedVersion: 2
-        x: 448
+        x: 724
         y: 0
-        width: 224
+        width: 93
         height: 144
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.24887118, y: 0.50705165}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -175,12 +178,12 @@ TextureImporter:
       name: Gobta_Attack_3
       rect:
         serializedVersion: 2
-        x: 672
+        x: 1028
         y: 0
-        width: 224
+        width: 94
         height: 144
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.2461405, y: 0.50705165}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -196,12 +199,12 @@ TextureImporter:
       name: Gobta_Attack_4
       rect:
         serializedVersion: 2
-        x: 896
+        x: 1230
         y: 0
-        width: 224
+        width: 167
         height: 144
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6368072, y: 0.4929484}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -217,12 +220,12 @@ TextureImporter:
       name: Gobta_Attack_5
       rect:
         serializedVersion: 2
-        x: 1120
+        x: 1553
         y: 0
-        width: 224
+        width: 152
         height: 144
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5734831, y: 0.49647412}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -230,6 +233,27 @@ TextureImporter:
       bones: []
       spriteID: 743fd492ec8c5f3a0800000000000000
       internalID: -6632174088451394745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gobta_Attack_6
+      rect:
+        serializedVersion: 2
+        x: 1870
+        y: 0
+        width: 139
+        height: 144
+      alignment: 9
+      pivot: {x: 0.5584392, y: 0.48942265}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 634f463e71429a880800000000000000
+      internalID: -8599302328469359562
       vertices: []
       indices: 
       edges: []

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8960846998353679849}
   - component: {fileID: 2482536206471902620}
   - component: {fileID: 4366807926303106823}
+  - component: {fileID: 8284966127439239858}
   m_Layer: 5
   m_Name: Potion_Stamina_Icon
   m_TagString: Untagged
@@ -67,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8165566742373251319, guid: 10545d5fd8bf09148a0f470ed7b3f540, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3997729944d3fd34986152e333057c10, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -101,8 +102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2777d091f075f744fb4279d8ee3cd987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
-  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   objectName: Potion_Stamina
   isInstanceLimited: 0
   maxEachEntityInField: 0
@@ -133,3 +132,17 @@ MonoBehaviour:
     effectTimerIncrements: 0.1
   uniqueProp:
     consumableType: 0
+--- !u!114 &8284966127439239858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5336195007643097998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: StaminaPotion
+  objectClassification: 2

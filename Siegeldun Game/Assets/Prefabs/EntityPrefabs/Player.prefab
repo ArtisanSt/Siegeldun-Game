@@ -5129,6 +5129,7 @@ GameObject:
   - component: {fileID: 4865986372180236412}
   - component: {fileID: 1376583885049657951}
   - component: {fileID: 1545940619873157281}
+  - component: {fileID: 1495676802547384115}
   m_Layer: 22
   m_Name: Player
   m_TagString: Player
@@ -5324,6 +5325,9 @@ MonoBehaviour:
   - {fileID: 0}
   isAlive: 1
   entityStatusBar: {fileID: 8319419660486494463}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
@@ -5354,10 +5358,10 @@ MonoBehaviour:
   stamText: {fileID: 5453753030787085242}
   doStamRegen: 1
   stamRegenScaling:
-  - 0.01
+  - 1
   - 0.005
   - 0.001
-  stamRegen: 0.01
+  stamRegen: 1
   stamRegenDelay: 3
   doMoveX: 1
   mvSpeed: 10
@@ -5454,6 +5458,20 @@ MonoBehaviour:
   interactorComponent: {fileID: 1376583885049657951}
   itemAmountTexts: []
   consumeSlotAmountText: {fileID: 0}
+--- !u!114 &1495676802547384115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4865986372180236411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Player
+  objectClassification: 0
 --- !u!1 &4865986373347713242
 GameObject:
   m_ObjectHideFlags: 0

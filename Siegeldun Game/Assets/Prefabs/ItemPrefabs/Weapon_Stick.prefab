@@ -168,10 +168,11 @@ MonoBehaviour:
   objectName: Weapon_Stick
   isInstanceLimited: 0
   maxEachEntityInField: 0
-  doDrop: 0
+  doDrop: 1
   dropChance: 1
   onDestroyDropDelay: 0
-  itemDrops: []
+  itemDrops:
+  - {fileID: 8761768885611777174}
   _isInteractible: 1
   itemName: Stick
   itemType: 0
@@ -190,7 +191,7 @@ MonoBehaviour:
     weaponType: 0
     tier: 1
     doBreak: 0
-    durability: 100
+    durability: 10000
     wpnDamage: 20
     wpnAtkRange: 0.5
     wpnAtkSpeed: 1

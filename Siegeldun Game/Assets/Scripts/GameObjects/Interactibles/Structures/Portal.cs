@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Portal : Structures
 {
-    [SerializeField] public GameMechanics gameMechanics;
-
     protected override void Awake()
     {
         base.Awake();
@@ -24,6 +22,7 @@ public class Portal : Structures
         if (!isSelected) return;
 
         Debug.Log("ENTERING NEXT STAGE");
+        if (GetComponent<AchievementUnlocks>() != null) GetComponent<AchievementUnlocks>().ChangeState();
         gameMechanics.StartNextLevel();
     }
 }

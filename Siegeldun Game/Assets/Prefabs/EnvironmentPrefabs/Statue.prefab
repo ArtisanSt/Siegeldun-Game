@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 218027177540259928}
   - component: {fileID: 218027177540259931}
   - component: {fileID: 5470006327641098083}
+  - component: {fileID: 7731572886830569385}
   m_Layer: 9
   m_Name: Statue
   m_TagString: Untagged
@@ -110,6 +111,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0791245, y: 1.7402489}
   m_EdgeRadius: 0
+--- !u!114 &7731572886830569385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218027177540259930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Statue
+  objectClassification: 0
 --- !u!1 &218027178743051771
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +315,9 @@ MonoBehaviour:
   - {fileID: 0}
   isAlive: 1
   entityStatusBar: {fileID: 0}
+  doBlock: 0
+  blockChance: 0
+  blockDuration: 0
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
