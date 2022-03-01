@@ -405,7 +405,7 @@ public abstract class NPC : Beings
         }
 
         // Attack Code
-        if (inProximity == 0 && targetInDetection && !isAttacking && !isDoingAbility && !isBlocking && !isHurting && TimerIncrement(_lastAttack, totalAtkDelay))
+        if (inProximity == 0 && targetInDetection && !isBlocking && !isAttacking && !isDoingAbility && !isBlocking && !isHurting && TimerIncrement(_lastAttack, totalAtkDelay))
         {
             Attack();
         }
