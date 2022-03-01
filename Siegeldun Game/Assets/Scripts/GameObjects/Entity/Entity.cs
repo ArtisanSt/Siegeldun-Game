@@ -402,7 +402,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
     {
 
         DamageEvaluator(ref rcvStatsProp);
-        bool blockProcess = doBlock && ChanceRandomizer(blockChance);
+        bool blockProcess = doBlock && ChanceRandomizer(blockChance) && !isDoingAbility && !isAttacking;
         bool doesDamage = isAlive && !blockProcess && !isInvulnerable && rcvStatsProp.wpnDamage > 0 && ProcessEvaluator((float)attackID, rcvStatsProp.wpnAtkSpeed);
 
         if (blockProcess)
@@ -410,6 +410,7 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
             isBlocking = true;
             anim.SetTrigger("block");
             StartCoroutine(BlockingTimer());
+            Debug.Log(true);
         }
 
         if (!doesDamage) return;

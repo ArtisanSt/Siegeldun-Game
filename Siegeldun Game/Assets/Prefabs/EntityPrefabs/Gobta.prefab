@@ -5310,8 +5310,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.2487888, y: -0.9072249}
-  m_Size: {x: 1.729969, y: 2.6830478}
+  m_Offset: {x: 0.015476227, y: -0.6869199}
+  m_Size: {x: 1.7073135, y: 2.5931387}
   m_Direction: 0
 --- !u!61 &7244559956178301277
 BoxCollider2D:
@@ -5326,7 +5326,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.248743, y: -0.91318184}
+  m_Offset: {x: 0.015481949, y: -0.6727382}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5337,7 +5337,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.7343941, y: 1.1556195}
+  m_Size: {x: 1.7097893, y: 1.0123088}
   m_EdgeRadius: 0
 --- !u!114 &8139996859713401437
 MonoBehaviour:
@@ -5488,12 +5488,11 @@ MonoBehaviour:
   sleepParticle: {fileID: 2530611360873288887}
   isTriggered: 0
   forgivenessTime: 2
-  triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
   hasAbility: 1
-  abilityChance: 0
-  abilityCooldown: 5
+  abilityChance: 1
+  abilityCooldown: 10
   dummiesPrefabs:
   - {fileID: 6685909666436209234, guid: 0d7458e69d7219f46b652df2adcda141, type: 3}
   - {fileID: 5839565291898570757, guid: 36a7033d27881304d9c35722f25e2493, type: 3}
