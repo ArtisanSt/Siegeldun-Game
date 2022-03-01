@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8960846998353679849}
   - component: {fileID: 2482536206471902620}
   - component: {fileID: 4366807926303106823}
+  - component: {fileID: 8284966127439239858}
   m_Layer: 5
   m_Name: Potion_Stamina_Icon
   m_TagString: Untagged
@@ -131,3 +132,17 @@ MonoBehaviour:
     effectTimerIncrements: 0.1
   uniqueProp:
     consumableType: 0
+--- !u!114 &8284966127439239858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5336195007643097998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: StaminaPotion
+  objectClassification: 2

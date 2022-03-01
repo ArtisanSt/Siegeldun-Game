@@ -60,6 +60,13 @@ public abstract class NPC : Beings
     protected float edgeStuckTime = 0f;
     protected float allowJumpAfter = .05f;
 
+    [SerializeField] private bool hasAbility = false;
+    [SerializeField] private int abilityChance;
+    [SerializeField] private float abilityCooldown;
+    protected float lastAbilityTime;
+
+    protected bool forcedDeath = false;
+
 
 
     // ========================================= UNITY MAIN METHODS =========================================
@@ -107,9 +114,33 @@ public abstract class NPC : Beings
     // ========================================= ENEMY METHODS =========================================
     protected override void Attack()
     {
-        anim.SetTrigger("attack");
+        if (hasAbility && TimerIncrement(lastAbilityTime, abilityCooldown) && ChanceRandomizer(abilityChance))
+        {
+            Ability();
+        }
+        else
+        {
+            anim.SetTrigger("attack");
 
-        base.Attack();
+            base.Attack();
+        }
+    }
+
+    protected virtual void Ability()
+    {
+        lastAbilityTime = Time.time;
+    }
+
+    public void InstanceTimed(float time)
+    {
+        StartCoroutine(InstanceTimer(time));
+    }
+
+    IEnumerator InstanceTimer(float time)
+    {
+        yield return new WaitForSeconds(time);
+        forcedDeath = true;
+        Die();
     }
 
 

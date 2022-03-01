@@ -113,7 +113,7 @@ public static class SaveAndLoadManager
     public static void LoadGameData()
     {
         string path = Application.persistentDataPath + "/GameData.ats";
-        //Debug.Log(path);
+        Debug.Log(path);
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();

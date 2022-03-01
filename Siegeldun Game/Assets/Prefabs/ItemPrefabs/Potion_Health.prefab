@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 116043195058129467}
   - component: {fileID: 116043195058129466}
   - component: {fileID: 8625872400465317144}
+  - component: {fileID: 3588463673523751298}
   m_Layer: 8
   m_Name: Potion_Health
   m_TagString: Item
@@ -165,8 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a3cbe9c0b5de741b69afbd7c8f4915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  systemGameObject: {fileID: 6944229709921447118, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
-  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
   objectName: Potion_Health
   isInstanceLimited: 0
   maxEachEntityInField: 0
@@ -215,3 +214,17 @@ MonoBehaviour:
   center: {x: 0, y: 0}
   size: {x: 3, y: 1}
   outlined: 0
+--- !u!114 &3588463673523751298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116043195058129465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: HealthPotion
+  objectClassification: 2

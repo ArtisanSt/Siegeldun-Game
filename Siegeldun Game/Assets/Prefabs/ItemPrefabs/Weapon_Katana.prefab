@@ -168,12 +168,13 @@ MonoBehaviour:
   objectName: Weapon_Katana
   isInstanceLimited: 0
   maxEachEntityInField: 0
-  doDrop: 0
+  doDrop: 1
   dropChance: 1
   onDestroyDropDelay: 0
-  itemDrops: []
+  itemDrops:
+  - {fileID: 3061056848185965347}
   _isInteractible: 1
-  itemName: Weapon_Katana
+  itemName: Katana
   itemType: 0
   _maxQuantity: 1
   _curQuantity: 1

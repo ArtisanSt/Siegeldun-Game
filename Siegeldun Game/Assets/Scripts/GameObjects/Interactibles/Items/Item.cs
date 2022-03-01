@@ -280,6 +280,7 @@ public abstract class Item : Interactibles, IInteractor
     {
         inInventory = true;
         this.entityHolder = entityHolder;
+        if (GetComponent<AchievementUnlocks>() != null) GetComponent<AchievementUnlocks>().ChangeState();
         PassiveEffects("Inventory");
     }
 

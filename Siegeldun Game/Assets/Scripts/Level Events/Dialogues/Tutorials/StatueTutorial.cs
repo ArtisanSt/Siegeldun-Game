@@ -6,6 +6,8 @@ public class StatueTutorial : BaseDialogue
 {
     [SerializeField] public Dialogue statueDialogue;
 
+    [SerializeField] public GameObject statue;
+
     // ================================================= DIALOGUE UPDATER =================================================
     protected void Update()
     {
@@ -45,6 +47,7 @@ public class StatueTutorial : BaseDialogue
     {
         OverwriteDialogue(curDialogue, ref statueDialogue);
         base.OnStartMessage(curDialogue);
+        if (statue.GetComponent<AchievementUnlocks>() != null) statue.GetComponent<AchievementUnlocks>().ChangeState();
     }
 
     public override void OnDisplayMessage(Dialogue curDialogue)

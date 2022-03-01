@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8502316654925628258}
   - component: {fileID: 912029420961870480}
   - component: {fileID: -692120225824364911}
+  - component: {fileID: 4387533203509731837}
   m_Layer: 8
   m_Name: Potion_Stamina
   m_TagString: Item
@@ -213,3 +214,17 @@ MonoBehaviour:
   center: {x: 0, y: 0}
   size: {x: 3, y: 1}
   outlined: 0
+--- !u!114 &4387533203509731837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8502316654925628256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037820d4f2559864e9fbd5d7943eb622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: StaminaPotion
+  objectClassification: 2
