@@ -1301,7 +1301,6 @@ MonoBehaviour:
   sleepParticle: {fileID: 781637663116089702}
   isTriggered: 0
   forgivenessTime: 2
-  triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
   hasAbility: 0
@@ -6822,6 +6821,10 @@ PrefabInstance:
       propertyPath: m_MinValue
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2034478631547687327, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
+      propertyPath: numberOfLevelsPerAct.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2872067839006717300, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -7629,7 +7632,6 @@ MonoBehaviour:
   sleepParticle: {fileID: 6685909668082653914}
   isTriggered: 0
   forgivenessTime: 2
-  triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
   hasAbility: 0

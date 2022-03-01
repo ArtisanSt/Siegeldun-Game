@@ -7,4 +7,5 @@ public interface IInteractible
     bool isInteractible { get; }
     void Interact();
     void ToggleInteractible();
+    void DisableInteract();
 }

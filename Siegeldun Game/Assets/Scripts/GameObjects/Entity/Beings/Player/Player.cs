@@ -107,14 +107,13 @@ public class Player : Beings, IInteractor
     protected override void Die()
     {
         base.Die();
-        // Clear Inventory
+        InventoryDeathSpill();
     }
 
     // Executes right before entity to be destroyed
     protected override void OnEntityDestroy()
     {
         base.OnEntityDestroy();
-
         gameMechanics.PlayerDied();
     }
 

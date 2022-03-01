@@ -410,7 +410,6 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
             isBlocking = true;
             anim.SetTrigger("block");
             StartCoroutine(BlockingTimer());
-            Debug.Log(true);
         }
 
         if (!doesDamage) return;

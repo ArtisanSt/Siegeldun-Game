@@ -5246,12 +5246,12 @@ SpriteRenderer:
   m_SortingLayerID: -1305073549
   m_SortingLayer: 6
   m_SortingOrder: 1
-  m_Sprite: {fileID: -7907183673654001057, guid: 75ce894435b33414192e0bae3decf577, type: 3}
+  m_Sprite: {fileID: -7907183673654001057, guid: 8ee2f6d1257957344918513c60057e00, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.5, y: 4}
+  m_Size: {x: 4.5, y: 4.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -5310,8 +5310,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.015476227, y: -0.6869199}
-  m_Size: {x: 1.7073135, y: 2.5931387}
+  m_Offset: {x: 0.4453411, y: -0.81277704}
+  m_Size: {x: 1.743351, y: 2.844853}
   m_Direction: 0
 --- !u!61 &7244559956178301277
 BoxCollider2D:
@@ -5326,18 +5326,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.015481949, y: -0.6727382}
+  m_Offset: {x: 0.44463348, y: -0.8190044}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.5, y: 4}
-    newSize: {x: 4.5, y: 4}
+    oldSize: {x: 4.5, y: 4.5}
+    newSize: {x: 4.5, y: 4.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.7097893, y: 1.0123088}
+  m_Size: {x: 1.7470932, y: 1.2300074}
   m_EdgeRadius: 0
 --- !u!114 &8139996859713401437
 MonoBehaviour:
@@ -5392,7 +5392,7 @@ MonoBehaviour:
   cirColl: {fileID: 0}
   capColl: {fileID: 5139777578425533659}
   anim: {fileID: 7151718093002690431}
-  animationSpeed: 1
+  animationSpeed: 1.5
   spriteDefaultFacing: -1
   entityName: Gobta
   entityType: 0
@@ -5405,8 +5405,8 @@ MonoBehaviour:
   isAlive: 1
   entityStatusBar: {fileID: 8310663147638570484}
   doBlock: 1
-  blockChance: 0
-  blockDuration: 0
+  blockChance: 2
+  blockDuration: 1
   hasHp: 1
   isInvulnerable: 0
   maxHpScaling:
@@ -5463,7 +5463,7 @@ MonoBehaviour:
     durability: 0
     wpnDamage: 30
     wpnAtkRange: 1
-    wpnAtkSpeed: 1
+    wpnAtkSpeed: 1.25
     wpnAtkDelay: 3
     wpnCritChance: 0
     wpnAtkCrit: 0
@@ -5480,7 +5480,7 @@ MonoBehaviour:
   attackPoint: {fileID: 7231136562797078304}
   hasInventory: 0
   inventory: {fileID: 0}
-  detectionSize: {x: 10, y: 3}
+  detectionSize: {x: 12, y: 4}
   allowPathfinding: 1
   doSleep: 0
   isAwake: 1

@@ -112,12 +112,12 @@ TextureImporter:
       name: Gobta_Run_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 10
         y: 0
-        width: 176
+        width: 119
         height: 144
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -133,12 +133,12 @@ TextureImporter:
       name: Gobta_Run_1
       rect:
         serializedVersion: 2
-        x: 176
+        x: 214
         y: 0
-        width: 176
+        width: 83
         height: 144
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.44642106, y: 0.5009962}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -154,12 +154,12 @@ TextureImporter:
       name: Gobta_Run_2
       rect:
         serializedVersion: 2
-        x: 352
+        x: 398
         y: 0
-        width: 176
+        width: 79
         height: 144
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.32022944, y: 0.50199234}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -175,12 +175,12 @@ TextureImporter:
       name: Gobta_Run_3
       rect:
         serializedVersion: 2
-        x: 528
+        x: 573
         y: 0
-        width: 176
+        width: 80
         height: 144
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.32426834, y: 0.5019923}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -196,12 +196,12 @@ TextureImporter:
       name: Gobta_Run_4
       rect:
         serializedVersion: 2
-        x: 704
+        x: 750
         y: 0
-        width: 176
+        width: 72
         height: 144
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35256195, y: 0.49999994}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -217,12 +217,12 @@ TextureImporter:
       name: Gobta_Run_5
       rect:
         serializedVersion: 2
-        x: 880
+        x: 900
         y: 0
-        width: 176
+        width: 103
         height: 144
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

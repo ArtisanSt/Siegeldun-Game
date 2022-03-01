@@ -332,4 +332,11 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable, IActivator
             eqpSlots[1] = inventory.eqpSlotsCol["Consumable"].eqpSlot;
         }
     }
+
+    protected void InventoryDeathSpill()
+    {
+        if (!hasInventory) return;
+
+        GetComponent<Inventory>().InventorySpill();
+    }
 }
