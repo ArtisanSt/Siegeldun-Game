@@ -29,6 +29,7 @@ public class SoundManager : MonoBehaviour
 
     [Header("ADDITIONAL SOUND SETTINGS", order = 2)]
     [SerializeField] public AudioClip interactSFX;
+    [SerializeField] public AudioClip daggerSFX;
 
 
     void Awake()
@@ -129,5 +130,10 @@ public class SoundManager : MonoBehaviour
     public void PlayInteract()
     {
         sfxSource.PlayOneShot(interactSFX);
+    }
+
+    public void PlayDagger()
+    {
+        sfxSource.PlayOneShot(daggerSFX);
     }
 }

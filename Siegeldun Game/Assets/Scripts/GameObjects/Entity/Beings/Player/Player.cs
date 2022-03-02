@@ -47,6 +47,7 @@ public class Player : Beings, IInteractor
         }
 
         base.Attack();
+        SoundManager.instance.PlayDagger();
     }
 
     public bool InteractorColliderConditions(Collider2D coll)
