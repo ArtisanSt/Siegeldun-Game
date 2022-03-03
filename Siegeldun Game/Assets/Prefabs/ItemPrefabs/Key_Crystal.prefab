@@ -145,16 +145,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9569db20ba620e49b16dc0f8f5eb961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  system: {fileID: 0}
-  gameMechanics: {fileID: 6944229709921447116, guid: 9d97c3737e083144097266356f4fd4b2, type: 3}
-  pauseMenu: {fileID: 0}
   objectName: Key_Crystal
   isInstanceLimited: 1
   maxEachEntityInField: 2
   doDrop: 1
   dropChance: 1
   onDestroyDropDelay: 0
-  itemDrops: []
+  itemDrops:
+  - {fileID: 1030391241932288014}
   _isInteractible: 1
   itemName: Key Crystal
   itemType: 2
