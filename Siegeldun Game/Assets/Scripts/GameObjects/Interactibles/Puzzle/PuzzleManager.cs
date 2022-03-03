@@ -8,6 +8,8 @@ public class PuzzleManager : MonoBehaviour
     public List<GameObject> torches, buttons, gates;
     public bool puzzleStart;
 
+    [SerializeField] private AudioClip gateOpenSfx;
+
     private void Start()
     {
         Instance = this;
@@ -46,6 +48,7 @@ public class PuzzleManager : MonoBehaviour
     public void OpenGates()
     {
         Debug.Log("Open Gates");
+        SoundManager.instance.PlaySFX(gateOpenSfx);
 
         foreach(GameObject button in buttons)
         {
