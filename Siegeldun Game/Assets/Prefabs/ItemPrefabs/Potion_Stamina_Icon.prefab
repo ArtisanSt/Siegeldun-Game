@@ -115,8 +115,8 @@ MonoBehaviour:
   itemType: 1
   _maxQuantity: 64
   _curQuantity: 1
-  _itemPrefab: {fileID: 0}
-  _iconPrefab: {fileID: 0}
+  _itemPrefab: {fileID: 8502316654925628256, guid: c1cb39b5ef1805447bb7db25385b4140, type: 3}
+  _iconPrefab: {fileID: 5336195007643097998}
   equippable: 1
   rBody: {fileID: 0}
   itemHopSpeed: 0.0075
