@@ -14,7 +14,7 @@ public class GateSlot : Structures, IGateSlot
     protected override void Awake()
     {
         base.Awake();
-        playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
+        playerInventory = GameObject.Find("/Game System/Inventory").GetComponent<Inventory>();
     }
 
     protected override void Update()

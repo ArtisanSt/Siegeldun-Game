@@ -34,7 +34,7 @@ RectTransform:
   - {fileID: 2784371690624496403}
   - {fileID: 374092242831744548}
   m_Father: {fileID: 9019712465255089918}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -207,7 +207,7 @@ Transform:
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.07927321}
   m_Children: []
   m_Father: {fileID: 9019712465255089918}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 2.998, y: 3.003, z: 0.105}
 --- !u!198 &836073464729219671
 ParticleSystem:
@@ -5009,7 +5009,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9019712465255089918}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3562279173696304011
 GameObject:
@@ -5046,9 +5046,9 @@ Transform:
   m_LocalPosition: {x: -4.6, y: -1.36, z: 117.58367}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8024227010808369370}
   - {fileID: 5737291448510681025}
   - {fileID: 3315150584154830079}
+  - {fileID: 8024227010808369370}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5334,7 +5334,6 @@ MonoBehaviour:
   sleepParticle: {fileID: 836073464729219671}
   isTriggered: 0
   forgivenessTime: 2
-  triggerDistance: 3
   backOffDistance: 0
   jumpEnabled: 1
   hasAbility: 0

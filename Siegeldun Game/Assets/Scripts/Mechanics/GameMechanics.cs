@@ -21,6 +21,9 @@ public class GameMechanics : MonoBehaviour
 
     public static LevelProperties levelProperties;
 
+    [SerializeField] public GameObject inventory;
+    [SerializeField] public GameObject playerStatusBar;
+    [SerializeField] public GameObject messageBox;
     [SerializeField] public GameObject loadingScreen;
     [SerializeField] public Slider slider;
     [SerializeField] public Text progressText;
@@ -112,6 +115,11 @@ public class GameMechanics : MonoBehaviour
 
         gameState = GameState.Loading;
 
+        bool inMainMenu = GetSceneName(scenePath) == GetSceneName(SpecialScene.MainMenu);
+        inventory.SetActive(!inMainMenu);
+        playerStatusBar.SetActive(!inMainMenu);
+        messageBox.SetActive(!inMainMenu);
+
         AsyncOperation asyncLoading = SceneManager.LoadSceneAsync(scenePath);
 
         loadingScreen.SetActive(true);
@@ -126,8 +134,6 @@ public class GameMechanics : MonoBehaviour
 
             yield return null;
         }
-
-        bool inMainMenu = GetSceneName(scenePath) == GetSceneName(SpecialScene.MainMenu);
         gameState = (inMainMenu) ? GameState.MainMenu : GameState.InGame;
         loadingScreen.SetActive(false);
         PauseMechanics.instance.SetPlayTime(true, false);

@@ -183,6 +183,23 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
         ["Stamina"] = new Dictionary<string, float>(),
     };
 
+    protected void StatusBarUIInit(GameObject entityStatusBar)
+    {
+        this.entityStatusBar = entityStatusBar;
+        if (entityStatusBar == null) return;
+
+        if (!hasHp) return;
+
+        hpBarB = entityStatusBar.transform.GetChild(0).gameObject.GetComponent<Image>();
+        hpBarF = entityStatusBar.transform.GetChild(1).gameObject.GetComponent<Image>();
+        hpText = entityStatusBar.transform.GetChild(2).gameObject.GetComponent<Text>();
+
+        if (!hasStam) return;
+
+        stamBar = entityStatusBar.transform.GetChild(3).gameObject.GetComponent<Image>();
+        stamText = entityStatusBar.transform.GetChild(4).gameObject.GetComponent<Text>();
+    }
+
     protected void StatusBarPropInit()
     {
         if (hasHp)

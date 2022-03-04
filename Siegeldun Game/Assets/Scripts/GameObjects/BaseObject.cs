@@ -12,7 +12,7 @@ public abstract class BaseObject : Root
     [SerializeField] protected List<GameObject> itemDrops = new List<GameObject>();
 
 
-    protected GameObject Drop(int dropChance, Vector2 dropPosition, GameObject itemG = null, Transform parentT = null, bool doDropOverride = false)
+    public GameObject Drop(int dropChance, Vector2 dropPosition, GameObject itemG = null, Transform parentT = null, bool doDropOverride = false)
     {
         if ((doDrop || doDropOverride) && ChanceRandomizer(dropChance))
         {

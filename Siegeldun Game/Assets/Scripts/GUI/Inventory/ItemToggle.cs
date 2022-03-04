@@ -15,18 +15,15 @@ public class ItemToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     void Awake()
     {
         playerEntity = GameObject.Find("Player");
-        playerInventory = playerEntity.GetComponent<Inventory>();
+        playerInventory = GameObject.Find("/Game System/Inventory").GetComponent<Inventory>();
     }
 
     void Update()
     {
-        if (!PauseMechanics.isPlaying) return; 
+        if (!PauseMechanics.isPlaying || (playerEntity == null && GameObject.Find("Player") == null)) return;
 
-        if (playerEntity == null)
-        {
-            playerEntity = GameObject.Find("Player");
-            if (playerEntity != null) { playerInventory = playerEntity.GetComponent<Inventory>(); }
-        }
+        if (playerEntity == null) { playerEntity = GameObject.Find("Player"); }
+        if (playerInventory == null) { playerInventory = GameObject.Find("/Game System/Inventory").GetComponent<Inventory>(); }
 
         if((int)(gameObject.name[7] - '0') == playerInventory.selectedSlot)
         {

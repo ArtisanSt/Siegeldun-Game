@@ -45,6 +45,7 @@ public class SoundManager : MonoBehaviour
 
     void Update()
     {
+        if (instance == null) { instance = this; }
         SFXUpdater();
         BGMUpdater();
     }

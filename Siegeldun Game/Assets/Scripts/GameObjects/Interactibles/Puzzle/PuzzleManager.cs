@@ -52,7 +52,7 @@ public class PuzzleManager : MonoBehaviour
 
         foreach(GameObject button in buttons)
         {
-            button.GetComponent<PuzzleButton>().DisableInteract();
+            button.GetComponent<PuzzleButton>().ToggleInteractible();
             button.GetComponent<SpriteRenderer>().material.DisableKeyword("OUTLINE_ON");
         }
 
