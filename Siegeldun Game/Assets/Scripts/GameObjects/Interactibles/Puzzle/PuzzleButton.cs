@@ -34,9 +34,4 @@ public class PuzzleButton : Structures
             PuzzleManager.Instance.OpenGates();
         
     }
-
-    public void DisableInteract()
-    {
-        isInteractible = false;
-    }
 }

@@ -16,10 +16,10 @@ public class EquippedSlotProperties
     }
 }
 
-public class Inventory: BaseObject
+public class Inventory: Root
 {
     // ========================================= INVENTORY PROPERTIES =========================================
-    [SerializeField] public GameObject inventoryBg;
+    [SerializeField] public GameObject playerEntity;
     protected GameObject itemColliding;
     protected List<GameObject[]> inventorySlots = new List<GameObject[]>(); // idx: {slot, item}
 
@@ -39,26 +39,33 @@ public class Inventory: BaseObject
     {
         GameMechanicsPropInit();
 
-        inventoryBg = GameObject.Find("/GUI/Inventory/InventoryBackground");
+        inventorySlots = new List<GameObject[]>();
+        itemAmountTexts = new List<Text>();
 
         for (int i = 0; i < 6; i++)
         {
-            GameObject invSlot = GameObject.Find($"/GUI/Inventory/InventoryBackground/InvSlots/InvSlot{i}");
+            GameObject invSlot = GameObject.Find($"/Game System/Inventory/InventoryBackground/InvSlots/InvSlot{i}");
             inventorySlots.Add(new GameObject[2] { invSlot, null });
-            itemAmountTexts.Add(GameObject.Find($"/GUI/Inventory/InventoryBackground/InventoryAmountTexts/InvSlot{i}Amount").GetComponent<Text>());
+            itemAmountTexts.Add(GameObject.Find($"/Game System/Inventory/InventoryBackground/InventoryAmountTexts/InvSlot{i}Amount").GetComponent<Text>());
             UpdateText(itemAmountTexts[i], 0);
             itemAmountTexts[i].text = "";
         };
 
         eqpSlotsCol = new Dictionary<string, EquippedSlotProperties>()
         {
-            ["Weapon"] = new EquippedSlotProperties(GameObject.Find("/GUI/Inventory/EqpSlotWeapon")),
-            ["Consumable"] = new EquippedSlotProperties(GameObject.Find("/GUI/Inventory/EqpConsumableBg/EqpSlotConsumable")),
+            ["Weapon"] = new EquippedSlotProperties(GameObject.Find("/Game System/Inventory/EqpSlotWeapon")),
+            ["Consumable"] = new EquippedSlotProperties(GameObject.Find("/Game System/Inventory/EqpConsumableBg/EqpSlotConsumable")),
         };
 
-        consumeSlotAmountText = GameObject.Find("/GUI/Inventory/EqpConsumableBg/ConsumeSlotAmount").GetComponent<Text>();
+        consumeSlotAmountText = GameObject.Find("/Game System/Inventory/EqpConsumableBg/ConsumeSlotAmount").GetComponent<Text>();
+    }
 
-        interactorComponent = GetComponent<Interactor>();
+    public void InventoryInit(GameObject playerEntity)
+    {
+        if (playerEntity == null) return;
+
+        this.playerEntity = playerEntity;
+        interactorComponent = playerEntity.GetComponent<Interactor>();
     }
 
     // ========================================= MAIN METHODS =========================================
@@ -307,7 +314,7 @@ public class Inventory: BaseObject
             // Overwrites the Stats of the Icon created by the stats of the Item picked
             if (curItemProp.itemType.ToString() == "Consumable") curItem.GetComponent<Consumable>().OverwriteStats(selItemProp.GetComponent<Consumable>());
             else if (curItemProp.itemType.ToString() == "Weapon") curItem.GetComponent<Weapon>().OverwriteStats(selItemProp.GetComponent<Weapon>());
-            curItemProp.OnInventory(gameObject, curSlot);
+            curItemProp.OnInventory(playerEntity, curSlot);
 
             isSuccess = 0;
         }
@@ -401,8 +408,8 @@ public class Inventory: BaseObject
         newEqpItem.GetComponent<Image>().enabled = true;
 
         newEqpItem.GetComponent<Item>().ItemReferencedTo(curItem);
-        curItem.GetComponent<Item>().OnEquip(gameObject);
-        if (eqpSlot == eqpSlotsCol["Weapon"].eqpSlot) gameObject.GetComponent<IWeaponizable>().SetWeapon(newEqpItem.GetComponent<Weapon>()); // Should be changed to Events //////////////////////
+        curItem.GetComponent<Item>().OnEquip(playerEntity);
+        if (eqpSlot == eqpSlotsCol["Weapon"].eqpSlot) playerEntity.GetComponent<IWeaponizable>().SetWeapon(newEqpItem.GetComponent<Weapon>()); // Should be changed to Events //////////////////////
 
         return true;
     }
@@ -430,7 +437,7 @@ public class Inventory: BaseObject
             eqpSlotsCol[eqpItemProp.itemType.ToString()].curItem = null;
             Destroy(eqpItem);
 
-            gameObject.GetComponent<IWeaponizable>().SetWeapon(null); // Should be changed to Events //////////////////////
+            playerEntity.GetComponent<IWeaponizable>().SetWeapon(null); // Should be changed to Events //////////////////////
 
             isSuccess = true;
         }
@@ -488,7 +495,8 @@ public class Inventory: BaseObject
 
         if (!curItemProp.isEmpty)
         {
-            GameObject newDrop = Drop(1, new Vector2(0, 0), curItemProp.itemPrefab);
+            GameObject newDrop = playerEntity.GetComponent<BaseObject>().Drop(1, new Vector2(0, 0), curItemProp.itemPrefab);
+            Debug.Log(newDrop);
             newDrop.GetComponent<Item>().OverwriteStats(curItemProp.curQuantity, curItemProp.amountOverflow);
         }
         bool isSuccess = RemoveFromInventory(curItem);

@@ -22,11 +22,6 @@ public class SpeedBoost
 
 public abstract class Beings : Entity, IBoostable, IWeaponizable, IActivator
 {
-    protected virtual void Start()
-    {
-        InventoryPropInit();
-    }
-
     // ========================================= MOVEMENT PROPERTIES =========================================
     [Header("MOVEMENT SETTINGS", order = 1)]
     [SerializeField] protected bool doMoveX = false;
@@ -323,13 +318,16 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable, IActivator
 
 
     // Initialize at Start (Not Awake)
-    protected void InventoryPropInit()
+    protected void InventoryPropInit(Inventory inventory)
     {
+        hasInventory = inventory != null;
+
         if (hasInventory)
         {
-            inventory = GetComponent<Inventory>();
+            this.inventory = inventory;
             eqpSlots[0] = inventory.eqpSlotsCol["Weapon"].eqpSlot;
             eqpSlots[1] = inventory.eqpSlotsCol["Consumable"].eqpSlot;
+            inventory.InventoryInit(gameObject);
         }
     }
 
@@ -337,6 +335,6 @@ public abstract class Beings : Entity, IBoostable, IWeaponizable, IActivator
     {
         if (!hasInventory) return;
 
-        GetComponent<Inventory>().InventorySpill();
+        inventory.InventorySpill();
     }
 }

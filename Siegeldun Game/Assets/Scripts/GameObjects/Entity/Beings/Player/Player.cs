@@ -13,13 +13,14 @@ public class Player : Beings, IInteractor
     protected override void Awake()
     {
         base.Awake();
+        StatusBarUIInit(GameObject.Find("/Game System/PlayerStatusBar"));
         GetComponent<AchievementUnlocks>().ChangeState();
     }
 
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
         transform.position = new Vector2(LevelProperties.resPlatform.position.x, transform.position.y);
+        InventoryPropInit(GameObject.Find("/Game System/Inventory").GetComponent<Inventory>());
     }
 
     // Update is called once per frame
@@ -115,6 +116,7 @@ public class Player : Beings, IInteractor
     protected override void OnEntityDestroy()
     {
         base.OnEntityDestroy();
+        GetComponent<Interactor>().ChangeSelection(null);
         gameMechanics.PlayerDied();
     }
 

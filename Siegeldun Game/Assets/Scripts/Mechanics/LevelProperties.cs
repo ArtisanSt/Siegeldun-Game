@@ -26,6 +26,8 @@ public class LevelProperties: Singleton<LevelProperties>
 
         if (resPlatform == null) resPlatform = GameObject.Find("ResurrectionPlatform").transform;
         playerPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EntityPrefabs/Player.prefab");
+
+        GetComponent<DialogueSystem>().EndDialogue();
     }
 
     public void ActInitialize()

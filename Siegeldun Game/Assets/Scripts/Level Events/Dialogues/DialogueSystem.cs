@@ -52,7 +52,7 @@ public class DialogueSystem : Process
 
     void Awake()
     {
-        messageBox = (messageBox == null) ? GameObject.Find("/GUI/MessageBox") : messageBox;
+        messageBox = (messageBox == null) ? GameObject.Find("/Game System/MessageBox") : messageBox;
         dialogueBG = (dialogueBG == null) ? messageBox.transform.GetChild(0).GetComponent<Image>() : dialogueBG;
         nameText = (nameText == null) ? messageBox.transform.GetChild(1).GetComponent<Text>() : nameText;
         dialogueText = (dialogueText == null) ? messageBox.transform.GetChild(2).GetComponent<Text>() : dialogueText;
@@ -155,6 +155,8 @@ public class DialogueSystem : Process
 
     public void EndDialogue()
     {
+        if (dialogue == null) return;
+
         dialogue.state = (dialogue.repeatable) ? Dialogue.DialogueState.StandBy : Dialogue.DialogueState.Done;
         if (dialogue.messageSource != null && dialogue.messageSource.GetComponent<IDialogue>() != null) dialogue.messageSource.GetComponent<IDialogue>().OnEndMessage(dialogue);
 

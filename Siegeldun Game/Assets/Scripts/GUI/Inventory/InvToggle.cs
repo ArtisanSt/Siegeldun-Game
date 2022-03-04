@@ -11,7 +11,7 @@ public class InvToggle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        inventoryBg = GameObject.Find("/GUI/Inventory/InventoryBackground");
+        inventoryBg = GameObject.Find("/Game System/Inventory/InventoryBackground");
         InvBGUpdate();
     }
 

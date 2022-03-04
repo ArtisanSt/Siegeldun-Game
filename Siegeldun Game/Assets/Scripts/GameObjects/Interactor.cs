@@ -83,7 +83,7 @@ public class Interactor : Process
         IgnoreErrors(InteractorFixedUpdate);
     }
 
-    private void ChangeSelection(GameObject newSelected)
+    public void ChangeSelection(GameObject newSelected)
     {
         _selectCalled[0] = curSelected == null;
         prevSelected = curSelected;
