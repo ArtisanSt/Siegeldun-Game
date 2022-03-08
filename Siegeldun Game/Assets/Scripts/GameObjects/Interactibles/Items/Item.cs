@@ -121,6 +121,8 @@ public abstract class Item : Interactibles, IInteractor
         ItemUpdate();
         IconUpdate();
 
+        if ((inInventory || isEquipped) && entityHolder == null) { entityHolder = GameObject.Find("Player"); }
+
     }
 
     private void IconUpdate()

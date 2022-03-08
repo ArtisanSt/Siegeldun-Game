@@ -82,6 +82,20 @@ public class Player : Beings, IInteractor
                 Attack();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Debug.Log($"totalAtkDamage: {totalAtkDamage}");
+            Debug.Log($"totalAtkRange: {totalAtkRange}");
+            Debug.Log($"totalAtkSpeed: {totalAtkSpeed}");
+            Debug.Log($"totalAtkDelay: {totalAtkDelay}");
+
+            Debug.Log($"totalAtkCritChance: {totalAtkCritChance}");
+            Debug.Log($"totalAtkCrit: {totalAtkCrit}");
+
+            Debug.Log($"totalStamCost: {totalStamCost}");
+            Debug.Log($"totalKbForce: {totalKbForce}");
+        }
     }
 
     // Jump Alpha
