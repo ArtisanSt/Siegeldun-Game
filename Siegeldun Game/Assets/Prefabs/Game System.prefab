@@ -1576,12 +1576,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imgBGMDisable: {fileID: 3563143541466544598}
   imgSFXDisable: {fileID: 3563143540709794663}
-  hasBGM: 0
+  hasBGM: 1
   isOnBGM: 1
   bgmVolume: 1
   bgmSource: {fileID: 3563143541188465454}
   bgmSlider: {fileID: 3563143541645572211}
-  hasSFX: 0
+  hasSFX: 1
   isOnSFX: 1
   sfxVolume: 1
   sfxSource: {fileID: 3563143540723880868}

@@ -314,6 +314,7 @@ public class Inventory: Root
             // Overwrites the Stats of the Icon created by the stats of the Item picked
             if (curItemProp.itemType.ToString() == "Consumable") curItem.GetComponent<Consumable>().OverwriteStats(selItemProp.GetComponent<Consumable>());
             else if (curItemProp.itemType.ToString() == "Weapon") curItem.GetComponent<Weapon>().OverwriteStats(selItemProp.GetComponent<Weapon>());
+            else if (curItemProp.itemType.ToString() == "Key") curItem.GetComponent<Key>().OverwriteStats(selItemProp.GetComponent<Key>());
             curItemProp.OnInventory(playerEntity, curSlot);
 
             isSuccess = 0;

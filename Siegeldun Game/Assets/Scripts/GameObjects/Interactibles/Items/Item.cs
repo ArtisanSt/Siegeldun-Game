@@ -321,6 +321,12 @@ public abstract class Item : Interactibles, IInteractor
         this.amountOverflow = amountOverflow;
     }
 
+    public void OverwriteStats(int curQuantity, List<SelfEffectProperties> effects)
+    {
+        this.curQuantity = curQuantity;
+        this.effects = effects;
+    }
+
     public void ItemReferencedTo(GameObject referencedItem)
     {
         hasReference = referencedItem != null;

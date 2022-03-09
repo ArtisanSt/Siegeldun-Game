@@ -9,6 +9,7 @@ public class LevelProperties: Singleton<LevelProperties>
     [SerializeField] protected static GameObject playerPrefab;
     [SerializeField] public int actNumber;
     [SerializeField] public int lvlNumber;
+    [SerializeField] public AudioClip lvlBGM;
 
     protected override void Awake()
     {
@@ -28,6 +29,7 @@ public class LevelProperties: Singleton<LevelProperties>
         playerPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EntityPrefabs/Player.prefab");
 
         GetComponent<DialogueSystem>().EndDialogue();
+        SoundManager.instance.PlayBGM(lvlBGM);
     }
 
     public void ActInitialize()

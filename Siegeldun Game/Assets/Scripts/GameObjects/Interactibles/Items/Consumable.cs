@@ -36,8 +36,7 @@ public abstract class Consumable : Item
     // ========================================= OVERWRITE METHODS =========================================
     public void OverwriteStats(Consumable originalItem)
     {
-        curQuantity = originalItem.curQuantity;
-        effects = originalItem.effects;
+        OverwriteStats(originalItem.curQuantity, originalItem.effects);
         uniqueProp = originalItem.uniqueProp;
     }
 }

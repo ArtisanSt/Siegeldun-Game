@@ -119,8 +119,7 @@ public abstract class Weapon : Item
     // ========================================= OVERWRITE METHODS =========================================
     public void OverwriteStats(Weapon originalItem)
     {
-        curQuantity = originalItem.curQuantity;
-        effects = originalItem.effects;
+        OverwriteStats(originalItem.curQuantity, originalItem.effects);
         uniqueProp = originalItem.uniqueProp;
     }
 }
