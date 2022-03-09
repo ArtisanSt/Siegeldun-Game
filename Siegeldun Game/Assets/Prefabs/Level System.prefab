@@ -52,8 +52,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb54bba5b1c254342beec2220a60e6d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 4865986372180236411, guid: d013b059544ef9d45a2fb624ca903190, type: 3}
   actNumber: 1
   lvlNumber: 1
+  lvlBGM: {fileID: 0}
 --- !u!114 &640290593228997955
 MonoBehaviour:
   m_ObjectHideFlags: 0

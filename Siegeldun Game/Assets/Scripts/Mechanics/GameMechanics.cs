@@ -28,6 +28,8 @@ public class GameMechanics : MonoBehaviour
     [SerializeField] public Slider slider;
     [SerializeField] public Text progressText;
 
+    [SerializeField] public List<string> scenePathList;
+
     // Game Properties
     public enum GameState { MainMenu, Loading, InGame }
     public static GameState gameState = GameState.InGame;
@@ -44,9 +46,9 @@ public class GameMechanics : MonoBehaviour
         GlobalVariableStorage.numberOfLevelsPerAct = numberOfLevelsPerAct;
 
         instance = this;
-        foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
+        foreach (string scenePath in scenePathList)
         {
-            scenes.Add(GetSceneName(scene.path), scene.path);
+            scenes.Add(GetSceneName(scenePath), scenePath);
         }
     }
 

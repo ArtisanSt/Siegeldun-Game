@@ -6,7 +6,7 @@ using UnityEditor;
 public class LevelProperties: Singleton<LevelProperties>
 {
     [SerializeField] public static Transform resPlatform;
-    [SerializeField] protected static GameObject playerPrefab;
+    [SerializeField] protected GameObject playerPrefab;
     [SerializeField] public int actNumber;
     [SerializeField] public int lvlNumber;
     [SerializeField] public AudioClip lvlBGM;
@@ -26,10 +26,9 @@ public class LevelProperties: Singleton<LevelProperties>
         SaveAndLoadManager.SaveLevelData();
 
         if (resPlatform == null) resPlatform = GameObject.Find("ResurrectionPlatform").transform;
-        playerPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EntityPrefabs/Player.prefab");
 
         GetComponent<DialogueSystem>().EndDialogue();
-        SoundManager.instance.PlayBGM(lvlBGM);
+        GameObject.Find("SoundManager").GetComponent<SoundManager>().PlayBGM(lvlBGM);
     }
 
     public void ActInitialize()

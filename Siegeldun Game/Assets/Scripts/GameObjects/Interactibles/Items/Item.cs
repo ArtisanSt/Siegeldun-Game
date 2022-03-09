@@ -308,8 +308,6 @@ public abstract class Item : Interactibles, IInteractor
     protected override void PrefabsInit()
     {
         // Prefab Setting
-        itemPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/ItemPrefabs/{objectName}.prefab");
-        iconPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/ItemPrefabs/{objectName}_icon.prefab");
 
         // GameObject Name Change
         gameObject.name = $"{itemName} ({gameObject.GetInstanceID()})";

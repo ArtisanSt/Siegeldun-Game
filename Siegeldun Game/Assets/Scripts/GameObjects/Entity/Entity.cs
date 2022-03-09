@@ -100,8 +100,6 @@ public abstract class Entity : BaseObject, IDamageable, IRegeneration, IFaceScal
 
     protected override void PrefabsInit()
     {
-        entityPrefab = AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>($"Assets/Prefabs/EntityPrefabs/{objectName}.prefab");
-
         if (entityName != "Player")
         {
             gameObject.name = $"{entityName} ({entityID})";

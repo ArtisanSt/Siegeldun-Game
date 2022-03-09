@@ -3812,6 +3812,13 @@ MonoBehaviour:
   loadingScreen: {fileID: 3563143542499038445}
   slider: {fileID: 3563143542275498700}
   progressText: {fileID: 3563143542733464363}
+  scenePathList:
+  - Assets/Scenes/Main Menu.unity
+  - Assets/Scenes/Testing Grounds.unity
+  - Assets/Scenes/Tutorial Grounds.unity
+  - Assets/Scenes/Level 1 - 1.unity
+  - Assets/Scenes/Level 1 - 2.unity
+  - Assets/Scenes/Level 1 - 3.unity
   difficultyProperties:
   - difficulty: 0
     statsMultiplier: 1
