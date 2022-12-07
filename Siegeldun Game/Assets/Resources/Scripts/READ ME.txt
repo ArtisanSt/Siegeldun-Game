@@ -1,0 +1,72 @@
+Script Directory
+:: All Base are ABSTRACT
+:: ** means features
+:: = Accessible Interfaces
+
+
+Game System
+- Levels (Level System Overrites)
+	- 
+
+- GameSystem.cs (Overall Game System) {Parent Object} [Game runtime]
+- LevelSystem.cs (Level Base System) {Parent Object} [Scene runtime]
+- Globals.cs (Global Static Properties) {SingletonDontDestroy}
+- Settings (Base Monobehaviour) {Singleton}
+
+
+
+Singleton
+- Singleton.cs (Monobehaviour) [Limits an object to have only 1 instance]
+	= ISingleton
+- SingletonDontDestroy.cs (Monobehaviour) [Limits an object to have only 1 instance but stays for entire game runtime]
+	= ISingleton
+
+
+
+Root
+- Root.cs (Base Monibehaviour) {SO : RootSO.cs} [Game System Communicator]
+	** Component Checker : Loads each Component (Unity-based and User-Based)
+
+- Animation System (Monobehaviour)
+	= IAnimateable
+
+- Entity
+	- Unit
+		- Unit.cs (Monobehaviour) {SO : UnitSO.cs} 
+
+		- Jason.cs (Character Override)
+	- Structure
+		- Structure.cs (Monobehaviour) {SO : StructureSO.cs} 
+
+		- Gate.cs (Structure Override)
+	- Item
+		- Item.cs (Monobehaviour) {SO : ItemSO.cs}
+
+		- Stick.cs (Item Override)
+	- Other
+		- 
+
+	- Interactible.cs (Allows interactions for each instance)
+		= IInteratible
+	- Entity.cs (Base Monobehaviour) {SO : EntitySO.cs} [Entity System Communicator]
+		** Component Checker (Override) : Loads Entity System Components
+		** Stats Tab : Gets each showable stats from each System
+		** Entity Type: Identify what type of Entity is the object
+
+
+	// User-based Varied Components
+	- MovementSystem (Monobehaviour) {SO : MovementSystemSO.cs} [MVSpd] {Cte: Animation}
+		= IMoveable (Sends signal to move)
+	- StatusSystem (Monobehaviour) {SO : StatusSystemSO.cs} [HP, SP, Shield, Armor]  {Cte: Animation}
+		= IStatusable (Interact with HP, SP, Shield, Armor)
+	- BattleSystem (Monobehaviour) {SO : BattleSystemSO.cs} {Reqs: StatusSystem} [AtkDmg, AtkSpd, AtkChrg]
+		= IDamageable (Makes an object prone to damage)
+		
+
+	
+- 
+
+
+
+========================================== Imported Scripts ========================================== 
+Astar Pathfinding
