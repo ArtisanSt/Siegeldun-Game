@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Settings<T> : MonoBehaviour, ISingleton where T: MonoBehaviour
+public class PrefabsContainer : MonoBehaviour
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
     protected virtual void Awake()
     {
-        InstanceConfiguration();
+
     }
 
     protected virtual void Start()
@@ -50,11 +50,14 @@ public abstract class Settings<T> : MonoBehaviour, ISingleton where T: MonoBehav
     }
 
 
-    // ============================== SINGLETON PROPERTIES AND METHODS ==============================
-    public static T instance { get; private set; }
+    // ============================== OBJECT PROPERTIES AND METHODS ==============================
+    [SerializeField] public string prefabsPath = "Assets/Resources/Prefabs";
+    [SerializeField] public Dictionary<string, GameObject> prefabsList = new Dictionary<string, GameObject>();
 
-    public void InstanceConfiguration()
+
+    // Reload all prefabs in the specified location
+    protected void PrefabsReloader()
     {
-        instance = GameSystem.FindInstance<T>();
+
     }
 }

@@ -2,6 +2,7 @@ Script Directory
 :: All Base are ABSTRACT
 :: ** means features
 :: = Accessible Interfaces
+:: + Folder
 
 
 Game System
@@ -11,7 +12,12 @@ Game System
 - GameSystem.cs (Overall Game System) {Parent Object} [Game runtime]
 - LevelSystem.cs (Level Base System) {Parent Object} [Scene runtime]
 - Globals.cs (Global Static Properties) {SingletonDontDestroy}
-- Settings (Base Monobehaviour) {Singleton}
+- SettingsSystem.cs (Base Monobehaviour) {Singleton}
+
++ Settings
+	- ControllerSystem.cs (Monobehaviour)
+		** Player Checker : Locates the entity instance controlled by player, if none create one
+		
 
 
 
@@ -30,28 +36,30 @@ Root
 - Animation System (Monobehaviour)
 	= IAnimateable
 
-- Entity
-	- Unit
++ Entity
+	+ Unit
 		- Unit.cs (Monobehaviour) {SO : UnitSO.cs} 
 
 		- Jason.cs (Character Override)
-	- Structure
+	+ Structure
 		- Structure.cs (Monobehaviour) {SO : StructureSO.cs} 
 
 		- Gate.cs (Structure Override)
-	- Item
+	+ Item
 		- Item.cs (Monobehaviour) {SO : ItemSO.cs}
 
 		- Stick.cs (Item Override)
-	- Other
+	+ Other
 		- 
 
-	- Interactible.cs (Allows interactions for each instance)
+	- Interactible.cs (Monobehaviour) [Allows interactions for each instance]
 		= IInteratible
 	- Entity.cs (Base Monobehaviour) {SO : EntitySO.cs} [Entity System Communicator]
 		** Component Checker (Override) : Loads Entity System Components
 		** Stats Tab : Gets each showable stats from each System
 		** Entity Type: Identify what type of Entity is the object
+	- Controller.cs (Monobehaviour)
+		** Control Verifier : Verifies if an instance is controlled by the player
 
 
 	// User-based Varied Components

@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Root : MonoBehaviour
+public abstract class SettingsSystem<T> : MonoBehaviour, ISingleton where T: MonoBehaviour
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
     protected virtual void Awake()
     {
-        ComponentInit();
-
-        /*if (GetComponent<Player>() != null) { player = gameObject; }*/
+        InstanceConfiguration();
     }
 
     protected virtual void Start()
@@ -52,19 +50,11 @@ public class Root : MonoBehaviour
     }
 
 
-    // ============================== COMPONENTS ==============================
-    protected SpriteRenderer sprRndr;
-    protected Rigidbody2D rbody;
-    protected CircleCollider2D cirCol;
+    // ============================== SINGLETON PROPERTIES AND METHODS ==============================
+    public static T instance { get; private set; }
 
-    protected virtual void ComponentInit()
+    public void InstanceConfiguration()
     {
-        sprRndr = GetComponent<SpriteRenderer>();
-        rbody = GetComponent<Rigidbody2D>();
-        cirCol = GetComponent<CircleCollider2D>();
+        instance = GameSystem.FindInstance<T>();
     }
-
-
-    // ============================== OBJECT METHODS ==============================
-    /*public static GameObject player = null;*/
 }

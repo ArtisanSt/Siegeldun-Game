@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Root : MonoBehaviour
+public class AnimationSystem : MonoBehaviour
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
     protected virtual void Awake()
     {
-        ComponentInit();
 
-        /*if (GetComponent<Player>() != null) { player = gameObject; }*/
     }
 
     protected virtual void Start()
@@ -50,21 +48,4 @@ public class Root : MonoBehaviour
     {
 
     }
-
-
-    // ============================== COMPONENTS ==============================
-    protected SpriteRenderer sprRndr;
-    protected Rigidbody2D rbody;
-    protected CircleCollider2D cirCol;
-
-    protected virtual void ComponentInit()
-    {
-        sprRndr = GetComponent<SpriteRenderer>();
-        rbody = GetComponent<Rigidbody2D>();
-        cirCol = GetComponent<CircleCollider2D>();
-    }
-
-
-    // ============================== OBJECT METHODS ==============================
-    /*public static GameObject player = null;*/
 }
