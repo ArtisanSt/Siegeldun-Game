@@ -80,6 +80,21 @@ public class EGUILayout : Editor
         if (spaceAtEnd && !isEnd) SetSpace((isHeadline) ? 3 : 2 );
     }
 
+    public delegate void Del<T>(T args);
+    public static void XLayout<T>(Del<T> handler, T args)
+    {
+        EditorGUILayout.BeginHorizontal();
+        handler(args);
+        EditorGUILayout.EndHorizontal();
+    }
+
+    public static void YLayout<T>(Del<T> handler, T args)
+    {
+        EditorGUILayout.BeginVertical();
+        handler(args);
+        EditorGUILayout.EndVertical();
+    }
+
 
     // ==================================================== LayerMask ====================================================
     public static string[] LayersList(bool hideBlank = false)

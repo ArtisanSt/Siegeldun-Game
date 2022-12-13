@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity : Root
+public class Item : Entity<ItemProp>
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -60,9 +60,9 @@ public class Entity : Root
     protected override void ComponentInit()
     {
         base.ComponentInit();
-
-
     }
 
 
+    // ============================== MAIN PROPERTIES AND METHODS ==============================
+    public override EntityType entityType { get { return EntityType.Item; } }
 }

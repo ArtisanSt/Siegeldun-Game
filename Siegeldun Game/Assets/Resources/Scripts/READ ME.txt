@@ -30,7 +30,7 @@ Singleton
 
 
 Root
-- Root.cs (Base Monibehaviour) {SO : RootSO.cs} [Game System Communicator]
+- Root.cs (Base Monibehaviour) {SO : RootProp.cs} [Game System Communicator]
 	** Component Checker : Loads each Component (Unity-based and User-Based)
 
 - Animation System (Monobehaviour)
@@ -38,15 +38,27 @@ Root
 
 + Entity
 	+ Unit
-		- Unit.cs (Monobehaviour) {SO : UnitSO.cs} 
+		- Unit.cs (Monobehaviour) {SO : UnitProp.cs} 
+		
+		+ Humans {Mb: Human.cs} {SO : HumanProp.cs} [Jason, Raf]
+		+ Goblins {Mb: Goblin.cs} {SO : GoblinProp.cs} [Goblin Runner, Wolf, Goblin Sniper, Goblin Rider, Gobla]
+		+ Crimsons {Mb: Crimson.cs} {SO : CrimsonProp.cs} [Kop'ra(Corruption), , ]
+		+ Phantoms {Mb: Phantom.cs} {SO : PhantomProp.cs} 
+		+ Elementals {Mb: Elemental.cs} {SO : ElementalProp.cs} 
+		+ Aliens {Mb: Alien.cs} {SO : AlienProp.cs} 
 
 		- Jason.cs (Character Override)
 	+ Structure
-		- Structure.cs (Monobehaviour) {SO : StructureSO.cs} 
+		- Structure.cs (Monobehaviour) {SO : StructureProp.cs} 
 
 		- Gate.cs (Structure Override)
 	+ Item
-		- Item.cs (Monobehaviour) {SO : ItemSO.cs}
+		- Item.cs (Monobehaviour) {SO : ItemProp.cs}
+		
+		+ Weapons
+		+ Potions
+		+ Keys
+		+ Others
 
 		- Stick.cs (Item Override)
 	+ Other
@@ -54,7 +66,7 @@ Root
 
 	- Interactible.cs (Monobehaviour) [Allows interactions for each instance]
 		= IInteratible
-	- Entity.cs (Base Monobehaviour) {SO : EntitySO.cs} [Entity System Communicator]
+	- Entity.cs (Base Monobehaviour) {SO : EntityProp.cs} [Entity System Communicator]
 		** Component Checker (Override) : Loads Entity System Components
 		** Stats Tab : Gets each showable stats from each System
 		** Entity Type: Identify what type of Entity is the object
@@ -63,11 +75,11 @@ Root
 
 
 	// User-based Varied Components
-	- MovementSystem (Monobehaviour) {SO : MovementSystemSO.cs} [MVSpd] {Cte: Animation}
+	- MovementSystem (Monobehaviour) {SO : MovementSystemProp.cs} [MVSpd] {Cte: Animation}
 		= IMoveable (Sends signal to move)
-	- StatusSystem (Monobehaviour) {SO : StatusSystemSO.cs} [HP, SP, Shield, Armor]  {Cte: Animation}
+	- StatusSystem (Monobehaviour) {SO : StatusSystemProp.cs} [HP, SP, Shield, Armor]  {Cte: Animation}
 		= IStatusable (Interact with HP, SP, Shield, Armor)
-	- BattleSystem (Monobehaviour) {SO : BattleSystemSO.cs} {Reqs: StatusSystem} [AtkDmg, AtkSpd, AtkChrg]
+	- BattleSystem (Monobehaviour) {SO : BattleSystemProp.cs} {Reqs: StatusSystem} [AtkDmg, AtkSpd, AtkChrg]
 		= IDamageable (Makes an object prone to damage)
 		
 

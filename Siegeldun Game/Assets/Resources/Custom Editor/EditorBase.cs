@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public abstract class EditorBase : Editor, IEditorBase
+
+// N = ScriptableObject or Monobehavior
+// T = Monobehaviour or Scriptable Object Class Instance
+public abstract class EditorBase<N, T> : Editor, IEditorBase where N : Object where T: N
 {
     // ============================== MAIN METHODS ==============================
-    public abstract System.Type scriptType { get; }
+    //public abstract System.Type scriptType { get; }
+    public System.Type scriptType { get { return typeof(N); } }
     protected bool showUneditable = true;
+    protected Dictionary<string, bool[]> foldouts = new Dictionary<string, bool[]>();
+    protected T root;
 
     public override void OnInspectorGUI()
     {
@@ -22,6 +28,7 @@ public abstract class EditorBase : Editor, IEditorBase
     public virtual void HeaderSettings()
     {
         EGUILBase.ScriptName(target, scriptType);
+        root = (T)target;
     }
 
     public abstract void BodySettings();
@@ -29,15 +36,15 @@ public abstract class EditorBase : Editor, IEditorBase
     public virtual void FooterSettings()
     {
         showUneditable = EGUILBase.BoolField(showUneditable, "Show Uneditable", true, true, true);
-        if (GUILayout.Button("Save"))
-        {
-            SaveVariables();
-        }
+        if (GUILayout.Button("Save")) { SaveVariables(); }
     }
 
 
     // ============================== SECONDARY METHODS ==============================
-    protected abstract void SetProperty(bool isLeaf);
+    protected virtual void SetProperty(bool isLeaf) { }
 
-    protected abstract void SaveVariables();
+    protected virtual void SaveVariables()
+    {
+        EditorUtility.SetDirty(root);
+    }
 }

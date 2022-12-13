@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Root : MonoBehaviour
+[RequireComponent(typeof(BoxCollider2D))]
+public abstract class Root : MonoBehaviour
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -53,15 +54,11 @@ public class Root : MonoBehaviour
 
 
     // ============================== COMPONENTS ==============================
-    protected SpriteRenderer sprRndr;
-    protected Rigidbody2D rbody;
-    protected CircleCollider2D cirCol;
+    protected BoxCollider2D boxCol;
 
     protected virtual void ComponentInit()
     {
-        sprRndr = GetComponent<SpriteRenderer>();
-        rbody = GetComponent<Rigidbody2D>();
-        cirCol = GetComponent<CircleCollider2D>();
+        boxCol = GetComponent<BoxCollider2D>();
     }
 
 
