@@ -63,10 +63,11 @@ public abstract class Entity<T> : Root where T: EntityProp
 
 
     // ============================== COMPONENTS ==============================
-    protected SpriteRenderer sprRndr;
-    protected Rigidbody2D rbody;
-    protected CircleCollider2D cirCol;
+    public SpriteRenderer sprRndr { get; private set; }
+    public Rigidbody2D rbody { get; private set; }
+    public CircleCollider2D cirCol { get; private set; }
 
+    // No need to call
     protected override void ComponentInit()
     {
         base.ComponentInit();
@@ -81,14 +82,13 @@ public abstract class Entity<T> : Root where T: EntityProp
 
     // ============================== MAIN PROPERTIES AND METHODS ==============================
     public T entityProp;
+    public abstract void PropertyInit();
     public string parentPath { get { return entityProp.parentPath; } }
     public Transform parentT { get { return transform.Find(parentPath); } }
 
     /*public T entityProp<T>(T entityProp) where T:  notnull, EntityProp { return entityProp; }*/
 
 
-    public enum EntityType { Unit, Structure, Item }
-    public abstract EntityType entityType { get; }
     [SerializeField] public string entityNickname;
 
     public string nickname

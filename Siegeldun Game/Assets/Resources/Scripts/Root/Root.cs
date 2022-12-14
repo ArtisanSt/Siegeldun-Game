@@ -54,11 +54,11 @@ public abstract class Root : MonoBehaviour
 
 
     // ============================== COMPONENTS ==============================
-    protected BoxCollider2D boxCol;
+    public BoxCollider2D boxColl { get; private set; }
 
     protected virtual void ComponentInit()
     {
-        boxCol = GetComponent<BoxCollider2D>();
+        boxColl = GetComponent<BoxCollider2D>();
     }
 
 

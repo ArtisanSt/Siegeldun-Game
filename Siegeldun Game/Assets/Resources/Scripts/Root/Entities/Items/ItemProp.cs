@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Entity/Item")]
-public class ItemProp : EntityProp
+public abstract class ItemProp : EntityProp
 {
+    // ============================== MAIN PROPERTIES AND METHODS ==============================
+    public override EntityType entityType { get { return EntityType.Item; } }
+
+    public new enum EntitySubType { Weapon }
+    public abstract EntitySubType entitySubType { get; }
+
+
     public override string parentPath
     {
         get

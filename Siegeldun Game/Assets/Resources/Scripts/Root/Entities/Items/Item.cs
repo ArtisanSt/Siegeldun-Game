@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : Entity<ItemProp>
+public abstract class Item<N> : Entity<N> where N: ItemProp
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -64,5 +64,11 @@ public class Item : Entity<ItemProp>
 
 
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    public override EntityType entityType { get { return EntityType.Item; } }
+    //public MovementProp movementProp { get; private set; }
+    public override void PropertyInit()
+    {
+        if (entityProp == null) return;
+
+        //movementProp = entityProp.movementProp;
+    }
 }

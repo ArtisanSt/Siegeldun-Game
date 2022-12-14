@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Unit", menuName = "Entity/Unit")]
-public class UnitProp : EntityProp
+public abstract class UnitProp : EntityProp
 {
+    // ============================== MAIN PROPERTIES AND METHODS ==============================
+    public override EntityType entityType { get { return EntityType.Unit; } }
+
+    public new enum EntitySubType { Human }
+    public abstract EntitySubType entitySubType { get; }
+
+
     public override string parentPath
     {
         get
@@ -12,4 +18,8 @@ public class UnitProp : EntityProp
             return $"{base.parentPath}/Units";
         }
     }
+
+    public MovementProp movementProp;
+    public BattleProp battleProp;
+    public StatusProp statusProp;
 }

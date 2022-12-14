@@ -56,7 +56,10 @@ Root
 		- Item.cs (Monobehaviour) {SO : ItemProp.cs}
 		
 		+ Weapons
-		+ Potions
+		+ Gears
+		+ Accessories
+		+ Potions {IConsumable}
+		+ Foods {IConsumable}
 		+ Keys
 		+ Others
 

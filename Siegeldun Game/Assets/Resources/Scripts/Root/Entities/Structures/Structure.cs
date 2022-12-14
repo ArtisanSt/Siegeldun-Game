@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Structure : Entity<StructureProp>
+public abstract class Structure<N> : Entity<StructureProp> where N: StructureProp
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -64,5 +64,11 @@ public class Structure : Entity<StructureProp>
 
 
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    public override EntityType entityType { get { return EntityType.Structure; } }
+    //public MovementProp movementProp { get; private set; }
+    public override void PropertyInit()
+    {
+        if (entityProp == null) return;
+
+        //movementProp = entityProp.movementProp;
+    }
 }

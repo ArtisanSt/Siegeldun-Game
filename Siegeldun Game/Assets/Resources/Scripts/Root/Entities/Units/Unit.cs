@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CapsuleCollider2D))]
+
 [RequireComponent(typeof(MovementSystem))]
 [RequireComponent(typeof(BattleSystem))]
 [RequireComponent(typeof(StatusSystem))]
-public class Unit : Entity<UnitProp>
+public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable where N: UnitProp
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -18,6 +20,7 @@ public class Unit : Entity<UnitProp>
     protected override void Start()
     {
         base.Start();
+        PropertyInit();
     }
 
     protected override void Update()
@@ -60,6 +63,7 @@ public class Unit : Entity<UnitProp>
 
 
     // ============================== COMPONENTS ==============================
+    // No need to call
     protected override void ComponentInit()
     {
         base.ComponentInit();
@@ -67,5 +71,21 @@ public class Unit : Entity<UnitProp>
 
 
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    public override EntityType entityType { get { return EntityType.Unit; } }
+    public CapsuleCollider2D capColl { get; private set; }
+
+    public MovementProp movementProp { get; private set; }
+    public BattleProp battleProp { get; private set; }
+    public StatusProp statusProp { get; private set; }
+
+    public override void PropertyInit()
+    {
+        if (entityProp == null) return;
+        capColl = GetComponent<CapsuleCollider2D>();
+
+        movementProp = entityProp.movementProp;
+        battleProp = entityProp.battleProp;
+        statusProp = entityProp.statusProp;
+    }
+
+
 }
