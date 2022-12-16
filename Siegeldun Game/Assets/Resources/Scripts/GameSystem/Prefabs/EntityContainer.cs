@@ -2,50 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityContainer : MonoBehaviour
+public class EntityContainer : SettingsSystem<EntityContainer>
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
 
     }
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
 
     }
 
-    protected virtual void Update()
+    protected override void LateUpdate()
     {
-
-    }
-
-    protected virtual void FixedUpdate()
-    {
-
-    }
-
-    protected virtual void LateUpdate()
-    {
+        base.LateUpdate();
 
     }
 
     // When turned disabled
-    protected virtual void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
 
     }
 
     // When turned enabled
-    protected virtual void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
 
     }
 
     // When scene ends
-    protected virtual void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
 
     }
 
@@ -55,7 +61,7 @@ public class EntityContainer : MonoBehaviour
     [SerializeField] public int entityInstanceCap;
     public bool ignoreCap; // Debugging
 
-    public interface IRowProperty { }
+    [SerializeField] public GameObject groundG;
 
     [System.Serializable]
     public abstract class RowProperty<N, T>

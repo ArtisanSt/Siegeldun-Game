@@ -103,6 +103,8 @@ public class Controller : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         bool jump = Input.GetButtonDown("Jump");
         bool climb = Input.GetButtonDown("Climb");
+        bool dash = Input.GetButtonDown("Dash");
+        bool fly = Input.GetButton("Jump");
 
         if (Input.GetButtonDown("Crouch"))
         {
@@ -112,7 +114,7 @@ public class Controller : MonoBehaviour
                 crouch = !crouch;
         }
 
-        movementSystem.Receiver(horizontal, jump, climb, crouch);
+        movementSystem.Receiver(horizontal, jump, fly, climb, dash, crouch);
     }
 
     public void PlayerBattle()
@@ -120,7 +122,6 @@ public class Controller : MonoBehaviour
         if (battleSystem == null) return;
 
         bool attack = Input.GetButtonDown("Attack");
-        bool dash = Input.GetButtonDown("Dash");
         bool ability = Input.GetButtonDown("Ability");
         bool reload = Input.GetButtonDown("Reload");
 

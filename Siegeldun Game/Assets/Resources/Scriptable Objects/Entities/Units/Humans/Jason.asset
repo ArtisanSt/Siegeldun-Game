@@ -17,10 +17,7 @@ MonoBehaviour:
   entityId: 
   movementProp:
     runSpeed: 5
-    jumpForce: 5
-    groundLayer:
-      serializedVersion: 2
-      m_Bits: 64
+    jumpForce: 17
     passiveAbilities:
       doubleJump: 0
       canCrouch: 0

@@ -24,7 +24,7 @@ public class MovementSystem : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        
+
     }
 
     protected virtual void LateUpdate()
@@ -63,18 +63,29 @@ public class MovementSystem : MonoBehaviour
     protected MovementProp movementProp;
     protected IMoveable iMoveable;
     public bool allowMovement = false;
-    private bool isAlive { get { return GetComponent<StatusSystem>().isAlive; } }
+    private bool isAlive { get { return GetComponent<StatusSystem>() ? GetComponent<StatusSystem>().isAlive : false; } } // Updates whenever is called
 
-    private BoxCollider2D boxColl;
-    private CapsuleCollider2D capColl;
     private Rigidbody2D rbody;
-    private Collider2D ground;
     private LayerMask groundLayer;
-    private bool groundTriggered = false;
-    private bool onGround = false;
+    private LayerMask jumpableLayers;
+
+    [SerializeField] private Transform groundRaycastT;
+    [SerializeField] private float mercyJumpDistance = 0f;
+    [SerializeField] private float allowedJumpRatio = 0f; // Allowed Jump will always be a fraction of mercy jump distance
+    private float allowedJumpDistance { get { return allowedJumpRatio * mercyJumpDistance; } }
+    
+    private bool mercyJump;
+    private int[] jumpCount; // {Current Jump Count, Max Jump Count}
+
 
 
     private Vector2 totalSpeed = new Vector2();
+
+    protected virtual void ComponentInit()
+    {
+        // Component Init
+        rbody = iMoveable.rbody;
+    }
 
 
     protected virtual void PropertyInit()
@@ -84,15 +95,21 @@ public class MovementSystem : MonoBehaviour
         if (iMoveable == null) return;
 
         movementProp = iMoveable.movementProp;
-        if (movementProp == null) return;
+        /*if (movementProp == null) return;*/
 
-        allowMovement = (movementProp != null);
-        boxColl = iMoveable.boxColl;
-        capColl = iMoveable.capColl;
-        rbody = iMoveable.rbody;
-        GameObject groundG = GameObject.Find("Grid/Ground");
-        ground = groundG.GetComponent<CompositeCollider2D>();
-        groundLayer = groundG.layer;
+        /*allowMovement = (movementProp != null);*/
+        allowMovement = true;
+
+        ComponentInit();
+
+        // Jump Settings
+        int curJumpCount = (movementProp.passiveAbilities.doubleJump) ? 2 : 1;
+        jumpCount = new int[2] { curJumpCount, curJumpCount };
+
+        groundRaycastT = transform.GetChild("RaycastGround");
+
+        groundLayer = iMoveable.groundLayer;
+        jumpableLayers = iMoveable.jumpableLayers;
 
         totalSpeed = new Vector2(0,0);
     }
@@ -100,17 +117,21 @@ public class MovementSystem : MonoBehaviour
     // Controller Shared
     private float horizontal;
     private bool jump;
+    private bool fly;
     private bool climb;
+    private bool dash;
     private bool crouch;
 
     // Communicates with other components
-    public void Receiver(float horizontal, bool jump, bool climb, bool crouch)
+    public void Receiver(float horizontal, bool jump, bool fly, bool climb, bool dash, bool crouch)
     {
         if (!(isAlive && allowMovement)) return;
 
         this.horizontal = horizontal;
         this.jump = jump;
+        this.fly = fly;
         this.climb = climb;
+        this.dash = dash;
         this.crouch = crouch;
     }
 
@@ -121,42 +142,45 @@ public class MovementSystem : MonoBehaviour
             totalSpeed.Set(0, 0);
         }
 
+        // Jump Restrictions
+        bool executeJump = JumpExecution();
+
+
         totalSpeed.Set((crouch) ? movementProp.mvSpeed[0] : movementProp.mvSpeed[1], movementProp.jumpForce);
         float freeFalling = (Mathf.Abs(rbody.velocity.y) < 0.001f) ? 0f : rbody.velocity.y;
-        onGround = capColl.IsTouchingLayers(groundLayer);
-
-        totalSpeed.Set(horizontal * totalSpeed.x, (onGround && jump && groundTriggered) ? totalSpeed.y : freeFalling);
+        totalSpeed.Set(horizontal * totalSpeed.x, (executeJump) ? totalSpeed.y : freeFalling);
         rbody.velocity = totalSpeed;
-
-        groundTriggered = (groundTriggered) ? !(onGround && jump) : groundTriggered ;
-
-        Debug.Log(onGround);
-        Debug.Log(groundG.layer);
-        Debug.Log(groundTriggered);
-
-
-        /*totalSpeed.Set(mvSpeed + TotalBoost("MVSpeed"), jumpForce + TotalBoost("JumpHeight"));
-
-        // Horizontal Movement
-        float slowDown = (Mathf.Abs(dirXFinal * slowDownConst) > 0.001f) ? dirXFinal * slowDownConst : 0;
-        dirXFinal = (!isAttacking && !isHurting && !isDoingAbility) ? dirXFacing : slowDown; // Front movement with a slowdown effect when attacking
-        runVelocity = (isAlive) ? inProximity * dirXFinal * totalSpeed.x + rcvKbDisplacement : slowDown;
-        runVelocity = (doMoveX) ? runVelocity : 0;
-
-        // Vertical Movement
-        if ((capColl.IsTouchingLayers(groundLayer) || capColl.IsTouchingLayers(enemyLayer)) && rBody.velocity.y == 0 && !isGrounded) StartCoroutine(GroundCheckAlpha());
-        float freeFalling = (Mathf.Abs(rBody.velocity.y) < 0.001f) ? 0f : rBody.velocity.y;
-        dirYFinal = (allowJump && isGrounded) ? jumpForce : freeFalling;
-        jumpVelocity = (isAlive) ? dirYFinal : freeFalling;
-        jumpVelocity = (doMoveY) ? jumpVelocity : 0;
-
-        rBody.velocity = new Vector2(runVelocity, jumpVelocity);
-        deadOnGround = !isAlive && (rBody.velocity == new Vector2(0, 0)) && isGrounded;*/
     }
 
-    void OnTriggerEnter2D(Collider2D coll)
+    private bool JumpExecution()
     {
-        if (coll == ground)
-            groundTriggered = true;
+        RaycastHit2D rayHit = Physics2D.Raycast(groundRaycastT.position, -Vector2.up, mercyJumpDistance, jumpableLayers);
+        float rayDistance = (rayHit.collider != null) ? groundRaycastT.position.y - rayHit.point.y : 2 * mercyJumpDistance;
+
+        // Jump Count Reset
+        if (rayDistance <= allowedJumpDistance && totalSpeed.y <= 0 && jumpCount[0] != jumpCount[1])
+            jumpCount[0] = jumpCount[1];
+
+        System.Func<float, bool> distanceRestriction = jumpDistance => rayDistance <= jumpDistance && totalSpeed.y <= 0;
+        bool jumpRestriction = distanceRestriction(allowedJumpDistance) || jumpCount[0] + jumpCount[1] == 3;
+        bool executeJump = jumpCount[0] > 0 && jumpRestriction && (jump || mercyJump);
+
+        if (executeJump)
+        {
+            jumpCount[0]--;
+            mercyJump = false;
+        }
+        else if (!mercyJump) mercyJump = (jump && distanceRestriction(mercyJumpDistance)); // Checks if the player pressed jumped n seconds early
+        return executeJump;
+    }
+
+    void OnDrawGizmos()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(groundRaycastT.position, new Vector2(groundRaycastT.position.x, groundRaycastT.position.y - mercyJumpDistance));
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(groundRaycastT.position, new Vector2(groundRaycastT.position.x, groundRaycastT.position.y - allowedJumpDistance));
     }
 }

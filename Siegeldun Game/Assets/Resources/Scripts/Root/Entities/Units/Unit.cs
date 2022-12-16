@@ -87,5 +87,8 @@ public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable w
         statusProp = entityProp.statusProp;
     }
 
-
+    [SerializeField] private LayerMask _groundLayer;
+    public LayerMask groundLayer { get { return _groundLayer; } }
+    [SerializeField] private LayerMask _jumpableLayers;
+    public LayerMask jumpableLayers { get { return _jumpableLayers; } }
 }
