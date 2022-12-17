@@ -125,7 +125,25 @@ public static class FloatExtensions
 
 public static class StringExtensions
 {
+    public static string NameToTitle(this string fieldName)
+    {
+        System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(@"
+                (?<=[A-Z])(?=[A-Z][a-z]) |
+                 (?<=[^A-Z])(?=[A-Z]) |
+                 (?<=[A-Za-z])(?=[^A-Za-z])", System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace);
 
+        return r.Replace(fieldName, " ");
+    }
+
+    public static string TypeToTitle(this System.Type type)
+    {
+        return type.Name.NameToTitle();
+    }
+
+    public static string FieldToTitle(this System.Reflection.FieldInfo fieldInfo)
+    {
+        return fieldInfo.Name.NameToTitle();
+    }
 }
 
 public static class ArrayExtensions
@@ -148,5 +166,14 @@ public static class ArrayExtensions
 
 public static class ListExtensions
 {
-
+    public static List<T> AddRange<T>(this List<T> target, params List<T>[] adds) where T: class
+    {
+        foreach (List<T> add in adds)
+        {
+            target.AddRange(add);
+        }
+        return target;
+    }
 }
+
+

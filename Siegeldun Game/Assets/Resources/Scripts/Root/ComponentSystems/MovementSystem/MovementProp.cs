@@ -7,27 +7,29 @@ using UnityEngine;
 public struct MovementProp
 {
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    [SerializeField] public float runSpeed;
-    [SerializeField] public float jumpForce;
+    public float runSpeed;
+    public float jumpForce;
     public const float crouchMultiplier = 2 / 3;
     public Vector2 mvSpeed { get { return new Vector2(runSpeed * crouchMultiplier, runSpeed); } }
 
     [System.Serializable]
-    public struct PassiveAbilities
+    public class PassiveAbilities
     {
-        public bool doubleJump;
-        public bool fly;
-        public float flyTime;
+        public Effects doubleJump;
+        public Effects fly;
 
-        public List<string> Get
+        public List<Effects> Get
         {
             get
             {
                 return (from field in typeof(PassiveAbilities).GetFields()
-                        where field.FieldType == typeof(bool)
-                        select field.Name).ToList();
+                        where (bool)typeof(Effects).GetField("allow").GetValue(field.GetValue(this))
+                        select (Effects)field.GetValue(this)).ToList();
             }
         }
+
     }
-    [SerializeField] public PassiveAbilities passiveAbilities;
+
+
+    public PassiveAbilities passiveAbilities;
 }

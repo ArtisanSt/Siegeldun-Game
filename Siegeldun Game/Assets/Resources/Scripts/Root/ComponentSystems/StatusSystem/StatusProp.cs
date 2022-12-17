@@ -1,17 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
-public class StatusProp
+public struct StatusProp
 {
     // ============================== MAIN PROPERTIES AND METHODS ==============================
     [System.Serializable]
-    public struct PassiveAbilities
+    public class PassiveAbilities
     {
-        public bool hpRegen;
-        public bool spRegen;
+        public Effects hpRegen;
+        public Effects spRegen;
+
+        public List<Effects> Get
+        {
+            get
+            {
+                return (from field in typeof(PassiveAbilities).GetFields()
+                        where (bool)typeof(Effects).GetField("allow").GetValue(field.GetValue(this))
+                        select (Effects)field.GetValue(this)).ToList();
+            }
+        }
     }
+
     public PassiveAbilities passiveAbilities;
 
 }

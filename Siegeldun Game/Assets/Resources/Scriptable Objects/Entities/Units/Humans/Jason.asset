@@ -19,12 +19,30 @@ MonoBehaviour:
     runSpeed: 5
     jumpForce: 17
     passiveAbilities:
-      doubleJump: 0
-      canCrouch: 0
-  battleProp:
-    passiveAbilities:
-      rage: 0
+      doubleJump:
+        name: Double Jump
+        allow: 1
+        time: 0
+        value: 0
+        count: 0
+      fly:
+        name: Fly
+        allow: 1
+        time: 2
+        value: 0
+        count: 0
+  battleProp: {}
   statusProp:
     passiveAbilities:
-      hpRegen: 0
-      spRegen: 0
+      hpRegen:
+        name: HP Regen
+        allow: 1
+        time: 0
+        value: 0
+        count: 0
+      spRegen:
+        name: SP Regen
+        allow: 1
+        time: 0
+        value: 0
+        count: 0

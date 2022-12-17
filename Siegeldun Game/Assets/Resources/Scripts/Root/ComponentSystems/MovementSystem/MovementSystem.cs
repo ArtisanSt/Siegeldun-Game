@@ -60,12 +60,14 @@ public class MovementSystem : MonoBehaviour
 
 
     // ============================== OBJECT PROPERTIES AND METHODS ==============================
+    protected IMoveable iMoveable { get { return GetComponent<IMoveable>(); } }
     protected MovementProp movementProp;
-    protected IMoveable iMoveable;
-    public bool allowMovement = false;
     private bool isAlive { get { return GetComponent<StatusSystem>() ? GetComponent<StatusSystem>().isAlive : false; } } // Updates whenever is called
 
     private Rigidbody2D rbody;
+
+    public bool allowMovement = false;
+
     private LayerMask groundLayer;
     private LayerMask jumpableLayers;
 
@@ -76,8 +78,6 @@ public class MovementSystem : MonoBehaviour
     
     private bool mercyJump;
     private int[] jumpCount; // {Current Jump Count, Max Jump Count}
-
-
 
     private Vector2 totalSpeed = new Vector2();
 
@@ -90,20 +90,19 @@ public class MovementSystem : MonoBehaviour
 
     protected virtual void PropertyInit()
     {
-        allowMovement = false;
-        iMoveable = GetComponent<IMoveable>();
-        if (iMoveable == null) return;
+        allowMovement = iMoveable != null; // Temporary
+
+        if (iMoveable is null) return;
 
         movementProp = iMoveable.movementProp;
         /*if (movementProp == null) return;*/
 
         /*allowMovement = (movementProp != null);*/
-        allowMovement = true;
 
         ComponentInit();
 
         // Jump Settings
-        int curJumpCount = (movementProp.passiveAbilities.doubleJump) ? 2 : 1;
+        int curJumpCount = (movementProp.passiveAbilities.doubleJump.allow) ? 2 : 1;
         jumpCount = new int[2] { curJumpCount, curJumpCount };
 
         groundRaycastT = transform.GetChild("RaycastGround");
@@ -137,9 +136,12 @@ public class MovementSystem : MonoBehaviour
 
     protected void Movement()
     {
+        allowMovement = true; // Movement Restrictions are altered by effects such as root, stun, sleep
+
         if (!(isAlive && allowMovement))
         {
             totalSpeed.Set(0, 0);
+            return;
         }
 
         // Jump Restrictions
@@ -154,6 +156,8 @@ public class MovementSystem : MonoBehaviour
 
     private bool JumpExecution()
     {
+        if (!(isAlive && allowMovement)) return false;
+
         RaycastHit2D rayHit = Physics2D.Raycast(groundRaycastT.position, -Vector2.up, mercyJumpDistance, jumpableLayers);
         float rayDistance = (rayHit.collider != null) ? groundRaycastT.position.y - rayHit.point.y : 2 * mercyJumpDistance;
 

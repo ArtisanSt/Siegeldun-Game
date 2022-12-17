@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//[CustomEditor(typeof(MbCSample))]
 public class EditorMbCSample : EditorBase<ScriptableObject, SoCSample>
 {
     /*
