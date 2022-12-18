@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(StatusSystem))]
-public class MovementSystem : MonoBehaviour
+[RequireComponent(typeof(IMoveable))]
+public class MovementSystem : MonoBehaviour, IControllable
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -19,16 +19,20 @@ public class MovementSystem : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (paused) return;
+
         Movement();
     }
 
     protected virtual void FixedUpdate()
     {
+        if (paused) return;
 
     }
 
     protected virtual void LateUpdate()
     {
+        if (paused) return;
 
     }
 
@@ -51,27 +55,133 @@ public class MovementSystem : MonoBehaviour
     }
 
 
-    // ============================== COMPONENTS ==============================
-    protected virtual void ComponentChecker()
+    // ============================== SYSTEM PROPERTIES AND METHODS ==============================
+    // Checks if game is paused
+    public bool paused
     {
+        get
+        {
+            return false;
+        }
+    }
 
+    private LayerMask groundLayer;
 
+    private void SystemInit()
+    {
+        groundLayer = iMoveable.groundLayer; // Change to get to system
     }
 
 
-    // ============================== OBJECT PROPERTIES AND METHODS ==============================
-    protected IMoveable iMoveable { get { return GetComponent<IMoveable>(); } }
-    protected MovementProp movementProp;
-    private bool isAlive { get { return GetComponent<StatusSystem>() ? GetComponent<StatusSystem>().isAlive : false; } } // Updates whenever is called
+    // ============================== COMPONENTS ==============================
+    private IEffectable iEffectable;
+    private IMoveable iMoveable;
+
+    private MovementProp movementProp;
 
     private Rigidbody2D rbody;
 
-    public bool allowMovement = false;
+    private Transform groundRaycastT;
 
-    private LayerMask groundLayer;
     private LayerMask jumpableLayers;
 
-    [SerializeField] private Transform groundRaycastT;
+    private void ComponentInit()
+    {
+        iEffectable = GetComponent<IEffectable>();
+
+        movementProp = iMoveable.movementProp;
+
+        rbody = iMoveable.rbody;
+        jumpableLayers = iMoveable.jumpableLayers;
+
+        groundRaycastT = transform.GetChild("RaycastGround");
+        Debug.Log(groundRaycastT);
+    }
+
+    private void MainRestriction()
+    {
+        iMoveable = GetComponent<IMoveable>();
+    }
+
+
+    // ============================== INITIALIZATION ==============================
+
+    private void PropertyInit()
+    {
+        MainRestriction();
+
+        if (!allowMovement) return;
+        ComponentInit();
+        SystemInit();
+
+        // Overall 
+        totalSpeed = new Vector2(0, 0);
+
+        // Jump Settings
+        int curJumpCount = (movementProp.passiveAbilities.doubleJump.allow) ? 2 : 1;
+        jumpCount = new int[2] { curJumpCount, curJumpCount };
+    }
+
+
+    // ============================== ICONTROLLABLE ==============================
+    private float horizontal;
+    private bool jump;
+    private bool fly;
+    private float vertical;
+    private bool dash;
+    private bool crouch;
+
+    // Communicates with other components
+    public void Receiver(Dictionary<string, object> controls)
+    {
+        if (!allowMovement) return;
+
+        this.horizontal = (float)controls[nameof(horizontal)];
+        this.jump = (bool)controls[nameof(jump)];
+        this.fly = (bool)controls[nameof(fly)];
+        this.vertical = (float)controls[nameof(vertical)];
+        this.dash = (bool)controls[nameof(dash)];
+        this.crouch = (bool)controls[nameof(crouch)];
+    }
+
+
+    // ============================== OVERALL PROPERTIES AND METHODS ==============================
+    // Runtime Changing
+    // Checks for default movement, effect restrictions
+    public bool allowMovement
+    {
+        get
+        {
+            return iMoveable != null;
+        }
+    }
+
+    private Vector2 totalSpeed = new Vector2();
+
+    private void Movement()
+    {
+        totalSpeed.Set(0, 0);
+        if (!allowMovement) return;
+        totalSpeed.Set((crouch) ? movementProp.mvSpeed[0] : movementProp.mvSpeed[1], movementProp.jumpForce);
+
+        // Jump Restrictions
+        bool executeJump = JumpExecution();
+
+        // Overall Velocity Calculation
+        float freeFalling = (Mathf.Abs(rbody.velocity.y) < 0.001f) ? 0f : rbody.velocity.y;
+        totalSpeed.Set(horizontal * totalSpeed.x, (executeJump) ? totalSpeed.y : freeFalling);
+        rbody.velocity = totalSpeed;
+    }
+
+
+    // ------------------------------ HORIZONTAL PROPERTIES AND METHODS ------------------------------
+    private bool HorizontalMovement()
+    {
+        return false;
+    }
+
+
+    // ------------------------------ VERTICAL PROPERTIES AND METHODS ------------------------------
     [SerializeField] private float mercyJumpDistance = 0f;
     [SerializeField] private float allowedJumpRatio = 0f; // Allowed Jump will always be a fraction of mercy jump distance
     private float allowedJumpDistance { get { return allowedJumpRatio * mercyJumpDistance; } }
@@ -79,84 +189,9 @@ public class MovementSystem : MonoBehaviour
     private bool mercyJump;
     private int[] jumpCount; // {Current Jump Count, Max Jump Count}
 
-    private Vector2 totalSpeed = new Vector2();
-
-    protected virtual void ComponentInit()
-    {
-        // Component Init
-        rbody = iMoveable.rbody;
-    }
-
-
-    protected virtual void PropertyInit()
-    {
-        allowMovement = iMoveable != null; // Temporary
-
-        if (iMoveable is null) return;
-
-        movementProp = iMoveable.movementProp;
-        /*if (movementProp == null) return;*/
-
-        /*allowMovement = (movementProp != null);*/
-
-        ComponentInit();
-
-        // Jump Settings
-        int curJumpCount = (movementProp.passiveAbilities.doubleJump.allow) ? 2 : 1;
-        jumpCount = new int[2] { curJumpCount, curJumpCount };
-
-        groundRaycastT = transform.GetChild("RaycastGround");
-
-        groundLayer = iMoveable.groundLayer;
-        jumpableLayers = iMoveable.jumpableLayers;
-
-        totalSpeed = new Vector2(0,0);
-    }
-
-    // Controller Shared
-    private float horizontal;
-    private bool jump;
-    private bool fly;
-    private bool climb;
-    private bool dash;
-    private bool crouch;
-
-    // Communicates with other components
-    public void Receiver(float horizontal, bool jump, bool fly, bool climb, bool dash, bool crouch)
-    {
-        if (!(isAlive && allowMovement)) return;
-
-        this.horizontal = horizontal;
-        this.jump = jump;
-        this.fly = fly;
-        this.climb = climb;
-        this.dash = dash;
-        this.crouch = crouch;
-    }
-
-    protected void Movement()
-    {
-        allowMovement = true; // Movement Restrictions are altered by effects such as root, stun, sleep
-
-        if (!(isAlive && allowMovement))
-        {
-            totalSpeed.Set(0, 0);
-            return;
-        }
-
-        // Jump Restrictions
-        bool executeJump = JumpExecution();
-
-
-        totalSpeed.Set((crouch) ? movementProp.mvSpeed[0] : movementProp.mvSpeed[1], movementProp.jumpForce);
-        float freeFalling = (Mathf.Abs(rbody.velocity.y) < 0.001f) ? 0f : rbody.velocity.y;
-        totalSpeed.Set(horizontal * totalSpeed.x, (executeJump) ? totalSpeed.y : freeFalling);
-        rbody.velocity = totalSpeed;
-    }
-
     private bool JumpExecution()
     {
-        if (!(isAlive && allowMovement)) return false;
+        if (!allowMovement) return false;
 
         RaycastHit2D rayHit = Physics2D.Raycast(groundRaycastT.position, -Vector2.up, mercyJumpDistance, jumpableLayers);
         float rayDistance = (rayHit.collider != null) ? groundRaycastT.position.y - rayHit.point.y : 2 * mercyJumpDistance;
@@ -178,8 +213,22 @@ public class MovementSystem : MonoBehaviour
         return executeJump;
     }
 
+    private bool FlyExecution()
+    {
+        return false;
+    }
+
+    private bool FloatExecution()
+    {
+        return false;
+    }
+
+
+    // ============================== GIZMOS ==============================
     void OnDrawGizmos()
     {
+        if (!allowMovement) return;
+
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.red;
         Gizmos.DrawLine(groundRaycastT.position, new Vector2(groundRaycastT.position.x, groundRaycastT.position.y - mercyJumpDistance));

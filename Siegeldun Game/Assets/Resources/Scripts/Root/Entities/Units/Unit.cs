@@ -67,6 +67,7 @@ public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable w
     protected override void ComponentInit()
     {
         base.ComponentInit();
+        capColl = GetComponent<CapsuleCollider2D>();
     }
 
 
@@ -80,7 +81,6 @@ public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable w
     public override void PropertyInit()
     {
         if (entityProp == null) return;
-        capColl = GetComponent<CapsuleCollider2D>();
 
         movementProp = entityProp.movementProp;
         battleProp = entityProp.battleProp;

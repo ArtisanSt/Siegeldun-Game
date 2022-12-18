@@ -11,13 +11,13 @@ public struct BattleProp
     public class PassiveAbilities
     {
 
-        public List<Effects> Get
+        public List<Effect> Get
         {
             get
             {
                 return (from field in typeof(PassiveAbilities).GetFields()
-                        where (bool)typeof(Effects).GetField("allow").GetValue(field.GetValue(this))
-                        select (Effects)field.GetValue(this)).ToList();
+                        where (bool)typeof(Effect).GetField("allow").GetValue(field.GetValue(this))
+                        select (Effect)field.GetValue(this)).ToList();
             }
         }
     }

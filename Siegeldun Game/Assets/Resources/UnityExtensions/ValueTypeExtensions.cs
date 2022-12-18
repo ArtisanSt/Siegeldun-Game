@@ -89,7 +89,7 @@ public static class IntExtensions
         return Mathf.Min(curValue + addToCurValue, minValue);
     }
 
-    public static float Max(this int curValue, int maxValue, int addToCurValue = 0)
+    public static int Max(this int curValue, int maxValue, int addToCurValue = 0)
     {
         return Mathf.Max(curValue + addToCurValue, maxValue);
     }

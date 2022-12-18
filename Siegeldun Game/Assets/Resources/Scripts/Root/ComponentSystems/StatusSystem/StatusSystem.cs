@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(IStatusable))]
-public class StatusSystem : MonoBehaviour, IEffectable
+public class StatusSystem : MonoBehaviour
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -19,16 +19,19 @@ public class StatusSystem : MonoBehaviour, IEffectable
 
     protected virtual void Update()
     {
+        if (paused) return;
 
     }
 
     protected virtual void FixedUpdate()
     {
+        if (paused) return;
 
     }
 
     protected virtual void LateUpdate()
     {
+        if (paused) return;
 
     }
 
@@ -51,103 +54,61 @@ public class StatusSystem : MonoBehaviour, IEffectable
     }
 
 
-    // ============================== COMPONENTS ==============================
-    protected virtual void ComponentChecker()
+    // ============================== SYSTEM PROPERTIES AND METHODS ==============================
+    // Checks if game is paused
+    public bool paused
     {
-        /*movementSystem = GetComponent<MovementSystem>();*/
+        get
+        {
+            return false;
+        }
+    }
 
+
+    // ============================== COMPONENTS ==============================
+    private IEffectable iEffectable;
+    private IStatusable iStatusable;
+    
+    private StatusProp statusProp;
+
+    private void ComponentInit()
+    {
+        iEffectable = GetComponent<IEffectable>();
+
+        statusProp = iStatusable.statusProp;
+
+    }
+
+    private void MainRestriction()
+    {
+        iStatusable = GetComponent<IStatusable>();
+    }
+
+
+    // ============================== OVERALL PROPERTIES AND METHODS ==============================
+    // Runtime Changing
+    // Checks for default life, effect restrictions
+    public bool isAlive
+    {
+        get
+        {
+            return iStatusable != null;
+        }
     }
 
 
     // ============================== OBJECT PROPERTIES AND METHODS ==============================
-    protected IStatusable iStatusable;
-    protected IMoveable iMoveable;
-    protected IBattleable iBattleable;
-
-    protected StatusProp statusProp;
-    protected MovementProp movementProp;
-    protected BattleProp battleProp;
-    public bool isAlive = true;
-    protected virtual void PropertyInit()
+    private void PropertyInit()
     {
-        iStatusable = GetComponent<IStatusable>();
-        iMoveable = GetComponent<IMoveable>();
-        iBattleable = GetComponent<IBattleable>();
-        if (iStatusable == null) return;
-        statusProp = iStatusable.statusProp;
+        MainRestriction();
 
-        if (iMoveable != null)
-            movementProp = iMoveable.movementProp;
-        if (iBattleable != null)
-            battleProp = iBattleable.battleProp;
-
-        effects = new Dictionary<string, List<Effects>>();
-
-        EffectInit();
+        if (!isAlive) return;
+        ComponentInit();
     }
 
     // Communicates with other components
     public void Receiver()
     {
 
-    }
-
-    public Dictionary<string, List<Effects>> effects;
-
-    private void EffectInit()
-    {
-        List<Effects> temp = new List<Effects>().AddRange(movementProp.passiveAbilities.Get, statusProp.passiveAbilities.Get, battleProp.passiveAbilities.Get);
-        foreach (Effects eff in temp)
-        {
-            AddEffect(eff);
-        }
-    }
-
-    public void AddEffect(Effects effect)
-    {
-        List<Effects> target = FindEffect(effect);
-        if (IsDuplicate(effect, target)) return;
-
-        target.Add(effect);
-
-        if (effect.infinite) return;
-        StartCoroutine(EffectTimer(effect, effect.time));
-
-        if (effect.count > 0) return;
-        StartCoroutine(EffectCounter(effect));
-    }
-
-    private List<Effects> FindEffect(Effects effect)
-    {
-        string effectName = effect.name;
-        if (!effects.ContainsKey(effectName)) effects.Add(effectName, new List<Effects>());
-
-        return effects[effectName];
-    }
-
-    private bool IsDuplicate(Effects effect, List<Effects> target)
-    {
-        foreach (Effects eff in target)
-        {
-            if (eff.id == effect.id) return true;
-        }
-        return false;
-    }
-
-    public void RemoveEffect(Effects effect)
-    {
-        FindEffect(effect).Remove(effect);
-    }
-
-    private IEnumerator EffectTimer(Effects effect, float time)
-    {
-        yield return new WaitForSeconds(time);
-        RemoveEffect(effect);
-    }
-
-    private IEnumerator EffectCounter(Effects effect)
-    {
-        yield return new WaitUntil(() => effect.count == 0);
-        RemoveEffect(effect);
     }
 }

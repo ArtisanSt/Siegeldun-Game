@@ -65,7 +65,7 @@ public abstract class Entity<T> : Root where T: EntityProp
     // ============================== COMPONENTS ==============================
     public SpriteRenderer sprRndr { get; private set; }
     public Rigidbody2D rbody { get; private set; }
-    public CircleCollider2D cirCol { get; private set; }
+    public CircleCollider2D cirColl { get; private set; }
 
     // No need to call
     protected override void ComponentInit()
@@ -74,9 +74,7 @@ public abstract class Entity<T> : Root where T: EntityProp
 
         sprRndr = GetComponent<SpriteRenderer>();
         rbody = GetComponent<Rigidbody2D>();
-        cirCol = GetComponent<CircleCollider2D>();
-
-
+        cirColl = GetComponent<CircleCollider2D>();
     }
 
 

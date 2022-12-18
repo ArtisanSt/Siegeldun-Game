@@ -20,29 +20,65 @@ MonoBehaviour:
     jumpForce: 17
     passiveAbilities:
       doubleJump:
-        name: Double Jump
+        name: 
+        source: {fileID: 0}
+        showOnUI: 0
+        icon: {fileID: 0}
+        valueType: 0
         allow: 1
+        value: 0
+        count: 0
         time: 0
-        value: 0
-        count: 0
+        description: 
+        priorityLevel: 0
+        cancellationType: 0
+        actionOnCancel: 0
+        effectTarget: 0
       fly:
-        name: Fly
+        name: 
+        source: {fileID: 0}
+        showOnUI: 0
+        icon: {fileID: 0}
+        valueType: 0
         allow: 1
-        time: 2
         value: 0
         count: 0
+        time: 2
+        description: 
+        priorityLevel: 0
+        cancellationType: 0
+        actionOnCancel: 0
+        effectTarget: 0
   battleProp: {}
   statusProp:
     passiveAbilities:
       hpRegen:
-        name: HP Regen
+        name: 
+        source: {fileID: 0}
+        showOnUI: 0
+        icon: {fileID: 0}
+        valueType: 0
         allow: 1
-        time: 0
         value: 0
         count: 0
+        time: 0
+        description: 
+        priorityLevel: 0
+        cancellationType: 0
+        actionOnCancel: 0
+        effectTarget: 0
       spRegen:
-        name: SP Regen
+        name: 
+        source: {fileID: 0}
+        showOnUI: 0
+        icon: {fileID: 0}
+        valueType: 0
         allow: 1
-        time: 0
         value: 0
         count: 0
+        time: 0
+        description: 
+        priorityLevel: 0
+        cancellationType: 0
+        actionOnCancel: 0
+        effectTarget: 0

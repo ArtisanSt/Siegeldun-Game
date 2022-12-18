@@ -15,7 +15,7 @@ public class Controller : MonoBehaviour
 
     protected virtual void Start()
     {
-        ComponentChecker();
+        ControllerInit();
     }
 
     protected virtual void Update()
@@ -55,13 +55,15 @@ public class Controller : MonoBehaviour
     // ============================== COMPONENTS ==============================
     protected MovementSystem movementSystem;
     protected BattleSystem battleSystem;
+    protected IControllable iControllable;
     //protected Interactible cirCol;
 
-    protected virtual void ComponentChecker()
-    {
-        movementSystem = GetComponent<MovementSystem>();
-        battleSystem = GetComponent<BattleSystem>();
+    private Dictionary<string, object> controls;
 
+    protected virtual void ControllerInit()
+    {
+        iControllable = GetComponent<IControllable>();
+        controls = new Dictionary<string, object>();
     }
 
 
@@ -74,6 +76,8 @@ public class Controller : MonoBehaviour
 
     public void ControllerTypeIdentifier()
     {
+        if (iControllable == null) return;
+
         switch (controllerType)
         {
             case ControllerType.Player:
@@ -87,6 +91,8 @@ public class Controller : MonoBehaviour
             default:
                 break;
         }
+
+        iControllable.Receiver(controls);
     }
 
     public void ControllerPlayer()
@@ -98,14 +104,6 @@ public class Controller : MonoBehaviour
 
     public void PlayerMovement()
     {
-        if (movementSystem == null) return;
-
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        bool jump = Input.GetButtonDown("Jump");
-        bool climb = Input.GetButtonDown("Climb");
-        bool dash = Input.GetButtonDown("Dash");
-        bool fly = Input.GetButton("Jump");
-
         if (Input.GetButtonDown("Crouch"))
         {
             if (ControllerSystem.crouchOn == ControllerSystem.CrouchOn.Hold)
@@ -114,13 +112,16 @@ public class Controller : MonoBehaviour
                 crouch = !crouch;
         }
 
-        movementSystem.Receiver(horizontal, jump, fly, climb, dash, crouch);
+        controls["horizontal"] = Input.GetAxisRaw("Horizontal");
+        controls["jump"] = Input.GetButtonDown("Jump");
+        controls["vertical"] = Input.GetAxisRaw("Vertical");
+        controls["dash"] = Input.GetButtonDown("Dash");
+        controls["fly"] = Input.GetButtonDown("Jump");
+        controls["crouch"] = crouch;
     }
 
     public void PlayerBattle()
     {
-        if (battleSystem == null) return;
-
         bool attack = Input.GetButtonDown("Attack");
         bool ability = Input.GetButtonDown("Ability");
         bool reload = Input.GetButtonDown("Reload");
@@ -130,8 +131,6 @@ public class Controller : MonoBehaviour
 
     public void PlayerInteract()
     {
-        //if (battleSystem == null) return;
-
         bool interact = Input.GetButtonDown("Interact");
         bool consume = Input.GetButtonDown("Consume");
         bool inventory = Input.GetButtonDown("Inventory");
