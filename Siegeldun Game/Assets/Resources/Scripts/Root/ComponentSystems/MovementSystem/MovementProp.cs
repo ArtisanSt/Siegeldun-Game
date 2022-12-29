@@ -1,35 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
 public struct MovementProp
 {
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    public float runSpeed;
-    public float jumpForce;
-    public const float crouchMultiplier = 2 / 3;
-    public Vector2 mvSpeed { get { return new Vector2(runSpeed * crouchMultiplier, runSpeed); } }
-
     [System.Serializable]
-    public class PassiveAbilities
+    public struct Stats
     {
-        public Effect doubleJump;
-        public Effect fly;
+        /* Vector2
+         * For Base Stats : (x : amount, y : 0f)
+         * For other stats : (x : amount, y : Percent) */
 
-        public List<Effect> Get
-        {
-            get
-            {
-                return (from field in typeof(PassiveAbilities).GetFields()
-                        where (bool)typeof(Effect).GetField("allow").GetValue(field.GetValue(this))
-                        select (Effect)field.GetValue(this)).ToList();
-            }
-        }
-
+        public Vector2 runSpeed; // Raw Run Speed
+        public Vector2 jumpForce; // Raw Jump Force
+        public int jumpCount;
     }
 
+    public List<Stats> stats;
 
-    public PassiveAbilities passiveAbilities;
+    public float crouchMultiplier;
+    public LayerMask jumpableLayers;
 }

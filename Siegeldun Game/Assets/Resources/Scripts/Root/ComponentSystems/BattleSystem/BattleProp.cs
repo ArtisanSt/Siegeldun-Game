@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -8,20 +7,25 @@ public struct BattleProp
 {
     // ============================== MAIN PROPERTIES AND METHODS ==============================
     [System.Serializable]
-    public class PassiveAbilities
+    public struct Stats
     {
+        /* Vector2
+         * For Base Stats : (x : amount, y : 0f)
+         * For other stats : (x : amount, y : Percent) */
 
-        public List<Effect> Get
-        {
-            get
-            {
-                return (from field in typeof(PassiveAbilities).GetFields()
-                        where (bool)typeof(Effect).GetField("allow").GetValue(field.GetValue(this))
-                        select (Effect)field.GetValue(this)).ToList();
-            }
-        }
+        // HP (Health Points)
+        public Vector2 dmg; // Raw damage
+
+        public Vector2 prgDmg; // Piercing Damage [ignores damage resistance]
+        public Vector2 trDmg; // True Damage [ignores damage resistance and shield]
+        public Vector2 ftlDmg; // Fatal Damage [additional damage to instantly kill an enemy]
+
+        public Vector2 atkSpd;
+
+        public float critHit; // Percent
+        public float critCnc; // Percent
     }
 
-    public PassiveAbilities passiveAbilities;
+    public List<Stats> stats;
 
 }

@@ -62,7 +62,7 @@ public class ControllerSystem : SettingsSystem<ControllerSystem>
     public static GameObject player;
 
     public enum CrouchOn { Hold, Toggle }
-    public static CrouchOn crouchOn = CrouchOn.Hold;
+    public CrouchOn crouchOn;
 
     public static void CreatePlayerInstance()
     {

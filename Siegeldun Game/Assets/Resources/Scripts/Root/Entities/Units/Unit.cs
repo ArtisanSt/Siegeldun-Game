@@ -78,6 +78,10 @@ public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable w
     public BattleProp battleProp { get; private set; }
     public StatusProp statusProp { get; private set; }
 
+    public MovementSystem movementSystem { get; private set; }
+    public BattleSystem battleSystem { get; private set; }
+    public StatusSystem statusSystem { get; private set; }
+
     public override void PropertyInit()
     {
         if (entityProp == null) return;
@@ -85,10 +89,13 @@ public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable w
         movementProp = entityProp.movementProp;
         battleProp = entityProp.battleProp;
         statusProp = entityProp.statusProp;
-    }
 
-    [SerializeField] private LayerMask _groundLayer;
-    public LayerMask groundLayer { get { return _groundLayer; } }
-    [SerializeField] private LayerMask _jumpableLayers;
-    public LayerMask jumpableLayers { get { return _jumpableLayers; } }
+        movementSystem = GetComponent<MovementSystem>();
+        battleSystem = GetComponent<BattleSystem>();
+        statusSystem = GetComponent<StatusSystem>();
+
+        movementSystem.Init(movementProp);
+        battleSystem.Init(battleProp);
+        statusSystem.Init(statusProp);
+    }
 }

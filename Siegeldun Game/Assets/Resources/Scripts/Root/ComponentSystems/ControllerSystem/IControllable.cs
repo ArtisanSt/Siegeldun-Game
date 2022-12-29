@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
+
 public interface IControllable
 {
-    public void Receiver(System.Collections.Generic.Dictionary<string, object> controls);
+    public void Receiver(Dictionary<string, object> controls);
 }

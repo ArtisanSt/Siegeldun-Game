@@ -19,6 +19,7 @@ public abstract class UnitProp : EntityProp
         }
     }
 
+    public EffectProp effectProp;
     public MovementProp movementProp;
     public BattleProp battleProp;
     public StatusProp statusProp;

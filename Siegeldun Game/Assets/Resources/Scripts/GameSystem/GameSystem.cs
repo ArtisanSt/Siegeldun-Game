@@ -9,24 +9,57 @@ public class GameSystem : SingletonDontDestroy<GameSystem>
     protected override void Awake()
     {
         base.Awake();
+        Init();
     }
 
-    protected virtual void Start()
+    protected override void Start()
     {
-        /*if (instanceConfigEvent == null) { instanceConfigEvent = new UnityEvent(); }
-        instanceConfigEvent.AddListener(InstanceConfiguration);
-        instanceConfigEvent.Invoke();*/
-
-
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            if (transform.GetChild(i).GetComponent<ISingleton>() != null)
-                transform.GetChild(i).GetComponent<ISingleton>().InstanceConfiguration();
-        }
+        base.Start();
     }
 
     protected override void Update()
     {
         base.Update();
     }
+
+    protected virtual void FixedUpdate()
+    {
+
+    }
+
+    protected virtual void LateUpdate()
+    {
+
+
+    }
+
+    // When turned disabled
+    protected virtual void OnDisable()
+    {
+
+    }
+
+    // When turned enabled
+    protected virtual void OnEnable()
+    {
+
+    }
+
+    // When scene ends
+    protected virtual void OnDestroy()
+    {
+
+    }
+
+
+    // ============================== OBJECT PROPERTIES AND METHODS ==============================
+    private void Init()
+    {
+        paused = false;
+        difficulty = 0;
+    }
+
+    public static bool paused;
+    public static int difficulty;
+    [SerializeField] public LayerMask groundLayer;
 }

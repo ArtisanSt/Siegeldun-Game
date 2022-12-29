@@ -58,22 +58,32 @@ public static class BoolExtensions
 
     public static bool EvaluateAnd(this bool[] values)
     {
-        bool arr = values[0];
-        for (int i = 1; i < values.Length; i++)
+        return values[0].EvaluateAnd(values);
+    }
+
+    public static bool EvaluateAnd(this bool value, params bool[] values)
+    {
+        if (!value) return false; // if first value is false then output is false
+        foreach(bool val in values)
         {
-            arr &= values[i];
+            if (!val) return false;
         }
-        return arr;
+        return true;
     }
 
     public static bool EvaluateOr(this bool[] values)
     {
-        bool arr = values[0];
-        for (int i = 1; i < values.Length; i++)
+        return values[0].EvaluateOr(values);
+    }
+
+    public static bool EvaluateOr(this bool value, params bool[] values)
+    {
+        if (value) return true; // if first value is true then output is true
+        foreach (bool val in values)
         {
-            arr |= values[i];
+            if (val) return true;
         }
-        return arr;
+        return false;
     }
 }
 
@@ -92,6 +102,16 @@ public static class IntExtensions
     public static int Max(this int curValue, int maxValue, int addToCurValue = 0)
     {
         return Mathf.Max(curValue + addToCurValue, maxValue);
+    }
+
+    public static int Positive(this int curValue, int addToCurValue = 0)
+    {
+        return curValue.Max(0, addToCurValue);
+    }
+
+    public static int Negative(this int curValue, int addToCurValue = 0)
+    {
+        return curValue.Min(0, addToCurValue);
     }
 
     public static int ToBin(this int value)
@@ -117,9 +137,24 @@ public static class FloatExtensions
         return Mathf.Max(curValue + addToCurValue, maxValue);
     }
 
+    public static float Positive(this float curValue, float addToCurValue = 0)
+    {
+        return curValue.Max(0f, addToCurValue);
+    }
+
+    public static float Negative(this float curValue, float addToCurValue = 0)
+    {
+        return curValue.Min(0f, addToCurValue);
+    }
+
     public static bool InRange(this float curValue, float minValue, float maxValue)
     {
         return minValue <= curValue && curValue <= maxValue;
+    }
+
+    public static float Floor(this float curValue, float addToCurValue = 0)
+    {
+        return Mathf.Floor(curValue + addToCurValue);
     }
 }
 

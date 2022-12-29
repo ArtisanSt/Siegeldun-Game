@@ -17,6 +17,15 @@ public class SingletonDontDestroy<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
+    protected virtual void Start()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).GetComponent<ISingleton>() != null)
+                transform.GetChild(i).GetComponent<ISingleton>().InstanceConfiguration();
+        }
+    }
+
     protected virtual void Update()
     {
         if (instance == null)

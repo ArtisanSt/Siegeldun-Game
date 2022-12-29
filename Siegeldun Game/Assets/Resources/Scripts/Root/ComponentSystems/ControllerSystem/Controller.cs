@@ -106,7 +106,7 @@ public class Controller : MonoBehaviour
     {
         if (Input.GetButtonDown("Crouch"))
         {
-            if (ControllerSystem.crouchOn == ControllerSystem.CrouchOn.Hold)
+            if (ControllerSystem.instance.crouchOn == ControllerSystem.CrouchOn.Hold)
                 crouch = Input.GetButtonDown("Crouch");
             else
                 crouch = !crouch;

@@ -1,162 +1,193 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EffectData;
 
 
-public class EffectSystem : MonoBehaviour, IEffectable
+public class EffectSystem : UserComponents//, IEffectReceiver, IEffectRunner
 {
     // ============================== UNITY METHODS ==============================
-    // When this script is loaded
-    protected virtual void Awake()
+    // Should be initialized by an entity
+    public void Init(EffectProp effectProp)
     {
-
-    }
-
-    protected virtual void Start()
-    {
+        this.effectProp = effectProp;
         PropertyInit();
     }
 
-    protected virtual void Update()
+    public void Update()
     {
+        if (IsRestricted()) return;
 
     }
 
-    protected virtual void FixedUpdate()
+    public void FixedUpdate()
     {
+        if (IsRestricted()) return;
 
     }
 
-    protected virtual void LateUpdate()
+    public void LateUpdate()
     {
+        if (IsRestricted()) return;
 
     }
 
     // When turned disabled
-    protected virtual void OnDisable()
+    public void OnDisable()
     {
 
     }
 
     // When turned enabled
-    protected virtual void OnEnable()
+    public void OnEnable()
     {
 
     }
 
     // When scene ends
-    protected virtual void OnDestroy()
+    public void OnDestroy()
     {
 
     }
 
 
-    // ============================== COMPONENTS ==============================
-    protected virtual void ComponentChecker()
-    {
-        /*movementSystem = GetComponent<MovementSystem>();*/
+    // ============================== INITIALIZATION ==============================
+    private EffectProp effectProp;
 
+    protected override void PropertyInit()
+    {
+        if (!IsRestricted()) return;
+
+        state = new State();
+        allow = true;
     }
 
 
     // ============================== OBJECT PROPERTIES AND METHODS ==============================
-    protected IStatusable iStatusable;
-    protected IMoveable iMoveable;
-    protected IBattleable iBattleable;
-
-    protected StatusProp statusProp;
-    protected MovementProp movementProp;
-    protected BattleProp battleProp;
-
-    private Dictionary<string, List<Effect>> effectsContainer;
-
-    public Effect Evaluate(Effect.EffectTargets targetEffect)
+    // ------------------------------ EFFECT RESTRICTIONS ------------------------------
+    public struct State
     {
-        List<Effect> effects = effectsContainer[targetEffect.ToString()];
 
-        Effect temp = new Effect(effects[0].effectTarget);
-
-        return temp;
     }
+    public State state { get; private set; }
 
-    protected virtual void PropertyInit()
+
+    // ------------------------------ EFFECT PROPERTIES ------------------------------
+
+
+    // ------------------------------ EFFECT METHODS ------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+
+
+    // ============================== IEffectReceiver ==============================
+    public Dictionary<Effect.Name, Effect> effects { get; private set; }
+    public Dictionary<Effect.Name, int> immunities { get; private set; } //Immunity and count
+
+    public void Receive(List<Effect> receivedEffects)
     {
-        // Components Initiation
-        iStatusable = GetComponent<IStatusable>();
-        iMoveable = GetComponent<IMoveable>();
-        iBattleable = GetComponent<IBattleable>();
-
-        if (iStatusable != null)
-            statusProp = iStatusable.statusProp;
-        if (iMoveable != null)
-            movementProp = iMoveable.movementProp;
-        if (iBattleable != null)
-            battleProp = iBattleable.battleProp;
-
-        // Effects Initiation
-        effectsContainer = new Dictionary<string, List<Effect>>();
-
-        List<Effect> temp = new List<Effect>().AddRange(movementProp.passiveAbilities.Get, statusProp.passiveAbilities.Get, battleProp.passiveAbilities.Get);
-        foreach (Effect eff in temp)
+        foreach (Effect effect in receivedEffects)
         {
-            AddEffect(eff);
+            if (effects.ContainsKey(effect.name))
+            {
+                if ((int)effects[effect.name].sourceType > (int)effect.sourceType) continue;
+                if (this.immunities.ContainsKey(effect.name)) continue;
+                Interrupt(effect.name);
+            }
+
+            Invoke(effect);
         }
     }
 
-    public void AddEffect(Effect effect)
+    private void Interrupt(Effect.Name effectName)
     {
-        List<Effect> target = FindEffect(effect);
-        if (IsDuplicate(effect, target)) return;
-
-        target.Add(effect);
-
-        if (effect.permanent) return;
-        StartCoroutine(EffectTimer(effect, effect.time));
-
-        if (effect.count > 0) return;
-        StartCoroutine(EffectCounter(effect));
+        this.effects[effectName].Interrupt();
+        Remove(this.effects[effectName]);
     }
 
-    private List<Effect> FindEffect(Effect effect)
+    private void Expire(Effect.Name effectName)
     {
-        string effectTarget = effect.target;
-        if (!effectsContainer.ContainsKey(effectTarget)) effectsContainer.Add(effectTarget, new List<Effect>());
-
-        return effectsContainer[effectTarget];
+        this.effects[effectName].Expire(); ;
+        Remove(this.effects[effectName]);
     }
 
-    private bool IsDuplicate(Effect effect, List<Effect> target)
+    private void Remove(Effect effect)
     {
-        foreach (Effect eff in target)
+        this.immunities[effect.name] -= 1;
+        if (this.immunities[effect.name] == 0) this.immunities.Remove(effect.name);
+        this.effects.Remove(effect.name);
+    }
+
+    private void Invoke(Effect effect)
+    {
+        this.effects.Add(effect.name, effect);
+        this.effects[effect.name].Init();
+
+        foreach (Effect.Name immunity in effect.immunities)
         {
-            if (eff.id == effect.id) return true;
+            if (this.immunities.ContainsKey(immunity))
+                this.immunities[immunity] += 1;
+            else
+                this.immunities[immunity] = 1;
         }
-        return false;
+
+        ActionRunner(effect, Action.InvocationType.OnInvoke);
+        IEnumerator effectTimer = StartCoroutine(EffectTimer(effect));
+        IEnumerator effectCounter = StartCoroutine(EffectCounter(effect));
+        this.effects[effect.name].AddCoroutine(effectTimer, effectCounter);
     }
 
-    private bool EffectEvaluation(Effect effect, List<Effect> target)
+    private void ActionRunner(Effect effect, Action.InvocationType invocationType)
     {
-        bool output = false;
+        foreach (Action action in effect.actions)
+        {
+            if (action.invocationType != invocationType) continue;
 
-        target.Evaluate();
+            object value;
+            switch (action.valueType)
+            {
+                case Action.ValueType.Boolean;
+                    value = action.boolean;
+                    break;
 
-        return output;
+                case Action.ValueType.Percent;
+                    value = action.percent;
+                    break;
+
+                case Action.ValueType.AmountFloat;
+                    value = action.amountFloat;
+                    break;
+
+                case Action.ValueType.AmountInt;
+                    value = action.amountInt;
+                    break;
+            }
+
+            Stats temp = new Stats(action.actionType, value);
+            this.stats[action.target.ToString()] = temp;
+        }
     }
 
-    public void RemoveEffect(Effect effect)
+    private IEnumerator EffectTimer(Effect effect)
     {
-        FindEffect(effect).Remove(effect);
-    }
-
-    private IEnumerator EffectTimer(Effect effect, float time)
-    {
-        yield return new WaitForSeconds(time);
-        RemoveEffect(effect);
+        yield return new WaitForSeconds(effect.time);
+        Expire(effect.name);
     }
 
     private IEnumerator EffectCounter(Effect effect)
     {
         yield return new WaitUntil(() => effect.count == 0);
-        RemoveEffect(effect);
-    }
+        Expire(effect.name);
+    }*/
 }

@@ -16,69 +16,61 @@ MonoBehaviour:
   entityTitle: 
   entityId: 
   movementProp:
-    runSpeed: 5
-    jumpForce: 17
-    passiveAbilities:
-      doubleJump:
-        name: 
-        source: {fileID: 0}
-        showOnUI: 0
-        icon: {fileID: 0}
-        valueType: 0
-        allow: 1
-        value: 0
-        count: 0
-        time: 0
-        description: 
-        priorityLevel: 0
-        cancellationType: 0
-        actionOnCancel: 0
-        effectTarget: 0
-      fly:
-        name: 
-        source: {fileID: 0}
-        showOnUI: 0
-        icon: {fileID: 0}
-        valueType: 0
-        allow: 1
-        value: 0
-        count: 0
-        time: 2
-        description: 
-        priorityLevel: 0
-        cancellationType: 0
-        actionOnCancel: 0
-        effectTarget: 0
-  battleProp: {}
+    stats:
+    - runSpeed: {x: 15, y: 0}
+      jumpForce: {x: 15, y: 0}
+      jumpCount: 1
+    - runSpeed: {x: 0, y: 0}
+      jumpForce: {x: 0, y: 0}
+      jumpCount: 0
+    - runSpeed: {x: 0, y: 0}
+      jumpForce: {x: 0, y: 0}
+      jumpCount: 0
+    crouchMultiplier: 0
+    jumpableLayers:
+      serializedVersion: 2
+      m_Bits: 2097216
+  battleProp:
+    stats:
+    - dmg: {x: 0, y: 0}
+      prgDmg: {x: 0, y: 0}
+      trDmg: {x: 0, y: 0}
+      ftlDmg: {x: 0, y: 0}
+      atkSpd: {x: 0, y: 0}
+      critHit: 0
+      critCnc: 0
+    - dmg: {x: 0, y: 0}
+      prgDmg: {x: 0, y: 0}
+      trDmg: {x: 0, y: 0}
+      ftlDmg: {x: 0, y: 0}
+      atkSpd: {x: 0, y: 0}
+      critHit: 0
+      critCnc: 0
+    - dmg: {x: 0, y: 0}
+      prgDmg: {x: 0, y: 0}
+      trDmg: {x: 0, y: 0}
+      ftlDmg: {x: 0, y: 0}
+      atkSpd: {x: 0, y: 0}
+      critHit: 0
+      critCnc: 0
   statusProp:
-    passiveAbilities:
-      hpRegen:
-        name: 
-        source: {fileID: 0}
-        showOnUI: 0
-        icon: {fileID: 0}
-        valueType: 0
-        allow: 1
-        value: 0
-        count: 0
-        time: 0
-        description: 
-        priorityLevel: 0
-        cancellationType: 0
-        actionOnCancel: 0
-        effectTarget: 0
-      spRegen:
-        name: 
-        source: {fileID: 0}
-        showOnUI: 0
-        icon: {fileID: 0}
-        valueType: 0
-        allow: 1
-        value: 0
-        count: 0
-        time: 0
-        description: 
-        priorityLevel: 0
-        cancellationType: 0
-        actionOnCancel: 0
-        effectTarget: 0
+    stats:
+    - HP: {x: 100, y: 0}
+      HPRegen: {x: 3, y: 0}
+      SP: {x: 10, y: 0}
+      SPRegen: {x: 1, y: 0}
+      DR: {x: 5, y: 0}
+      shd: {x: 5, y: 0}
+    - HP: {x: 0, y: 0}
+      HPRegen: {x: 0, y: 0}
+      SP: {x: 0, y: 0}
+      SPRegen: {x: 0, y: 0}
+      DR: {x: 0, y: 0}
+      shd: {x: 0, y: 0}
+    - HP: {x: 0, y: 0}
+      HPRegen: {x: 0, y: 0}
+      SP: {x: 0, y: 0}
+      SPRegen: {x: 0, y: 0}
+      DR: {x: 0, y: 0}
+      shd: {x: 0, y: 0}
+    regenTimeIncrement: {x: 1, y: 0}
