@@ -19,7 +19,7 @@ MonoBehaviour:
     stats:
     - runSpeed: {x: 15, y: 0}
       jumpForce: {x: 15, y: 0}
-      jumpCount: 1
+      jumpCount: 2
     - runSpeed: {x: 0, y: 0}
       jumpForce: {x: 0, y: 0}
       jumpCount: 0
@@ -29,7 +29,7 @@ MonoBehaviour:
     crouchMultiplier: 0
     jumpableLayers:
       serializedVersion: 2
-      m_Bits: 2097216
+      m_Bits: 192
   battleProp:
     stats:
     - dmg: {x: 0, y: 0}
