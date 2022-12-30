@@ -29,7 +29,7 @@ MonoBehaviour:
     crouchMultiplier: 0
     jumpableLayers:
       serializedVersion: 2
-      m_Bits: 192
+      m_Bits: 64
   battleProp:
     stats:
     - dmg: {x: 0, y: 0}

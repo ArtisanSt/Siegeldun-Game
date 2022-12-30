@@ -64,12 +64,26 @@ public class Human : Unit<HumanProp>
 
 
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    //public StatusProp statusProp { get; private set; }
     public override void PropertyInit()
     {
+        PropertyReconfig();
         base.PropertyInit();
         if (entityProp == null) return;
+    }
 
-        //statusProp = entityProp.statusProp;
+    protected void PropertyReconfig()
+    {
+        if (entityProp != null) return;
+        if (!EntityContainer.instance.Contains(gameObject.name, out int index, EntityContainer.instance.collections.Get("humans"))) return;
+
+        this.entityProp = EntityContainer.instance.collections.humans[index].entityProp;
+    }
+
+
+    // ============================== INSTANTIATION ==============================
+    public override void Duplicate(GameObject gameObject)
+    {
+        base.Duplicate(gameObject);
+        Human human = gameObject.GetComponent<Human>();
     }
 }

@@ -179,6 +179,16 @@ public static class StringExtensions
     {
         return fieldInfo.Name.NameToTitle();
     }
+
+    public static bool FoundIn(this string value, params string[] targets)
+    {
+        bool[] temp = new bool[targets.Length];
+        foreach (string target in targets)
+        {
+            temp[0] = value.Equals(target);
+        }
+        return temp.EvaluateOr();
+    }
 }
 
 public static class ArrayExtensions

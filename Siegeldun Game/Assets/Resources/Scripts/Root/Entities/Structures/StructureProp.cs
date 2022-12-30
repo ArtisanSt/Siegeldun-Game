@@ -8,9 +8,6 @@ public class StructureProp : EntityProp
     // ============================== MAIN PROPERTIES AND METHODS ==============================
     public override EntityType entityType { get { return EntityType.Structure; } }
 
-    public new enum EntitySubType { Structure }
-    public EntitySubType entitySubType = EntitySubType.Structure;
-
 
     public override string parentPath
     {

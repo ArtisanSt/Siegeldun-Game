@@ -8,7 +8,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(AnimationSystem))]
 [RequireComponent(typeof(Controller))]
-public abstract class Entity<T> : Root where T: EntityProp
+public abstract class Entity<TEntityProp> : Root
+    where TEntityProp : EntityProp
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -79,7 +80,7 @@ public abstract class Entity<T> : Root where T: EntityProp
 
 
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    public T entityProp;
+    public TEntityProp entityProp;
     public abstract void PropertyInit();
     public string parentPath { get { return entityProp.parentPath; } }
     public Transform parentT { get { return transform.Find(parentPath); } }
@@ -103,4 +104,11 @@ public abstract class Entity<T> : Root where T: EntityProp
 
     // ============================== DROPS ==============================
     public List<GameObject> itemDrops;
+
+
+    // ============================== INSTANTIATION ==============================
+    public virtual void Duplicate(GameObject gameObject)
+    {
+        Entity<TEntityProp> entity = gameObject.GetComponent<Entity<TEntityProp>>();
+    }
 }

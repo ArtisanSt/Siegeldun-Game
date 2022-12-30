@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Entity/Item/Weapon")]
-public class WeaponProp : ItemProp
+public class WeaponProp : ItemProp, IInventoryable
 {
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    public override EntitySubType entitySubType { get { return EntitySubType.Weapon; } }
+    public override ItemType itemType { get { return ItemType.Weapon; } }
 
 
     public override string parentPath

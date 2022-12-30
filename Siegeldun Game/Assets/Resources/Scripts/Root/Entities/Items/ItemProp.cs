@@ -7,8 +7,8 @@ public abstract class ItemProp : EntityProp
     // ============================== MAIN PROPERTIES AND METHODS ==============================
     public override EntityType entityType { get { return EntityType.Item; } }
 
-    public new enum EntitySubType { Weapon }
-    public abstract EntitySubType entitySubType { get; }
+    public enum ItemType { Weapon }
+    public abstract ItemType itemType { get; }
 
 
     public override string parentPath
@@ -18,4 +18,6 @@ public abstract class ItemProp : EntityProp
             return $"{base.parentPath}/Items";
         }
     }
+
+    public int maxAmount;
 }

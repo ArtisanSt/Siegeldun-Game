@@ -6,7 +6,7 @@ using UnityEngine;
 public class HumanProp : UnitProp
 {
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    public override EntitySubType entitySubType { get { return EntitySubType.Human; } }
+    public override UnitType unitType { get { return UnitType.Human; } }
 
 
     public override string parentPath

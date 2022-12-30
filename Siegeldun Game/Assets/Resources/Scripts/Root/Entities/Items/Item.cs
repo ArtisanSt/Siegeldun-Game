@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Item<N> : Entity<N> where N: ItemProp
+public abstract class Item<TItemProp> : Entity<TItemProp>
+    where TItemProp: ItemProp
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -15,6 +16,7 @@ public abstract class Item<N> : Entity<N> where N: ItemProp
     protected override void Start()
     {
         base.Start();
+        PropertyInit();
     }
 
     protected override void Update()
@@ -64,11 +66,30 @@ public abstract class Item<N> : Entity<N> where N: ItemProp
 
 
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    //public MovementProp movementProp { get; private set; }
     public override void PropertyInit()
     {
         if (entityProp == null) return;
 
-        //movementProp = entityProp.movementProp;
+        amount = new Vector2Int(entityProp.maxAmount, entityProp.maxAmount);
+    }
+
+    public Vector2Int amount; // curAmount, maxAmount
+
+
+
+    // ============================== INSTANTIATION ==============================
+    public void Duplicate(TItemProp entityProp, Vector2Int amount)
+    {
+        this.entityProp = entityProp;
+        this.amount = amount;
+    }
+
+
+    // ============================== INSTANTIATION ==============================
+    public override void Duplicate(GameObject gameObject)
+    {
+        base.Duplicate(gameObject);
+        Item<TItemProp> item = gameObject.GetComponent<Item<TItemProp>>();
+        Duplicate(item.entityProp, item.amount);
     }
 }

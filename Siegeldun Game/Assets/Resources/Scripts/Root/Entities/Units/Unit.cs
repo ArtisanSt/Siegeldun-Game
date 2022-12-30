@@ -7,7 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(MovementSystem))]
 [RequireComponent(typeof(BattleSystem))]
 [RequireComponent(typeof(StatusSystem))]
-public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable where N: UnitProp
+public abstract class Unit<TUnitProp> : Entity<TUnitProp>, IMoveable, IBattleable, IStatusable
+    where TUnitProp : UnitProp
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -97,5 +98,13 @@ public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable w
         movementSystem.Init(movementProp);
         battleSystem.Init(battleProp);
         statusSystem.Init(statusProp);
+    }
+
+
+    // ============================== INSTANTIATION ==============================
+    public override void Duplicate(GameObject gameObject)
+    {
+        base.Duplicate(gameObject);
+        Unit<TUnitProp> unit = gameObject.GetComponent<Unit<TUnitProp>>();
     }
 }

@@ -64,12 +64,26 @@ public class Weapon : Item<WeaponProp>
 
 
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    //public StatusProp statusProp { get; private set; }
     public override void PropertyInit()
     {
+        PropertyReconfig();
         base.PropertyInit();
         if (entityProp == null) return;
+    }
 
-        //statusProp = entityProp.statusProp;
+    protected void PropertyReconfig()
+    {
+        if (entityProp != null) return;
+        if (!EntityContainer.instance.Contains(gameObject.name, out int index, EntityContainer.instance.collections.Get("weapons"))) return;
+
+        this.entityProp = EntityContainer.instance.collections.weapons[index].entityProp;
+    }
+
+
+    // ============================== INSTANTIATION ==============================
+    public override void Duplicate(GameObject gameObject)
+    {
+        Weapon weapon = gameObject.GetComponent<Weapon>();
+        base.Duplicate(gameObject);
     }
 }

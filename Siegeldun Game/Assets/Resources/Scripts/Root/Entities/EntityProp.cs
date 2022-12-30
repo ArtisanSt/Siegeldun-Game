@@ -11,7 +11,6 @@ public abstract class EntityProp : ScriptableObject
 
     public enum EntityType { Unit, Structure, Item }
     public abstract EntityType entityType { get; }
-    public enum EntitySubType { }
 
     public virtual string parentPath
     {

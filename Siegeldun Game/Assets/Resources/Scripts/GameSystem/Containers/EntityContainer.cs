@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class EntityContainer : SettingsSystem<EntityContainer>
 {
@@ -64,49 +65,125 @@ public class EntityContainer : SettingsSystem<EntityContainer>
     [SerializeField] public GameObject groundG;
 
     [System.Serializable]
-    public abstract class RowProperty<N, T>
-        where N: EntityProp
-        where T: Entity<N>
+    public abstract class RowPropertyEntity<TEntityProp>
+        where TEntityProp : EntityProp
     {
-        public EntityProp.EntityType entityType
-        {
-            get
-            {
-                System.Enum.TryParse(typeof(T).Name, out EntityProp.EntityType entityType);
-                return entityType;
-            }
-        }
-        public EntityProp.EntitySubType entitySubType
-        {
-            get
-            {
-                System.Enum.TryParse(typeof(T).Name, out EntityProp.EntitySubType entitySubType);
-                return entitySubType;
-            }
-        }
-        public string entityName;
         public bool allow;
         public int instanceCap;
+        public TEntityProp entityProp;
+
+        public EntityProp GetProp() { return (EntityProp)entityProp; }
+        public virtual string type { get { return (entityProp == null) ? Globals.nullPlaceholder : entityProp.entityType.ToString(); } }
     }
 
-
-    [SerializeField] public List<RowProperty<UnitProp, Unit<UnitProp>>> unitList;
-    [SerializeField] public List<RowProperty<ItemProp, Item<ItemProp>>> itemList;
-    [SerializeField] public List<RowProperty<StructureProp, Structure<StructureProp>>> structureList;
-
-    public static string[] IdentifyType(string entityName)
+    // Entity
+    [System.Serializable] public class RowPropertyStructure : RowPropertyEntity<StructureProp>, IInstantiatiable { }
+    [System.Serializable] public abstract class RowPropertyUnit<TUnitProp> : RowPropertyEntity<TUnitProp> where TUnitProp : UnitProp
     {
-        foreach (List<RowProperty<EntityProp, Entity<EntityProp>>> rp in new List<List<RowProperty<EntityProp, Entity<EntityProp>>>>())
+        public override string type { get { return (entityProp == null) ? Globals.nullPlaceholder : entityProp.unitType.ToString(); } }
+    }
+    [System.Serializable] public abstract class RowPropertyItem<TItemProp> : RowPropertyEntity<TItemProp> where TItemProp : ItemProp
+    {
+        public override string type { get { return (entityProp == null) ? Globals.nullPlaceholder : entityProp.itemType.ToString(); } }
+    }
+
+    public interface IInstantiatiable
+    {
+        public EntityProp GetProp();
+        public string type { get; }
+    }
+
+    // Entity > Unit
+    [System.Serializable] public class RowPropertyHuman : RowPropertyUnit<HumanProp>, IInstantiatiable { }
+
+    // Entity > Item
+    [System.Serializable] public class RowPropertyWeapon : RowPropertyItem<WeaponProp>, IInstantiatiable { }
+
+    [System.Serializable]
+    public class EntityCollections
+    {
+        public List<RowPropertyStructure> structures;
+        public List<RowPropertyHuman> humans;
+        public List<RowPropertyWeapon> weapons;
+
+        public List<IInstantiatiable> Get(params string[] targets)
         {
-            for (int i = 0; i < rp.Count; i++)
+            List<IInstantiatiable> temp = new List<IInstantiatiable>();
+            foreach (string target in targets)
             {
-                if (entityName.Trim() == rp[i].entityName.Trim())
-                {
-                    return new string[2] { rp[i].entityType.ToString() , rp[i].entitySubType.ToString() };
-                }
+                string fieldName = target.Trim().ToLower();
+                if (!fieldNames.Contains(fieldName).EvaluateOr()) continue;
+                if (fieldName == "structures") temp.AddRange(structures.Convert<RowPropertyStructure>());
+                if (fieldName == "humans") temp.AddRange(humans.Convert<RowPropertyHuman>());
+                if (fieldName == "weapons") temp.AddRange(weapons.Convert<RowPropertyWeapon>());
             }
+
+            if (temp.Count == 0)
+                return Get(fieldNames);
+            else return temp;
         }
 
-        return new string[0];
+        public string[] fieldNames { get { return (from System.Reflection.FieldInfo fieldInfo in typeof(EntityCollections).GetFields() select fieldInfo.Name).ToArray(); } }
+    }
+    public EntityCollections collections;
+
+
+    public string IdentifyType(string entityName)
+    {
+        Contains(entityName, out string entityType, collections.Get().ToArray());
+        return entityType;
+    }
+
+    public bool Contains(string entityName, out string entityType, params IInstantiatiable[] entities)
+    {
+        entityType = Globals.nullPlaceholder;
+        foreach (IInstantiatiable entity in entities)
+        {
+            if (entityName == entity.GetProp().entityName)
+            {
+                entityType = entity.type;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool Contains(string entityName, out string entityType, List<IInstantiatiable> entities)
+    {
+        return Contains(entityName, out entityType, entities.ToArray());
+    }
+
+    public bool Contains(string entityName, out int index, params IInstantiatiable[] entities)
+    {
+        index = -1;
+        for (int i=0; i < entities.Length; i++)
+        {
+            if (entityName == entities[i].GetProp().entityName)
+            {
+                index = i;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool Contains(string entityName, out int index, List<IInstantiatiable> entities)
+    {
+        return Contains(entityName, out index, entities.ToArray());
+    }
+}
+
+public static class InstantiatiableExtensions
+{
+    public static List<EntityContainer.IInstantiatiable> Convert<TSource>(this List<TSource> source) where TSource : EntityContainer.IInstantiatiable
+    {
+        return source.Select(x => (EntityContainer.IInstantiatiable)x).ToList();
+    }
+
+    public static List<EntityContainer.IInstantiatiable> Combine<TSource>(this List<EntityContainer.IInstantiatiable> target, List<TSource> source) where TSource : EntityContainer.IInstantiatiable
+    {
+        List<EntityContainer.IInstantiatiable> temp = new List<EntityContainer.IInstantiatiable>(target);
+        temp.AddRange(source.Select(x => (EntityContainer.IInstantiatiable)x).ToList());
+        return temp;
     }
 }

@@ -7,8 +7,8 @@ public abstract class UnitProp : EntityProp
     // ============================== MAIN PROPERTIES AND METHODS ==============================
     public override EntityType entityType { get { return EntityType.Unit; } }
 
-    public new enum EntitySubType { Human }
-    public abstract EntitySubType entitySubType { get; }
+    public enum UnitType { Human }
+    public abstract UnitType unitType { get; }
 
 
     public override string parentPath
