@@ -54,7 +54,7 @@ public class EntityContainer : SettingsSystem<EntityContainer>
     {
         base.OnDestroy();
 
-    }
+    }/*
 
 
     // ============================== OBJECT PROPERTIES AND METHODS ==============================
@@ -65,8 +65,7 @@ public class EntityContainer : SettingsSystem<EntityContainer>
     [SerializeField] public GameObject groundG;
 
     [System.Serializable]
-    public abstract class RowPropertyEntity<TEntityProp>
-        where TEntityProp : EntityProp
+    public abstract class RowPropertyEntity
     {
         public bool allow;
         public int instanceCap;
@@ -170,10 +169,10 @@ public class EntityContainer : SettingsSystem<EntityContainer>
     public bool Contains(string entityName, out int index, List<IInstantiatiable> entities)
     {
         return Contains(entityName, out index, entities.ToArray());
-    }
+    }*/
 }
 
-public static class InstantiatiableExtensions
+/*public static class InstantiatiableExtensions
 {
     public static List<EntityContainer.IInstantiatiable> Convert<TSource>(this List<TSource> source) where TSource : EntityContainer.IInstantiatiable
     {
@@ -186,4 +185,4 @@ public static class InstantiatiableExtensions
         temp.AddRange(source.Select(x => (EntityContainer.IInstantiatiable)x).ToList());
         return temp;
     }
-}
+}*/

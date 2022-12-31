@@ -193,10 +193,10 @@ public static class StringExtensions
 
 public static class ArrayExtensions
 {
-    public static List<T> ToList<T>(this T[] arr)
+    /*public static List<T> ToList<T>(this T[] arr)
     {
         return System.Linq.Enumerable.ToList<T>(arr);
-    }
+    }*/
 
     public static bool[] Contains<T>(this T[] target, params T[] values) where T : notnull
     {
@@ -219,6 +219,19 @@ public static class ListExtensions
         }
         return target;
     }
+
+    /*public static System.Type GetElementType(this object targetlist)
+    {
+        if (targetlist == null)
+            throw new System.ArgumentNullException(nameof(targetlist));
+
+        System.Type type = targetlist.GetType();
+
+        if (!type.IsGenericType || type.GetGenericTypeDefinition() != typeof(List<>))
+            throw new System.ArgumentException("Type must be List<>, but was " + type.FullName, nameof(targetlist));
+
+        return type.GetGenericArguments()[0];
+    }*/
 }
 
 

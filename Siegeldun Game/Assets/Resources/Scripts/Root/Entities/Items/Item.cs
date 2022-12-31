@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Item<TItemProp> : Entity<TItemProp>
-    where TItemProp: ItemProp
+public class Item : Entity
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -16,7 +15,6 @@ public abstract class Item<TItemProp> : Entity<TItemProp>
     protected override void Start()
     {
         base.Start();
-        PropertyInit();
     }
 
     protected override void Update()
@@ -65,31 +63,41 @@ public abstract class Item<TItemProp> : Entity<TItemProp>
     }
 
 
+    // ============================== DATAPROP ==============================
+    public new ItemProp dataProp { get; protected set; }
+    public override void DataPropInit()
+    {
+        this.dataProp = DataProp.instance.Get<ItemProp>(entityName);
+        if (this.dataProp == null) return;
+        base.dataProp = this.dataProp;
+    }
+
+
     // ============================== MAIN PROPERTIES AND METHODS ==============================
     public override void PropertyInit()
     {
-        if (entityProp == null) return;
+        if (dataProp == null) return;
 
-        amount = new Vector2Int(entityProp.maxAmount, entityProp.maxAmount);
+        amount = new Vector2Int(dataProp.maxAmount, dataProp.maxAmount);
     }
 
     public Vector2Int amount; // curAmount, maxAmount
 
 
 
-    // ============================== INSTANTIATION ==============================
-    public void Duplicate(TItemProp entityProp, Vector2Int amount)
+    /*// ============================== INSTANTIATION ==============================
+    public void Duplicate(IItemProp entityProp, Vector2Int amount)
     {
         this.entityProp = entityProp;
         this.amount = amount;
-    }
+    }*/
 
 
-    // ============================== INSTANTIATION ==============================
+    /*// ============================== INSTANTIATION ==============================
     public override void Duplicate(GameObject gameObject)
     {
         base.Duplicate(gameObject);
         Item<TItemProp> item = gameObject.GetComponent<Item<TItemProp>>();
         Duplicate(item.entityProp, item.amount);
-    }
+    }*/
 }

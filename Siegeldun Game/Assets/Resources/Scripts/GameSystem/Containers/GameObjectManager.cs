@@ -5,7 +5,7 @@ using UnityEditor;
 
 public static class GameObjectManager
 {
-    public static GameObject Instantiate(string entityName, Vector3 position)
+    /*public static GameObject Instantiate(string entityName, Vector3 position)
     {
         if (entityName.Trim().FoundIn("", Globals.nullPlaceholder)) return null;
 
@@ -46,5 +46,5 @@ public static class GameObjectManager
     private static void ComponentDependencies(ref GameObject gameObject)
     {
 
-    }
+    }*/
 }
