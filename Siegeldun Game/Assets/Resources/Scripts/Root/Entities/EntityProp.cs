@@ -8,6 +8,7 @@ public abstract class EntityProp : ScriptableObject
     [SerializeField] public string entityName;
     [SerializeField] public string entityTitle;
     [SerializeField] public string entityId;
+    public int instanceID { get { return GetInstanceID(); } }
 
     public enum EntityType { Unit, Structure, Item }
     public abstract EntityType entityType { get; }
