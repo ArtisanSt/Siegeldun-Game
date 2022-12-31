@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(MovementSystem))]
 [RequireComponent(typeof(BattleSystem))]
 [RequireComponent(typeof(StatusSystem))]
-public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable where N: UnitProp
+public class Unit : Entity, IMoveable, IBattleable, IStatusable
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -20,7 +20,6 @@ public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable w
     protected override void Start()
     {
         base.Start();
-        PropertyInit();
     }
 
     protected override void Update()
@@ -71,6 +70,16 @@ public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable w
     }
 
 
+    // ============================== DATAPROP ==============================
+    public new UnitProp dataProp { get; protected set; }
+    public override void DataPropInit()
+    {
+        this.dataProp = DataProp.instance.Get<UnitProp>(entityName);
+        if (this.dataProp == null) return;
+        base.dataProp = this.dataProp;
+    }
+
+
     // ============================== MAIN PROPERTIES AND METHODS ==============================
     public CapsuleCollider2D capColl { get; private set; }
 
@@ -84,11 +93,14 @@ public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable w
 
     public override void PropertyInit()
     {
-        if (entityProp == null) return;
+        if (dataProp == null) return;
 
-        movementProp = entityProp.movementProp;
-        battleProp = entityProp.battleProp;
-        statusProp = entityProp.statusProp;
+        Debug.Log(dataProp.entityName);
+        Debug.Log(dataProp.entityID);
+
+        movementProp = dataProp.movementProp;
+        battleProp = dataProp.battleProp;
+        statusProp = dataProp.statusProp;
 
         movementSystem = GetComponent<MovementSystem>();
         battleSystem = GetComponent<BattleSystem>();
@@ -98,4 +110,12 @@ public abstract class Unit<N> : Entity<N>, IMoveable, IBattleable, IStatusable w
         battleSystem.Init(battleProp);
         statusSystem.Init(statusProp);
     }
+
+
+    /*// ============================== INSTANTIATION ==============================
+    public override void Duplicate(GameObject gameObject)
+    {
+        base.Duplicate(gameObject);
+        Unit<TUnitProp> unit = gameObject.GetComponent<Unit<TUnitProp>>();
+    }*/
 }

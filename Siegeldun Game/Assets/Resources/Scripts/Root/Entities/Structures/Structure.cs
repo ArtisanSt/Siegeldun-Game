@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Structure<N> : Entity<StructureProp> where N: StructureProp
+public class Structure: Entity
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -63,12 +63,36 @@ public abstract class Structure<N> : Entity<StructureProp> where N: StructurePro
     }
 
 
+    // ============================== DATAPROP ==============================
+    public new StructureProp dataProp { get; protected set; }
+    public override void DataPropInit()
+    {
+        this.dataProp = DataProp.instance.Get<StructureProp>(entityName);
+        if (this.dataProp == null) return;
+        base.dataProp = this.dataProp;
+    }
+
+
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    //public MovementProp movementProp { get; private set; }
     public override void PropertyInit()
     {
-        if (entityProp == null) return;
-
-        //movementProp = entityProp.movementProp;
+        //PropertyReconfig();
+        if (dataProp == null) return;
     }
+
+    /*protected void PropertyReconfig()
+    {
+        if (entityProp != null) return;
+        if (!EntityContainer.instance.Contains(gameObject.name, out int index, EntityContainer.instance.collections.Get("structures"))) return;
+
+        this.entityProp = EntityContainer.instance.collections.structures[index].entityProp;
+    }*/
+
+
+    /*// ============================== INSTANTIATION ==============================
+    public override void Duplicate(GameObject gameObject)
+    {
+        base.Duplicate(gameObject);
+        Structure structure = gameObject.GetComponent<Structure>();
+    }*/
 }

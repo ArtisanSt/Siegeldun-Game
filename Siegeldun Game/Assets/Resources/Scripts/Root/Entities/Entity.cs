@@ -8,7 +8,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(AnimationSystem))]
 [RequireComponent(typeof(Controller))]
-public abstract class Entity<T> : Root where T: EntityProp
+public abstract class Entity : Root
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -21,6 +21,8 @@ public abstract class Entity<T> : Root where T: EntityProp
     protected override void Start()
     {
         base.Start();
+        DataPropInit();
+        PropertyInit();
     }
 
     protected override void Update()
@@ -78,15 +80,20 @@ public abstract class Entity<T> : Root where T: EntityProp
     }
 
 
+    // ============================== DATAPROP ==============================
+    public EntityProp dataProp { get; protected set; }
+    public abstract void DataPropInit();
+
+
     // ============================== MAIN PROPERTIES AND METHODS ==============================
-    public T entityProp;
     public abstract void PropertyInit();
-    public string parentPath { get { return entityProp.parentPath; } }
-    public Transform parentT { get { return transform.Find(parentPath); } }
-
-    /*public T entityProp<T>(T entityProp) where T:  notnull, EntityProp { return entityProp; }*/
+    public string parentPath { get { return dataProp.dirPath; } }
+    public Transform parentT { get { return transform.Find(dataProp.dirPath); } }
 
 
+
+
+    [SerializeField] public string entityName;
     [SerializeField] public string entityNickname;
 
     public string nickname
@@ -95,12 +102,20 @@ public abstract class Entity<T> : Root where T: EntityProp
         {
             ProjectUtils.Defaults(ref entityNickname);
 
-            if (entityProp == null) return entityNickname;
-            else return entityProp.entityName;
+            if (dataProp == null && entityName != Globals.nullPlaceholder) return entityNickname;
+            else return entityName;
         }
     }
 
 
     // ============================== DROPS ==============================
     public List<GameObject> itemDrops;
+
+
+    /*// ============================== INSTANTIATION ==============================
+    public virtual void Duplicate(GameObject gameObject)
+    {
+        Entity<TEntityProp> entity = gameObject.GetComponent<Entity<TEntityProp>>();
+    }*/
 }
+

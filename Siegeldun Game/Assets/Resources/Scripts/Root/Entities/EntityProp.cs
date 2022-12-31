@@ -2,22 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EntityProp : ScriptableObject
+public abstract class EntityProp
 {
-    // ============================== MAIN PROPERTIES AND METHODS ==============================
-    [SerializeField] public string entityName;
-    [SerializeField] public string entityTitle;
-    [SerializeField] public string entityId;
+    // ============================== MAIN PROPERTIES ==============================
+    public string entityName;
+    public string entityTitle;
+    public string entityID;
+    public int instanceCap;
 
     public enum EntityType { Unit, Structure, Item }
-    public abstract EntityType entityType { get; }
-    public enum EntitySubType { }
+    public EntityType entityType { get; protected set; }
 
-    public virtual string parentPath
-    {
-        get
-        {
-            return "Entities";
-        }
-    }
+    public virtual string dirPath { get { return "Entities"; } }
+
 }

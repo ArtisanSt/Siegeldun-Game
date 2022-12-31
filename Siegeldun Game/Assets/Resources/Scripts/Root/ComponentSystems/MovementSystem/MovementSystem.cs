@@ -151,8 +151,8 @@ public class MovementSystem : UserComponents, IControllable
 
 
     // ------------------------------ VERTICAL PROPERTIES AND METHODS ------------------------------
-    [SerializeField] private float mercyJumpDistance = 0f;
-    [SerializeField] private float allowedJumpRatio = 0f; // Allowed Jump will always be a fraction of mercy jump distance
+    [SerializeField] private float mercyJumpDistance;
+    [SerializeField] private float allowedJumpRatio; // Allowed Jump will always be a fraction of mercy jump distance
     private float allowedJumpDistance { get { return allowedJumpRatio * mercyJumpDistance; } }
 
     private bool mercyJump;
@@ -166,10 +166,10 @@ public class MovementSystem : UserComponents, IControllable
         float rayDistance = (rayHit.collider != null) ? groundRaycastT.position.y - rayHit.point.y : 2 * mercyJumpDistance;
 
         // Jump Count Reset
-        if (rayDistance <= allowedJumpDistance && rbody.velocity.y <= 0 && curJumpCount != maxJumpCount)
+        System.Func<float, bool> distanceRestriction = jumpDistance => rayDistance <= jumpDistance && rbody.velocity.y <= 0;
+        if (distanceRestriction(allowedJumpDistance) && curJumpCount != maxJumpCount)
             curJumpCount = maxJumpCount;
 
-        System.Func<float, bool> distanceRestriction = jumpDistance => rayDistance <= jumpDistance && rbody.velocity.y <= 0;
         bool jumpRestriction = distanceRestriction(allowedJumpDistance) || maxJumpCount - curJumpCount >= 1; // Can still configure
         bool executeJump = curJumpCount > 0 && jumpRestriction && (controls.jump || mercyJump);
 

@@ -830,12 +830,82 @@ MonoBehaviour:
   m_GameObject: {fileID: 213497632}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c41766d4b95a1044a44419f729de570, type: 3}
+  m_Script: {fileID: 11500000, guid: 9efed35977b979c468736840f4eb99b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityInstanceCap: 0
-  ignoreCap: 0
-  groundG: {fileID: 13504465}
+  unitProps:
+  - entityName: Jason
+    entityTitle: 
+    entityID: 111
+    instanceCap: 0
+    unitType: 0
+    movementProp:
+      stats:
+      - runSpeed: {x: 15, y: 0}
+        jumpForce: {x: 15, y: 0}
+        jumpCount: 1
+      - runSpeed: {x: 15, y: 0}
+        jumpForce: {x: 15, y: 0}
+        jumpCount: 1
+      - runSpeed: {x: 15, y: 0}
+        jumpForce: {x: 15, y: 0}
+        jumpCount: 1
+      crouchMultiplier: 0.3
+      jumpableLayers:
+        serializedVersion: 2
+        m_Bits: 192
+    battleProp:
+      stats:
+      - dmg: {x: 0, y: 0}
+        prgDmg: {x: 0, y: 0}
+        trDmg: {x: 0, y: 0}
+        ftlDmg: {x: 0, y: 0}
+        atkSpd: {x: 0, y: 0}
+        critHit: 0
+        critCnc: 0
+      - dmg: {x: 0, y: 0}
+        prgDmg: {x: 0, y: 0}
+        trDmg: {x: 0, y: 0}
+        ftlDmg: {x: 0, y: 0}
+        atkSpd: {x: 0, y: 0}
+        critHit: 0
+        critCnc: 0
+      - dmg: {x: 0, y: 0}
+        prgDmg: {x: 0, y: 0}
+        trDmg: {x: 0, y: 0}
+        ftlDmg: {x: 0, y: 0}
+        atkSpd: {x: 0, y: 0}
+        critHit: 0
+        critCnc: 0
+    statusProp:
+      stats:
+      - HP: {x: 0, y: 0}
+        HPRegen: {x: 0, y: 0}
+        SP: {x: 0, y: 0}
+        SPRegen: {x: 0, y: 0}
+        DR: {x: 0, y: 0}
+        shd: {x: 0, y: 0}
+      - HP: {x: 0, y: 0}
+        HPRegen: {x: 0, y: 0}
+        SP: {x: 0, y: 0}
+        SPRegen: {x: 0, y: 0}
+        DR: {x: 0, y: 0}
+        shd: {x: 0, y: 0}
+      - HP: {x: 0, y: 0}
+        HPRegen: {x: 0, y: 0}
+        SP: {x: 0, y: 0}
+        SPRegen: {x: 0, y: 0}
+        DR: {x: 0, y: 0}
+        shd: {x: 0, y: 0}
+      regenTimeIncrement: {x: 0, y: 0}
+  itemProps:
+  - entityName: Stick
+    entityTitle: 
+    entityID: 222
+    instanceCap: 0
+    itemType: 0
+    maxAmount: 1
+  structureProps: []
 --- !u!1 &613879082
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,7 +915,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 613879083}
-  m_Layer: 7
+  m_Layer: 31
   m_Name: Units
   m_TagString: Entity
   m_Icon: {fileID: 0}
@@ -964,7 +1034,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025915720}
   m_LocalRotation: {x: -0.002416879, y: -0, z: -0, w: 0.9999971}
-  m_LocalPosition: {x: 0.412, y: 2.4139986, z: -0.0006144047}
+  m_LocalPosition: {x: 0.3, y: 4.86, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1077088636}
@@ -980,10 +1050,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1025915720}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3124b5625c406543b6be2a8aea93f51, type: 3}
+  m_Script: {fileID: 11500000, guid: 27fccc3ddc93f9c4693ef8f846175ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityProp: {fileID: 11400000, guid: c866d181df5280a46a80ffd1b57a7165, type: 2}
+  entityName: Jason
   entityNickname: 
   itemDrops: []
 --- !u!70 &1025915723
@@ -1015,7 +1085,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.014599085, y: -1.1386603}
+  m_Offset: {x: 0.0009454787, y: -0.26637915}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1026,7 +1096,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5341275, y: 0.19984221}
+  m_Size: {x: 0.39249915, y: 0.6090545}
   m_EdgeRadius: 0.05
 --- !u!114 &1025915725
 MonoBehaviour:
@@ -1279,7 +1349,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1077088636}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: RaycastGround
   m_TagString: Raycast
   m_Icon: {fileID: 0}
@@ -1294,7 +1364,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1077088635}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.961, z: 0}
+  m_LocalPosition: {x: -0.002, y: -0.914, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1025915721}
@@ -1356,7 +1426,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452287222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.932226, y: 1.4638454, z: 5.340126}
+  m_LocalPosition: {x: 11.820227, y: 3.9098468, z: 5.330742}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1030568133}
@@ -1761,7 +1831,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1941011952}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.932226, y: 1.4638454, z: 5.340126}
+  m_LocalPosition: {x: 11.820227, y: 3.9098468, z: 5.330742}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1861846352}

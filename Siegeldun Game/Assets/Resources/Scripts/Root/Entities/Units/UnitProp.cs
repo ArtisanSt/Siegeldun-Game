@@ -2,22 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UnitProp : EntityProp
+[System.Serializable]
+public class UnitProp : EntityProp
 {
-    // ============================== MAIN PROPERTIES AND METHODS ==============================
-    public override EntityType entityType { get { return EntityType.Unit; } }
-
-    public new enum EntitySubType { Human }
-    public abstract EntitySubType entitySubType { get; }
-
-
-    public override string parentPath
+    public UnitProp()
     {
-        get
-        {
-            return $"{base.parentPath}/Units";
-        }
+        entityType = EntityType.Unit;
     }
+
+    public string unitName { get { return entityName; } }
+    public string unitTitle { get { return entityTitle; } }
+    public string unitID { get { return entityID; } }
+
+    // ============================== SHARED PROPERTIES ==============================
+    public override string dirPath { get { return $"{base.dirPath}/Units/{unitType.ToString()}"; } }
+
+
+    // ============================== MAIN PROPERTIES ==============================
+    public enum UnitType { Human }
+    public UnitType unitType;
 
     public EffectProp effectProp;
     public MovementProp movementProp;
