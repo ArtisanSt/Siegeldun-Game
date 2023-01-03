@@ -10,6 +10,9 @@ public class GameSystem : SingletonDontDestroy<GameSystem>
     {
         base.Awake();
         Init();
+        GameDataManager.DataInit();
+        GameDataManager.LoadSavedData(0);
+        Debug.Log(GameDataManager.currentData);
     }
 
     protected override void Start()
@@ -62,4 +65,6 @@ public class GameSystem : SingletonDontDestroy<GameSystem>
     public static bool paused;
     public static int difficulty;
     [SerializeField] public LayerMask groundLayer;
+
+
 }
