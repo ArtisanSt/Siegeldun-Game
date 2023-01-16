@@ -833,79 +833,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9efed35977b979c468736840f4eb99b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitProps:
-  - entityName: Jason
-    entityTitle: 
-    entityID: 111
-    instanceCap: 0
-    unitType: 0
-    movementProp:
-      stats:
-      - runSpeed: {x: 15, y: 0}
-        jumpForce: {x: 15, y: 0}
-        jumpCount: 1
-      - runSpeed: {x: 15, y: 0}
-        jumpForce: {x: 15, y: 0}
-        jumpCount: 1
-      - runSpeed: {x: 15, y: 0}
-        jumpForce: {x: 15, y: 0}
-        jumpCount: 1
-      crouchMultiplier: 0.3
-      jumpableLayers:
-        serializedVersion: 2
-        m_Bits: 192
-    battleProp:
-      stats:
-      - dmg: {x: 0, y: 0}
-        prgDmg: {x: 0, y: 0}
-        trDmg: {x: 0, y: 0}
-        ftlDmg: {x: 0, y: 0}
-        atkSpd: {x: 0, y: 0}
-        critHit: 0
-        critCnc: 0
-      - dmg: {x: 0, y: 0}
-        prgDmg: {x: 0, y: 0}
-        trDmg: {x: 0, y: 0}
-        ftlDmg: {x: 0, y: 0}
-        atkSpd: {x: 0, y: 0}
-        critHit: 0
-        critCnc: 0
-      - dmg: {x: 0, y: 0}
-        prgDmg: {x: 0, y: 0}
-        trDmg: {x: 0, y: 0}
-        ftlDmg: {x: 0, y: 0}
-        atkSpd: {x: 0, y: 0}
-        critHit: 0
-        critCnc: 0
-    statusProp:
-      stats:
-      - HP: {x: 0, y: 0}
-        HPRegen: {x: 0, y: 0}
-        SP: {x: 0, y: 0}
-        SPRegen: {x: 0, y: 0}
-        DR: {x: 0, y: 0}
-        shd: {x: 0, y: 0}
-      - HP: {x: 0, y: 0}
-        HPRegen: {x: 0, y: 0}
-        SP: {x: 0, y: 0}
-        SPRegen: {x: 0, y: 0}
-        DR: {x: 0, y: 0}
-        shd: {x: 0, y: 0}
-      - HP: {x: 0, y: 0}
-        HPRegen: {x: 0, y: 0}
-        SP: {x: 0, y: 0}
-        SPRegen: {x: 0, y: 0}
-        DR: {x: 0, y: 0}
-        shd: {x: 0, y: 0}
-      regenTimeIncrement: {x: 0, y: 0}
-  itemProps:
-  - entityName: Stick
-    entityTitle: 
-    entityID: 222
-    instanceCap: 0
-    itemType: 0
-    maxAmount: 1
-  structureProps: []
 --- !u!1 &613879082
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,14 +935,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1025915721}
-  - component: {fileID: 1025915732}
   - component: {fileID: 1025915731}
-  - component: {fileID: 1025915730}
   - component: {fileID: 1025915729}
   - component: {fileID: 1025915728}
   - component: {fileID: 1025915727}
-  - component: {fileID: 1025915726}
-  - component: {fileID: 1025915725}
   - component: {fileID: 1025915724}
   - component: {fileID: 1025915723}
   - component: {fileID: 1025915722}
@@ -1050,12 +973,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1025915720}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27fccc3ddc93f9c4693ef8f846175ab5, type: 3}
+  m_Script: {fileID: 11500000, guid: d1785eecb97eb9f47aac0b80037d7a6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityName: Jason
+  dataProp:
+    objectName: Jason0
+    name: Jason
+    title: The Unknown
+    ID: 0001
+    instanceCap: 1
+    entityRace: 0
   entityNickname: 
-  itemDrops: []
 --- !u!70 &1025915723
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1098,31 +1026,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.39249915, y: 0.6090545}
   m_EdgeRadius: 0.05
---- !u!114 &1025915725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025915720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47028a71d94b0514497f3b9679b101ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controllerType: 2
---- !u!114 &1025915726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025915720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a21cfacfef28e564da1271916c852d85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &1025915727
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1211,19 +1114,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1025915730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025915720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84fa30d8907c4d64e8d867221e9941e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allow: 0
 --- !u!114 &1025915731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1236,23 +1126,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c4c3fa0c9335c4384755f3cda10565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allow: 0
+  _allowed: 0
   groundRaycastT: {fileID: 1077088636}
+  baseProp:
+    allowed: 0
+    stats: []
+    crouchMultiplier: 0
+    jumpableLayers:
+      serializedVersion: 2
+      m_Bits: 0
   mercyJumpDistance: 3
   allowedJumpRatio: 0.15
---- !u!114 &1025915732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025915720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aae6db41a81c0d243bc93b30f454f405, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allow: 0
 --- !u!1 &1030568132
 GameObject:
   m_ObjectHideFlags: 3
@@ -1720,7 +1604,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2fce84c6872d94b98ffdf132d48d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crouchOn: 0
 --- !u!1 &1861846351
 GameObject:
   m_ObjectHideFlags: 0

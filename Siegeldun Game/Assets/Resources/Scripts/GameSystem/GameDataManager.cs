@@ -67,7 +67,7 @@ public static class GameDataManager
     {
         if (!savedData.FindIndex(loadedDataIndex)) return;
 
-        currentData = lastLoadedData.Duplicate();
+        //currentData = lastLoadedData.Duplicate();
     }
 
     private static bool FindIndex(this IList values, int index)

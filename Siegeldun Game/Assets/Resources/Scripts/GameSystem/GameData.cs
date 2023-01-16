@@ -15,7 +15,7 @@ public class GameData
 
     public int difficulty { get; set; }
 
-    public List<Item> lastSavedItems { get; set; }
+    //public List<Item> lastSavedItems { get; set; }
 
     // public List<Achievement> achievements;
 
@@ -27,10 +27,10 @@ public class GameData
         lastSavedItems = new List<Item>();
     }*/
 
-    public GameData Duplicate()
+    /*public GameData Duplicate()
     {
         GameData temp = (GameData)MemberwiseClone();
         temp.lastSavedItems = this.lastSavedItems;
         return temp;
-    }
+    }*/
 }
