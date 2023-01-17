@@ -935,13 +935,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1025915721}
-  - component: {fileID: 1025915731}
   - component: {fileID: 1025915729}
   - component: {fileID: 1025915728}
   - component: {fileID: 1025915727}
   - component: {fileID: 1025915724}
   - component: {fileID: 1025915723}
   - component: {fileID: 1025915722}
+  - component: {fileID: 1025915731}
+  - component: {fileID: 1025915725}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1026,6 +1027,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.39249915, y: 0.6090545}
   m_EdgeRadius: 0.05
+--- !u!114 &1025915725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025915720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47028a71d94b0514497f3b9679b101ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerType: 2
 --- !u!58 &1025915727
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1126,15 +1140,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c4c3fa0c9335c4384755f3cda10565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allowed: 0
+  _allowed: 1
   groundRaycastT: {fileID: 1077088636}
   baseProp:
-    allowed: 0
-    stats: []
-    crouchMultiplier: 0
+    allowed: 1
+    stats:
+    - runSpeed:
+        amount: 15
+        percent: 0
+      jumpForce:
+        amount: 25
+        percent: 0
+      jumpCount: 2
+    crouchMultiplier: 0.3
     jumpableLayers:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 64
   mercyJumpDistance: 3
   allowedJumpRatio: 0.15
 --- !u!1 &1030568132
@@ -1604,6 +1625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2fce84c6872d94b98ffdf132d48d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crouchOn: 0
 --- !u!1 &1861846351
 GameObject:
   m_ObjectHideFlags: 0

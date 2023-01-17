@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity : Base
+public class Entity : Base, IMoveable
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -14,7 +14,7 @@ public class Entity : Base
     protected virtual void Start()
     {
         ComponentInit();
-        Debug.Log(DefaultsToJson());
+        IInitializeables();
     }
 
     protected virtual void Update()
@@ -65,18 +65,30 @@ public class Entity : Base
 
     }
 
+    private IInitializeable[] iInits => GetComponents<IInitializeable>();
+    public void IInitializeables()
+    {
+        for (int i=0; i<iInits.Length; i++)
+        {
+            iInits[i].Init();
+        }
+    }
+
+
+    // ============================== IMOVEABLE ==============================
+    public Rigidbody2D rbody => GetComponent<Rigidbody2D>();
+
 
     // ============================== JSON ==============================
     public string DefaultsToJson()
     {
         string componentsJson = "";
-        IInitializeable[] iInit = GetComponents<IInitializeable>();
-        for (int i=0; i < iInit.Length; i++)
+        for (int i=0; i < iInits.Length; i++)
         {
-            string componentJson = iInit[i].DefaultsToJson();
+            string componentJson = iInits[i].DefaultsToJson();
             int start = 1;
             componentsJson += componentJson.Substring(start, componentJson.Length - start - 1);
-            if (i + 1 != iInit.Length - 1)
+            if (i + 1 != iInits.Length - 1)
                 componentsJson += ", ";
         }
         return $"{{ \"{dataProp.name}\" : {{ {componentsJson} }} }}";

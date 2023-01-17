@@ -3,27 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class MovementSystem : MonoBehaviour, IRestrictable, IInitializeable<MovementProp>
+public class MovementScript : MonoBehaviour, IRestrictable, IInitializeable, IControllable
 {
     // ============================== MAIN RESTRICTION ==============================
     public bool paused { get { return GameSystem.paused; } }
     [SerializeField] private bool _allowed;
     public bool allowed => _allowed;
     public bool alive { get; set; }
+    public bool initialized { get; private set; }
 
-    public bool IsRestricted() { return paused || !allowed; }
+    public bool IsRestricted() { return paused || !allowed || !initialized; }
 
 
     // ============================== IINITIALIZEABLE ==============================
-    public MovementProp dataProp { get; private set; }
-    public void Init(MovementProp dataProp)
+    public void Init()
     {
-        if (!_allowed) return; // Debug Override
-        _allowed = dataProp.allowed; // Runtime Init
-        if (!allowed) return;
-        this.dataProp = dataProp;
-
-        if (!IsRestricted()) return;
+        alive = true;
+        initialized = true;
+        if (IsRestricted()) return;
         PropertyInit();
         ComponentInit();
         StatsInit();
@@ -48,9 +45,47 @@ public class MovementSystem : MonoBehaviour, IRestrictable, IInitializeable<Move
     private void ComponentInit()
     {
         rbody = GetComponent<IMoveable>().rbody;
-        jumpableLayers = dataProp.jumpableLayers;
+        jumpableLayers = baseProp.jumpableLayers;
 
         groundRaycastT = transform.GetChild("RaycastGround");
+    }
+
+
+    // ============================== UNITY METHODS ==============================
+    protected virtual void Update()
+    {
+        if (IsRestricted()) return;
+        Movement();
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        if (IsRestricted()) return;
+
+    }
+
+    protected virtual void LateUpdate()
+    {
+        if (IsRestricted()) return;
+
+    }
+
+    // When turned disabled
+    protected virtual void OnDisable()
+    {
+
+    }
+
+    // When turned enabled
+    protected virtual void OnEnable()
+    {
+
+    }
+
+    // When scene ends
+    protected virtual void OnDestroy()
+    {
+
     }
 
 
@@ -83,7 +118,7 @@ public class MovementSystem : MonoBehaviour, IRestrictable, IInitializeable<Move
     public MovementProp.Stats statsBoots { get; private set; } // Boots Stats (only for mv speed and jump)
 
     public float runSpeed { get { return (statsBoots.runSpeed.x + statsBase.runSpeed.x * (1 + statsBoots.runSpeed.y)) * (1 + statsBstd.runSpeed.y) + statsBstd.runSpeed.x; } }
-    public float walkSpeed { get { return runSpeed * dataProp.crouchMultiplier; } }
+    public float walkSpeed { get { return runSpeed * baseProp.crouchMultiplier; } }
     public float mvForce { get { return (controls.crouch) ? walkSpeed : runSpeed; } }
     public float jumpForce { get { return (statsBoots.jumpForce.x + statsBase.jumpForce.x * (1 + statsBoots.jumpForce.y)) * (1 + statsBstd.jumpForce.y) + statsBstd.jumpForce.x; } }
 
@@ -92,7 +127,7 @@ public class MovementSystem : MonoBehaviour, IRestrictable, IInitializeable<Move
 
     public void StatsInit()
     {
-        statsBase = dataProp.stats[difficulty];
+        statsBase = baseProp.stats[difficulty];
         statsBstd = new MovementProp.Stats();
         statsBoots = new MovementProp.Stats();
 
@@ -147,7 +182,7 @@ public class MovementSystem : MonoBehaviour, IRestrictable, IInitializeable<Move
 
         bool jumpRestriction = distanceRestriction(allowedJumpDistance) || maxJumpCount - curJumpCount >= 1; // Can still configure
         bool executeJump = curJumpCount > 0 && jumpRestriction && (controls.jump || mercyJump);
-
+        Debug.Log(controls.jump);
         if (executeJump)
         {
             curJumpCount--;
@@ -169,50 +204,21 @@ public class MovementSystem : MonoBehaviour, IRestrictable, IInitializeable<Move
 
 
     // ------------------------------ IControllable ------------------------------
-    public struct Controls
-    {
-        public float horizontal;
-        public bool jump;
-        public bool fly;
-        public float vertical;
-        public bool dash;
-        public bool crouch;
-
-        public void Set(float horizontal = 0f, bool jump = false, bool fly = false, float vertical = 0f, bool dash = false, bool crouch = false)
-        {
-            this.horizontal = horizontal;
-            this.jump = jump;
-            this.fly = fly;
-            this.vertical = vertical;
-            this.dash = dash;
-            this.crouch = crouch;
-        }
-
-        public void Set(Dictionary<string, object> controls)
-        {
-            this.horizontal = (float)controls[nameof(horizontal)];
-            this.jump = (bool)controls[nameof(jump)];
-            this.fly = (bool)controls[nameof(fly)];
-            this.vertical = (float)controls[nameof(vertical)];
-            this.dash = (bool)controls[nameof(dash)];
-            this.crouch = (bool)controls[nameof(crouch)];
-        }
-    }
-    public Controls controls;
+    public Controller.Controls controls { get; private set; }
 
     // Communicates with other components
-    public void Receiver(Dictionary<string, object> controls)
+    public void Receiver(Controller.Controls controls)
     {
         if (IsRestricted()) return;
         if (!alive || state.immovable)
-            this.controls.Set();
+            this.controls = new Controller.Controls();
         else
-            this.controls.Set(controls);
+            this.controls = controls;
     }
 
 
     // ============================== JSON ==============================
-    public string DefaultsToJson() => $"{{ \"{dataProp.GetType()}\" : {dataProp.ToJson()} }}";
+    public string DefaultsToJson() => $"{{ \"{baseProp.GetType()}\" : {baseProp.ToJson()} }}";
 
 
     // ============================== GIZMOS ==============================
