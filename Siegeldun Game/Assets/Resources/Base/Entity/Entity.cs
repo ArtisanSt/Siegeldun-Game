@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Controller))]
 public class Entity : Base, IMoveable
 {
     // ============================== UNITY METHODS ==============================
@@ -65,7 +66,7 @@ public class Entity : Base, IMoveable
 
     }
 
-    private IInitializeable[] iInits => GetComponents<IInitializeable>();
+    public IInitializeable[] iInits => GetComponents<IInitializeable>();
     public void IInitializeables()
     {
         for (int i=0; i<iInits.Length; i++)

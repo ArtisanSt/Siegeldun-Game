@@ -182,7 +182,6 @@ public class MovementScript : MonoBehaviour, IRestrictable, IInitializeable, ICo
 
         bool jumpRestriction = distanceRestriction(allowedJumpDistance) || maxJumpCount - curJumpCount >= 1; // Can still configure
         bool executeJump = curJumpCount > 0 && jumpRestriction && (controls.jump || mercyJump);
-        Debug.Log(controls.jump);
         if (executeJump)
         {
             curJumpCount--;

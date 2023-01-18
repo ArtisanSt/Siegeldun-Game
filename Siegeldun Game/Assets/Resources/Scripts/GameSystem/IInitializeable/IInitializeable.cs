@@ -7,4 +7,5 @@ public interface IInitializeable
     public string DefaultsToJson();
     public void Init();
     public bool initialized { get; }
+    public bool alive { get; set; }
 }
