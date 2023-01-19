@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class StatusScript : MonoBehaviour, IRestrictable, IInitializeable, IRegenable, IDamageable
+public class StatusScript : MonoBehaviour, IRestrictable, IInitializeable, IJsonable, IRegenable, IDamageable
 {
     // ============================== MAIN RESTRICTION ==============================
     public bool paused { get { return GameSystem.paused; } }
@@ -376,5 +376,10 @@ public class StatusScript : MonoBehaviour, IRestrictable, IInitializeable, IRege
 
 
     // ============================== JSON ==============================
-    public string DefaultsToJson() => $"{{ \"{baseProp.GetType()}\" : {baseProp.ToJson()} }}";
+    public JsonData BasePropToJson() => new JsonData(baseProp.GetType().ToString(), baseProp.ToJson());
+
+    public void SetBaseProp(string baseProp)
+    {
+        this.baseProp = JsonUtility.FromJson<StatusProp>(baseProp);
+    }
 }

@@ -17,6 +17,9 @@ public abstract class EditorBase<N, T> : Editor, IEditorBase where N : Object wh
 
     public override void OnInspectorGUI()
     {
+        EGUILBase.ScriptName(target, scriptType);
+        root = (T)target;
+
         HeaderSettings();
         SetProperty(true);
         EGUILayout.SetSpace(3);
@@ -25,11 +28,7 @@ public abstract class EditorBase<N, T> : Editor, IEditorBase where N : Object wh
         FooterSettings();
     }
 
-    public virtual void HeaderSettings()
-    {
-        EGUILBase.ScriptName(target, scriptType);
-        root = (T)target;
-    }
+    public abstract void HeaderSettings();
 
     public abstract void BodySettings();
 

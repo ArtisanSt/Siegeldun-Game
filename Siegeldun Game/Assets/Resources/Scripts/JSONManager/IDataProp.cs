@@ -1,4 +1,4 @@
-public interface IDataProp: IJsonable
+public interface IDataProp
 {
 
 }

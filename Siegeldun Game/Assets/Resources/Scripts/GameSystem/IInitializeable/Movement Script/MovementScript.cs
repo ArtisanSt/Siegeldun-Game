@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class MovementScript : MonoBehaviour, IRestrictable, IInitializeable, IControllable
+public class MovementScript : MonoBehaviour, IRestrictable, IInitializeable, IJsonable, IControllable
 {
     // ============================== MAIN RESTRICTION ==============================
     public bool paused { get { return GameSystem.paused; } }
@@ -217,7 +217,12 @@ public class MovementScript : MonoBehaviour, IRestrictable, IInitializeable, ICo
 
 
     // ============================== JSON ==============================
-    public string DefaultsToJson() => $"{{ \"{baseProp.GetType()}\" : {baseProp.ToJson()} }}";
+    public JsonData BasePropToJson() => new JsonData(baseProp.GetType().ToString(), baseProp.ToJson());
+
+    public void SetBaseProp(string baseProp)
+    {
+        this.baseProp = JsonUtility.FromJson<MovementProp>(baseProp);
+    }
 
 
     // ============================== GIZMOS ==============================

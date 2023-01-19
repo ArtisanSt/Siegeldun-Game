@@ -17,7 +17,7 @@ public class EditorMbCSample : EditorBase<ScriptableObject, SoCSample>
     // Optional
     public override void HeaderSettings()
     {
-        base.HeaderSettings(); // Optional
+
 
     }
 
