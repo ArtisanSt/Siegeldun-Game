@@ -25,6 +25,8 @@ public class StatusScript : MonoBehaviour, IRestrictable, IInitializeable, IRege
         PropertyInit();
         ComponentInit();
         StatsInit();
+
+        UIInit();
     }
 
     private void SetAliveToAll(bool value)
@@ -58,6 +60,26 @@ public class StatusScript : MonoBehaviour, IRestrictable, IInitializeable, IRege
     {
         if (IsRestricted()) return;
         StatsUpdate();
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            TakeDamage(0, 0, 20, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            curSP -= 10;
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            HealHP(10);
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            HealSP(5);
+        }
     }
 
     public void FixedUpdate()
@@ -68,6 +90,8 @@ public class StatusScript : MonoBehaviour, IRestrictable, IInitializeable, IRege
 
     public void LateUpdate()
     {
+        UIUpdate();
+
         if (IsRestricted()) return;
         if (curHP <= 0f) Death();
     }
@@ -173,12 +197,12 @@ public class StatusScript : MonoBehaviour, IRestrictable, IInitializeable, IRege
 
     public void Regenerate()
     {
-        if (lastHealTime.x + baseProp.regenTimeIncrement.x.Positive() <= Time.time)
+        if (curHP != maxHP && lastHealTime.x + baseProp.regenTimeIncrement.x.Positive() <= Time.time)
         {
             if (HealHP(HPRegen))
                 lastHealTime.Set(Time.time, lastHealTime.y);
         }
-        if (lastHealTime.y + baseProp.regenTimeIncrement.y.Positive() <= Time.time)
+        if (curSP != maxSP && lastHealTime.y + baseProp.regenTimeIncrement.y.Positive() <= Time.time)
         {
             if (HealSP(SPRegen))
                 lastHealTime.Set(lastHealTime.x, Time.time);
@@ -255,12 +279,97 @@ public class StatusScript : MonoBehaviour, IRestrictable, IInitializeable, IRege
 
 
     // ============================== UI ==============================
-    [SerializeField] private Image spBar = null;
-    [SerializeField] private Image hpBarB = null;
-    [SerializeField] private Image hpBarF = null;
-    [SerializeField] private Image ShdBar = null;
-    [SerializeField] private TMP_Text hpText = null;
-    [SerializeField] private TMP_Text spText = null;
+    [SerializeField] private Image spBar, hpBarB, hpBarF, shdBar;
+    [SerializeField] private TMP_Text hpText, spText;
+
+    private float HPUIChangeTickCount, SPUIChangeTickCount;
+    [SerializeField] private float UIPercentChangeSpeed, UIPercentChangeAcceleration;
+
+    private void UIInit()
+    {
+        hpBarF.fillAmount = (curHP / maxHP).Positive();
+        hpBarB.fillAmount = hpBarF.fillAmount;
+        shdBar.fillAmount = (shd / maxHP).Positive();
+
+        HPUIChangeTickCount = 0;
+        SPUIChangeTickCount = 0;
+    }
+
+    private void UIUpdate()
+    {
+        HPBarUI();
+        SPBarUI();
+    }
+
+    private void HPBarUI()
+    {
+        if (hpBarF == null || hpBarB == null || shdBar == null) return;
+
+        float fillFractionShd = (shd / maxHP).Clamp(0, 1);
+        float fillFractionHP = (curHP / maxHP).Clamp(0, 1);
+
+        float fillHPBarF = hpBarF.fillAmount;
+        float fillHPBarB = hpBarB.fillAmount;
+        float fillShdBar = shdBar.fillAmount;
+
+        // SHDBAR Changes
+        if (fillShdBar != fillFractionShd)
+        {
+            shdBar.fillAmount = fillFractionShd;
+        }
+
+        // HPBARF Changes
+        if (fillHPBarF != fillFractionHP)
+        {
+            hpBarF.fillAmount = fillFractionHP;
+        }
+
+        // HPBARB Changes
+        if (fillHPBarB != fillHPBarF)
+        {
+            if (fillHPBarF < fillHPBarB)
+                hpBarB.fillAmount -= (UIPercentChangeSpeed * Mathf.Pow(UIPercentChangeAcceleration, HPUIChangeTickCount)).Positive();
+            if (fillHPBarF > fillHPBarB)
+                hpBarB.fillAmount = fillHPBarF;
+
+            HPUIChangeTickCount++;
+        }
+        else if (HPUIChangeTickCount != 0)
+        {
+            HPUIChangeTickCount = 0;
+        }
+
+        if (hpText == null) return;
+        hpText.text = $"{Mathf.FloorToInt(curHP)} / {Mathf.FloorToInt(maxHP)}";
+        if (shd > 0)
+            hpText.text = $"({hpText.text}) + {Mathf.FloorToInt(shd)}";
+    }
+
+    private void SPBarUI()
+    {
+        if (spBar == null) return;
+
+        float fillFractionSP = (curSP / maxSP).Positive();
+        float fillSPBar = spBar.fillAmount;
+
+        // HPBARB Changes
+        if (fillSPBar != fillFractionSP)
+        {
+            if (fillFractionSP < fillSPBar)
+                spBar.fillAmount -= (UIPercentChangeSpeed * Mathf.Pow(UIPercentChangeAcceleration, SPUIChangeTickCount)).Positive();
+            if (fillFractionSP > fillSPBar)
+                spBar.fillAmount = fillFractionSP;
+
+            SPUIChangeTickCount++;
+        }
+        else if (SPUIChangeTickCount != 0)
+        {
+            SPUIChangeTickCount = 0;
+        }
+
+        if (spText == null) return;
+        spText.text = $"{Mathf.FloorToInt(curSP)} / {Mathf.FloorToInt(maxSP)}";
+    }
 
 
 
