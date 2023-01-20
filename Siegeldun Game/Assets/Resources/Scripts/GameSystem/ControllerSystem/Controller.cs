@@ -67,6 +67,7 @@ public class Controller : MonoBehaviour
 
         // ------------------------------- Battle -------------------------------
         public bool attack;
+        public bool block;
         public bool ability;
         public bool reload;
 
@@ -90,6 +91,15 @@ public class Controller : MonoBehaviour
     // ============================== OBJECT PROPERTIES AND METHODS ==============================
     public enum ControllerType { None, AI, Player }
     public ControllerType controllerType;
+
+    public static ControllerType None => ControllerType.None;
+    public static ControllerType Player => ControllerType.Player;
+    public static ControllerType AI => ControllerType.AI;
+
+    public void SetControllerType(ControllerType controllerType)
+    {
+        this.controllerType = controllerType;
+    }
 
     private bool crouch = false;
 
@@ -146,6 +156,7 @@ public class Controller : MonoBehaviour
     public void PlayerBattle()
     {
         controls.attack = Input.GetButtonDown("Attack");
+        controls.block = Input.GetButtonDown("Block");
         controls.ability = Input.GetButtonDown("Ability");
         controls.reload = Input.GetButtonDown("Reload");
 
@@ -161,7 +172,6 @@ public class Controller : MonoBehaviour
 
 
     }
-
 
     public void ControllerAI()
     {

@@ -63,8 +63,12 @@ public class GameSystem : SingletonDontDestroy<GameSystem>
     }
 
     public static bool paused;
-    public static int difficulty;
+    public List<Difficulty> difficulties;
+    public GameDAta gameData { get; private set; }
     [SerializeField] public LayerMask groundLayer;
 
-
+    public void NewGame(int difficulty)
+    {
+        GameDataManager.CreateGameData("New Game", difficulty);
+    }
 }

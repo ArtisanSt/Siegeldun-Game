@@ -59,13 +59,18 @@ public class ControllerSystem : SettingsSystem<ControllerSystem>
 
 
     // ============================== OBJECT PROPERTIES AND METHODS ==============================
-    public static GameObject player;
+    public static GameObject player { get; private set; }
 
     public enum CrouchOn { Hold, Toggle }
     public CrouchOn crouchOn;
 
-    public static void CreatePlayerInstance()
+    public void SetPlayer(GameObject player)
     {
+        if (this.player != null)
+            this.player.GetComponent<Controller>().SetControllerType(Controller.None);
 
+        if (player == null) return;
+        this.player = player;
+        this.player.GetComponent<Controller>().SetControllerType(Controller.Player);
     }
 }

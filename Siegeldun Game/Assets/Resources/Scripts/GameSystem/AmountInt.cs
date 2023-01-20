@@ -10,6 +10,14 @@ public struct AmountInt
     public int max;
     public int value { get; private set; }
 
+    public AmountInt(int _max)
+    {
+        min = _max;
+        max = _max;
+
+        value = _max;
+    }
+
     public AmountInt(int _min, int _max)
     {
         min = _min;
@@ -42,10 +50,10 @@ public class AmountIntPropertyDrawer : PropertyDrawer
 
         EditorGUI.indentLevel++;
 
-        Rect minRect = new Rect(position.x + 15 * width, position.y, 15 * width, EditorGUIUtility.singleLineHeight);
-        Rect maxRect = new Rect(position.x + 30 * width, position.y, 15 * width, EditorGUIUtility.singleLineHeight);
-        Rect minLabelRect = new Rect(minRect.position.x - 2 * width, position.y, 7 * width, EditorGUIUtility.singleLineHeight);
-        Rect maxLabelRect = new Rect(maxRect.position.x - 2 * width, position.y, 7 * width, EditorGUIUtility.singleLineHeight);
+        Rect minRect = new Rect(position.x + 17.5f * width, position.y, 13 * width, EditorGUIUtility.singleLineHeight);
+        Rect maxRect = new Rect(position.x + 35 * width, position.y, 13 * width, EditorGUIUtility.singleLineHeight);
+        Rect minLabelRect = new Rect(minRect.position.x - 3 * width, position.y, 7 * width, EditorGUIUtility.singleLineHeight);
+        Rect maxLabelRect = new Rect(maxRect.position.x - 3 * width, position.y, 7 * width, EditorGUIUtility.singleLineHeight);
 
         SerializedProperty min = property.FindPropertyRelative("min");
         SerializedProperty max = property.FindPropertyRelative("max");
