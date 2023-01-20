@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Controller))]
-public class Entity : Base, IMoveable, IJsonable
+public abstract class Entity : Base, IMoveable, IJsonable
 {
     // ============================== UNITY METHODS ==============================
     // When this script is loaded
@@ -52,9 +52,8 @@ public class Entity : Base, IMoveable, IJsonable
 
 
     // ============================== BASE INHERITED PROPERTIES ==============================
-    public override string instanceName => baseProp.name;
     public override string dirPath => baseProp.dirPath;
-    public override System.Type objectType => this.GetType();
+    public override System.Type baseType => typeof(Entity);
 
 
     // ============================== ENTITY PROPERTIES ==============================
@@ -82,7 +81,11 @@ public class Entity : Base, IMoveable, IJsonable
 
 
     // ============================== JSON ==============================
-    public JsonData BasePropToJson() => new JsonData(baseProp.GetType().ToString(), baseProp.ToJson());
+    public virtual JsonData BasePropToJson()
+    {
+        baseProp.name = instanceName;
+        return new JsonData(baseProp.GetType().ToString(), baseProp.ToJson());
+    }
 
     public void SetBaseProp(string baseProp)
     {

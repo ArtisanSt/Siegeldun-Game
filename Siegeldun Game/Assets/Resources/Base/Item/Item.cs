@@ -51,9 +51,8 @@ public class Item : Base, IJsonable
 
 
     // ============================== BASE INHERITED PROPERTIES ==============================
-    public override string instanceName => baseProp.name;
     public override string dirPath => baseProp.dirPath;
-    public override System.Type objectType => this.GetType();
+    public override System.Type baseType => typeof(Item);
 
 
     // ============================== ENTITY PROPERTIES ==============================

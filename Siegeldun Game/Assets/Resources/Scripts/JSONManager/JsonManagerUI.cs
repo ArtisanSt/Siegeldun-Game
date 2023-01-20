@@ -10,12 +10,11 @@ public class JsonManagerUI : MonoBehaviour
     // When this script is loaded
     protected virtual void Awake()
     {
-        LoadData();
-        Debug.Log(InstancePropToJson().ConvertToString());
+        DestroyComponent();
     }
 
     // ============================== JSON ==============================
-    public string baseType => GetComponent<Base>().objectType.ToString();
+    public string baseType => GetComponent<Base>().baseType.ToString();
     public static string gamePath => Application.persistentDataPath;
     public static string dataPath => $"{gamePath}/Data";
     public string jsonPath => $"{dataPath}/{baseType}.json";
@@ -56,46 +55,26 @@ public class JsonManagerUI : MonoBehaviour
     {
         CreateData();
         jsonData.Set(instanceName, InstancePropToJson().value);
-        File.WriteAllText(jsonPath, jsonData.value);
-
-        Debug.Log($"Data Saved at: {jsonPath}");
+        jsonData.SaveJsonData(jsonPath);
     }
 
     public void LoadData()
     {
         CreateData();
-        JsonData allData = JsonManager.JsonToJsonData(jsonPath);
-        foreach (string data in allData.toDict.Keys)
-        {
-            Debug.Log(data);
-        }
-
-        jsonData = new JsonData(instanceName, allData.toDict[instanceName]);
+        jsonData = jsonData.LoadJsonData(jsonPath);
         JsonDataToDataProp();
-
-        Debug.Log($"Data Loaded From: {jsonPath}");
     }
 
     public void DeleteData()
     {
         CreateData();
-        jsonData.Remove(instanceName);
-        File.WriteAllText(jsonPath, jsonData.value);
-
-        Debug.Log($"Data Deleted From: {jsonPath}");
+        jsonData.DeleteJsonData(jsonPath);
     }
 
 
-    public void CreateJson()
+    public void DestroyComponent()
     {
-        if (File.Exists(jsonPath)) return;
-        Directory.CreateDirectory(dataPath);
-    }
-
-    public void DeleteJson()
-    {
-        if (!File.Exists(jsonPath)) return;
-        File.Delete(jsonPath);
+        Object.DestroyImmediate(this);
     }
 }
 
@@ -128,9 +107,26 @@ public class JsonManagerEditor : EditorBase<MonoBehaviour, JsonManagerUI>
     // Optional
     public override void FooterSettings()
     {
+        if (GUILayout.Button("Destroy Component")) root.DestroyComponent();
+
+        EGUILayout.LabelField("DATA SETTINGS", true);
+        EGUILayout.SetSpace(1);
         if (GUILayout.Button("Save")) root.SaveData();
         if (GUILayout.Button("Load")) root.LoadData();
         if (GUILayout.Button("Delete")) root.DeleteData();
+
+        EGUILayout.SetSpace(2);
+        EGUILayout.LabelField("JSON FILE SETTINGS", true);
+        EGUILayout.SetSpace(1);
+
+        if (GUILayout.Button("Create Json")) JsonManager.CreateJson(root.jsonPath);
+        if (GUILayout.Button("Recreate Json"))
+        {
+            JsonManager.DeleteJson(root.jsonPath);
+            JsonManager.CreateJson(root.jsonPath);
+        }
+        if (GUILayout.Button("Delete Json")) JsonManager.DeleteJson(root.jsonPath);
+
         //base.FooterSettings(); // Optional
     }
 

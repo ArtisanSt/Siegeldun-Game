@@ -1393,9 +1393,8 @@ GameObject:
   - component: {fileID: 1025915727}
   - component: {fileID: 1025915724}
   - component: {fileID: 1025915723}
-  - component: {fileID: 1025915730}
-  - component: {fileID: 1025915725}
   - component: {fileID: 1025915722}
+  - component: {fileID: 1025915725}
   - component: {fileID: 1025915726}
   - component: {fileID: 1025915731}
   m_Layer: 7
@@ -1429,16 +1428,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1025915720}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1785eecb97eb9f47aac0b80037d7a6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 15ad8cf7b388f20469b4701633c014fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   baseProp:
-    name: 
-    title: 
-    ID: 
-    instanceCap: 0
+    name: Jason
+    title: The Unknown
+    ID: 00001
+    instanceCap: 1
     entityRace: 0
-  entityNickname: NICKNAME
+  entityNickname: 
 --- !u!70 &1025915723
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1626,18 +1625,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1025915730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025915720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0c4d80eb44d98c41b39d81de861f6bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1025915731
 MonoBehaviour:
   m_ObjectHideFlags: 0

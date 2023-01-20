@@ -5,9 +5,10 @@ using UnityEngine;
 public abstract class Base : MonoBehaviour
 {
     // ============================== BASE PROPERTIES ==============================
-    public abstract string instanceName { get; }
     public virtual string instanceID => $"{instanceName}({GetInstanceID()})";
-    public abstract System.Type objectType { get; }
+    public abstract System.Type baseType { get; }
+    public System.Type objectType => this.GetType();
+    public virtual string instanceName => objectType.ToString();
 
     public virtual string dirPath { get; }
 }

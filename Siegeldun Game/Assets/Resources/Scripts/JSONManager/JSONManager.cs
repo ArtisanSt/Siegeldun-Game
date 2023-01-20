@@ -14,40 +14,71 @@ public static class JsonManager
 
     public static Dictionary<string, string> SeparateDataToDict(this JsonData jsonData, bool removeOuterParentheses = true)
     {
-        string json = jsonData.value.Trim().Trim(',').Trim();
+        string json = jsonData.value.RemoveEndingComma();
         if (removeOuterParentheses)
             json = json.RemoveOuterParentheses();
         Dictionary<string, string> temp = new Dictionary<string, string>();
 
+        //Debug.Log($"{json}");
+        int colonIdx = 0, nextIdx = 0;
         string tempValue, instanceName;
-        int parCount = 0, startIdx = 0, nameLength = 0, valueStart = 0;
-        for (int i = 0; i < json.Length; i++)
+        while (json.Contains(":"))
         {
-            string chr = $"{json[i]}";
+            colonIdx = json.IndexOf(":");
+            instanceName = json.Substring(0, colonIdx).RemoveOuterQuotations();
 
-            if ((chr == "," || i == json.Length-1) && parCount == 0)
+            int parCount = 0;
+            bool isData = false;
+            for (int i=colonIdx+1; i<json.Length; i++)
             {
-                valueStart = startIdx + 1 + nameLength;
-                tempValue = json.Substring(valueStart, i - valueStart);
-                instanceName = json.Substring(startIdx, nameLength).Trim().RemoveOuterParentheses();
-                temp.Add(instanceName, tempValue);
-                startIdx = i + 1;
+                string chr = $"{json[i]}";
+                if (chr == "{" || chr == "[")
+                {
+                    parCount++;
+                    if (!isData)
+                        isData = true;
+                }
+                if (chr == "}" || chr == "]") parCount--;
+
+                if ((parCount == 0 && (isData || chr == ",")) || i == json.Length - 1)
+                {
+                    nextIdx = (isData && i != json.Length - 1 && json[i+1] == ',') ? i+2 : i+1 ;
+                    tempValue = json.Substring(colonIdx + 1, nextIdx - (colonIdx + 1)).RemoveEndingComma();
+                    temp.Add(instanceName, tempValue);
+                    isData = false;
+                    parCount = 0;
+                    break;
+                }
             }
 
-            if (chr == "{")
+            if (nextIdx < json.Length)
             {
-                parCount++;
+                json = json.Substring(nextIdx, json.Length - nextIdx).Trim();
             }
-            if (chr == "}") parCount--;
-            if (chr == ":")
-                nameLength = i - startIdx;
+            else break;
         }
         return temp;
     }
 
+    public static string RemoveEndingComma(this string value)
+    {
+        value = value.Trim();
+        if (!value.EndsWith(",")) return value;
+        return value.Remove(value.Length - 1).Trim();
+    }
+
     public static string RemoveOuterParentheses(this string value)
     {
-        return value.Trim().Trim(',').Trim().Substring(1, value.Length - 2).Trim().Trim(',').Trim();
+        value = value.Trim();
+        if (!(value.StartsWith("{") && value.EndsWith("}"))) return value;
+        return value.Substring(1, value.Length - 2).RemoveEndingComma();
+    }
+
+    public static string RemoveOuterQuotations(this string value)
+    {
+        value = value.Trim();
+        if (!(value.StartsWith("\"") && value.EndsWith("\""))) return value;
+        return value.Substring(1, value.Length - 2).RemoveEndingComma();
     }
 
     public static string RemoveOuterParentheses(this JsonData jsonData)
@@ -58,21 +89,66 @@ public static class JsonManager
     public static string CombineData(Dictionary<string, string> allData)
     {
         string data = "";
+        int count = 0;
         foreach (KeyValuePair<string, string> eachData in allData)
         {
-            data += $"\"{eachData.Key}\" :{((eachData.Value.Contains("{")) ? "\t" : " " )}{eachData.Value},\n";
+            data += $"\"{eachData.Key}\" :{((eachData.Value.Contains("{")) ? "\t" : " " )}{eachData.Value}";
+            count++;
+            if (allData.Count != count)
+                data += ",\n";
         }
-        data = data.Trim().Trim(',').Trim(); // Removes the last comma
         return $"{{\n\t{data}\n}}";
     }
 
-    public static JsonData JsonToJsonData(string jsonPath)
+    public static JsonData GetJsonData(string jsonPath)
     {
         jsonPath = jsonPath.Replace("\\", "/");
-        int startIdx = jsonPath.LastIndexOf("/");
+        int startIdx = jsonPath.LastIndexOf("/")+1;
         string instanceName = jsonPath.Substring(startIdx, jsonPath.IndexOf(".json") - startIdx);
         string json = File.ReadAllText(jsonPath);
         return new JsonData(instanceName, json);
+    }
+
+
+    public static void CreateJson(string jsonPath)
+    {
+        if (File.Exists(jsonPath)) return;
+        File.WriteAllText(jsonPath, "{\n}");
+    }
+
+    public static void DeleteJson(string jsonPath)
+    {
+        if (!File.Exists(jsonPath)) return;
+        File.Delete(jsonPath);
+    }
+
+
+    public static void SaveJsonData(this JsonData jsonData, string jsonPath)
+    {
+        File.WriteAllText(jsonPath, jsonData.value);
+        Debug.Log($"Data Saved at: {jsonPath}");
+    }
+
+    public static JsonData LoadJsonData(this JsonData jsonData, string jsonPath)
+    {
+        JsonData allData = GetJsonData(jsonPath);
+        if (!allData.toDict.ContainsKey(jsonData.key))
+        {
+            Debug.Log($"Data not found from: {jsonPath}");
+            return null;
+        }
+
+        Debug.Log($"Data Loaded from: {jsonPath}");
+        return new JsonData(jsonData.key, allData.toDict[jsonData.key]);
+    }
+
+    public static void DeleteJsonData(this JsonData jsonData, string jsonPath)
+    {
+        JsonData allData = GetJsonData(jsonPath);
+        allData.Remove(jsonData.key);
+        File.WriteAllText(jsonPath, allData.value);
+
+        Debug.Log($"Data Deleted From: {jsonPath}");
     }
 }
 
