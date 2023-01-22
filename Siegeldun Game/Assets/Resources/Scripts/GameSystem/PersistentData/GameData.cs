@@ -10,6 +10,6 @@ public struct GameData
     public int act;
     public int segment;
 
-    public AmountInt bulwarkLives;
-    public AmountInt shrineLives;
+    public int bulwarkLives;
+    public int shrineLives;
 }

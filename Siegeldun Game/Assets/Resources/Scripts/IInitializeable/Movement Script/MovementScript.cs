@@ -28,7 +28,7 @@ public class MovementScript : MonoBehaviour, IRestrictable, IInitializeable, IJs
 
 
     // ------------------------------ PROPERTIES ------------------------------
-    public int difficulty { get { return GameSystem.difficulty; } }
+    public int difficulty { get { return GameSystem.instance.difficulty; } }
     protected void PropertyInit()
     {
         state = new State();

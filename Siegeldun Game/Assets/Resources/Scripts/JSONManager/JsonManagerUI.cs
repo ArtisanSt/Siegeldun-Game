@@ -14,9 +14,9 @@ public class JsonManagerUI : MonoBehaviour
     }
 
     // ============================== JSON ==============================
+    public string gamePath => GameSystem.gamePath;
+    public string dataPath => GameSystem.dataPath;
     public string baseType => GetComponent<Base>().baseType.ToString();
-    public static string gamePath => Application.persistentDataPath;
-    public static string dataPath => $"{gamePath}/Data";
     public string jsonPath => $"{dataPath}/{baseType}.json";
 
     public string instanceName => GetComponent<Base>().instanceName;
@@ -81,32 +81,15 @@ public class JsonManagerUI : MonoBehaviour
 
 
 [CustomEditor(typeof(JsonManagerUI))]
-public class JsonManagerEditor : EditorBase<MonoBehaviour, JsonManagerUI>
+public class JsonManagerEditor : Editor
 {
-    /*
-        Process:
-            HeaderSettings();
-            SetProperty(true);
-            BodySettings();
-            FooterSettings();
-                - SaveVariables();
-    */
+    private JsonManagerUI root;
 
-    // Optional
-    public override void HeaderSettings()
+    public override void OnInspectorGUI()
     {
+        base.OnInspectorGUI();
+        root = (JsonManagerUI)target;
 
-    }
-
-    // Required
-    public override void BodySettings()
-    {
-        //EGUILayout.ContentDivider(Div_Main, $"JSON Manager ({root.baseType})", true, true, false, true);
-    }
-
-    // Optional
-    public override void FooterSettings()
-    {
         if (GUILayout.Button("Destroy Component")) root.DestroyComponent();
 
         EGUILayout.LabelField("DATA SETTINGS", true);
@@ -126,28 +109,5 @@ public class JsonManagerEditor : EditorBase<MonoBehaviour, JsonManagerUI>
             JsonManager.CreateJson(root.jsonPath);
         }
         if (GUILayout.Button("Delete Json")) JsonManager.DeleteJson(root.jsonPath);
-
-        //base.FooterSettings(); // Optional
     }
-
-
-    // ============================== SECONDARY METHODS ==============================
-    // Optional
-    /*protected override void SetProperty(bool isLeaf)
-    {
-
-    }*/
-
-    // Required
-    protected override void SaveVariables()
-    {
-        //base.SaveVariables(); // Optional
-    }
-
-
-    // ============================== TERTIARY METHODS ==============================
-    /*private void Div_Main()
-    {
-
-    }*/
 }

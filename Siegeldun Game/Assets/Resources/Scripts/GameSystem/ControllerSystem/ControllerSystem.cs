@@ -66,11 +66,11 @@ public class ControllerSystem : SettingsSystem<ControllerSystem>
 
     public void SetPlayer(GameObject player)
     {
-        if (this.player != null)
-            this.player.GetComponent<Controller>().SetControllerType(Controller.None);
+        if (ControllerSystem.player != null)
+            ControllerSystem.player.GetComponent<Controller>().SetControllerType(Controller.None);
 
         if (player == null) return;
-        this.player = player;
-        this.player.GetComponent<Controller>().SetControllerType(Controller.Player);
+        ControllerSystem.player = player;
+        ControllerSystem.player.GetComponent<Controller>().SetControllerType(Controller.Player);
     }
 }

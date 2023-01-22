@@ -40,7 +40,7 @@ public class StatusScript : MonoBehaviour, IRestrictable, IInitializeable, IJson
 
 
     // ------------------------------ PROPERTIES ------------------------------
-    public int difficulty { get { return GameSystem.difficulty; } }
+    public int difficulty { get { return GameSystem.instance.difficulty; } }
     protected void PropertyInit()
     {
         state = new State();
