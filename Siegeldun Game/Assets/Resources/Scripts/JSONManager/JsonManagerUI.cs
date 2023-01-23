@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEditor;
 
+[RequireComponent(typeof(Base))]
 public class JsonManagerUI : MonoBehaviour
 {
     // ============================== UNITY METHODS ==============================
@@ -14,68 +15,17 @@ public class JsonManagerUI : MonoBehaviour
     }
 
     // ============================== JSON ==============================
-    public string gamePath => GameSystem.gamePath;
-    public string dataPath => GameSystem.dataPath;
-    public string baseType => GetComponent<Base>().baseType.ToString();
-    public string jsonPath => $"{dataPath}/{baseType}.json";
+    public Base baseObject => GetComponent<Base>();
+    public string jsonPath => baseObject.jsonPath;
 
-    public string instanceName => GetComponent<Base>().instanceName;
+    public void DestroyComponent() => Object.DestroyImmediate(this);
 
-    public JsonData jsonData { get; private set; }
-    public JsonData InstancePropToJson()
-    {
-        IJsonable[] iJsonables = GetComponents<IJsonable>();
-        JsonData temp = new JsonData(instanceName, false);
-        for (int i = 0; i < iJsonables.Length; i++)
-        {
-            JsonData jsonData = iJsonables[i].BasePropToJson();
-            temp.Set(jsonData.key, jsonData.value);
-        }
-        temp.Update();
-        return temp;
-    }
+    public void SaveData() => baseObject.SaveJsonData();
+    public void LoadData() => baseObject.JsonDataToBaseProp();
+    public void DeleteData() => baseObject.DeleteJsonData();
 
-    public void JsonDataToDataProp()
-    {
-        IJsonable[] iJsonables = GetComponents<IJsonable>();
-        for (int i = 0; i < iJsonables.Length; i++)
-        {
-            string componentName = iJsonables[i].BasePropToJson().key;
-            iJsonables[i].SetBaseProp(jsonData.toDict[componentName]);
-        }
-    }
-
-    public void CreateData()
-    {
-        if (jsonData == null)
-            jsonData = new JsonData(baseType);
-    }
-
-    public void SaveData()
-    {
-        CreateData();
-        jsonData.Set(instanceName, InstancePropToJson().value);
-        jsonData.SaveJsonData(jsonPath);
-    }
-
-    public void LoadData()
-    {
-        CreateData();
-        jsonData = jsonData.LoadJsonData(jsonPath);
-        JsonDataToDataProp();
-    }
-
-    public void DeleteData()
-    {
-        CreateData();
-        jsonData.DeleteJsonData(jsonPath);
-    }
-
-
-    public void DestroyComponent()
-    {
-        Object.DestroyImmediate(this);
-    }
+    public void CreateJsonFile() => baseObject.CreateJsonFile();
+    public void DeleteJsonFile() => baseObject.DeleteJsonFile();
 }
 
 
@@ -102,12 +52,12 @@ public class JsonManagerEditor : Editor
         EGUILayout.LabelField("JSON FILE SETTINGS", true);
         EGUILayout.SetSpace(1);
 
-        if (GUILayout.Button("Create Json")) JsonManager.CreateJson(root.jsonPath);
+        if (GUILayout.Button("Create Json")) root.CreateJsonFile();
         if (GUILayout.Button("Recreate Json"))
         {
-            JsonManager.DeleteJson(root.jsonPath);
-            JsonManager.CreateJson(root.jsonPath);
+            root.DeleteJsonFile();
+            root.CreateJsonFile();
         }
-        if (GUILayout.Button("Delete Json")) JsonManager.DeleteJson(root.jsonPath);
+        if (GUILayout.Button("Delete Json")) root.DeleteJsonFile();
     }
 }

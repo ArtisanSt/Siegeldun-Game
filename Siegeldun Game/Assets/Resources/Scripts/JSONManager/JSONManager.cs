@@ -5,6 +5,7 @@ using UnityEngine;
 
 public static class JsonManager
 {
+    // ============================================== IDataProp ==============================================
     public static string ToJson<TDataProp>(this TDataProp value)
         where TDataProp : IDataProp
     {
@@ -12,6 +13,8 @@ public static class JsonManager
 
     }
 
+
+    // ============================================== JSONDATA EXCLUSIVE METHODS ==============================================
     public static Dictionary<string, string> SeparateDataToDict(this JsonData jsonData, bool removeOuterParentheses = true)
     {
         string json = jsonData.value.RemoveEndingComma();
@@ -100,57 +103,98 @@ public static class JsonManager
         return $"{{\n\t{data}\n}}";
     }
 
-    public static JsonData GetJsonData(string jsonPath)
+
+    // ============================================== SCRIPTING METHODS ==============================================
+    // JSON FILE:
+    public static void CreateJsonFile(string jsonPath) { if (!File.Exists(jsonPath)) File.WriteAllText(jsonPath, "{\n}"); }
+    public static void DeleteJsonFile(string jsonPath) { if (File.Exists(jsonPath)) File.Delete(jsonPath); }
+    public static JsonData ReadJsonDataFile(string jsonPath)
     {
+        CreateJsonFile(jsonPath);
         jsonPath = jsonPath.Replace("\\", "/");
-        int startIdx = jsonPath.LastIndexOf("/")+1;
+        int startIdx = jsonPath.LastIndexOf("/") + 1;
         string instanceName = jsonPath.Substring(startIdx, jsonPath.IndexOf(".json") - startIdx);
         string json = File.ReadAllText(jsonPath);
         return new JsonData(instanceName, json);
     }
 
-
-    public static void CreateJson(string jsonPath)
-    {
-        if (File.Exists(jsonPath)) return;
-        File.WriteAllText(jsonPath, "{\n}");
-    }
-
-    public static void DeleteJson(string jsonPath)
-    {
-        if (!File.Exists(jsonPath)) return;
-        File.Delete(jsonPath);
-    }
-
+    // JSON DATA ALTERATIONS:
 
     public static void SaveJsonData(this JsonData jsonData, string jsonPath)
     {
+        JsonData allData = ReadJsonDataFile(jsonPath);
+        allData.Set(jsonData.key, jsonData.value);
         File.WriteAllText(jsonPath, jsonData.value);
         Debug.Log($"Data Saved at: {jsonPath}");
     }
 
-    public static JsonData LoadJsonData(this JsonData jsonData, string jsonPath)
+    public static JsonData LoadJsonData(this JsonData jsonData, string jsonPath) => LoadJsonData(jsonData.key, jsonPath);
+    public static JsonData LoadJsonData(string instanceName, string jsonPath)
     {
-        JsonData allData = GetJsonData(jsonPath);
-        if (!allData.toDict.ContainsKey(jsonData.key))
+        JsonData allData = ReadJsonDataFile(jsonPath);
+        if (!allData.Contains(instanceName))
         {
             Debug.Log($"Data not found from: {jsonPath}");
             return null;
         }
 
         Debug.Log($"Data Loaded from: {jsonPath}");
-        return new JsonData(jsonData.key, allData.toDict[jsonData.key]);
+        return new JsonData(instanceName, allData.toDict[instanceName]);
     }
 
-    public static void DeleteJsonData(this JsonData jsonData, string jsonPath)
+    public static void DeleteJsonData(this JsonData jsonData, string jsonPath) => DeleteJsonData(jsonData.key, jsonPath);
+    public static void DeleteJsonData(string instanceName, string jsonPath)
     {
-        JsonData allData = GetJsonData(jsonPath);
-        allData.Remove(jsonData.key);
+        JsonData allData = ReadJsonDataFile(jsonPath);
+        allData.Remove(instanceName);
         File.WriteAllText(jsonPath, allData.value);
 
         Debug.Log($"Data Deleted From: {jsonPath}");
     }
+
+    public static string GetJsonPath(string dataPath, string baseType) => $"{dataPath}/{baseType}.json";
+
+
 }
+
+public static class JsonDataManagerBaseExtensions
+{
+    public static void CreateJsonFile(this Base baseObject) { if (!File.Exists(baseObject.jsonPath)) File.WriteAllText(baseObject.jsonPath, "{\n}"); }
+    public static void DeleteJsonFile(this Base baseObject) { if (File.Exists(baseObject.jsonPath)) File.Delete(baseObject.jsonPath); }
+
+    public static JsonData BasePropJDToJsonData(this GameObject gameObject) => BasePropJDToJsonData(gameObject.GetComponents<IJsonable>(), gameObject.GetComponent<Base>().instanceName);
+    public static JsonData BasePropJDToJsonData(this Base baseObject) => BasePropJDToJsonData(baseObject.gameObject.GetComponents<IJsonable>(), baseObject.instanceName);
+    public static JsonData BasePropJDToJsonData(this IJsonable[] iJsonables, string instanceName)
+    {
+        JsonData temp = new JsonData(instanceName, false);
+        for (int i = 0; i < iJsonables.Length; i++)
+        {
+            JsonData jsonData = iJsonables[i].BasePropToBasePropJD();
+            temp.Set(jsonData.key, jsonData.value);
+        }
+        temp.Update();
+        return temp;
+    }
+
+    public static void JsonDataToBaseProp(this Base baseObject) => JsonDataToBaseProp(baseObject.gameObject.GetComponents<IJsonable>(), LoadJsonData(baseObject));
+    public static void JsonDataToBaseProp(this IJsonable[] iJsonables, JsonData jsonData)
+    {
+        for (int i = 0; i < iJsonables.Length; i++)
+        {
+            iJsonables[i].SetBaseProp(jsonData.toDict[iJsonables[i].componentName]);
+        }
+    }
+
+    public static void SaveJsonData(this Base baseObject)
+    {
+        IJsonable[] iJsonables = baseObject.gameObject.GetComponents<IJsonable>();
+        JsonData jsonData = new JsonData(baseObject.instanceName, BasePropJDToJsonData(iJsonables, baseObject.instanceName).KeyValuePairToString());
+        JsonManager.SaveJsonData(jsonData, baseObject.jsonPath);
+    }
+    public static JsonData LoadJsonData(this Base baseObject) => JsonManager.LoadJsonData(baseObject.instanceName, baseObject.jsonPath);
+    public static void DeleteJsonData(this Base baseObject) => JsonManager.DeleteJsonData(baseObject.instanceName, baseObject.jsonPath);
+}
+
 
 public class JsonData
 {
@@ -194,13 +238,16 @@ public class JsonData
         if (autoUpdate) Update();
     }
 
+    public bool Contains(string key) => toDict.ContainsKey(key.Trim());
+    public string Get(string key) => toDict[key.Trim()];
+
     public void Update()
     {
         value = JsonManager.CombineData(toDict);
     }
 
-    public string ConvertToString()
+    public string KeyValuePairToString()
     {
-        return $"{{\"{key}\" : {value}}}";
+        return $"{{\n\"{key}\" : {value}\n}}";
     }
 }

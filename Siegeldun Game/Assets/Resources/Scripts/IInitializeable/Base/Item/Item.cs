@@ -71,7 +71,12 @@ public abstract class Item : Base, IJsonable
 
 
     // ============================== JSON ==============================
-    public JsonData BasePropToJson() => new JsonData(baseProp.GetType().ToString(), baseProp.ToJson());
+    public string componentName => baseProp.GetType().ToString();
+    public virtual JsonData BasePropToBasePropJD()
+    {
+        baseProp.name = instanceName;
+        return new JsonData(componentName, baseProp.ToJson());
+    }
 
     public void SetBaseProp(string baseProp)
     {

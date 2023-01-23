@@ -1466,7 +1466,7 @@ MonoBehaviour:
   baseProp:
     name: Jason
     title: The Unknown
-    ID: 00001
+    ID: 0001
     instanceCap: 1
     entityRace: 0
   entityNickname: 

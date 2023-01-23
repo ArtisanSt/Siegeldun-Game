@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public abstract class Base : MonoBehaviour, IInitializer
 {
     // ============================== UNITY METHODS ==============================
@@ -12,9 +13,11 @@ public abstract class Base : MonoBehaviour, IInitializer
 
     // ============================== BASE PROPERTIES ==============================
     public virtual string instanceID => $"{instanceName}({GetInstanceID()})";
+    public static string dataPath => GameSystem.dataPath;
     public abstract System.Type baseType { get; }
     public System.Type objectType => this.GetType();
     public virtual string instanceName => objectType.ToString();
+    public virtual string jsonPath => JsonManager.GetJsonPath(dataPath, baseType.ToString());
 
     public virtual string dirPath { get; }
 
@@ -28,4 +31,5 @@ public abstract class Base : MonoBehaviour, IInitializer
             iInits[i].Init();
         }
     }
+
 }

@@ -9,7 +9,7 @@ public abstract class Entity : Base, IJsonable, IMoveable
     // When this script is loaded
     protected virtual void Awake()
     {
-
+        //SetBaseProp(JsonManager.LoadJsonData(new JsonData(instanceName), JsonManager.GetJsonPath(GameSystem.dataPath, baseType)).toDict[instanceName]);
     }
 
     protected override void Start()
@@ -72,10 +72,11 @@ public abstract class Entity : Base, IJsonable, IMoveable
 
 
     // ============================== JSON ==============================
-    public virtual JsonData BasePropToJson()
+    public string componentName => baseProp.GetType().ToString();
+    public virtual JsonData BasePropToBasePropJD()
     {
         baseProp.name = instanceName;
-        return new JsonData(baseProp.GetType().ToString(), baseProp.ToJson());
+        return new JsonData(componentName, baseProp.ToJson());
     }
 
     public void SetBaseProp(string baseProp)

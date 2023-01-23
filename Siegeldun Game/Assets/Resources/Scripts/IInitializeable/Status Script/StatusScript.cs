@@ -376,7 +376,8 @@ public class StatusScript : MonoBehaviour, IRestrictable, IInitializeable, IJson
 
 
     // ============================== JSON ==============================
-    public JsonData BasePropToJson() => new JsonData(baseProp.GetType().ToString(), baseProp.ToJson());
+    public string componentName => this.GetType().ToString();
+    public JsonData BasePropToBasePropJD() => new JsonData(componentName, baseProp.ToJson());
 
     public void SetBaseProp(string baseProp)
     {

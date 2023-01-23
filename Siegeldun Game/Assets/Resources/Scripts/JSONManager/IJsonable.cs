@@ -1,5 +1,6 @@
 public interface IJsonable
 {
-    public JsonData BasePropToJson();
+    public string componentName { get; }
+    public JsonData BasePropToBasePropJD();
     public void SetBaseProp(string baseProp);
 }
