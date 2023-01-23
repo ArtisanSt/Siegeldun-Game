@@ -7,18 +7,26 @@ public class GameSystem : SingletonDontDestroy<GameSystem>
     // First one to be awakened and last one to get destroyed
     protected override void Awake()
     {
+        if (initialized) return;
+        state = State.Opening;
+
         base.Awake();
-        ExecutionInit();
+        /*ExecutionInit();
         MainMenuInit();
 
 
 
-        GameInit();
+        GameInit();*/
     }
 
     protected override void Start()
     {
+        if (initialized) return;
+
         base.Start();
+
+        state = State.MainMenu;
+        initialized = true; // last line
     }
 
     protected override void Update()
@@ -64,9 +72,10 @@ public class GameSystem : SingletonDontDestroy<GameSystem>
 
 
     // ============================== OBJECT PROPERTIES AND METHODS ==============================
+    public static bool initialized { get; private set; }
     public enum State { Opening, MainMenu, Preparation, Playing, Ending, Saving, Closing, Debug }
     //public State state { get; private set; }
-    public State state => State.Debug;
+    public State state { get { return State.Debug; } set { State x = value; } }
 
     public List<Difficulty> difficulties { get; private set; }
 
